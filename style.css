@@ -10,26 +10,69 @@ body {
   
   .container {
     text-align: center;
-    max-width: 400px;
+    max-width: 520px;
+  }
+  
+  .controls {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+  
+  input[type="number"] {
+    width: 80px;
+    padding: 8px;
+    font-size: 16px;
   }
   
   button {
-    padding: 12px 24px;
+    padding: 12px 18px;
     font-size: 16px;
     cursor: pointer;
   }
   
+  button.secondary {
+    opacity: 0.9;
+  }
+  
   .test-area {
-    margin-top: 20px;
-    width: 300px;
+    margin: 14px auto 0;
+    width: 320px;
     height: 200px;
     background: red;
     display: flex;
     justify-content: center;
     align-items: center;
     user-select: none;
+    border-radius: 12px;
   }
   
   .hidden {
     display: none;
+  }
+  
+  .panel {
+    margin-top: 14px;
+    text-align: left;
+    background: #1a1a1a;
+    border-radius: 12px;
+    padding: 12px 14px;
+  }
+  
+  .panel h2 {
+    margin: 0 0 8px 0;
+    font-size: 16px;
+  }
+  
+  #trialList {
+    margin: 0;
+    padding-left: 18px;
+  }
+  
+  #summary {
+    margin-top: 10px;
+    font-weight: 600;
   }  

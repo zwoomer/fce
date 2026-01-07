@@ -679,4 +679,16 @@ document.getElementById("langNoBtn")?.addEventListener("click", () => setLang("n
 
 // Apply language on startup
 applyLangUI();
+
+// Sync topbar height for fixed positioning
+function syncTopbarHeight() {
+  const topbar = document.querySelector('.topbar');
+  if (!topbar) return;
+  document.documentElement.style.setProperty('--topbar-h', `${topbar.offsetHeight}px`);
+}
+
+window.addEventListener('load', syncTopbarHeight);
+window.addEventListener('resize', syncTopbarHeight);
+// Call immediately in case DOM is already loaded
+syncTopbarHeight();
 });

@@ -1,4 +1,8 @@
-html, body {
+:root {
+    --topbar-h: 64px;
+  }
+
+  html, body {
     overflow-x: hidden;
   }
 
@@ -8,16 +12,21 @@ html, body {
     color: #eee;
   
     margin: 0;
+    padding: 0;
     min-height: 100vh;
     overflow-y: auto;
-  
-    padding: 24px 12px;
   }
 
   main {
     width: 100%;
     display: flex;
     justify-content: center;
+    padding-top: calc(var(--topbar-h) + 18px);
+  }
+  
+  .content,
+  .page {
+    padding-top: calc(var(--topbar-h) + 18px);
   }
   
   .view {
@@ -171,11 +180,25 @@ html, body {
     margin-top: 6px;
   }
 
-  /* Topbar stays above overlay */
+  /* Topbar stays pinned */
   .topbar {
     position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
+    height: var(--topbar-h);
     z-index: 1000;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 0 16px;
+    box-sizing: border-box;
+
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
   }
 
   #menuBtn {
@@ -222,31 +245,36 @@ html, body {
     opacity: 0.65;
   }
 
-  /* Darken ONLY the content area below topbar */
+  /* Overlay should NOT cover the topbar */
   .menu-overlay {
     position: fixed;
+    top: var(--topbar-h);
     left: 0;
-    right: 0;
-    top: 48px;                 /* start below topbar */
-    height: calc(100vh - 48px);
+    width: 100vw;
+    height: calc(100vh - var(--topbar-h));
+    z-index: 1050;
     background: rgba(0,0,0,0.35);
-    z-index: 20;
   }
   .menu-overlay.hidden {
     display: none;
   }
 
-  /* Drawer sits above overlay, below topbar area */
+  /* Menu should start UNDER the topbar */
   .menu {
     position: fixed;
-    top: 48px;
+    top: var(--topbar-h);
     left: 0;
-    width: 240px;
-    height: calc(100vh - 48px);
-    background: #111;
-    border-right: 1px solid #222;
+
+    width: 260px;
+    height: calc(100vh - var(--topbar-h));
+
+    z-index: 1100;
+    overflow-y: auto;
+
+    background: rgba(0,0,0,0.70);
+    backdrop-filter: blur(8px);
+    border-right: 1px solid rgba(255,255,255,0.06);
     padding: 18px 10px 10px;
-    z-index: 25;
 
     transform: translateX(-105%);
     transition: transform 180ms ease;

@@ -25,11 +25,13 @@ const views = document.querySelectorAll(".view");
 function openMenu() {
   menu.classList.add("open");
   menuOverlay.classList.remove("hidden");
+  document.body.classList.add("menu-open");
 }
 
 function closeMenu() {
   menu.classList.remove("open");
   menuOverlay.classList.add("hidden");
+  document.body.classList.remove("menu-open");
 }
 
 menuBtn.addEventListener("click", () => {

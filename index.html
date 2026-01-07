@@ -31,18 +31,25 @@
         </p>
         <!-- Controls -->
         <div class="controls">
+          <div class="config-row">
             <label for="testType">Test:</label>
             <select id="testType">
               <option value="reaction">Reaction Time</option>
               <option value="gonogo">Go / No-Go</option>
             </select>
 
-          <label for="trialCount">Trials:</label>
-          <input id="trialCount" type="number" min="3" max="40" value="10" />
+            <label for="trialCount">Trials:</label>
+            <input id="trialCount" type="number" min="3" max="40" value="10" />
+          </div>
 
-          <button id="startBaselineBtn">Add Baseline Session</button>
-          <button id="startCheckBtn">Run Functional Check</button>
-          <button id="resetBtn" class="secondary">Reset</button>
+          <div class="action-row">
+            <button id="startBaselineBtn">Add Baseline Session</button>
+            <button id="startCheckBtn">Run Functional Check</button>
+          </div>
+
+          <div class="secondary-row">
+            <button id="resetBtn">Reset</button>
+          </div>
         </div>
 
         <div id="testArea" class="test-area hidden"></div>

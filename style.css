@@ -5,30 +5,65 @@ body {
   
     margin: 0;
     min-height: 100vh;
-  
-    /* allow scrolling */
     overflow-y: auto;
-  
-    /* keep content centered horizontally, but start at top */
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
   
     padding: 24px 12px;
   }
+
+  main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .view {
+    width: 100%;
+  }
   
   .container {
-    text-align: center;
-    max-width: 520px;
+    width: min(760px, 100%);
+    margin: 0 auto;
   }
   
   .controls {
+    margin: 14px auto 0;
+    width: min(760px, 100%);
+  }
+
+  .config-row,
+  .action-row,
+  .secondary-row {
     display: flex;
     gap: 10px;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    margin-bottom: 10px;
+    margin: 10px 0;
+  }
+
+  /* Make action buttons feel primary and consistent */
+  .action-row button {
+    min-width: 220px;
+  }
+
+  /* Reset should never float weirdly */
+  .secondary-row button {
+    min-width: 140px;
+    opacity: 0.9;
+  }
+
+  /* On smaller widths: stack primary actions */
+  @media (max-width: 720px) {
+    .action-row {
+      flex-direction: column;
+    }
+    .action-row button {
+      width: 100%;
+      max-width: 360px;
+    }
+    .config-row {
+      justify-content: center;
+    }
   }
   
   input[type="number"] {
@@ -125,24 +160,27 @@ body {
     margin-top: 6px;
   }
 
+  /* Topbar stays above overlay */
   .topbar {
     position: sticky;
     top: 0;
-    display: flex;
+    left: 0;
+    width: 100%;
+    height: 48px;
+
+    display: grid;
+    grid-template-columns: 48px 1fr 48px;
     align-items: center;
-    gap: 12px;
-    padding: 10px 14px;
+
+    padding: 0 8px;
     background: #111;
     border-bottom: 1px solid #222;
-    z-index: 10;
-  }
-
-  .topbar .title {
-    font-weight: 600;
-    letter-spacing: 0.5px;
+    z-index: 30;
   }
 
   #menuBtn {
+    width: 48px;
+    height: 48px;
     font-size: 20px;
     background: none;
     border: none;
@@ -150,33 +188,48 @@ body {
     cursor: pointer;
   }
 
+  .topbar .title {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    opacity: 0.95;
+  }
+
+  body.menu-open .topbar {
+    opacity: 0.65;
+  }
+
+  /* Darken ONLY the content area below topbar */
+  .menu-overlay {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 48px;                 /* start below topbar */
+    height: calc(100vh - 48px);
+    background: rgba(0,0,0,0.35);
+    z-index: 20;
+  }
+  .menu-overlay.hidden {
+    display: none;
+  }
+
+  /* Drawer sits above overlay, below topbar area */
   .menu {
     position: fixed;
-    top: 48px;                 /* below the topbar */
+    top: 48px;
     left: 0;
     width: 240px;
     height: calc(100vh - 48px);
     background: #111;
     border-right: 1px solid #222;
     padding: 10px;
-    z-index: 20;
+    z-index: 25;
 
-    /* drawer behavior */
     transform: translateX(-105%);
     transition: transform 180ms ease;
   }
   .menu.open {
     transform: translateX(0);
-  }
-
-  .menu-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.35);
-    z-index: 19;
-  }
-  .menu-overlay.hidden {
-    display: none;
   }
 
   .menu-item {
@@ -217,27 +270,24 @@ body {
   }
 
   .view p {
-    line-height: 1.6;
-    margin: 10px 0;
-    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .view ul {
-    margin: 10px 0 14px 20px;
     max-width: 720px;
+    margin: 10px auto 14px;
+    padding-left: 22px;
+    text-align: left;
   }
 
   .view li {
-    margin: 4px 0;
+    text-align: left;
   }
 
   .view blockquote {
-    margin: 16px 0;
-    padding: 10px 14px;
-    border-left: 3px solid #444;
-    background: #161616;
-    font-style: italic;
-    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .view hr {

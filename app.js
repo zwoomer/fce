@@ -213,7 +213,7 @@ clearBaselineBtn.addEventListener("click", () => {
     // Go/No-Go display
     switch (entry.type) {
       case "go":
-        li.textContent = `Trial ${n}: GO hit — ${entry.rt} ms`;
+        li.textContent = `Trial ${n}: GO response — ${entry.rt} ms`;
         break;
       case "miss":
         li.textContent = `Trial ${n}: GO miss (no click)`;
@@ -222,7 +222,7 @@ clearBaselineBtn.addEventListener("click", () => {
         li.textContent = `Trial ${n}: NO-GO correct (no click)`;
         break;
       case "false_alarm":
-        li.textContent = `Trial ${n}: NO-GO false alarm — ${entry.rt} ms`;
+        li.textContent = `Trial ${n}: NO-GO inhibitory error — ${entry.rt} ms`;
         break;
       case "false_start":
         li.textContent = `Trial ${n}: false start (clicked during wait)`;
@@ -277,7 +277,7 @@ clearBaselineBtn.addEventListener("click", () => {
       const falseStarts = results.filter(e => e && e.type === "false_start").length;
   
       if (goHits.length === 0) {
-        summary.textContent = "Session invalid (no GO hits recorded).";
+        summary.textContent = "Session invalid (no GO responses recorded).";
         mode = null;
         return;
       }
@@ -294,8 +294,20 @@ clearBaselineBtn.addEventListener("click", () => {
   
     // ---- Baseline mode: store payload ----
     if (mode === "baseline") {
+      // Go/No-Go baseline validity rule: require ≥ 10 valid GO responses
+      if (testType.value === "gonogo") {
+        const goHits = results.filter(e => e && e.type === "go").length;
+
+        if (goHits < 10) {
+          summary.textContent =
+            "Baseline session not saved: too few valid GO responses. Increase trials for stable results.";
+          mode = null;
+          return;
+        }
+      }
+
       const sessions = loadBaseline();
-  
+
       sessions.push({
         ...sessionPayload,
         timestamp: new Date().toISOString()
@@ -316,7 +328,7 @@ clearBaselineBtn.addEventListener("click", () => {
         summary.textContent =
           `Baseline session saved. GO mean: ${sessionPayload.mean.toFixed(0)} ms | ` +
           `SD: ${sessionPayload.sd.toFixed(0)} ms` +
-          ` | Misses: ${sessionPayload.misses} | False alarms: ${sessionPayload.falseAlarms}` +
+          ` | Misses: ${sessionPayload.misses} | Inhibitory errors: ${sessionPayload.falseAlarms}` +
           (sessionPayload.falseStarts ? ` | False starts: ${sessionPayload.falseStarts}` : "") +
           qualityNote;
       }
@@ -370,7 +382,7 @@ clearBaselineBtn.addEventListener("click", () => {
           `Baseline SD: ${baselineSD.toFixed(0)} ms | ` +
           `Status: ${status} | ` +
           `Misses: ${sessionPayload.misses} (baseline avg ${baselineMissAvg.toFixed(1)}) | ` +
-          `False alarms: ${sessionPayload.falseAlarms} (baseline avg ${baselineFAAvg.toFixed(1)})` +
+          `Inhibitory errors: ${sessionPayload.falseAlarms} (baseline avg ${baselineFAAvg.toFixed(1)})` +
           (sessionPayload.falseStarts ? ` | False starts: ${sessionPayload.falseStarts}` : "") +
           qualityNote;
       }

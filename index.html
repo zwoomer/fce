@@ -10,7 +10,7 @@
     <h1>Reaction Time Test</h1>
     <p id="instruction">
       Click “Add Baseline Session” to build your baseline (3–5 sessions).
-      Click “Run Check” to compare today vs baseline.
+      Click "Run Functional Check" to compare today vs baseline.
       Early clicks count as false starts.
     </p>
     <!-- Controls -->
@@ -25,7 +25,7 @@
       <input id="trialCount" type="number" min="3" max="40" value="10" />
 
       <button id="startBaselineBtn">Add Baseline Session</button>
-      <button id="startCheckBtn">Run Check</button>
+      <button id="startCheckBtn">Run Functional Check</button>
       <button id="resetBtn" class="secondary">Reset</button>
     </div>
 
@@ -45,6 +45,9 @@
       <p id="baselineInfo">No baseline sessions recorded.</p>
       <p id="baselineProgress"></p>
       <p id="baselineGuidance"></p>
+      <p class="note">
+        Baseline applies to the current device and input method.
+      </p>
 
       <div class="baseline-actions">
         <button id="clearBaselineBtn" class="danger">Clear baseline</button>

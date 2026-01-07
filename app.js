@@ -113,6 +113,7 @@ testArea.addEventListener("click", () => {
 
 testType.addEventListener("change", () => {
     hardReset();
+    updateBaselineInfo();
   });
 
 clearBaselineBtn.addEventListener("click", () => {
@@ -465,11 +466,11 @@ function loadBaseline() {
   
     if (sessions.length === 0) {
       baselineInfo.textContent = "No baseline sessions recorded.";
-      clearBaselineBtn.disabled = true;
+      clearBaselineBtn.style.display = "none";
       return;
     }
   
-    clearBaselineBtn.disabled = false;
+    clearBaselineBtn.style.display = "";
   
     const means = sessions.map(s => s.mean);
     const sds = sessions.map(s => s.sd);

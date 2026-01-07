@@ -9,6 +9,10 @@
   <header class="topbar">
     <button id="menuBtn" aria-label="Menu">☰</button>
     <span class="title">FCE</span>
+    <div class="lang-toggle" role="group" aria-label="Language">
+      <button id="langEnBtn" class="lang-btn" type="button">EN</button>
+      <button id="langNoBtn" class="lang-btn" type="button">NO</button>
+    </div>
   </header>
 
   <nav id="menu" class="menu">
@@ -34,23 +38,23 @@
         <!-- Controls -->
         <div class="controls">
           <div class="config-row">
-            <label for="testType">Test:</label>
+            <label for="testType" data-i18n="ui.test">Test</label>
             <select id="testType">
               <option value="reaction">Reaction Time</option>
               <option value="gonogo">Go / No-Go</option>
             </select>
 
-            <label for="trialCount">Trials:</label>
+            <label for="trialCount" data-i18n="ui.trials">Trials</label>
             <input id="trialCount" type="number" min="3" max="40" value="10" />
           </div>
 
           <div class="action-row">
-            <button id="startBaselineBtn">Add Baseline Session</button>
-            <button id="startCheckBtn">Run Functional Check</button>
+            <button id="startBaselineBtn" data-i18n="ui.addBaseline">Add Baseline Session</button>
+            <button id="startCheckBtn" data-i18n="ui.runCheck">Run Functional Check</button>
           </div>
 
           <div class="secondary-row">
-            <button id="resetBtn">Reset</button>
+            <button id="resetBtn" data-i18n="ui.reset">Reset</button>
           </div>
         </div>
 
@@ -75,7 +79,7 @@
           </p>
 
           <div class="baseline-actions">
-            <button id="clearBaselineBtn" class="danger">Clear baseline</button>
+            <button id="clearBaselineBtn" class="danger" data-i18n="ui.clearBaseline">Clear baseline</button>
           </div>
         
           <ul id="baselineList"></ul>

@@ -1,4 +1,8 @@
-body {
+html, body {
+    overflow-x: hidden;
+  }
+
+  body {
     font-family: system-ui, sans-serif;
     background: #111;
     color: #eee;
@@ -171,18 +175,21 @@ body {
   .topbar {
     position: sticky;
     top: 0;
-    left: 0;
-    width: 100%;
-    height: 48px;
+    z-index: 30;
 
     display: grid;
-    grid-template-columns: 48px 1fr 48px;
+    grid-template-columns: 48px 1fr auto;
     align-items: center;
+    gap: 12px;
 
-    padding: 0 8px;
-    background: #111;
-    border-bottom: 1px solid #222;
-    z-index: 30;
+    padding: 14px 18px;
+    width: 100%;
+    box-sizing: border-box;
+
+    background: rgba(10,10,10,0.75);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    overflow-x: hidden;
   }
 
   #menuBtn {
@@ -200,6 +207,29 @@ body {
     font-weight: 600;
     letter-spacing: 0.6px;
     opacity: 0.95;
+  }
+
+  /* Language toggle buttons */
+  .lang-toggle {
+    margin-left: auto;
+    display: flex;
+    gap: 6px;
+  }
+
+  .lang-btn {
+    padding: 6px 10px;
+    border: 1px solid #333;
+    background: transparent;
+    color: inherit;
+    border-radius: 10px;
+    cursor: pointer;
+    opacity: 0.9;
+  }
+
+  .lang-btn.active {
+    border-color: #666;
+    background: #1a1a1a;
+    opacity: 1;
   }
 
   body.menu-open .topbar {

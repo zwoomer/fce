@@ -1,4 +1,74 @@
 document.addEventListener("DOMContentLoaded", () => {
+// Language system
+const LANG_KEY = "fce_lang_v1";
+let currentLang = localStorage.getItem(LANG_KEY) || "en";
+
+const I18N = {
+  en: {
+    ui: {
+      test: "Test",
+      trials: "Trials",
+      addBaseline: "Add Baseline Session",
+      runCheck: "Run Functional Check",
+      reset: "Reset",
+      clearBaseline: "Clear baseline",
+    },
+    status: {
+      within: "Within normal range",
+      slightly: "Slightly below normal",
+      significantly: "Significantly below normal",
+      noBaseline: "No baseline yet — add baseline sessions first.",
+    },
+  },
+  no: {
+    ui: {
+      test: "Test",
+      trials: "Forsøk",
+      addBaseline: "Legg til baseline-økt",
+      runCheck: "Kjør funksjonssjekk",
+      reset: "Nullstill",
+      clearBaseline: "Slett baseline",
+    },
+    status: {
+      within: "Innenfor normalområdet",
+      slightly: "Litt under normalområdet",
+      significantly: "Betydelig under normalområdet",
+      noBaseline: "Ingen baseline ennå — legg til baseline-økter først.",
+    },
+  },
+};
+
+function t(path) {
+  const [group, key] = path.split(".");
+  return (I18N[currentLang] && I18N[currentLang][group] && I18N[currentLang][group][key]) || path;
+}
+
+function applyLangUI() {
+  // 1) Toggle docs language blocks
+  document.querySelectorAll(".lang-en").forEach(el => el.classList.toggle("hidden", currentLang !== "en"));
+  document.querySelectorAll(".lang-no").forEach(el => el.classList.toggle("hidden", currentLang !== "no"));
+
+  // 2) Update any elements that opt-in via data-i18n (C-lite)
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    el.textContent = t(key);
+  });
+
+  // 3) Toggle active state on buttons
+  const enBtn = document.getElementById("langEnBtn");
+  const noBtn = document.getElementById("langNoBtn");
+  if (enBtn && noBtn) {
+    enBtn.classList.toggle("active", currentLang === "en");
+    noBtn.classList.toggle("active", currentLang === "no");
+  }
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem(LANG_KEY, currentLang);
+  applyLangUI();
+}
+
 const startBaselineBtn = document.getElementById("startBaselineBtn");
 const startCheckBtn = document.getElementById("startCheckBtn");
 const baselineInfo = document.getElementById("baselineInfo");
@@ -602,4 +672,11 @@ updateBaselineInfo();
 
 // Hide Reset button initially (only show during active session)
 resetBtn.style.display = "none";
+
+// Language toggle
+document.getElementById("langEnBtn")?.addEventListener("click", () => setLang("en"));
+document.getElementById("langNoBtn")?.addEventListener("click", () => setLang("no"));
+
+// Apply language on startup
+applyLangUI();
 });

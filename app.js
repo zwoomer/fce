@@ -16,6 +16,53 @@ const progress = document.getElementById("progress");
 const trialList = document.getElementById("trialList");
 const summary = document.getElementById("summary");
 
+const menuBtn = document.getElementById("menuBtn");
+const menu = document.getElementById("menu");
+const menuOverlay = document.getElementById("menuOverlay");
+const menuItems = document.querySelectorAll(".menu-item");
+const views = document.querySelectorAll(".view");
+
+function openMenu() {
+  menu.classList.add("open");
+  menuOverlay.classList.remove("hidden");
+}
+
+function closeMenu() {
+  menu.classList.remove("open");
+  menuOverlay.classList.add("hidden");
+}
+
+menuBtn.addEventListener("click", () => {
+  if (menu.classList.contains("open")) closeMenu();
+  else openMenu();
+});
+
+menuOverlay.addEventListener("click", closeMenu);
+
+menuItems.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const target = btn.dataset.view;
+
+    views.forEach(v => {
+      v.classList.add("hidden");
+      v.classList.remove("active");
+    });
+
+    const activeView = document.getElementById(`view-${target}`);
+    if (activeView) {
+      activeView.classList.remove("hidden");
+      activeView.classList.add("active");
+    }
+
+    closeMenu();
+    window.scrollTo(0, 0);
+  });
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeMenu();
+});
+
 let mode = null; // "baseline" | "check"
 
 let startTime = null;

@@ -6,56 +6,251 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>Reaction Time Test</h1>
-    <p id="instruction">
-      Click “Add Baseline Session” to build your baseline (3–5 sessions).
-      Click "Run Functional Check" to compare today vs baseline.
-      Early clicks count as false starts.
-    </p>
-    <!-- Controls -->
-    <div class="controls">
-        <label for="testType">Test:</label>
-        <select id="testType">
-          <option value="reaction">Reaction Time</option>
-          <option value="gonogo">Go / No-Go</option>
-        </select>
+  <header class="topbar">
+    <button id="menuBtn" aria-label="Menu">☰</button>
+    <span class="title">FCE</span>
+  </header>
 
-      <label for="trialCount">Trials:</label>
-      <input id="trialCount" type="number" min="3" max="40" value="10" />
+  <nav id="menu" class="menu">
+    <button class="menu-item" data-view="home">Home</button>
+    <button class="menu-item" data-view="about">About</button>
+    <button class="menu-item" data-view="howto">How to Use</button>
+    <button class="menu-item" data-view="faq">FAQ</button>
+  </nav>
 
-      <button id="startBaselineBtn">Add Baseline Session</button>
-      <button id="startCheckBtn">Run Functional Check</button>
-      <button id="resetBtn" class="secondary">Reset</button>
-    </div>
+  <div id="menuOverlay" class="menu-overlay hidden"></div>
 
-    <div id="testArea" class="test-area hidden"></div>
+  <main>
+    <section id="view-home" class="view active">
+      <div class="container">
+        <h1>Reaction Time Test</h1>
+        <p id="instruction">
+          Click "Add Baseline Session" to build your baseline (3–5 sessions).
+          Click "Run Functional Check" to compare today vs baseline.
+          Early clicks count as false starts.
+        </p>
+        <!-- Controls -->
+        <div class="controls">
+            <label for="testType">Test:</label>
+            <select id="testType">
+              <option value="reaction">Reaction Time</option>
+              <option value="gonogo">Go / No-Go</option>
+            </select>
 
-    <!-- Session panel -->
-    <div class="panel">
-      <h2>Session</h2>
-      <p id="progress"></p>
-      <ul id="trialList"></ul>
-      <p id="summary"></p>
-    </div>
+          <label for="trialCount">Trials:</label>
+          <input id="trialCount" type="number" min="3" max="40" value="10" />
 
-    <!-- Baseline panel -->
-    <div class="panel">
-      <h2>Baseline</h2>
-      <p id="baselineInfo">No baseline sessions recorded.</p>
-      <p id="baselineProgress"></p>
-      <p id="baselineGuidance"></p>
-      <p class="note">
-        Baseline applies to the current device and input method.
-      </p>
+          <button id="startBaselineBtn">Add Baseline Session</button>
+          <button id="startCheckBtn">Run Functional Check</button>
+          <button id="resetBtn" class="secondary">Reset</button>
+        </div>
 
-      <div class="baseline-actions">
-        <button id="clearBaselineBtn" class="danger">Clear baseline</button>
+        <div id="testArea" class="test-area hidden"></div>
+
+        <!-- Session panel -->
+        <div class="panel">
+          <h2>Session</h2>
+          <p id="progress"></p>
+          <ul id="trialList"></ul>
+          <p id="summary"></p>
+        </div>
+
+        <!-- Baseline panel -->
+        <div class="panel">
+          <h2>Baseline</h2>
+          <p id="baselineInfo">No baseline sessions recorded.</p>
+          <p id="baselineProgress"></p>
+          <p id="baselineGuidance"></p>
+          <p class="note">
+            Baseline applies to the current device and input method.
+          </p>
+
+          <div class="baseline-actions">
+            <button id="clearBaselineBtn" class="danger">Clear baseline</button>
+          </div>
+        
+          <ul id="baselineList"></ul>
+        </div>
       </div>
-    
-      <ul id="baselineList"></ul>
-    </div>
-  </div>
+    </section>
+
+    <section id="view-about" class="view hidden">
+      <div class="container">
+        <h2>About FCE</h2>
+
+        <p>
+          <strong>FCE (Functional Cognition &amp; Execution)</strong> is a web-based tool that measures how your current cognitive
+          performance compares to <em>your own normal capacity</em> — not to population averages.
+        </p>
+        
+        <p>
+          Instead of asking <em>“How do you compare to others?”</em>, FCE asks:
+        </p>
+        
+        <blockquote>
+          <p><strong>“How are you functioning today compared to yourself?”</strong></p>
+        </blockquote>
+        
+        <p>
+          This makes the results fairer, more meaningful, and more useful in real-world situations.
+        </p>
+        
+        <hr />
+        
+        <h3>What FCE measures</h3>
+        
+        <p>
+          FCE assesses multiple cognitive domains through short, focused tasks, such as:
+        </p>
+        
+        <ul>
+          <li><strong>Reaction speed</strong> (how quickly you respond)</li>
+          <li><strong>Inhibitory control</strong> (your ability to act or not act appropriately)</li>
+          <li><strong>Precision and motor control</strong> (accuracy of movement)</li>
+        </ul>
+        
+        <p>
+          Each domain is measured independently, because <em>speed, control, and precision are not the same thing</em>.
+        </p>
+        
+        <hr />
+        
+        <h3>Personal baselines — not population averages</h3>
+        
+        <p>
+          FCE works by building a <strong>personal baseline</strong> from several sessions performed when you are rested and
+          functioning normally.
+        </p>
+        
+        <p>
+          All future checks are compared to <em>your own baseline</em>, not to age groups, norms, or other people.
+        </p>
+        
+        <p><strong>This matters because:</strong></p>
+        <ul>
+          <li>people differ naturally</li>
+          <li>devices differ (desktop vs mobile)</li>
+          <li>input methods differ (mouse vs touch)</li>
+          <li>context matters</li>
+        </ul>
+        
+        <p>
+          FCE is designed to respect those differences rather than ignore them.
+        </p>
+        
+        <hr />
+        
+        <h3>Context-aware by design</h3>
+        
+        <p>
+          Performance can vary significantly depending on:
+        </p>
+        
+        <ul>
+          <li>device</li>
+          <li>input method</li>
+          <li>posture</li>
+          <li>fatigue</li>
+          <li>stress</li>
+        </ul>
+        
+        <p>
+          For this reason, FCE results are <strong>context-sensitive</strong>.
+          Baselines apply to the <strong>same device and input method</strong> used to build them.
+        </p>
+        
+        <p>
+          This avoids false conclusions caused by environmental differences rather than true functional change.
+        </p>
+        
+        <hr />
+        
+        <h3>What FCE is not</h3>
+        
+        <p><strong>FCE is not:</strong></p>
+        <ul>
+          <li>a medical diagnosis</li>
+          <li>a clinical assessment</li>
+          <li>a legal judgment</li>
+          <li>a comparison against other people</li>
+          <li>a test of intelligence or worth</li>
+        </ul>
+        
+        <p>
+          FCE measures <strong>functional performance</strong> only, under standardized but simple conditions.
+        </p>
+        
+        <hr />
+        
+        <h3>Privacy and data</h3>
+        
+        <p>
+          All data is stored <strong>locally on your device</strong> using your browser’s storage.
+        </p>
+        
+        <ul>
+          <li>No accounts</li>
+          <li>No tracking</li>
+          <li>No data is sent to a server</li>
+          <li>Clearing your browser data clears FCE data</li>
+        </ul>
+        
+        <p>
+          You remain in full control of your information.
+        </p>
+        
+        <hr />
+        
+        <h3>How to interpret results</h3>
+        
+        <p>
+          FCE results are intended as <strong>signals</strong>, not labels.
+        </p>
+        
+        <ul>
+          <li><strong>“Within normal range”</strong> means your performance aligns with your personal baseline.</li>
+          <li><strong>“Below normal range”</strong> means performance differs from your usual capacity and may warrant rest,
+              caution, or context-aware decisions.</li>
+        </ul>
+        
+        <p>
+          Results should always be interpreted alongside real-world factors such as sleep, workload, stress, and environment.
+        </p>
+        
+        <hr />
+        
+        <h3>Why FCE exists</h3>
+        
+        <p>
+          FCE was created to explore a simple idea:
+        </p>
+        
+        <blockquote>
+          <p><strong>Functional performance matters more than assumptions.</strong></p>
+        </blockquote>
+        
+        <p>
+          By focusing on function rather than substances, categories, or population norms, FCE aims to support
+          <strong>fairer, clearer, and more humane</strong> decision-making.
+        </p>
+        
+      </div>
+    </section>
+
+    <section id="view-howto" class="view hidden">
+      <div class="container">
+        <h2>How to Use</h2>
+        <!-- text later -->
+      </div>
+    </section>
+
+    <section id="view-faq" class="view hidden">
+      <div class="container">
+        <h2>FAQ</h2>
+        <!-- text later -->
+      </div>
+    </section>
+  </main>
 
   <script src="app.js"></script>
 </body>

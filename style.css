@@ -173,23 +173,9 @@ html, body {
 
   /* Topbar stays above overlay */
   .topbar {
-    position: sticky;
+    position: fixed;
     top: 0;
-    z-index: 30;
-
-    display: grid;
-    grid-template-columns: 48px 1fr auto;
-    align-items: center;
-    gap: 12px;
-
-    padding: 14px 18px;
-    width: 100%;
-    box-sizing: border-box;
-
-    background: rgba(10,10,10,0.75);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    overflow-x: hidden;
+    z-index: 1000;
   }
 
   #menuBtn {

@@ -4,6 +4,8 @@ const startCheckBtn = document.getElementById("startCheckBtn");
 const baselineInfo = document.getElementById("baselineInfo");
 const clearBaselineBtn = document.getElementById("clearBaselineBtn");
 const baselineList = document.getElementById("baselineList");
+const baselineProgress = document.getElementById("baselineProgress");
+const baselineGuidance = document.getElementById("baselineGuidance");
 const testType = document.getElementById("testType");
 
 const resetBtn = document.getElementById("resetBtn");
@@ -26,6 +28,8 @@ let inSession = false;
 let totalTrials = 5;
 let trialIndex = 0;
 let results = []; // stores reaction times (ms); null for false start
+let trialToken = 0;
+let windowTimeoutId = null;
 
 startBaselineBtn.addEventListener("click", () => {
     if (inSession) return;
@@ -46,7 +50,8 @@ startBaselineBtn.addEventListener("click", () => {
   }
 
   function beginSession() {
-    totalTrials = clampInt(parseInt(trialCountInput.value, 10), 3, 20);
+    const maxTrials = testType.value === "gonogo" ? 60 : 40;
+    totalTrials = clampInt(parseInt(trialCountInput.value, 10), 3, maxTrials);
     trialCountInput.value = totalTrials;
   
     inSession = true;
@@ -75,18 +80,23 @@ testArea.addEventListener("click", () => {
     if (!startTime) {
       clearTimeout(timeoutId);
       recordResult({ type: "false_start" });
-      nextTrial();
+      setTimeout(nextTrial, 250);
       return;
     }
   
     // Mark responded so auto-window doesn't also record
     responded = true;
   
+    if (windowTimeoutId) {
+      clearTimeout(windowTimeoutId);
+      windowTimeoutId = null;
+    }
+  
     const rt = Math.round(performance.now() - startTime);
   
     if (testType.value === "reaction") {
       recordResult({ type: "rt", rt });
-      nextTrial();
+      setTimeout(nextTrial, 250);
       return;
     }
   
@@ -98,12 +108,11 @@ testArea.addEventListener("click", () => {
       recordResult({ type: "false_alarm", rt });
     }
   
-    nextTrial();
+    setTimeout(nextTrial, 250);
   });  
 
 testType.addEventListener("change", () => {
     hardReset();
-    updateBaselineInfo();
   });
 
 clearBaselineBtn.addEventListener("click", () => {
@@ -121,6 +130,15 @@ clearBaselineBtn.addEventListener("click", () => {
     startTime = null;
     currentStim = null;
     responded = false;
+  
+    trialToken++;
+    const myToken = trialToken;
+  
+    // cancel any previous window timer
+    if (windowTimeoutId) {
+      clearTimeout(windowTimeoutId);
+      windowTimeoutId = null;
+    }
   
     trialIndex++;
   
@@ -156,9 +174,10 @@ clearBaselineBtn.addEventListener("click", () => {
       startTime = performance.now();
   
       // Auto-finish trial after window (miss detection)
-      const windowMs = 900;
-      setTimeout(() => {
-        if (!inSession) return;
+      const windowMs = 1400;
+      windowTimeoutId = setTimeout(() => {
+        // ignore if a new trial has started
+        if (!inSession || myToken !== trialToken) return;
         if (responded) return;
   
         if (currentStim === "go") {
@@ -168,7 +187,9 @@ clearBaselineBtn.addEventListener("click", () => {
           // Correct inhibition (no click)
           recordResult({ type: "correct_reject" });
         }
-        nextTrial();
+  
+        windowTimeoutId = null;
+        setTimeout(nextTrial, 250);
       }, windowMs);
     }, delay);
   }  
@@ -283,17 +304,21 @@ clearBaselineBtn.addEventListener("click", () => {
       saveBaseline(sessions);
       updateBaselineInfo();
   
+      const qualityNote = checkSessionQuality(sessionPayload, totalTrials, isReaction);
+      
       if (isReaction) {
         summary.textContent =
           `Baseline session saved. Mean: ${sessionPayload.mean.toFixed(0)} ms | ` +
           `SD: ${sessionPayload.sd.toFixed(0)} ms` +
-          (sessionPayload.falseStarts ? ` | False starts: ${sessionPayload.falseStarts}` : "");
+          (sessionPayload.falseStarts ? ` | False starts: ${sessionPayload.falseStarts}` : "") +
+          qualityNote;
       } else {
         summary.textContent =
           `Baseline session saved. GO mean: ${sessionPayload.mean.toFixed(0)} ms | ` +
           `SD: ${sessionPayload.sd.toFixed(0)} ms` +
           ` | Misses: ${sessionPayload.misses} | False alarms: ${sessionPayload.falseAlarms}` +
-          (sessionPayload.falseStarts ? ` | False starts: ${sessionPayload.falseStarts}` : "");
+          (sessionPayload.falseStarts ? ` | False starts: ${sessionPayload.falseStarts}` : "") +
+          qualityNote;
       }
   
       mode = null;
@@ -323,19 +348,22 @@ clearBaselineBtn.addEventListener("click", () => {
         status = "Significantly below normal";
       }
   
+      const qualityNote = checkSessionQuality(sessionPayload, totalTrials, isReaction);
+      
       if (isReaction) {
         summary.textContent =
           `Today mean: ${sessionPayload.mean.toFixed(0)} ms | ` +
           `Baseline mean: ${baselineMean.toFixed(0)} ms | ` +
           `Baseline SD: ${baselineSD.toFixed(0)} ms | ` +
           `Status: ${status}` +
-          (sessionPayload.falseStarts ? ` | False starts: ${sessionPayload.falseStarts}` : "");
+          (sessionPayload.falseStarts ? ` | False starts: ${sessionPayload.falseStarts}` : "") +
+          qualityNote;
       } else {
         // For Go/No-Go, also show error counts clearly.
         // Optional: compare errors vs baseline averages (simple, explainable)
         const baselineMissAvg = mean(sessions.map(s => (typeof s.misses === "number" ? s.misses : 0)));
         const baselineFAAvg = mean(sessions.map(s => (typeof s.falseAlarms === "number" ? s.falseAlarms : 0)));
-  
+
         summary.textContent =
           `Today GO mean: ${sessionPayload.mean.toFixed(0)} ms | ` +
           `Baseline mean: ${baselineMean.toFixed(0)} ms | ` +
@@ -343,7 +371,8 @@ clearBaselineBtn.addEventListener("click", () => {
           `Status: ${status} | ` +
           `Misses: ${sessionPayload.misses} (baseline avg ${baselineMissAvg.toFixed(1)}) | ` +
           `False alarms: ${sessionPayload.falseAlarms} (baseline avg ${baselineFAAvg.toFixed(1)})` +
-          (sessionPayload.falseStarts ? ` | False starts: ${sessionPayload.falseStarts}` : "");
+          (sessionPayload.falseStarts ? ` | False starts: ${sessionPayload.falseStarts}` : "") +
+          qualityNote;
       }
   
       mode = null;
@@ -390,6 +419,8 @@ function hardReset() {
   trialCountInput.disabled = false;
   startBaselineBtn.disabled = false;
   startCheckBtn.disabled = false;
+
+  updateBaselineInfo();
 }
 
 function loadBaseline() {
@@ -407,6 +438,19 @@ function loadBaseline() {
     // Clear list UI
     baselineList.innerHTML = "";
   
+    const minSessions = minBaselineSessions();
+    const recTrials = recommendedTrialsPerSession();
+  
+    // Guidance text (always shown)
+    baselineGuidance.textContent =
+      testType.value === "gonogo"
+        ? `Recommended: ≥${minSessions} baseline sessions, ≥${recTrials} trials per session (Go/No-Go needs more trials for stable results).`
+        : `Recommended: ≥${minSessions} baseline sessions, ≥${recTrials} trials per session.`;
+  
+    // Progress + button gating
+    baselineProgress.textContent = `Baseline progress: ${sessions.length}/${minSessions} sessions (minimum).`;
+    startCheckBtn.disabled = sessions.length < minSessions;
+  
     if (sessions.length === 0) {
       baselineInfo.textContent = "No baseline sessions recorded.";
       clearBaselineBtn.disabled = true;
@@ -423,8 +467,8 @@ function loadBaseline() {
   
     baselineInfo.textContent =
       `${sessions.length} sessions | ` +
-      `Baseline mean: ${meanAvg.toFixed(0)} ms | ` +
-      `Baseline SD: ${sdAvg.toFixed(0)} ms`;
+      `${testType.value === "gonogo" ? "GO " : ""}Baseline mean: ${meanAvg.toFixed(0)} ms | ` +
+      `${testType.value === "gonogo" ? "GO " : ""}Baseline SD: ${sdAvg.toFixed(0)} ms`;
   
     // Render newest first
     const newestFirst = [...sessions].reverse();
@@ -447,6 +491,32 @@ function loadBaseline() {
     const min = String(d.getMinutes()).padStart(2, "0");
     return `${yyyy}-${mm}-${dd} ${hh}:${min}`;
   }  
+
+function minBaselineSessions() {
+  return 3;
+}
+
+function recommendedTrialsPerSession() {
+  return testType.value === "gonogo" ? 20 : 5;
+}
+
+function checkSessionQuality(sessionPayload, totalTrials, isReaction) {
+  const falseStartRate = (sessionPayload.falseStarts || 0) / totalTrials;
+  const validHitRate = sessionPayload.trials / totalTrials;
+  
+  const issues = [];
+  if (falseStartRate > 0.2) {
+    issues.push("many false starts");
+  }
+  if (validHitRate < 0.5) {
+    issues.push("few valid hits");
+  }
+  
+  if (issues.length > 0) {
+    return ` Note: This session had ${issues.join(" and ")} — consider retaking for better baseline quality.`;
+  }
+  return "";
+}
 
 function clampInt(n, min, max) {
   if (Number.isNaN(n)) return min;

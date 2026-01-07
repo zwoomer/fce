@@ -314,4 +314,57 @@ body {
 
   .view em {
     opacity: 0.85;
+  }
+
+  /* About and Norwegian Context page styles */
+  .view .hero {
+    margin-bottom: 32px;
+  }
+
+  .view .lead {
+    font-size: 18px;
+    line-height: 1.6;
+    margin: 16px 0;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .view .card {
+    background: #1a1a1a;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 24px auto;
+    max-width: 720px;
+  }
+
+  .view .card h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+  }
+
+  .view blockquote.quote,
+  .view .quote {
+    margin: 20px auto;
+    padding: 16px 20px;
+    border-left: 3px solid #444;
+    background: #161616;
+    font-style: italic;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .view .muted {
+    opacity: 0.7;
+    font-size: 14px;
+  }
+
+  .view .footer {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid #222;
+    text-align: center;
+    opacity: 0.6;
+    font-size: 14px;
   }  

@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", () => {
 const startBaselineBtn = document.getElementById("startBaselineBtn");
 const startCheckBtn = document.getElementById("startCheckBtn");
 const baselineInfo = document.getElementById("baselineInfo");
+const clearBaselineBtn = document.getElementById("clearBaselineBtn");
+const baselineList = document.getElementById("baselineList");
 
 const BASELINE_KEY = "fce_baseline_reaction_v1";
 
@@ -73,6 +75,17 @@ testArea.addEventListener("click", () => {
   recordResult(rt);
   nextTrial();
 });
+
+clearBaselineBtn.addEventListener("click", () => {
+    const sessions = loadBaseline();
+    if (sessions.length === 0) return;
+  
+    const ok = confirm("Clear all baseline sessions? This cannot be undone.");
+    if (!ok) return;
+  
+    saveBaseline([]);
+    updateBaselineInfo();
+  });
 
 function nextTrial() {
   startTime = null;
@@ -232,10 +245,16 @@ function loadBaseline() {
   function updateBaselineInfo() {
     const sessions = loadBaseline();
   
+    // Clear list UI
+    baselineList.innerHTML = "";
+  
     if (sessions.length === 0) {
       baselineInfo.textContent = "No baseline sessions recorded.";
+      clearBaselineBtn.disabled = true;
       return;
     }
+  
+    clearBaselineBtn.disabled = false;
   
     const means = sessions.map(s => s.mean);
     const sds = sessions.map(s => s.sd);
@@ -247,7 +266,28 @@ function loadBaseline() {
       `${sessions.length} sessions | ` +
       `Baseline mean: ${meanAvg.toFixed(0)} ms | ` +
       `Baseline SD: ${sdAvg.toFixed(0)} ms`;
-}  
+  
+    // Render newest first
+    const newestFirst = [...sessions].reverse();
+  
+    for (const s of newestFirst) {
+      const li = document.createElement("li");
+      li.textContent =
+        `${formatTime(s.timestamp)} — mean ${s.mean.toFixed(0)} ms, SD ${s.sd.toFixed(0)} ms (${s.trials} trials)`;
+      baselineList.appendChild(li);
+    }
+  }
+  
+  function formatTime(iso) {
+    // Example output: "2026-01-07 21:13"
+    const d = new Date(iso);
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, "0");
+    const dd = String(d.getDate()).padStart(2, "0");
+    const hh = String(d.getHours()).padStart(2, "0");
+    const min = String(d.getMinutes()).padStart(2, "0");
+    return `${yyyy}-${mm}-${dd} ${hh}:${min}`;
+  }  
 
 function clampInt(n, min, max) {
   if (Number.isNaN(n)) return min;

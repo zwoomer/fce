@@ -75,4 +75,22 @@ body {
   #summary {
     margin-top: 10px;
     font-weight: 600;
-  }  
+  }
+ 
+  .baseline-actions {
+    margin: 10px 0;
+  }
+  
+  button.danger {
+    border: 1px solid #ff6b6b;
+    background: transparent;
+    color: #ff6b6b;
+  }
+  
+  #baselineList {
+    margin: 10px 0 0;
+    padding-left: 18px;
+    line-height: 1.4;
+    font-size: 14px;
+    opacity: 0.95;
+  }

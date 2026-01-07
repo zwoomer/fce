@@ -2,10 +2,19 @@ body {
     font-family: system-ui, sans-serif;
     background: #111;
     color: #eee;
+  
+    margin: 0;
+    min-height: 100vh;
+  
+    /* allow scrolling */
+    overflow-y: auto;
+  
+    /* keep content centered horizontally, but start at top */
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
+    align-items: flex-start;
+  
+    padding: 24px 12px;
   }
   
   .container {
@@ -60,6 +69,7 @@ body {
     background: #1a1a1a;
     border-radius: 12px;
     padding: 12px 14px;
+    max-width: 520px;
   }
   
   .panel h2 {
@@ -70,6 +80,9 @@ body {
   #trialList {
     margin: 0;
     padding-left: 18px;
+    max-height: 320px;
+    overflow-y: auto;
+    padding-right: 8px;
   }
   
   #summary {
@@ -94,3 +107,14 @@ body {
     font-size: 14px;
     opacity: 0.95;
   }
+
+  select {
+    padding: 8px;
+    font-size: 16px;
+  }
+
+  #baselineProgress, #baselineGuidance {
+    margin: 6px 0;
+    opacity: 0.95;
+    font-size: 14px;
+  }  

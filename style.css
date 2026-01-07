@@ -24,6 +24,12 @@ body {
     width: min(760px, 100%);
     margin: 0 auto;
   }
+
+  .container.instrument {
+    width: min(720px, 100%);
+    margin: 0 auto;
+    text-align: center;
+  }
   
   .controls {
     margin: 14px auto 0;
@@ -83,9 +89,10 @@ body {
   }
   
   .test-area {
-    margin: 14px auto 0;
-    width: 320px;
+    width: 100%;
+    max-width: 520px;
     height: 200px;
+    margin: 14px auto;
     background: red;
     display: flex;
     justify-content: center;
@@ -99,12 +106,12 @@ body {
   }
   
   .panel {
-    margin-top: 14px;
+    width: 100%;
+    margin: 14px auto;
     text-align: left;
     background: #1a1a1a;
     border-radius: 12px;
     padding: 12px 14px;
-    max-width: 520px;
   }
   
   .panel h2 {

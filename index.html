@@ -23,7 +23,7 @@
 
   <main>
     <section id="view-home" class="view active">
-      <div class="container">
+      <div class="container instrument">
         <h1>Reaction Time Test</h1>
         <p id="instruction">
           Click "Add Baseline Session" to build your baseline (3–5 sessions).
@@ -248,16 +248,224 @@
     <section id="view-howto" class="view hidden">
       <div class="container">
         <h2>How to Use</h2>
-        <!-- text later -->
+        <p>
+          FCE is designed to be simple: build a <strong>personal baseline</strong> first, then run quick checks later.
+          Your results are compared to <em>your own normal performance</em> — not other people.
+        </p>
+    
+        <hr />
+    
+        <h3>1) Choose your test</h3>
+        <ul>
+          <li><strong>Reaction Time</strong> — measures response speed and consistency.</li>
+          <li><strong>Go / No-Go</strong> — measures response speed <em>and</em> inhibitory control (don’t click on NO-GO).</li>
+        </ul>
+        <p class="note">
+          Tip: Reaction Time is easiest to start with. Go/No-Go usually needs more trials to stabilize.
+        </p>
+    
+        <hr />
+    
+        <h3>2) Set trials</h3>
+        <ul>
+          <li><strong>Reaction Time:</strong> start with 5–10 trials per session.</li>
+          <li><strong>Go / No-Go:</strong> start with 20–30 trials per session.</li>
+        </ul>
+        <p class="note">
+          More trials = more stable results, but don’t grind yourself into fatigue.
+        </p>
+    
+        <hr />
+    
+        <h3>3) Build your baseline (first time)</h3>
+        <ol>
+          <li>Be rested, sober, and “normal.”</li>
+          <li>Use the same device + input method (mouse vs touch) you plan to use later.</li>
+          <li>Click <strong>Add Baseline Session</strong>.</li>
+          <li>Repeat until you have at least <strong>3 baseline sessions</strong> (recommended 3–5).</li>
+        </ol>
+        <p class="note">
+          Baseline is stored locally in your browser (device-specific). If you switch device, your baseline won’t follow.
+        </p>
+    
+        <hr />
+    
+        <h3>4) Run a functional check (later)</h3>
+        <ol>
+          <li>Choose the same test you have baseline for.</li>
+          <li>Click <strong>Run Functional Check</strong>.</li>
+          <li>Review the status (e.g., “Within normal range”, “Slightly below”, “Significantly below”).</li>
+        </ol>
+    
+        <hr />
+    
+        <h3>Interpreting results</h3>
+        <ul>
+          <li><strong>Within normal range</strong> — performance matches your baseline signature.</li>
+          <li><strong>Slightly below normal</strong> — some deviation (could be stress, fatigue, distraction, etc.).</li>
+          <li><strong>Significantly below normal</strong> — larger deviation; consider rest and retest.</li>
+        </ul>
+    
+        <p class="note">
+          Important: This is a prototype tool for self-checking and research direction — not a medical diagnosis.
+          If you feel unsafe, don’t drive/work just because a test looks “fine.”
+        </p>
+    
+        <hr />
+    
+        <h3>Best practices</h3>
+        <ul>
+          <li>Test in a similar environment each time (lighting, noise, posture).</li>
+          <li>Avoid “warming up” with many runs before recording baseline (it can bias your baseline).</li>
+          <li>If you get a weird session (many misses / false starts), retake and use the cleaner session.</li>
+          <li>Use the baseline list to verify you’re building consistency over time.</li>
+        </ul>
+    
+        <hr />
+    
+        <h3>Reset and baseline management</h3>
+        <ul>
+          <li><strong>Reset</strong> clears the current session UI and stops a running session.</li>
+          <li><strong>Clear baseline</strong> deletes saved baseline sessions for the selected test type.</li>
+        </ul>
       </div>
     </section>
+    
 
     <section id="view-faq" class="view hidden">
       <div class="container">
         <h2>FAQ</h2>
-        <!-- text later -->
+    
+        <h3>What is FCE?</h3>
+        <p>
+          <strong>FCE (Functional Cognition & Execution)</strong> is a web-based tool that measures how you are functioning
+          <em>right now</em> compared to your own normal performance.
+        </p>
+        <p>
+          It focuses on function — reaction speed, control, precision — rather than substances, diagnoses, or population averages.
+        </p>
+    
+        <hr />
+    
+        <h3>Is this a medical test?</h3>
+        <p>
+          No. FCE is <strong>not</strong> a medical or diagnostic tool.
+        </p>
+        <p>
+          It does not diagnose conditions, determine fitness to drive, or replace professional judgment.
+          It is a <em>functional self-check</em> designed for awareness, research, and future policy exploration.
+        </p>
+    
+        <hr />
+    
+        <h3>How is this different from reaction time websites?</h3>
+        <ul>
+          <li>FCE builds a <strong>personal baseline</strong> instead of comparing you to others</li>
+          <li>Results are interpreted relative to <em>your own normal</em></li>
+          <li>Multiple cognitive domains are measured separately</li>
+          <li>Sessions are stored locally and shown transparently</li>
+        </ul>
+        <p>
+          Many sites show a number. FCE explains what that number means <em>for you</em>.
+        </p>
+    
+        <hr />
+    
+        <h3>Why does my reaction time differ between tests?</h3>
+        <p>
+          Different tasks measure different cognitive demands.
+        </p>
+        <ul>
+          <li><strong>Reaction Time</strong> focuses on pure speed</li>
+          <li><strong>Go / No-Go</strong> adds inhibition and decision-making</li>
+        </ul>
+        <p>
+          It is normal for Go / No-Go to be slower or more variable — control and speed are not the same thing.
+        </p>
+    
+        <hr />
+    
+        <h3>Why do results differ between desktop and mobile?</h3>
+        <ul>
+          <li>Touchscreens introduce latency</li>
+          <li>Screen size and posture differ</li>
+          <li>Input method (mouse vs touch) changes precision</li>
+        </ul>
+        <p>
+          This is why FCE baselines are <strong>device-specific</strong>.
+          Always compare checks on the same device and input method.
+        </p>
+    
+        <hr />
+    
+        <h3>Where is my data stored?</h3>
+        <p>
+          All data is stored <strong>locally in your browser</strong> using localStorage.
+        </p>
+        <ul>
+          <li>No accounts</li>
+          <li>No cloud sync</li>
+          <li>No data leaves your device</li>
+        </ul>
+        <p>
+          Clearing browser storage or switching devices will remove your baseline.
+        </p>
+    
+        <hr />
+    
+        <h3>Can I cheat the test?</h3>
+        <p>
+          You can try — but it usually shows.
+        </p>
+        <p>
+          Inconsistent reaction times, excessive false starts, or abnormal variance
+          tend to degrade baseline quality and are flagged in session feedback.
+        </p>
+        <p>
+          FCE is designed to reward <em>honest, calm participation</em>, not gaming the system.
+        </p>
+    
+        <hr />
+    
+        <h3>What does “Within normal range” actually mean?</h3>
+        <p>
+          It means your current performance falls within the expected variation
+          of your personal baseline — usually within one standard deviation.
+        </p>
+        <p>
+          It does <strong>not</strong> mean “safe”, “fit”, or “approved”.
+          Context always matters.
+        </p>
+    
+        <hr />
+    
+        <h3>Why build a baseline at all?</h3>
+        <p>
+          Humans differ naturally. Speed, control, and precision vary by person.
+        </p>
+        <p>
+          Comparing you to yourself is often fairer, more accurate, and more informative
+          than comparing you to population averages.
+        </p>
+    
+        <hr />
+    
+        <h3>What is FCE ultimately for?</h3>
+        <p>
+          FCE explores a different way of thinking about impairment:
+        </p>
+        <ul>
+          <li>Measure function, not substances</li>
+          <li>Respect individual differences</li>
+          <li>Increase awareness of cognitive state</li>
+        </ul>
+        <p>
+          It is both a practical tool and a prototype for future systems.
+        </p>
+    
       </div>
     </section>
+    
   </main>
 
   <script src="app.js"></script>

@@ -114,6 +114,7 @@ startBaselineBtn.addEventListener("click", () => {
     trialCountInput.disabled = true;
     startBaselineBtn.disabled = true;
     startCheckBtn.disabled = true;
+    resetBtn.style.display = "";
   
     nextTrial();
   }
@@ -295,6 +296,7 @@ clearBaselineBtn.addEventListener("click", () => {
     trialCountInput.disabled = false;
     startBaselineBtn.disabled = false;
     startCheckBtn.disabled = false;
+    resetBtn.style.display = "none";
   
     updateProgress(true);
   
@@ -481,6 +483,7 @@ function hardReset() {
   trialCountInput.disabled = false;
   startBaselineBtn.disabled = false;
   startCheckBtn.disabled = false;
+  resetBtn.style.display = "none";
 
   updateBaselineInfo();
 }
@@ -596,4 +599,7 @@ function stddev(arr) {
 }
 
 updateBaselineInfo();
+
+// Hide Reset button initially (only show during active session)
+resetBtn.style.display = "none";
 });

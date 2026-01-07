@@ -9,25 +9,37 @@
   <div class="container">
     <h1>Reaction Time Test</h1>
     <p id="instruction">
-      Click “Start Session”, then tap as fast as you can when it turns green.
-      Early clicks are counted as false starts.
+      Click “Add Baseline Session” to build your baseline (3–5 sessions).
+      Click “Run Check” to compare today vs baseline.
+      Early clicks count as false starts.
     </p>
-
+    <!-- Controls -->
     <div class="controls">
       <label for="trialCount">Trials:</label>
       <input id="trialCount" type="number" min="3" max="20" value="5" />
-      <button id="startBtn">Start Session</button>
+
+      <button id="startBaselineBtn">Add Baseline Session</button>
+      <button id="startCheckBtn">Run Check</button>
       <button id="resetBtn" class="secondary">Reset</button>
     </div>
 
     <div id="testArea" class="test-area hidden"></div>
 
+    <!-- Session panel -->
     <div class="panel">
       <h2>Session</h2>
       <p id="progress"></p>
       <ul id="trialList"></ul>
       <p id="summary"></p>
     </div>
+
+    <!-- Baseline panel -->
+    <div class="panel">
+      <h2>Baseline</h2>
+      <p id="baselineInfo">No baseline sessions recorded.</p>
+    </div>
+
+    <!-- (Optional) If you still have the Session panel in your app.js UI, add it here later -->
   </div>
 
   <script src="app.js"></script>

@@ -1,4 +1,10 @@
-const startBtn = document.getElementById("startBtn");
+document.addEventListener("DOMContentLoaded", () => {
+const startBaselineBtn = document.getElementById("startBaselineBtn");
+const startCheckBtn = document.getElementById("startCheckBtn");
+const baselineInfo = document.getElementById("baselineInfo");
+
+const BASELINE_KEY = "fce_baseline_reaction_v1";
+
 const resetBtn = document.getElementById("resetBtn");
 const testArea = document.getElementById("testArea");
 
@@ -6,6 +12,8 @@ const trialCountInput = document.getElementById("trialCount");
 const progress = document.getElementById("progress");
 const trialList = document.getElementById("trialList");
 const summary = document.getElementById("summary");
+
+let mode = null; // "baseline" | "check"
 
 let startTime = null;
 let timeoutId = null;
@@ -15,25 +23,36 @@ let totalTrials = 5;
 let trialIndex = 0;
 let results = []; // stores reaction times (ms); null for false start
 
-startBtn.addEventListener("click", () => {
-  if (inSession) return;
+startBaselineBtn.addEventListener("click", () => {
+    if (inSession) return;
+    mode = "baseline";
+    beginSession();
+  });
+  
+  startCheckBtn.addEventListener("click", () => {
+    if (inSession) return;
+    mode = "check";
+    beginSession();
+  });
 
-  totalTrials = clampInt(parseInt(trialCountInput.value, 10), 3, 20);
-  trialCountInput.value = totalTrials;
-
-  inSession = true;
-  trialIndex = 0;
-  results = [];
-
-  trialList.innerHTML = "";
-  summary.textContent = "";
-  testArea.classList.remove("hidden");
-
-  startBtn.disabled = true;
-  trialCountInput.disabled = true;
-
-  nextTrial();
-});
+function beginSession() {
+    totalTrials = clampInt(parseInt(trialCountInput.value, 10), 3, 20);
+    trialCountInput.value = totalTrials;
+  
+    inSession = true;
+    trialIndex = 0;
+    results = [];
+  
+    trialList.innerHTML = "";
+    summary.textContent = "";
+    testArea.classList.remove("hidden");
+  
+    trialCountInput.disabled = true;
+    startBaselineBtn.disabled = true;
+    startCheckBtn.disabled = true;
+  
+    nextTrial();
+  }
 
 resetBtn.addEventListener("click", () => {
   hardReset();
@@ -94,35 +113,73 @@ function recordResult(value) {
 
 function endSession() {
   inSession = false;
-  startBtn.disabled = false;
-  trialCountInput.disabled = false;
 
   testArea.classList.add("hidden");
   testArea.textContent = "";
 
+  trialCountInput.disabled = false;
+  startBaselineBtn.disabled = false;
+  startCheckBtn.disabled = false;
+
   updateProgress(true);
-  renderSummary();
-}
 
-function renderSummary() {
-  const valid = results.filter((x) => typeof x === "number");
-
-  const falseStarts = results.length - valid.length;
-
+  const valid = results.filter(x => typeof x === "number");
   if (valid.length === 0) {
-    summary.textContent = `Session finished. All attempts were false starts.`;
+    summary.textContent = "Session invalid (no valid trials).";
     return;
   }
 
-  const avg = mean(valid);
-  const best = Math.min(...valid);
-  const worst = Math.max(...valid);
-  const sd = stddev(valid);
+  const sessionMean = mean(valid);
+  const sessionSD = stddev(valid);
 
-  summary.textContent =
-    `Average: ${avg.toFixed(0)} ms | Best: ${best} ms | Worst: ${worst} ms | ` +
-    `Consistency (SD): ${sd.toFixed(0)} ms` +
-    (falseStarts > 0 ? ` | False starts: ${falseStarts}` : "");
+  if (mode === "baseline") {
+    const sessions = loadBaseline();
+    sessions.push({
+      mean: sessionMean,
+      sd: sessionSD,
+      trials: valid.length,
+      timestamp: new Date().toISOString()
+    });
+    saveBaseline(sessions);
+    updateBaselineInfo();
+
+    summary.textContent =
+      `Baseline session saved. Mean: ${sessionMean.toFixed(0)} ms | ` +
+      `SD: ${sessionSD.toFixed(0)} ms`;
+
+  } else if (mode === "check") {
+    renderCheckResult(sessionMean, sessionSD);
+  }
+
+  mode = null;
+}
+
+function renderCheckResult(todayMean, todaySD) {
+    const sessions = loadBaseline();
+  
+    if (sessions.length < 3) {
+      summary.textContent =
+        "Not enough baseline sessions. Please record at least 3 baseline sessions.";
+      return;
+    }
+  
+    const baselineMean = mean(sessions.map(s => s.mean));
+    const baselineSD = mean(sessions.map(s => s.sd));
+  
+    let status;
+    if (todayMean <= baselineMean + baselineSD) {
+      status = "Within normal range";
+    } else if (todayMean <= baselineMean + 2 * baselineSD) {
+      status = "Slightly below normal";
+    } else {
+      status = "Significantly below normal";
+    }
+  
+    summary.textContent =
+      `Today mean: ${todayMean.toFixed(0)} ms | ` +
+      `Baseline mean: ${baselineMean.toFixed(0)} ms | ` +
+      `Baseline SD: ${baselineSD.toFixed(0)} ms | ` +
+      `Status: ${status}`;
 }
 
 function updateProgress(isDone = false) {
@@ -157,9 +214,40 @@ function hardReset() {
   summary.textContent = "";
   progress.textContent = "";
 
-  startBtn.disabled = false;
+
   trialCountInput.disabled = false;
+  startBaselineBtn.disabled = false;
+  startCheckBtn.disabled = false;
 }
+
+function loadBaseline() {
+    const raw = localStorage.getItem(BASELINE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  }
+  
+  function saveBaseline(sessions) {
+    localStorage.setItem(BASELINE_KEY, JSON.stringify(sessions));
+  }
+  
+  function updateBaselineInfo() {
+    const sessions = loadBaseline();
+  
+    if (sessions.length === 0) {
+      baselineInfo.textContent = "No baseline sessions recorded.";
+      return;
+    }
+  
+    const means = sessions.map(s => s.mean);
+    const sds = sessions.map(s => s.sd);
+  
+    const meanAvg = mean(means);
+    const sdAvg = mean(sds);
+  
+    baselineInfo.textContent =
+      `${sessions.length} sessions | ` +
+      `Baseline mean: ${meanAvg.toFixed(0)} ms | ` +
+      `Baseline SD: ${sdAvg.toFixed(0)} ms`;
+}  
 
 function clampInt(n, min, max) {
   if (Number.isNaN(n)) return min;
@@ -175,3 +263,6 @@ function stddev(arr) {
   const variance = arr.reduce((sum, x) => sum + (x - m) ** 2, 0) / arr.length;
   return Math.sqrt(variance);
 }
+
+updateBaselineInfo();
+});

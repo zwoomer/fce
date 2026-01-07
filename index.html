@@ -15,8 +15,14 @@
     </p>
     <!-- Controls -->
     <div class="controls">
+        <label for="testType">Test:</label>
+        <select id="testType">
+          <option value="reaction">Reaction Time</option>
+          <option value="gonogo">Go / No-Go</option>
+        </select>
+
       <label for="trialCount">Trials:</label>
-      <input id="trialCount" type="number" min="3" max="20" value="5" />
+      <input id="trialCount" type="number" min="3" max="40" value="10" />
 
       <button id="startBaselineBtn">Add Baseline Session</button>
       <button id="startCheckBtn">Run Check</button>
@@ -37,6 +43,8 @@
     <div class="panel">
       <h2>Baseline</h2>
       <p id="baselineInfo">No baseline sessions recorded.</p>
+      <p id="baselineProgress"></p>
+      <p id="baselineGuidance"></p>
 
       <div class="baseline-actions">
         <button id="clearBaselineBtn" class="danger">Clear baseline</button>

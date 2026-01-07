@@ -316,7 +316,7 @@ body {
     opacity: 0.85;
   }
 
-  /* About and Norwegian Context page styles */
+  /* Documentation page styles (applies to all view sections) */
   .view .hero {
     margin-bottom: 32px;
   }
@@ -367,4 +367,16 @@ body {
     text-align: center;
     opacity: 0.6;
     font-size: 14px;
+  }
+
+  /* Ensure note class works within cards */
+  .view .card .note {
+    margin-top: 12px;
+    font-size: 13px;
+    opacity: 0.7;
+  }
+
+  /* Make sure footer appears in all views by default */
+  .view .container > .footer {
+    margin-top: 48px;
   }  

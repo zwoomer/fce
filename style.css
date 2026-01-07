@@ -222,12 +222,17 @@ body {
     height: calc(100vh - 48px);
     background: #111;
     border-right: 1px solid #222;
-    padding: 10px;
+    padding: 18px 10px 10px;
     z-index: 25;
 
     transform: translateX(-105%);
     transition: transform 180ms ease;
   }
+
+  .menu-header {
+    height: 10px;   /* or 12px */
+  }
+
   .menu.open {
     transform: translateX(0);
   }

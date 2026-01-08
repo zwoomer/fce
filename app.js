@@ -19,6 +19,11 @@ const I18N = {
       significantly: "Significantly below normal",
       noBaseline: "No baseline yet — add baseline sessions first.",
     },
+    baseline: {
+      noSessions: "No baseline sessions recorded.",
+      sessions: "sessions",
+      økter: "sessions",
+    },
   },
   no: {
     ui: {
@@ -35,12 +40,162 @@ const I18N = {
       significantly: "Betydelig under normalområdet",
       noBaseline: "Ingen baseline ennå — legg til baseline-økter først.",
     },
+    baseline: {
+      noSessions: "Ingen baseline-økter er registrert.",
+      sessions: "økter",
+      økter: "økter",
+    },
   },
 };
 
 function t(path) {
   const [group, key] = path.split(".");
   return (I18N[currentLang] && I18N[currentLang][group] && I18N[currentLang][group][key]) || path;
+}
+
+// Helper functions for bilingual trial and session strings
+function getTrialProgress(current, total, completed) {
+  if (currentLang === "no") {
+    return `Forsøk ${current}/${total} (fullført: ${completed})`;
+  }
+  return `Trial ${current}/${total} (completed: ${completed})`;
+}
+
+function getSessionComplete(done, total) {
+  if (currentLang === "no") {
+    return `Økt fullført (${done}/${total} forsøk).`;
+  }
+  return `Session complete (${done}/${total} trials).`;
+}
+
+function getTrialText(n, entry, testType) {
+  if (currentLang === "no") {
+    if (testType === "reaction") {
+      if (entry.type === "false_start") {
+        return `Forsøk ${n}: feilstart (for tidlig)`;
+      } else {
+        return `Forsøk ${n}: ${entry.rt} ms`;
+      }
+    }
+    // Go/No-Go
+    switch (entry.type) {
+      case "go":
+        return `Forsøk ${n}: GO-respons — ${entry.rt} ms`;
+      case "miss":
+        return `Forsøk ${n}: GO bom (ingen klikk)`;
+      case "correct_reject":
+        return `Forsøk ${n}: NO-GO korrekt (ingen klikk)`;
+      case "false_alarm":
+        return `Forsøk ${n}: NO-GO inhibisjonsfeil — ${entry.rt} ms`;
+      case "false_start":
+        return `Forsøk ${n}: feilstart (klikket under ventetid)`;
+      default:
+        return `Forsøk ${n}: ukjent`;
+    }
+  } else {
+    // English
+    if (testType === "reaction") {
+      if (entry.type === "false_start") {
+        return `Trial ${n}: false start (too early)`;
+      } else {
+        return `Trial ${n}: ${entry.rt} ms`;
+      }
+    }
+    // Go/No-Go
+    switch (entry.type) {
+      case "go":
+        return `Trial ${n}: GO response — ${entry.rt} ms`;
+      case "miss":
+        return `Trial ${n}: GO miss (no click)`;
+      case "correct_reject":
+        return `Trial ${n}: NO-GO correct (no click)`;
+      case "false_alarm":
+        return `Trial ${n}: NO-GO inhibitory error — ${entry.rt} ms`;
+      case "false_start":
+        return `Trial ${n}: false start (clicked during wait)`;
+      default:
+        return `Trial ${n}: unknown`;
+    }
+  }
+}
+
+// Helper functions for bilingual session summary strings
+function getSessionInvalidNoReaction() {
+  return currentLang === "no" 
+    ? "Økt ugyldig (ingen gyldige reaksjonstidforsøk)."
+    : "Session invalid (no valid reaction time trials).";
+}
+
+function getSessionInvalidNoGo() {
+  return currentLang === "no"
+    ? "Økt ugyldig (ingen GO-responser registrert)."
+    : "Session invalid (no GO responses recorded).";
+}
+
+function getBaselineNotSaved() {
+  return currentLang === "no"
+    ? "Baseline-økt ikke lagret: for få gyldige GO-responser. Øk antall forsøk for stabile resultater."
+    : "Baseline session not saved: too few valid GO responses. Increase trials for stable results.";
+}
+
+function getNotEnoughBaseline() {
+  return currentLang === "no"
+    ? "Ikke nok baseline-økter. Vennligst registrer minst 3 baseline-økter."
+    : "Not enough baseline sessions. Please record at least 3 baseline sessions.";
+}
+
+function getBaselineSavedReaction(mean, sd, falseStarts, qualityNote) {
+  const falseStartsText = falseStarts 
+    ? (currentLang === "no" ? ` | Feilstarter: ${falseStarts}` : ` | False starts: ${falseStarts}`)
+    : "";
+  if (currentLang === "no") {
+    return `Baseline-økt lagret. Gjennomsnitt: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms${falseStartsText}${qualityNote}`;
+  }
+  return `Baseline session saved. Mean: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms${falseStartsText}${qualityNote}`;
+}
+
+function getBaselineSavedGoNoGo(mean, sd, misses, falseAlarms, falseStarts, qualityNote) {
+  const falseStartsText = falseStarts
+    ? (currentLang === "no" ? ` | Feilstarter: ${falseStarts}` : ` | False starts: ${falseStarts}`)
+    : "";
+  if (currentLang === "no") {
+    return `Baseline-økt lagret. GO-gjennomsnitt: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms | Bom: ${misses} | Inhibisjonsfeil: ${falseAlarms}${falseStartsText}${qualityNote}`;
+  }
+  return `Baseline session saved. GO mean: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms | Misses: ${misses} | Inhibitory errors: ${falseAlarms}${falseStartsText}${qualityNote}`;
+}
+
+function getCheckReaction(mean, baselineMean, baselineSD, status, falseStarts, qualityNote) {
+  const falseStartsText = falseStarts
+    ? (currentLang === "no" ? ` | Feilstarter: ${falseStarts}` : ` | False starts: ${falseStarts}`)
+    : "";
+  if (currentLang === "no") {
+    return `Dagens gjennomsnitt: ${mean.toFixed(0)} ms | Baseline-gjennomsnitt: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status}${falseStartsText}${qualityNote}`;
+  }
+  return `Today mean: ${mean.toFixed(0)} ms | Baseline mean: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status}${falseStartsText}${qualityNote}`;
+}
+
+function getCheckGoNoGo(mean, baselineMean, baselineSD, status, misses, baselineMissAvg, falseAlarms, baselineFAAvg, falseStarts, qualityNote) {
+  const falseStartsText = falseStarts
+    ? (currentLang === "no" ? ` | Feilstarter: ${falseStarts}` : ` | False starts: ${falseStarts}`)
+    : "";
+  if (currentLang === "no") {
+    return `Dagens GO-gjennomsnitt: ${mean.toFixed(0)} ms | Baseline-gjennomsnitt: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status} | Bom: ${misses} (baseline snitt ${baselineMissAvg.toFixed(1)}) | Inhibisjonsfeil: ${falseAlarms} (baseline snitt ${baselineFAAvg.toFixed(1)})${falseStartsText}${qualityNote}`;
+  }
+  return `Today GO mean: ${mean.toFixed(0)} ms | Baseline mean: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status} | Misses: ${misses} (baseline avg ${baselineMissAvg.toFixed(1)}) | Inhibitory errors: ${falseAlarms} (baseline avg ${baselineFAAvg.toFixed(1)})${falseStartsText}${qualityNote}`;
+}
+
+function reRenderTrialList() {
+  // Re-render all trials with current language
+  if (results.length === 0) return;
+  
+  trialList.innerHTML = "";
+  results.forEach((entry, idx) => {
+    if (!entry) return;
+    const li = document.createElement("li");
+    const n = idx + 1;
+    li.textContent = getTrialText(n, entry, testType.value);
+    trialList.appendChild(li);
+  });
 }
 
 function applyLangUI() {
@@ -60,6 +215,20 @@ function applyLangUI() {
   if (enBtn && noBtn) {
     enBtn.classList.toggle("active", currentLang === "en");
     noBtn.classList.toggle("active", currentLang === "no");
+  }
+
+  // 4) Re-render trial list and progress if in session or has results
+  if (inSession || results.length > 0) {
+    reRenderTrialList();
+    updateProgress(results.length === totalTrials);
+  }
+  
+  // 5) Update summary if it exists and is not empty
+  if (summary && summary.textContent) {
+    // Summary is dynamically generated, so we need to re-generate it
+    // This happens automatically when endSession is called, but if we're viewing
+    // a completed session, we'd need to re-run endSession logic - for now,
+    // we'll leave summary as-is since it requires full session data to regenerate
   }
 }
 
@@ -320,37 +489,7 @@ clearBaselineBtn.addEventListener("click", () => {
   
     const li = document.createElement("li");
     const n = results.length;
-  
-    if (testType.value === "reaction") {
-      if (entry.type === "false_start") {
-        li.textContent = `Trial ${n}: false start (too early)`;
-      } else {
-        li.textContent = `Trial ${n}: ${entry.rt} ms`;
-      }
-      trialList.appendChild(li);
-      return;
-    }
-  
-    // Go/No-Go display
-    switch (entry.type) {
-      case "go":
-        li.textContent = `Trial ${n}: GO response — ${entry.rt} ms`;
-        break;
-      case "miss":
-        li.textContent = `Trial ${n}: GO miss (no click)`;
-        break;
-      case "correct_reject":
-        li.textContent = `Trial ${n}: NO-GO correct (no click)`;
-        break;
-      case "false_alarm":
-        li.textContent = `Trial ${n}: NO-GO inhibitory error — ${entry.rt} ms`;
-        break;
-      case "false_start":
-        li.textContent = `Trial ${n}: false start (clicked during wait)`;
-        break;
-      default:
-        li.textContent = `Trial ${n}: unknown`;
-    }
+    li.textContent = getTrialText(n, entry, testType.value);
   
     trialList.appendChild(li);
   }  
@@ -380,7 +519,7 @@ clearBaselineBtn.addEventListener("click", () => {
       const falseStarts = results.filter(e => e && e.type === "false_start").length;
   
       if (rts.length === 0) {
-        summary.textContent = "Session invalid (no valid reaction time trials).";
+        summary.textContent = getSessionInvalidNoReaction();
         mode = null;
         return;
       }
@@ -399,7 +538,7 @@ clearBaselineBtn.addEventListener("click", () => {
       const falseStarts = results.filter(e => e && e.type === "false_start").length;
   
       if (goHits.length === 0) {
-        summary.textContent = "Session invalid (no GO responses recorded).";
+        summary.textContent = getSessionInvalidNoGo();
         mode = null;
         return;
       }
@@ -421,8 +560,7 @@ clearBaselineBtn.addEventListener("click", () => {
         const goHits = results.filter(e => e && e.type === "go").length;
 
         if (goHits < 10) {
-          summary.textContent =
-            "Baseline session not saved: too few valid GO responses. Increase trials for stable results.";
+          summary.textContent = getBaselineNotSaved();
           mode = null;
           return;
         }
@@ -441,18 +579,21 @@ clearBaselineBtn.addEventListener("click", () => {
       const qualityNote = checkSessionQuality(sessionPayload, totalTrials, isReaction);
       
       if (isReaction) {
-        summary.textContent =
-          `Baseline session saved. Mean: ${sessionPayload.mean.toFixed(0)} ms | ` +
-          `SD: ${sessionPayload.sd.toFixed(0)} ms` +
-          (sessionPayload.falseStarts ? ` | False starts: ${sessionPayload.falseStarts}` : "") +
-          qualityNote;
+        summary.textContent = getBaselineSavedReaction(
+          sessionPayload.mean,
+          sessionPayload.sd,
+          sessionPayload.falseStarts,
+          qualityNote
+        );
       } else {
-        summary.textContent =
-          `Baseline session saved. GO mean: ${sessionPayload.mean.toFixed(0)} ms | ` +
-          `SD: ${sessionPayload.sd.toFixed(0)} ms` +
-          ` | Misses: ${sessionPayload.misses} | Inhibitory errors: ${sessionPayload.falseAlarms}` +
-          (sessionPayload.falseStarts ? ` | False starts: ${sessionPayload.falseStarts}` : "") +
-          qualityNote;
+        summary.textContent = getBaselineSavedGoNoGo(
+          sessionPayload.mean,
+          sessionPayload.sd,
+          sessionPayload.misses,
+          sessionPayload.falseAlarms,
+          sessionPayload.falseStarts,
+          qualityNote
+        );
       }
   
       mode = null;
@@ -464,8 +605,7 @@ clearBaselineBtn.addEventListener("click", () => {
       const sessions = loadBaseline();
   
       if (sessions.length < 3) {
-        summary.textContent =
-          "Not enough baseline sessions. Please record at least 3 baseline sessions.";
+        summary.textContent = getNotEnoughBaseline();
         mode = null;
         return;
       }
@@ -475,38 +615,42 @@ clearBaselineBtn.addEventListener("click", () => {
   
       let status;
       if (sessionPayload.mean <= baselineMean + baselineSD) {
-        status = "Within normal range";
+        status = t("status.within");
       } else if (sessionPayload.mean <= baselineMean + 2 * baselineSD) {
-        status = "Slightly below normal";
+        status = t("status.slightly");
       } else {
-        status = "Significantly below normal";
+        status = t("status.significantly");
       }
   
       const qualityNote = checkSessionQuality(sessionPayload, totalTrials, isReaction);
       
       if (isReaction) {
-        summary.textContent =
-          `Today mean: ${sessionPayload.mean.toFixed(0)} ms | ` +
-          `Baseline mean: ${baselineMean.toFixed(0)} ms | ` +
-          `Baseline SD: ${baselineSD.toFixed(0)} ms | ` +
-          `Status: ${status}` +
-          (sessionPayload.falseStarts ? ` | False starts: ${sessionPayload.falseStarts}` : "") +
-          qualityNote;
+        summary.textContent = getCheckReaction(
+          sessionPayload.mean,
+          baselineMean,
+          baselineSD,
+          status,
+          sessionPayload.falseStarts,
+          qualityNote
+        );
       } else {
         // For Go/No-Go, also show error counts clearly.
         // Optional: compare errors vs baseline averages (simple, explainable)
         const baselineMissAvg = mean(sessions.map(s => (typeof s.misses === "number" ? s.misses : 0)));
         const baselineFAAvg = mean(sessions.map(s => (typeof s.falseAlarms === "number" ? s.falseAlarms : 0)));
 
-        summary.textContent =
-          `Today GO mean: ${sessionPayload.mean.toFixed(0)} ms | ` +
-          `Baseline mean: ${baselineMean.toFixed(0)} ms | ` +
-          `Baseline SD: ${baselineSD.toFixed(0)} ms | ` +
-          `Status: ${status} | ` +
-          `Misses: ${sessionPayload.misses} (baseline avg ${baselineMissAvg.toFixed(1)}) | ` +
-          `Inhibitory errors: ${sessionPayload.falseAlarms} (baseline avg ${baselineFAAvg.toFixed(1)})` +
-          (sessionPayload.falseStarts ? ` | False starts: ${sessionPayload.falseStarts}` : "") +
-          qualityNote;
+        summary.textContent = getCheckGoNoGo(
+          sessionPayload.mean,
+          baselineMean,
+          baselineSD,
+          status,
+          sessionPayload.misses,
+          baselineMissAvg,
+          sessionPayload.falseAlarms,
+          baselineFAAvg,
+          sessionPayload.falseStarts,
+          qualityNote
+        );
       }
   
       mode = null;
@@ -527,9 +671,9 @@ function updateProgress(isDone = false) {
   const total = totalTrials;
 
   if (isDone) {
-    progress.textContent = `Session complete (${done}/${total} trials).`;
+    progress.textContent = getSessionComplete(done, total);
   } else {
-    progress.textContent = `Trial ${Math.min(trialIndex, total)}/${total} (completed: ${done})`;
+    progress.textContent = getTrialProgress(Math.min(trialIndex, total), total, done);
   }
 }
 
@@ -569,41 +713,73 @@ function loadBaseline() {
   
   function updateBaselineInfo() {
     const sessions = loadBaseline();
-  
+
     // Clear list UI
     baselineList.innerHTML = "";
-  
+
     const minSessions = minBaselineSessions();
     const recTrials = recommendedTrialsPerSession();
-  
-    // Guidance text (always shown)
-    baselineGuidance.textContent =
-      testType.value === "gonogo"
+    const isGoNoGo = testType.value === "gonogo";
+
+    // Guidance text (always shown) - update both language spans
+    const guidanceEn = baselineGuidance.querySelector(".lang-en");
+    const guidanceNo = baselineGuidance.querySelector(".lang-no");
+    if (guidanceEn) {
+      guidanceEn.textContent = isGoNoGo
         ? `Recommended: ≥${minSessions} baseline sessions, ≥${recTrials} trials per session (Go/No-Go needs more trials for stable results).`
         : `Recommended: ≥${minSessions} baseline sessions, ≥${recTrials} trials per session.`;
-  
-    // Progress + button gating
-    baselineProgress.textContent = `Baseline progress: ${sessions.length}/${minSessions} sessions (minimum).`;
+    }
+    if (guidanceNo) {
+      guidanceNo.textContent = isGoNoGo
+        ? `Anbefalt: ≥${minSessions} baseline-økter, ≥${recTrials} forsøk per økt (Go/No-Go trenger flere forsøk for stabile resultater).`
+        : `Anbefalt: ≥${minSessions} baseline-økter, ≥${recTrials} forsøk per økt.`;
+    }
+
+    // Progress + button gating - update both language spans
+    const progressEn = baselineProgress.querySelector(".lang-en");
+    const progressNo = baselineProgress.querySelector(".lang-no");
+    if (progressEn) {
+      progressEn.textContent = `Baseline progress: ${sessions.length}/${minSessions} sessions (minimum).`;
+    }
+    if (progressNo) {
+      progressNo.textContent = `Baseline-fremgang: ${sessions.length}/${minSessions} økter (minimum).`;
+    }
     startCheckBtn.disabled = sessions.length < minSessions;
-  
+
     if (sessions.length === 0) {
-      baselineInfo.textContent = "No baseline sessions recorded.";
+      // Update both language spans in baselineInfo
+      const infoEn = baselineInfo.querySelector(".lang-en");
+      const infoNo = baselineInfo.querySelector(".lang-no");
+      if (infoEn) infoEn.textContent = "No baseline sessions recorded.";
+      if (infoNo) infoNo.textContent = "Ingen baseline-økter er registrert.";
       clearBaselineBtn.style.display = "none";
       return;
     }
-  
+
     clearBaselineBtn.style.display = "";
-  
+
     const means = sessions.map(s => s.mean);
     const sds = sessions.map(s => s.sd);
-  
+
     const meanAvg = mean(means);
     const sdAvg = mean(sds);
-  
-    baselineInfo.textContent =
-      `${sessions.length} sessions | ` +
-      `${testType.value === "gonogo" ? "GO " : ""}Baseline mean: ${meanAvg.toFixed(0)} ms | ` +
-      `${testType.value === "gonogo" ? "GO " : ""}Baseline SD: ${sdAvg.toFixed(0)} ms`;
+
+    // Update both language spans in baselineInfo
+    const infoEn = baselineInfo.querySelector(".lang-en");
+    const infoNo = baselineInfo.querySelector(".lang-no");
+    const prefix = isGoNoGo ? "GO " : "";
+    if (infoEn) {
+      infoEn.textContent =
+        `${sessions.length} sessions | ` +
+        `${prefix}Baseline mean: ${meanAvg.toFixed(0)} ms | ` +
+        `${prefix}Baseline SD: ${sdAvg.toFixed(0)} ms`;
+    }
+    if (infoNo) {
+      infoNo.textContent =
+        `${sessions.length} økter | ` +
+        `${prefix}Baseline-gjennomsnitt: ${meanAvg.toFixed(0)} ms | ` +
+        `${prefix}Baseline SD: ${sdAvg.toFixed(0)} ms`;
+    }
   
     // Render newest first
     const newestFirst = [...sessions].reverse();
@@ -641,13 +817,16 @@ function checkSessionQuality(sessionPayload, totalTrials, isReaction) {
   
   const issues = [];
   if (falseStartRate > 0.2) {
-    issues.push("many false starts");
+    issues.push(currentLang === "no" ? "mange feilstarter" : "many false starts");
   }
   if (validHitRate < 0.5) {
-    issues.push("few valid hits");
+    issues.push(currentLang === "no" ? "få gyldige treff" : "few valid hits");
   }
   
   if (issues.length > 0) {
+    if (currentLang === "no") {
+      return ` Merknad: Denne økten hadde ${issues.join(" og ")} — vurder å gjennomføre på nytt for bedre baseline-kvalitet.`;
+    }
     return ` Note: This session had ${issues.join(" and ")} — consider retaking for better baseline quality.`;
   }
   return "";

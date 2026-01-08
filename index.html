@@ -29,12 +29,26 @@
   <main>
     <section id="view-home" class="view active">
       <div class="container instrument">
-        <h1>Reaction Time Test</h1>
-        <p id="instruction">
-          Click "Add Baseline Session" to build your baseline (3–5 sessions).
-          Click "Run Functional Check" to compare today vs baseline.
-          Early clicks count as false starts.
-        </p>
+        <h1>
+          <span class="lang lang-en">Reaction Time Test</span>
+          <span class="lang lang-no hidden">Reaksjonstidstest</span>
+        </h1>
+        <div id="instruction">
+          <div class="lang lang-en">
+            <p>
+              Click <strong>Add Baseline Session</strong> to build your baseline (3–5 sessions).
+              Click <strong>Run Functional Check</strong> to compare today vs baseline.
+              Early clicks count as false starts.
+            </p>
+          </div>
+          <div class="lang lang-no hidden">
+            <p>
+              Klikk <strong>Legg til baseline-økt</strong> for å bygge en personlig baseline (3–5 økter).
+              Klikk <strong>Kjør funksjonssjekk</strong> for å sammenligne dagens funksjon mot baseline.
+              Tidlige klikk registreres som feilstart.
+            </p>
+          </div>
+        </div>
         <!-- Controls -->
         <div class="controls">
           <div class="config-row">
@@ -62,7 +76,10 @@
 
         <!-- Session panel -->
         <div class="panel">
-          <h2>Session</h2>
+          <h2>
+            <span class="lang lang-en">Session</span>
+            <span class="lang lang-no hidden">Økt</span>
+          </h2>
           <p id="progress"></p>
           <ul id="trialList"></ul>
           <p id="summary"></p>
@@ -70,12 +87,29 @@
 
         <!-- Baseline panel -->
         <div class="panel">
-          <h2>Baseline</h2>
-          <p id="baselineInfo">No baseline sessions recorded.</p>
-          <p id="baselineProgress"></p>
-          <p id="baselineGuidance"></p>
+          <h2>
+            <span class="lang lang-en">Baseline</span>
+            <span class="lang lang-no hidden">Baseline</span>
+          </h2>
+          <p id="baselineInfo">
+            <span class="lang lang-en">No baseline sessions recorded.</span>
+            <span class="lang lang-no hidden">Ingen baseline-økter er registrert.</span>
+          </p>
+          <p id="baselineProgress">
+            <span class="lang lang-en"></span>
+            <span class="lang lang-no hidden"></span>
+          </p>
+          <p id="baselineGuidance">
+            <span class="lang lang-en"></span>
+            <span class="lang lang-no hidden"></span>
+          </p>
           <p class="note">
-            Baseline applies to the current device and input method.
+            <span class="lang lang-en">
+              Baseline applies to the current device and input method.
+            </span>
+            <span class="lang lang-no hidden">
+              Baseline gjelder kun for denne enheten og samme inndatametode.
+            </span>
           </p>
 
           <div class="baseline-actions">

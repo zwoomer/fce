@@ -423,4 +423,94 @@
   /* Make sure footer appears in all views by default */
   .view .container > .footer {
     margin-top: 48px;
-  }  
+  }
+
+/* --- Responsive foundation --- */
+* { box-sizing: border-box; }
+
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Make text scale nicely across devices */
+:root{
+  --container-pad: 20px;
+  --radius: 18px;
+}
+
+@media (max-width: 600px){
+  :root{ --container-pad: 14px; }
+}
+
+/* Add responsive padding to existing containers */
+.container, .container.instrument {
+  padding-left: var(--container-pad);
+  padding-right: var(--container-pad);
+}
+
+/* Headline and body text: clamp = responsive scaling */
+h1 {
+  font-size: clamp(28px, 6vw, 48px);
+  line-height: 1.15;
+}
+
+body, p, li, label {
+  font-size: clamp(14px, 3.6vw, 16px);
+}
+
+/* Controls: stack on small screens - enhance existing rules */
+@media (max-width: 600px){
+  .config-row, .action-row, .secondary-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* Buttons full width on mobile */
+  .action-row button {
+    width: 100%;
+    max-width: 100%;
+    min-width: unset;
+  }
+
+  .secondary-row button {
+    width: 100%;
+    max-width: 100%;
+    min-width: unset;
+  }
+
+  /* Inputs/selects full width on mobile */
+  input, select {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+/* Session/Baseline cards: ensure full width on mobile */
+@media (max-width: 600px) {
+  .card, .panel {
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+/* Topbar: prevent elements pushing outside screen */
+.topbar {
+  width: 100%;
+  max-width: 100%;
+}
+
+.lang-toggle {
+  display: flex;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+
+/* Make sure nothing causes sideways scroll */
+img, video, iframe, canvas {
+  max-width: 100%;
+  height: auto;
+}

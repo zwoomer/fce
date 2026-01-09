@@ -600,3 +600,17 @@ input.text {
   padding: 8px;
   font-size: 16px;
 }
+
+.history-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin: 10px 0 14px;
+}
+
+#exportStatus {
+  font-size: 14px;
+  opacity: 0.8;
+}

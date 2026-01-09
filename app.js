@@ -24,6 +24,12 @@ const I18N = {
       sessions: "sessions",
       økter: "sessions",
     },
+    export: {
+      btn: "Export (Copy JSON)",
+      copied: "Copied to clipboard.",
+      empty: "No history to export.",
+      failed: "Copy failed — showing text below.",
+    },
   },
   no: {
     ui: {
@@ -44,6 +50,12 @@ const I18N = {
       noSessions: "Ingen baseline-økter er registrert.",
       sessions: "økter",
       økter: "økter",
+    },
+    export: {
+      btn: "Eksporter (kopier JSON)",
+      copied: "Kopiert til utklippstavlen.",
+      empty: "Ingen historikk å eksportere.",
+      failed: "Kopiering feilet — viser tekst under.",
     },
   },
 };
@@ -453,6 +465,85 @@ if (clearHistoryBtn) {
     if (!ok) return;
     saveHistory(tt, []);
     renderHistory();
+  });
+}
+
+// Export history functionality
+const exportHistoryBtn = document.getElementById("exportHistoryBtn");
+const exportStatus = document.getElementById("exportStatus");
+
+function setExportStatus(msg) {
+  if (!exportStatus) return;
+  exportStatus.textContent = msg;
+  if (msg) setTimeout(() => (exportStatus.textContent = ""), 2500);
+}
+
+async function copyTextToClipboard(text) {
+  // Works on HTTPS (GitHub Pages) and localhost. Fallback if blocked.
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function showExportFallback(text) {
+  // Minimal, non-fancy fallback: put a textarea under the button.
+  let box = document.getElementById("exportFallbackBox");
+  if (!box) {
+    box = document.createElement("textarea");
+    box.id = "exportFallbackBox";
+    box.rows = 10;
+    box.style.width = "100%";
+    box.style.marginTop = "10px";
+    box.style.fontFamily = "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace";
+    box.style.fontSize = "12px";
+    // Put it near the button
+    exportHistoryBtn.parentElement.appendChild(box);
+  }
+  box.value = text;
+  box.focus();
+  box.select();
+}
+
+function exportHistoryFor(testType) {
+  const sessions = loadHistory(testType);
+
+  if (!sessions.length) return { ok: false, reason: "empty" };
+
+  const payload = {
+    schema: "fce-history-export-v1",
+    exportedAt: new Date().toISOString(),
+    testType,
+    sessions
+  };
+
+  return { ok: true, text: JSON.stringify(payload, null, 2) };
+}
+
+if (exportHistoryBtn) {
+  exportHistoryBtn.addEventListener("click", async () => {
+    // Use your existing UI selector for current test type:
+    // likely `historyTest.value` or your history filter's selected test.
+    const currentTest = (historyTest && historyTest.value)
+      ? historyTest.value
+      : (testType && testType.value ? testType.value : "reaction"); // fallback
+
+    const res = exportHistoryFor(currentTest);
+
+    if (!res.ok) {
+      setExportStatus(t("export.empty"));
+      return;
+    }
+
+    const copied = await copyTextToClipboard(res.text);
+    if (copied) {
+      setExportStatus(t("export.copied"));
+    } else {
+      setExportStatus(t("export.failed"));
+      showExportFallback(res.text);
+    }
   });
 }
 

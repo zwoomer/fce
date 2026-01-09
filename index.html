@@ -19,6 +19,7 @@
   <nav id="menu" class="menu">
     <div class="menu-header"></div>
     <button class="menu-item" data-view="home">Home</button>
+    <button class="menu-item" data-view="history">History</button>
     <button class="menu-item" data-view="about">About</button>
     <button class="menu-item" data-view="norway">Norwegian Context</button>
     <button class="menu-item" data-view="howto">How to Use</button>
@@ -52,6 +53,63 @@
         </div>
         <!-- Controls -->
         <div class="controls">
+          <!-- Context (optional) -->
+          <div class="panel context-panel">
+            <h2>
+              <span class="lang lang-en">Context (optional)</span>
+              <span class="lang lang-no hidden">Kontekst (valgfritt)</span>
+            </h2>
+            <div class="config-row">
+              <label for="contextMode">
+                <span class="lang lang-en">Mode</span>
+                <span class="lang lang-no hidden">Modus</span>
+              </label>
+              <select id="contextMode">
+                <option value="baseline">baseline</option>
+                <option value="check">check</option>
+                <option value="training">training</option>
+              </select>
+
+              <label for="sleepRating">
+                <span class="lang lang-en">Sleep</span>
+                <span class="lang lang-no hidden">Søvn</span>
+              </label>
+              <select id="sleepRating">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+
+              <label for="stressRating">
+                <span class="lang lang-en">Stress</span>
+                <span class="lang lang-no hidden">Stress</span>
+              </label>
+              <select id="stressRating">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+
+            <div class="config-row">
+              <label for="contextNote">
+                <span class="lang lang-en">Note</span>
+                <span class="lang lang-no hidden">Notat</span>
+              </label>
+              <input id="contextNote" class="text" type="text" maxlength="140" placeholder="" />
+            </div>
+            <p class="note">
+              <span class="lang lang-en">Saved with each session. Does not affect scoring.</span>
+              <span class="lang lang-no hidden">Lagres med hver økt. Påvirker ikke vurderingen.</span>
+            </p>
+          </div>
+
           <div class="config-row">
             <label for="testType" data-i18n="ui.test">Test</label>
             <select id="testType">
@@ -119,6 +177,61 @@
         
           <ul id="baselineList"></ul>
         </div>
+
+        <footer class="footer muted">
+          <p>FCE — Functional Cognition &amp; Execution</p>
+        </footer>
+      </div>
+    </section>
+
+    <section id="view-history" class="view hidden">
+      <div class="container">
+        <div class="lang lang-en">
+          <section class="hero">
+            <h2>History</h2>
+            <p class="lead">Sessions are stored locally on this device. Use filters to review trends and context.</p>
+          </section>
+        </div>
+        <div class="lang lang-no hidden">
+          <section class="hero">
+            <h2>Historikk</h2>
+            <p class="lead">Økter lagres lokalt på denne enheten. Bruk filter for å se mønster og kontekst.</p>
+          </section>
+        </div>
+
+        <section class="card">
+          <div class="config-row">
+            <label for="historyTest">
+              <span class="lang lang-en">Test</span>
+              <span class="lang lang-no hidden">Test</span>
+            </label>
+            <select id="historyTest">
+              <option value="reaction">Reaction Time</option>
+              <option value="gonogo">Go / No-Go</option>
+            </select>
+
+            <label for="historyMode">
+              <span class="lang lang-en">Mode</span>
+              <span class="lang lang-no hidden">Modus</span>
+            </label>
+            <select id="historyMode">
+              <option value="all">All</option>
+              <option value="baseline">baseline</option>
+              <option value="check">check</option>
+              <option value="training">training</option>
+            </select>
+          </div>
+
+          <div class="config-row">
+            <button id="clearHistoryBtn" class="danger" type="button">
+              <span class="lang lang-en">Clear history (this test)</span>
+              <span class="lang lang-no hidden">Slett historikk (denne testen)</span>
+            </button>
+          </div>
+
+          <p id="historyEmpty" class="muted"></p>
+          <div id="historyList" class="history-list"></div>
+        </section>
 
         <footer class="footer muted">
           <p>FCE — Functional Cognition &amp; Execution</p>

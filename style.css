@@ -514,3 +514,89 @@ img, video, iframe, canvas {
   max-width: 100%;
   height: auto;
 }
+
+/* ----------------------------
+   History cards (Phase 1.5)
+---------------------------- */
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.history-card {
+  background: #161616;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 14px 14px 12px;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.history-ts {
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.history-meta {
+  opacity: 0.75;
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  border: 1px solid rgba(255,255,255,0.12);
+  opacity: 0.95;
+}
+
+.badge-ok {
+  background: rgba(255,255,255,0.06);
+}
+
+.badge-bad {
+  border-color: rgba(255,107,107,0.55);
+  background: rgba(255,107,107,0.10);
+}
+
+.history-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.history-line {
+  font-size: 14px;
+}
+
+.history-compare {
+  margin-top: 6px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  font-weight: 600;
+}
+
+.history-tags {
+  opacity: 0.8;
+  font-size: 13px;
+}
+
+.history-reason {
+  opacity: 0.75;
+  font-size: 13px;
+}
+
+input.text {
+  padding: 8px;
+  font-size: 16px;
+}

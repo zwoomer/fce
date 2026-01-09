@@ -230,6 +230,11 @@ function applyLangUI() {
     // a completed session, we'd need to re-run endSession logic - for now,
     // we'll leave summary as-is since it requires full session data to regenerate
   }
+
+  // 6) Re-render history if visible
+  if (historyListEl) {
+    renderHistory();
+  }
 }
 
 function setLang(lang) {
@@ -246,6 +251,19 @@ const baselineList = document.getElementById("baselineList");
 const baselineProgress = document.getElementById("baselineProgress");
 const baselineGuidance = document.getElementById("baselineGuidance");
 const testType = document.getElementById("testType");
+
+// Context (optional)
+const contextMode = document.getElementById("contextMode");
+const sleepRating = document.getElementById("sleepRating");
+const stressRating = document.getElementById("stressRating");
+const contextNote = document.getElementById("contextNote");
+
+// History view
+const historyTest = document.getElementById("historyTest");
+const historyMode = document.getElementById("historyMode");
+const historyEmpty = document.getElementById("historyEmpty");
+const historyListEl = document.getElementById("historyList");
+const clearHistoryBtn = document.getElementById("clearHistoryBtn");
 
 const resetBtn = document.getElementById("resetBtn");
 const testArea = document.getElementById("testArea");
@@ -295,6 +313,12 @@ menuItems.forEach(btn => {
       activeView.classList.add("active");
     }
 
+    if (target === "history") {
+      // Keep history default test aligned with current selection
+      if (historyTest) historyTest.value = testType.value;
+      renderHistory();
+    }
+
     closeMenu();
     window.scrollTo(0, 0);
   });
@@ -321,12 +345,14 @@ let windowTimeoutId = null;
 
 startBaselineBtn.addEventListener("click", () => {
     if (inSession) return;
+    if (contextMode) contextMode.value = "baseline";
     mode = "baseline";
     beginSession();
   });
   
   startCheckBtn.addEventListener("click", () => {
     if (inSession) return;
+    if (contextMode) contextMode.value = "check";
     mode = "check";
     beginSession();
   });
@@ -403,7 +429,32 @@ testArea.addEventListener("click", () => {
 testType.addEventListener("change", () => {
     hardReset();
     updateBaselineInfo();
+    // Keep history filter aligned with current test by default
+    if (historyTest) {
+      historyTest.value = testType.value;
+      renderHistory();
+    }
   });
+
+if (historyTest) {
+  historyTest.value = testType.value;
+  historyTest.addEventListener("change", renderHistory);
+}
+if (historyMode) {
+  historyMode.addEventListener("change", renderHistory);
+}
+
+if (clearHistoryBtn) {
+  clearHistoryBtn.addEventListener("click", () => {
+    const tt = (historyTest && historyTest.value) ? historyTest.value : testType.value;
+    const sessions = loadHistory(tt);
+    if (!sessions.length) return;
+    const ok = confirm(currentLang === "no" ? "Slett all historikk for denne testen?" : "Clear all history for this test?");
+    if (!ok) return;
+    saveHistory(tt, []);
+    renderHistory();
+  });
+}
 
 clearBaselineBtn.addEventListener("click", () => {
     const sessions = loadBaseline();
@@ -494,6 +545,52 @@ clearBaselineBtn.addEventListener("click", () => {
     trialList.appendChild(li);
   }  
 
+// ----------------------------
+// History model (local-first)
+// ----------------------------
+function historyKeyFor(testType) {
+  return `fce_history_v1_${testType}`;
+}
+
+function loadHistory(tt = testType.value) {
+  try {
+    const raw = localStorage.getItem(historyKeyFor(tt));
+    return raw ? JSON.parse(raw) : [];
+  } catch (_) {
+    return [];
+  }
+}
+
+function saveHistory(tt, sessions) {
+  localStorage.setItem(historyKeyFor(tt), JSON.stringify(sessions));
+}
+
+function getContextTags() {
+  const safeInt = (v) => {
+    const n = parseInt(v, 10);
+    return Number.isFinite(n) ? n : 0;
+  };
+  return {
+    sleep: sleepRating ? safeInt(sleepRating.value) : 0,
+    stress: stressRating ? safeInt(stressRating.value) : 0,
+    note: contextNote ? String(contextNote.value || "").slice(0, 140) : ""
+  };
+}
+
+function getDeviceHints() {
+  const isTouch = ("ontouchstart" in window) || (navigator.maxTouchPoints > 0);
+  const ua = (navigator.userAgent || "").toLowerCase();
+  const userAgentHint = /mobi|android|iphone|ipad/.test(ua) ? "mobile" : "desktop";
+  return { isTouch, userAgentHint };
+}
+
+function pushHistoryRecord(record) {
+  const tt = record.testType;
+  const sessions = loadHistory(tt);
+  sessions.push(record);
+  saveHistory(tt, sessions);
+}
+
   function endSession() {
     inSession = false;
   
@@ -511,14 +608,32 @@ clearBaselineBtn.addEventListener("click", () => {
   
     const isReaction = testType.value === "reaction";
   
+    const createdAt = new Date().toISOString();
+    const tags = getContextTags();
+    const device = getDeviceHints();
+
     // ---- Compute session metrics depending on test ----
     let sessionPayload;
+    let flags = { invalid: false, reason: "" };
   
     if (isReaction) {
       const rts = results.filter(e => e && e.type === "rt").map(e => e.rt);
       const falseStarts = results.filter(e => e && e.type === "false_start").length;
   
       if (rts.length === 0) {
+        flags = { invalid: true, reason: "no_valid_trials" };
+        // Store invalid session in history
+        pushHistoryRecord({
+          id: createdAt,
+          createdAt,
+          testType: "reaction",
+          mode: mode || (contextMode ? contextMode.value : ""),
+          metrics: { avgMs: 0, sdMs: 0, bestMs: 0, worstMs: 0, trials: 0, falseStarts },
+          flags,
+          tags,
+          device
+        });
+        renderHistory();
         summary.textContent = getSessionInvalidNoReaction();
         mode = null;
         return;
@@ -528,7 +643,9 @@ clearBaselineBtn.addEventListener("click", () => {
         mean: mean(rts),
         sd: stddev(rts),
         trials: rts.length,
-        falseStarts
+        falseStarts,
+        best: Math.min(...rts),
+        worst: Math.max(...rts)
       };
     } else {
       // Go/No-Go metrics
@@ -538,6 +655,29 @@ clearBaselineBtn.addEventListener("click", () => {
       const falseStarts = results.filter(e => e && e.type === "false_start").length;
   
       if (goHits.length === 0) {
+        flags = { invalid: true, reason: "no_go_responses" };
+        pushHistoryRecord({
+          id: createdAt,
+          createdAt,
+          testType: "gonogo",
+          mode: mode || (contextMode ? contextMode.value : ""),
+          metrics: {
+            avgMs: 0,
+            sdMs: 0,
+            bestMs: 0,
+            worstMs: 0,
+            trials: 0,
+            hits: 0,
+            misses,
+            falseAlarms,
+            correctRejects: results.filter(e => e && e.type === "correct_reject").length,
+            falseStarts
+          },
+          flags,
+          tags,
+          device
+        });
+        renderHistory();
         summary.textContent = getSessionInvalidNoGo();
         mode = null;
         return;
@@ -547,11 +687,47 @@ clearBaselineBtn.addEventListener("click", () => {
         mean: mean(goHits),      // mean RT on GO hits
         sd: stddev(goHits),      // consistency on GO hits
         trials: goHits.length,
+        best: Math.min(...goHits),
+        worst: Math.max(...goHits),
         misses,
         falseAlarms,
         falseStarts
       };
     }
+
+    // Always write session record (even if baseline refuses saving later)
+    const sessionRecord = {
+      id: createdAt,
+      createdAt,
+      testType: isReaction ? "reaction" : "gonogo",
+      mode: mode,
+      metrics: isReaction
+        ? {
+            avgMs: sessionPayload.mean,
+            sdMs: sessionPayload.sd,
+            bestMs: sessionPayload.best,
+            worstMs: sessionPayload.worst,
+            trials: sessionPayload.trials,
+            falseStarts: sessionPayload.falseStarts
+          }
+        : {
+            avgMs: sessionPayload.mean,
+            sdMs: sessionPayload.sd,
+            bestMs: sessionPayload.best,
+            worstMs: sessionPayload.worst,
+            trials: sessionPayload.trials,
+            hits: sessionPayload.trials,
+            misses: sessionPayload.misses,
+            falseAlarms: sessionPayload.falseAlarms,
+            correctRejects: results.filter(e => e && e.type === "correct_reject").length,
+            falseStarts: sessionPayload.falseStarts
+          },
+      flags,
+      tags,
+      device
+    };
+    pushHistoryRecord(sessionRecord);
+    renderHistory();
   
     // ---- Baseline mode: store payload ----
     if (mode === "baseline") {
@@ -560,6 +736,12 @@ clearBaselineBtn.addEventListener("click", () => {
         const goHits = results.filter(e => e && e.type === "go").length;
 
         if (goHits < 10) {
+          // Mark latest history record as invalid (baseline refused)
+          sessionRecord.flags = { invalid: true, reason: "baseline_refused_too_few_go" };
+          const hs = loadHistory("gonogo");
+          hs[hs.length - 1] = sessionRecord;
+          saveHistory("gonogo", hs);
+          renderHistory();
           summary.textContent = getBaselineNotSaved();
           mode = null;
           return;
@@ -605,6 +787,13 @@ clearBaselineBtn.addEventListener("click", () => {
       const sessions = loadBaseline();
   
       if (sessions.length < 3) {
+        // Mark latest history record as invalid (check cannot compare)
+        const tt = isReaction ? "reaction" : "gonogo";
+        sessionRecord.flags = { invalid: true, reason: "not_enough_baseline" };
+        const hs = loadHistory(tt);
+        hs[hs.length - 1] = sessionRecord;
+        saveHistory(tt, hs);
+        renderHistory();
         summary.textContent = getNotEnoughBaseline();
         mode = null;
         return;
@@ -845,6 +1034,166 @@ function stddev(arr) {
   const m = mean(arr);
   const variance = arr.reduce((sum, x) => sum + (x - m) ** 2, 0) / arr.length;
   return Math.sqrt(variance);
+}
+
+// ----------------------------
+// History UI (Phase 1.5)
+// ----------------------------
+function formatTs(iso) {
+  try {
+    const d = new Date(iso);
+    return d.toLocaleString(undefined, { year: "numeric", month: "short", day: "2-digit", hour: "2-digit", minute: "2-digit" });
+  } catch {
+    return iso;
+  }
+}
+
+function statusLabelFromCompare(meanMs, baselineMean, baselineSD) {
+  if (!Number.isFinite(baselineMean) || !Number.isFinite(baselineSD)) return "";
+  if (meanMs <= baselineMean + baselineSD) return t("status.within");
+  if (meanMs <= baselineMean + 2 * baselineSD) return t("status.slightly");
+  return t("status.significantly");
+}
+
+function renderHistory() {
+  if (!historyListEl || !historyEmpty || !historyTest || !historyMode) return;
+
+  const tt = historyTest.value || "reaction";
+  const modeFilter = historyMode.value || "all";
+
+  let sessions = loadHistory(tt);
+  sessions = sessions.sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
+
+  if (modeFilter !== "all") {
+    sessions = sessions.filter(s => s && s.mode === modeFilter);
+  }
+
+  historyListEl.innerHTML = "";
+
+  if (!sessions.length) {
+    historyEmpty.textContent = currentLang === "no" ? "Ingen historikk ennå." : "No history yet.";
+    return;
+  }
+
+  historyEmpty.textContent = "";
+
+  // Baseline reference for compare cards (if available)
+  const baselineSessions = (() => {
+    try {
+      const key = tt === "gonogo" ? "fce_baseline_gonogo_v1" : "fce_baseline_reaction_v1";
+      const raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : [];
+    } catch {
+      return [];
+    }
+  })();
+
+  const baselineMean = baselineSessions.length ? mean(baselineSessions.map(s => s.mean)) : NaN;
+  const baselineSD = baselineSessions.length ? mean(baselineSessions.map(s => s.sd)) : NaN;
+
+  for (const s of sessions) {
+    const card = document.createElement("div");
+    card.className = "history-card";
+
+    const header = document.createElement("div");
+    header.className = "history-header";
+
+    const left = document.createElement("div");
+    left.className = "history-left";
+    const ts = document.createElement("div");
+    ts.className = "history-ts";
+    ts.textContent = formatTs(s.createdAt || s.id);
+    const meta = document.createElement("div");
+    meta.className = "history-meta";
+    meta.textContent = `${s.mode || ""}`.trim();
+    left.appendChild(ts);
+    left.appendChild(meta);
+
+    const right = document.createElement("div");
+    right.className = "history-right";
+
+    const badge = document.createElement("span");
+    const isInvalid = !!(s.flags && s.flags.invalid);
+    badge.className = `badge ${isInvalid ? "badge-bad" : "badge-ok"}`;
+    badge.textContent = isInvalid ? (currentLang === "no" ? "UGYLDIG" : "INVALID") : (currentLang === "no" ? "OK" : "OK");
+    right.appendChild(badge);
+
+    header.appendChild(left);
+    header.appendChild(right);
+    card.appendChild(header);
+
+    const body = document.createElement("div");
+    body.className = "history-body";
+
+    const m = s.metrics || {};
+    const avg = Number(m.avgMs);
+    const sd = Number(m.sdMs);
+    const best = Number(m.bestMs);
+    const worst = Number(m.worstMs);
+    const trials = Number(m.trials);
+
+    const line1 = document.createElement("div");
+    line1.className = "history-line";
+    line1.textContent = `avg ${Number.isFinite(avg) ? avg.toFixed(0) : "—"} ms · SD ${Number.isFinite(sd) ? sd.toFixed(0) : "—"} · trials ${Number.isFinite(trials) ? trials : "—"}`;
+    body.appendChild(line1);
+
+    const line2 = document.createElement("div");
+    line2.className = "history-line muted";
+    line2.textContent = `best ${Number.isFinite(best) ? best.toFixed(0) : "—"} · worst ${Number.isFinite(worst) ? worst.toFixed(0) : "—"}`;
+    body.appendChild(line2);
+
+    if (tt === "gonogo") {
+      const errs = document.createElement("div");
+      errs.className = "history-line";
+      errs.textContent = `misses ${m.misses ?? 0} · false alarms ${m.falseAlarms ?? 0} · false starts ${m.falseStarts ?? 0}`;
+      body.appendChild(errs);
+    } else {
+      const fs = document.createElement("div");
+      fs.className = "history-line";
+      fs.textContent = `false starts ${m.falseStarts ?? 0}`;
+      body.appendChild(fs);
+    }
+
+    // Compare-to-baseline hint for check sessions
+    if (s.mode === "check" && baselineSessions.length) {
+      const status = statusLabelFromCompare(avg, baselineMean, baselineSD);
+      const delta = Number.isFinite(avg) && Number.isFinite(baselineMean) ? (avg - baselineMean) : NaN;
+      const cmp = document.createElement("div");
+      cmp.className = "history-compare";
+      cmp.textContent = `${status} · Δ ${Number.isFinite(delta) ? (delta >= 0 ? "+" : "") + delta.toFixed(0) : "—"} ms (baseline ${baselineMean.toFixed(0)} ± ${baselineSD.toFixed(0)})`;
+      body.appendChild(cmp);
+    } else if (s.mode === "check" && !baselineSessions.length) {
+      const cmp = document.createElement("div");
+      cmp.className = "history-compare muted";
+      cmp.textContent = currentLang === "no" ? "Ingen baseline for sammenligning." : "No baseline available for comparison.";
+      body.appendChild(cmp);
+    }
+
+    // Tags
+    const tags = s.tags || {};
+    const hasTags = (tags.sleep || tags.stress || (tags.note && String(tags.note).trim()));
+    if (hasTags) {
+      const tagLine = document.createElement("div");
+      tagLine.className = "history-tags";
+      const parts = [];
+      if (tags.sleep) parts.push(`${currentLang === "no" ? "søvn" : "sleep"} ${tags.sleep}/5`);
+      if (tags.stress) parts.push(`${currentLang === "no" ? "stress" : "stress"} ${tags.stress}/5`);
+      if (tags.note && String(tags.note).trim()) parts.push(`“${String(tags.note).trim()}”`);
+      tagLine.textContent = parts.join(" · ");
+      body.appendChild(tagLine);
+    }
+
+    // Invalid reason (if present)
+    if (isInvalid && s.flags && s.flags.reason) {
+      const why = document.createElement("div");
+      why.className = "history-reason";
+      why.textContent = (currentLang === "no" ? "Årsak: " : "Reason: ") + String(s.flags.reason);
+      body.appendChild(why);
+    }
+
+    card.appendChild(body);
+    historyListEl.appendChild(card);
+  }
 }
 
 updateBaselineInfo();

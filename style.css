@@ -112,6 +112,20 @@
     align-items: center;
     user-select: none;
     border-radius: 12px;
+    position: relative;
+  }
+  
+  .flash-overlay {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #4af;
+    border-radius: 50%;
+    pointer-events: none;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+    box-shadow: 0 0 10px rgba(68, 170, 255, 0.8);
   }
   
   .hidden {

@@ -10,11 +10,13 @@ const I18N = {
       trials: "Trials",
       addBaseline: "Add Baseline Session",
       runCheck: "Run Functional Check",
+      runTraining: "Run Training",
       reset: "Reset",
       clearBaseline: "Clear baseline",
       testType: {
         reaction: "Reaction Time",
         gonogo: "Go / No-Go",
+        divided: "Divided Attention",
       },
       mode: {
         baseline: "Baseline",
@@ -62,6 +64,21 @@ const I18N = {
       falseAlarms: "false alarms",
       baseline: "baseline",
     },
+    stimulus: {
+      ready: "Ready…",
+      reaction: {
+        go: "CLICK!",
+      },
+      gonogo: {
+        go: "GO (click)",
+        nogo: "NO-GO (don't click)",
+      },
+      divided: {
+        go: "TAP",
+        nogo: "NO TAP",
+        legend: "TAP = respond · NO TAP = wait · Count blue flashes",
+      },
+    },
   },
   no: {
     ui: {
@@ -69,11 +86,13 @@ const I18N = {
       trials: "Forsøk",
       addBaseline: "Legg til baseline-økt",
       runCheck: "Kjør funksjonssjekk",
+      runTraining: "Kjør trening",
       reset: "Nullstill",
       clearBaseline: "Slett baseline",
       testType: {
         reaction: "Reaksjonstid",
         gonogo: "Go / No-Go",
+        divided: "Delt oppmerksomhet",
       },
       mode: {
         baseline: "Baseline",
@@ -121,6 +140,21 @@ const I18N = {
       falseAlarms: "inhibisjonsfeil",
       baseline: "baseline",
     },
+    stimulus: {
+      ready: "Klar…",
+      reaction: {
+        go: "KLIKK!",
+      },
+      gonogo: {
+        go: "GO (klikk)",
+        nogo: "NO-GO (ikke klikk)",
+      },
+      divided: {
+        go: "TRYKK",
+        nogo: "IKKE",
+        legend: "TRYKK = svar · IKKE = vent · Tell blå blink",
+      },
+    },
   },
 };
 
@@ -158,7 +192,7 @@ function getTrialText(n, entry, testType) {
         return `Forsøk ${n}: ${entry.rt} ms`;
       }
     }
-    // Go/No-Go
+    // Go/No-Go and Divided Attention (same trial types)
     switch (entry.type) {
       case "go":
         return `Forsøk ${n}: GO-respons — ${entry.rt} ms`;
@@ -182,7 +216,7 @@ function getTrialText(n, entry, testType) {
         return `Trial ${n}: ${entry.rt} ms`;
       }
     }
-    // Go/No-Go
+    // Go/No-Go and Divided Attention (same trial types)
     switch (entry.type) {
       case "go":
         return `Trial ${n}: GO response — ${entry.rt} ms`;
@@ -219,6 +253,12 @@ function getBaselineNotSaved() {
     : "Baseline session not saved: too few valid GO responses. Increase trials for stable results.";
 }
 
+function getBaselineNotSavedDivided() {
+  return currentLang === "no"
+    ? "Baseline-økt ikke lagret: for få gyldige GO-responser (minimum 80% av forsøk, minst 8). Øk antall forsøk for stabile resultater."
+    : "Baseline session not saved: too few valid GO responses (minimum 80% of trials, at least 8). Increase trials for stable results.";
+}
+
 function getNotEnoughBaseline() {
   return currentLang === "no"
     ? "Ikke nok baseline-økter. Vennligst registrer minst 3 baseline-økter."
@@ -245,6 +285,21 @@ function getBaselineSavedGoNoGo(mean, sd, misses, falseAlarms, falseStarts, qual
   return `Baseline session saved. GO mean: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms | Misses: ${misses} | Inhibitory errors: ${falseAlarms}${falseStartsText}${qualityNote}`;
 }
 
+function getBaselineSavedDivided(mean, sd, misses, falseAlarms, falseStarts, flashTargetCount, flashAbsError, qualityNote) {
+  const falseStartsText = falseStarts
+    ? (currentLang === "no" ? ` | Feilstarter: ${falseStarts}` : ` | False starts: ${falseStarts}`)
+    : "";
+  const flashText = flashTargetCount > 0
+    ? (currentLang === "no" 
+        ? ` | Flash-feil snitt: ${flashAbsError.toFixed(1)} (målt: ${flashTargetCount})`
+        : ` | Flash error avg: ${flashAbsError.toFixed(1)} (target: ${flashTargetCount})`)
+    : "";
+  if (currentLang === "no") {
+    return `Baseline-økt lagret. GO-gjennomsnitt: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms | Bom: ${misses} | Inhibisjonsfeil: ${falseAlarms}${flashText}${falseStartsText}${qualityNote}`;
+  }
+  return `Baseline session saved. GO mean: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms | Misses: ${misses} | Inhibitory errors: ${falseAlarms}${flashText}${falseStartsText}${qualityNote}`;
+}
+
 function getCheckReaction(mean, baselineMean, baselineSD, status, falseStarts, qualityNote) {
   const falseStartsText = falseStarts
     ? (currentLang === "no" ? ` | Feilstarter: ${falseStarts}` : ` | False starts: ${falseStarts}`)
@@ -263,6 +318,84 @@ function getCheckGoNoGo(mean, baselineMean, baselineSD, status, misses, baseline
     return `Dagens GO-gjennomsnitt: ${mean.toFixed(0)} ms | Baseline-gjennomsnitt: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status} | Bom: ${misses} (baseline snitt ${baselineMissAvg.toFixed(1)}) | Inhibisjonsfeil: ${falseAlarms} (baseline snitt ${baselineFAAvg.toFixed(1)})${falseStartsText}${qualityNote}`;
   }
   return `Today GO mean: ${mean.toFixed(0)} ms | Baseline mean: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status} | Misses: ${misses} (baseline avg ${baselineMissAvg.toFixed(1)}) | Inhibitory errors: ${falseAlarms} (baseline avg ${baselineFAAvg.toFixed(1)})${falseStartsText}${qualityNote}`;
+}
+
+// Divided Attention status comparison (avgMs, falseAlarmsRate, flashAbsError)
+function getDividedAttentionStatus(sessionPayload, baselineSessions) {
+  const baselineMean = mean(baselineSessions.map(s => s.mean));
+  const baselineSD = mean(baselineSessions.map(s => s.sd));
+  
+  // False alarm rate: falseAlarms / NO-GO trial count (not total trials)
+  const baselineFAAvg = mean(baselineSessions.map(s => {
+    if (typeof s.falseAlarms === "number" && typeof s.nogoCount === "number" && s.nogoCount > 0) {
+      return s.falseAlarms / s.nogoCount;
+    }
+    return 0;
+  }));
+  const baselineFlashErrorAvg = mean(baselineSessions.map(s => (typeof s.flashAbsError === "number" ? s.flashAbsError : 0)));
+  
+  // Current false alarm rate: use NO-GO trial count as denominator
+  const nogoCount = sessionPayload.nogoCount || 0;
+  const currentFARate = nogoCount > 0 ? (sessionPayload.falseAlarms || 0) / nogoCount : 0;
+  const currentFlashError = sessionPayload.flashAbsError || 0;
+  
+  // Compare avgMs
+  let avgMsStatus = t("status.within");
+  if (sessionPayload.mean > baselineMean + 2 * baselineSD) {
+    avgMsStatus = t("status.significantly");
+  } else if (sessionPayload.mean > baselineMean + baselineSD) {
+    avgMsStatus = t("status.slightly");
+  }
+  
+  // Compare falseAlarmsRate (worse if higher than baseline)
+  let faStatus = t("status.within");
+  if (baselineFAAvg > 0) {
+    const faRatio = currentFARate / baselineFAAvg;
+    if (faRatio > 2) {
+      faStatus = t("status.significantly");
+    } else if (faRatio > 1.5) {
+      faStatus = t("status.slightly");
+    }
+  } else if (currentFARate > 0.2) {
+    // No baseline false alarms, but current has >20% false alarm rate
+    faStatus = t("status.significantly");
+  } else if (currentFARate > 0.1) {
+    faStatus = t("status.slightly");
+  }
+  
+  // Compare flashAbsError (worse if higher than baseline)
+  let flashStatus = t("status.within");
+  if (baselineFlashErrorAvg > 0) {
+    const flashRatio = currentFlashError / baselineFlashErrorAvg;
+    if (flashRatio > 2) {
+      flashStatus = t("status.significantly");
+    } else if (flashRatio > 1.5) {
+      flashStatus = t("status.slightly");
+    }
+  } else if (currentFlashError > 3) {
+    // No baseline flash error, but current has >3 error
+    flashStatus = t("status.significantly");
+  } else if (currentFlashError > 2) {
+    flashStatus = t("status.slightly");
+  }
+  
+  // Overall status: worst of the three
+  if (avgMsStatus === t("status.significantly") || faStatus === t("status.significantly") || flashStatus === t("status.significantly")) {
+    return t("status.significantly");
+  } else if (avgMsStatus === t("status.slightly") || faStatus === t("status.slightly") || flashStatus === t("status.slightly")) {
+    return t("status.slightly");
+  }
+  return t("status.within");
+}
+
+function getCheckDividedAttention(mean, baselineMean, baselineSD, status, falseAlarmsRate, baselineFARate, flashAbsError, baselineFlashError, falseStarts, qualityNote) {
+  const falseStartsText = falseStarts > 0
+    ? (currentLang === "no" ? ` | Feilstarter: ${falseStarts}` : ` | False starts: ${falseStarts}`)
+    : "";
+  if (currentLang === "no") {
+    return `Dagens GO-gjennomsnitt: ${mean.toFixed(0)} ms | Baseline-gjennomsnitt: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status} | Inhibisjonsfeil-rate: ${(falseAlarmsRate * 100).toFixed(1)}% (baseline ${(baselineFARate * 100).toFixed(1)}%) | Flash-feil: ${flashAbsError} (baseline snitt ${baselineFlashError.toFixed(1)})${falseStartsText}${qualityNote}`;
+  }
+  return `Today GO mean: ${mean.toFixed(0)} ms | Baseline mean: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status} | False alarm rate: ${(falseAlarmsRate * 100).toFixed(1)}% (baseline ${(baselineFARate * 100).toFixed(1)}%) | Flash error: ${flashAbsError} (baseline avg ${baselineFlashError.toFixed(1)})${falseStartsText}${qualityNote}`;
 }
 
 function reRenderTrialList() {
@@ -319,6 +452,9 @@ function applyLangUI() {
 
   // 7) Update select options for modes and test types
   updateSelectOptions();
+  
+  // 8) Update divided attention legend if applicable
+  updateDividedLegend();
 }
 
 function updateSelectOptions() {
@@ -335,6 +471,10 @@ function updateSelectOptions() {
     gonogoOpt.value = "gonogo";
     gonogoOpt.textContent = t("ui.testType.gonogo");
     testTypeSelect.appendChild(gonogoOpt);
+    const dividedOpt = document.createElement("option");
+    dividedOpt.value = "divided";
+    dividedOpt.textContent = t("ui.testType.divided");
+    testTypeSelect.appendChild(dividedOpt);
     testTypeSelect.value = selectedValue;
   }
 
@@ -351,6 +491,10 @@ function updateSelectOptions() {
     gonogoOpt.value = "gonogo";
     gonogoOpt.textContent = t("ui.testType.gonogo");
     historyTestSelect.appendChild(gonogoOpt);
+    const dividedOpt = document.createElement("option");
+    dividedOpt.value = "divided";
+    dividedOpt.textContent = t("ui.testType.divided");
+    historyTestSelect.appendChild(dividedOpt);
     historyTestSelect.value = selectedValue;
   }
 
@@ -407,6 +551,7 @@ function setLang(lang) {
 
 const startBaselineBtn = document.getElementById("startBaselineBtn");
 const startCheckBtn = document.getElementById("startCheckBtn");
+const startTrainingBtn = document.getElementById("startTrainingBtn");
 const baselineInfo = document.getElementById("baselineInfo");
 const clearBaselineBtn = document.getElementById("clearBaselineBtn");
 const baselineList = document.getElementById("baselineList");
@@ -490,7 +635,7 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") closeMenu();
 });
 
-let mode = null; // "baseline" | "check"
+let mode = null; // "baseline" | "check" | "training" (set by button click, never by dropdown)
 
 let startTime = null;
 let timeoutId = null;
@@ -504,6 +649,41 @@ let trialIndex = 0;
 let results = []; // stores reaction times (ms); null for false start
 let trialToken = 0;
 let windowTimeoutId = null;
+
+// Divided Attention state
+let dividedPlan = null; // { trialTypes, flashTrialIndices, flashTargetCount }
+let dividedFlashAnswer = null; // User's answer to flash count question
+let flashOverlayTimeoutId = null; // For flash overlay timing
+
+// Test configuration constants
+const TEST_CONFIG = {
+  reaction: {
+    maxTrials: 40,
+    delayMin: 600,
+    delayMax: 1800,
+  },
+  gonogo: {
+    maxTrials: 60,
+    delayMin: 600,
+    delayMax: 1800,
+    goRatio: 0.7, // 70% GO, 30% NO-GO
+    windowMs: 1400,
+  },
+  divided: {
+    maxTrials: 50, // placeholder - adjust as needed
+    goRatio: 0.8, // 80% GO, 20% NO-GO
+    stimulusDuration: 600, // ms
+    isiMin: 650, // ms - inter-stimulus interval minimum
+    isiMax: 1400, // ms - inter-stimulus interval maximum
+    flashDuration: 150, // ms
+    flashCounts: {
+      baseline: 8, // flashes per trial in baseline mode
+      check: 6, // flashes per trial in check mode
+      training: 10, // flashes per trial in training mode
+    },
+    // Note: Flash scheduling done by trial indices, not ms spacing
+  },
+};
 
 startBaselineBtn.addEventListener("click", () => {
     if (inSession) return;
@@ -519,20 +699,39 @@ startBaselineBtn.addEventListener("click", () => {
     beginSession();
   });
 
+  if (startTrainingBtn) {
+    startTrainingBtn.addEventListener("click", () => {
+      if (inSession) return;
+      if (contextMode) contextMode.value = "training";
+      mode = "training";
+      beginSession();
+    });
+  }
+
   function baselineKey() {
-    return testType.value === "gonogo"
-      ? "fce_baseline_gonogo_v1"
-      : "fce_baseline_reaction_v1";
+    return baselineKeyFor(testType.value);
   }
 
   function beginSession() {
-    const maxTrials = testType.value === "gonogo" ? 60 : 40;
+    const tt = testType.value;
+    const config = TEST_CONFIG[tt] || TEST_CONFIG.reaction;
+    const maxTrials = config.maxTrials || 40;
     totalTrials = clampInt(parseInt(trialCountInput.value, 10), 3, maxTrials);
     trialCountInput.value = totalTrials;
   
     inSession = true;
     trialIndex = 0;
     results = [];
+    
+    // Initialize divided attention plan if needed
+    if (tt === "divided") {
+      // Mode must come from button click; fallback to "check" only if somehow undefined
+      dividedPlan = buildDividedPlan(totalTrials, mode || "check");
+      dividedFlashAnswer = null; // Reset flash answer
+    } else {
+      dividedPlan = null;
+      dividedFlashAnswer = null;
+    }
   
     trialList.innerHTML = "";
     summary.textContent = "";
@@ -541,6 +740,7 @@ startBaselineBtn.addEventListener("click", () => {
     trialCountInput.disabled = true;
     startBaselineBtn.disabled = true;
     startCheckBtn.disabled = true;
+    if (startTrainingBtn) startTrainingBtn.disabled = true;
     resetBtn.style.display = "";
   
     nextTrial();
@@ -550,8 +750,19 @@ resetBtn.addEventListener("click", () => {
   hardReset();
 });
 
-testArea.addEventListener("click", () => {
+testArea.addEventListener("click", (e) => {
     if (!inSession) return;
+    
+    // Don't process clicks if flash question is showing (for divided attention)
+    if (testType.value === "divided" && trialIndex > totalTrials) return;
+    
+    const tt = testType.value;
+    
+    // Route divided attention to dedicated handler
+    if (tt === "divided") {
+      handleDividedClick();
+      return;
+    }
   
     // If we haven't started stimulus yet, it's a false start
     if (!startTime) {
@@ -571,7 +782,7 @@ testArea.addEventListener("click", () => {
   
     const rt = Math.round(performance.now() - startTime);
   
-    if (testType.value === "reaction") {
+    if (tt === "reaction") {
       recordResult({ type: "rt", rt });
       setTimeout(nextTrial, 250);
       return;
@@ -588,15 +799,70 @@ testArea.addEventListener("click", () => {
     setTimeout(nextTrial, 250);
   });  
 
+// Helper function to update trialCountInput max based on test type
+function updateTrialCountMax() {
+  if (!trialCountInput || !testType) return;
+  const tt = testType.value;
+  const config = TEST_CONFIG[tt] || TEST_CONFIG.reaction;
+  const maxTrials = config.maxTrials || 40;
+  // Clamp to 40 max to match HTML attribute
+  const clampedMax = Math.min(maxTrials, 40);
+  trialCountInput.setAttribute("max", clampedMax);
+  // Clamp current value if it exceeds new max
+  if (parseInt(trialCountInput.value, 10) > clampedMax) {
+    trialCountInput.value = clampedMax;
+  }
+}
+
 testType.addEventListener("change", () => {
     hardReset();
+    updateTrialCountMax();
     updateBaselineInfo();
+    updateDividedLegend();
     // Keep history filter aligned with current test by default
     if (historyTest) {
       historyTest.value = testType.value;
       renderHistory();
     }
   });
+
+// Show/hide divided attention legend based on test type
+function updateDividedLegend() {
+  const instructionEl = document.getElementById("instruction");
+  if (!instructionEl) return;
+  
+  // Remove existing legend if any
+  const existingLegend = document.getElementById("dividedLegend");
+  if (existingLegend) {
+    existingLegend.remove();
+  }
+  
+  // Add legend if divided attention is selected
+  if (testType && testType.value === "divided") {
+    const legend = document.createElement("p");
+    legend.id = "dividedLegend";
+    legend.className = "divided-legend muted";
+    legend.style.marginTop = "8px";
+    legend.style.fontSize = "13px";
+    legend.style.opacity = "0.85";
+    
+    const legendEn = document.createElement("span");
+    legendEn.className = "lang lang-en";
+    legendEn.textContent = I18N.en.stimulus.divided.legend;
+    legend.appendChild(legendEn);
+    
+    const legendNo = document.createElement("span");
+    legendNo.className = "lang lang-no hidden";
+    legendNo.textContent = I18N.no.stimulus.divided.legend;
+    legend.appendChild(legendNo);
+    
+    instructionEl.appendChild(legend);
+    // Language visibility will be handled by applyLangUI() automatically via .lang-en/.lang-no classes
+  }
+}
+
+// Initialize trialCountInput max on page load
+updateTrialCountMax();
 
 if (historyTest) {
   historyTest.value = testType.value;
@@ -725,6 +991,11 @@ clearBaselineBtn.addEventListener("click", () => {
     trialIndex++;
   
     if (trialIndex > totalTrials) {
+      // For divided attention, show flash count question before ending session
+      if (testType.value === "divided") {
+        showDividedFlashQuestion();
+        return;
+      }
       endSession();
       return;
     }
@@ -732,31 +1003,61 @@ clearBaselineBtn.addEventListener("click", () => {
     updateProgress();
   
     testArea.style.background = "red";
-    testArea.textContent = "Wait...";
+    testArea.textContent = t("stimulus.ready"); // "Ready…" (EN) / "Klar…" (NO)
+    
+    // Clear any flash overlay
+    const existingFlash = document.getElementById("flashOverlay");
+    if (existingFlash) {
+      existingFlash.remove();
+      if (flashOverlayTimeoutId) {
+        clearTimeout(flashOverlayTimeoutId);
+        flashOverlayTimeoutId = null;
+      }
+    }
   
-    const delay = Math.random() * 1200 + 600; // 0.6–1.8 sec (faster for go/no-go)
+    const tt = testType.value;
+    const config = TEST_CONFIG[tt] || TEST_CONFIG.reaction;
+    
+    // ISI (Inter-Stimulus Interval): randomized 650-1400ms for divided attention
+    let delay;
+    if (tt === "divided") {
+      const isiRange = (config.isiMax || 1400) - (config.isiMin || 650);
+      delay = Math.random() * isiRange + (config.isiMin || 650);
+    } else {
+      const delayRange = (config.delayMax || 1800) - (config.delayMin || 600);
+      delay = Math.random() * delayRange + (config.delayMin || 600);
+    }
   
     timeoutId = setTimeout(() => {
-      if (testType.value === "reaction") {
+      const tt = testType.value;
+      
+      if (tt === "reaction") {
         // Reaction Time: always GO
         testArea.style.background = "green";
-        testArea.textContent = "CLICK!";
+        testArea.textContent = t("stimulus.reaction.go"); // "CLICK!" (EN) / "KLIKK!" (NO)
         startTime = performance.now();
         currentStim = "go";
         return;
       }
+      
+      if (tt === "divided") {
+        // Divided Attention: route to dedicated handler
+        runDividedAttention();
+        return;
+      }
   
       // Go/No-Go: 70% GO, 30% NO-GO
-      const isGo = Math.random() < 0.7;
+      const config = TEST_CONFIG.gonogo;
+      const isGo = Math.random() < config.goRatio;
       currentStim = isGo ? "go" : "nogo";
   
       testArea.style.background = isGo ? "green" : "red";
-      testArea.textContent = isGo ? "GO (click)" : "NO-GO (don’t click)";
+      testArea.textContent = isGo ? t("stimulus.gonogo.go") : t("stimulus.gonogo.nogo");
   
       startTime = performance.now();
   
       // Auto-finish trial after window (miss detection)
-      const windowMs = 1400;
+      const windowMs = config.windowMs || 1400;
       windowTimeoutId = setTimeout(() => {
         // ignore if a new trial has started
         if (!inSession || myToken !== trialToken) return;
@@ -775,6 +1076,248 @@ clearBaselineBtn.addEventListener("click", () => {
       }, windowMs);
     }, delay);
   }  
+
+  // Divided Attention: Plan generator
+  function buildDividedPlan(trials, mode) {
+    const config = TEST_CONFIG.divided;
+    const flashCount = config.flashCounts[mode] || config.flashCounts.check;
+    
+    // 1. Generate trialTypes array (80/20 GO/NO-GO distribution)
+    const trialTypes = [];
+    const goRatio = config.goRatio; // 0.8
+    
+    // First 2 trials must be GO
+    for (let i = 0; i < 2 && i < trials; i++) {
+      trialTypes.push("go");
+    }
+    
+    // Remaining trials with 80/20 distribution
+    let nogoCount = 0;
+    for (let i = 2; i < trials; i++) {
+      const targetNogoCount = Math.floor((i + 1) * (1 - goRatio));
+      const canBeNogo = (nogoCount < targetNogoCount) && (trialTypes[i - 1] !== "nogo" || trialTypes[i - 2] !== "nogo");
+      
+      if (canBeNogo && Math.random() < (1 - goRatio)) {
+        trialTypes.push("nogo");
+        nogoCount++;
+      } else {
+        trialTypes.push("go");
+      }
+    }
+    
+    // 2. Generate flashTrialIndices
+    // No flashes in first 2 trials
+    // Spacing: min 2 trials apart, max 6 trials apart
+    const flashTrialIndices = [];
+    let lastFlashIndex = 1; // Start after first 2 trials
+    
+    for (let i = 0; i < flashCount; i++) {
+      // Find next valid position (min 2 apart, max 6 apart from last flash, and after first 2 trials)
+      const minNextIndex = lastFlashIndex + 2;
+      const maxNextIndex = Math.min(lastFlashIndex + 6, trials - 1);
+      
+      if (minNextIndex >= trials) break; // Can't fit more flashes
+      
+      // Random position within valid range
+      const nextIndex = minNextIndex + Math.floor(Math.random() * (maxNextIndex - minNextIndex + 1));
+      flashTrialIndices.push(nextIndex);
+      lastFlashIndex = nextIndex;
+    }
+    
+    // Warn if we couldn't fit all requested flashes (due to small trial count)
+    const actualFlashCount = flashTrialIndices.length;
+    if (actualFlashCount < flashCount) {
+      console.warn(`Divided Attention: Requested ${flashCount} flashes but only ${actualFlashCount} fit in ${trials} trials. Adjusting flashTargetCount.`);
+    }
+    
+    return {
+      trialTypes,
+      flashTrialIndices,
+      flashTargetCount: actualFlashCount  // Use actual count, not requested
+    };
+  }
+
+  // Divided Attention test handler
+  function runDividedAttention() {
+    if (!dividedPlan) {
+      // Initialize plan on first trial
+      // Mode must come from button click; fallback to "check" only if somehow undefined
+      dividedPlan = buildDividedPlan(totalTrials, mode || "check");
+    }
+    
+    const myToken = trialToken; // Capture token for timeout closure
+    
+    const config = TEST_CONFIG.divided;
+    const currentTrialIdx = trialIndex - 1; // trialIndex is already incremented
+    
+    // Explicitly block flashes in first 2 trials
+    if (currentTrialIdx < 2 && dividedPlan.flashTrialIndices.includes(currentTrialIdx)) {
+      // Should not happen due to plan generation, but defensive check
+      console.warn("Flash scheduled in first 2 trials - ignoring");
+    }
+    
+    const isGo = dividedPlan.trialTypes[currentTrialIdx] === "go";
+    
+    // Show stimulus
+    testArea.style.background = isGo ? "green" : "red";
+    testArea.textContent = isGo ? t("stimulus.divided.go") : t("stimulus.divided.nogo");
+    // "TAP" / "NO TAP" (EN) or "TRYKK" / "IKKE" (NO)
+    startTime = performance.now();
+    currentStim = isGo ? "go" : "nogo";
+    
+    // Show flash overlay if this is a flash trial (and not in first 2 trials)
+    if (currentTrialIdx >= 2 && dividedPlan.flashTrialIndices.includes(currentTrialIdx)) {
+      showFlashOverlay();
+    }
+    
+    // Stimulus window: 600ms (GO missed if no click in window)
+    const windowMs = config.stimulusDuration || 600;
+    windowTimeoutId = setTimeout(() => {
+      // ignore if a new trial has started
+      if (!inSession || myToken !== trialToken) return;
+      if (responded) return;
+      
+      if (currentStim === "go") {
+        // Miss: didn't click in time
+        recordResult({ type: "miss" });
+      } else {
+        // Correct inhibition (no click)
+        recordResult({ type: "correct_reject" });
+      }
+      
+      windowTimeoutId = null;
+      setTimeout(nextTrial, 250);
+    }, windowMs);
+  }
+  
+  // Flash overlay: show blue dot for 150ms
+  function showFlashOverlay() {
+    // Clear any existing flash overlay
+    const existing = document.getElementById("flashOverlay");
+    if (existing) {
+      existing.remove();
+      if (flashOverlayTimeoutId) {
+        clearTimeout(flashOverlayTimeoutId);
+      }
+    }
+    
+    // Create flash overlay element
+    const flashOverlay = document.createElement("div");
+    flashOverlay.id = "flashOverlay";
+    flashOverlay.className = "flash-overlay";
+    testArea.appendChild(flashOverlay);
+    
+    // Remove after 150ms
+    flashOverlayTimeoutId = setTimeout(() => {
+      if (flashOverlay && flashOverlay.parentNode) {
+        flashOverlay.remove();
+      }
+      flashOverlayTimeoutId = null;
+    }, TEST_CONFIG.divided.flashDuration || 150);
+  }
+  
+  // Show flash count question after last trial
+  function showDividedFlashQuestion() {
+    // Ensure test area is visible (not hidden)
+    testArea.classList.remove("hidden");
+    
+    // Clear test area and show question UI
+    testArea.style.background = "#1a1a1a";
+    testArea.innerHTML = "";
+    
+    const questionDiv = document.createElement("div");
+    questionDiv.className = "divided-question";
+    
+    const prompt = document.createElement("p");
+    prompt.textContent = currentLang === "no" 
+      ? "Hvor mange blå blink så du?" 
+      : "How many blue flashes did you see?";
+    prompt.style.marginBottom = "12px";
+    prompt.style.textAlign = "center";
+    questionDiv.appendChild(prompt);
+    
+    const selectContainer = document.createElement("div");
+    selectContainer.style.display = "flex";
+    selectContainer.style.gap = "10px";
+    selectContainer.style.alignItems = "center";
+    selectContainer.style.justifyContent = "center";
+    
+    const select = document.createElement("select");
+    select.id = "flashCountSelect";
+    for (let i = 0; i <= 20; i++) {
+      const option = document.createElement("option");
+      option.value = i;
+      option.textContent = i;
+      if (i === 0) option.selected = true;
+      select.appendChild(option);
+    }
+    // Prevent clicks on dropdown from triggering testArea click handler
+    select.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
+    select.addEventListener("change", (e) => {
+      e.stopPropagation();
+    });
+    selectContainer.appendChild(select);
+    
+    const confirmBtn = document.createElement("button");
+    confirmBtn.textContent = currentLang === "no" ? "Bekreft" : "Confirm";
+    confirmBtn.className = "primary";
+    confirmBtn.addEventListener("click", (e) => {
+      e.stopPropagation(); // Prevent triggering testArea click handler
+      const answer = parseInt(select.value, 10);
+      if (isNaN(answer)) {
+        alert(currentLang === "no" ? "Velg et tall før du fortsetter." : "Please select a number before continuing.");
+        return;
+      }
+      dividedFlashAnswer = answer;
+      endSession();
+    });
+    selectContainer.appendChild(confirmBtn);
+    
+    questionDiv.appendChild(selectContainer);
+    testArea.appendChild(questionDiv);
+  }
+
+  // Divided Attention click handler
+  function handleDividedClick() {
+    if (!inSession) return;
+    
+    // Don't process clicks if we're past the last trial (showing flash question)
+    if (trialIndex > totalTrials) return;
+    
+    const currentTrialIdx = trialIndex - 1;
+    const currentTrialType = dividedPlan ? dividedPlan.trialTypes[currentTrialIdx] : "go";
+    
+    // If we haven't started stimulus yet, it's a false start
+    if (!startTime) {
+      clearTimeout(timeoutId);
+      recordResult({ type: "false_start" });
+      setTimeout(nextTrial, 250);
+      return;
+    }
+    
+    // Mark responded so auto-window doesn't also record
+    responded = true;
+    
+    if (windowTimeoutId) {
+      clearTimeout(windowTimeoutId);
+      windowTimeoutId = null;
+    }
+    
+    const rt = Math.round(performance.now() - startTime);
+    
+    // Handle GO vs NO-GO response
+    if (currentTrialType === "go") {
+      // GO hit: record reaction time
+      recordResult({ type: "go", rt });
+    } else {
+      // NO-GO false alarm: clicked when shouldn't have
+      recordResult({ type: "false_alarm", rt });
+    }
+    
+    setTimeout(nextTrial, 250);
+  }
 
   function recordResult(entry) {
     results.push(entry);
@@ -843,11 +1386,15 @@ function pushHistoryRecord(record) {
     trialCountInput.disabled = false;
     startBaselineBtn.disabled = false;
     startCheckBtn.disabled = false;
+    if (startTrainingBtn) startTrainingBtn.disabled = false;
     resetBtn.style.display = "none";
   
     updateProgress(true);
   
-    const isReaction = testType.value === "reaction";
+    const tt = testType.value;
+    const isReaction = tt === "reaction";
+    const isGoNoGo = tt === "gonogo";
+    const isDivided = tt === "divided";
   
     const createdAt = new Date().toISOString();
     const tags = getContextTags();
@@ -868,7 +1415,7 @@ function pushHistoryRecord(record) {
           id: createdAt,
           createdAt,
           testType: "reaction",
-          mode: mode || (contextMode ? contextMode.value : ""),
+          mode: mode || "", // Mode must come from button click, not dropdown
           metrics: { avgMs: 0, sdMs: 0, bestMs: 0, worstMs: 0, trials: 0, falseStarts },
           flags,
           tags,
@@ -888,7 +1435,7 @@ function pushHistoryRecord(record) {
         best: Math.min(...rts),
         worst: Math.max(...rts)
       };
-    } else {
+    } else if (isGoNoGo) {
       // Go/No-Go metrics
       const goHits = results.filter(e => e && e.type === "go").map(e => e.rt);
       const misses = results.filter(e => e && e.type === "miss").length;
@@ -901,7 +1448,7 @@ function pushHistoryRecord(record) {
           id: createdAt,
           createdAt,
           testType: "gonogo",
-          mode: mode || (contextMode ? contextMode.value : ""),
+          mode: mode || "", // Mode must come from button click, not dropdown
           metrics: {
             avgMs: 0,
             sdMs: 0,
@@ -934,14 +1481,119 @@ function pushHistoryRecord(record) {
         falseAlarms,
         falseStarts
       };
+    } else if (isDivided) {
+      // Divided Attention metrics
+      const goHits = results.filter(e => e && e.type === "go").map(e => e.rt);
+      const misses = results.filter(e => e && e.type === "miss").length;
+      const falseAlarms = results.filter(e => e && e.type === "false_alarm").length;
+      const falseStarts = results.filter(e => e && e.type === "false_start").length;
+      
+      // Check for missing flash answer
+      if (dividedFlashAnswer === null || dividedFlashAnswer === undefined) {
+        flags = { invalid: true, reason: "missing_secondary_answer" };
+        pushHistoryRecord({
+          id: createdAt,
+          createdAt,
+          testType: "divided",
+          mode: mode || "", // Mode must come from button click, not dropdown
+          metrics: { 
+            avgMs: 0, 
+            sdMs: 0, 
+            bestMs: 0, 
+            worstMs: 0, 
+            trials: 0,
+            hits: 0,
+            misses,
+            falseAlarms,
+            correctRejects: results.filter(e => e && e.type === "correct_reject").length,
+            falseStarts,
+            flashTargetCount: dividedPlan ? dividedPlan.flashTargetCount : 0,
+            flashUserCount: 0,
+            flashAbsError: 0
+          },
+          flags,
+          tags,
+          device
+        });
+        renderHistory();
+        summary.textContent = currentLang === "no"
+          ? "Kan ikke sammenlignes: mangler svar"
+          : "Session not usable for comparison: missing answer";
+        mode = null;
+        dividedPlan = null;
+        dividedFlashAnswer = null;
+        return;
+      }
+      
+      if (goHits.length === 0) {
+        flags = { invalid: true, reason: "no_go_responses" };
+        pushHistoryRecord({
+          id: createdAt,
+          createdAt,
+          testType: "divided",
+          mode: mode || "", // Mode must come from button click, not dropdown
+          metrics: {
+            avgMs: 0,
+            sdMs: 0,
+            bestMs: 0,
+            worstMs: 0,
+            trials: 0,
+            hits: 0,
+            misses,
+            falseAlarms,
+            correctRejects: results.filter(e => e && e.type === "correct_reject").length,
+            falseStarts,
+            flashTargetCount: dividedPlan ? dividedPlan.flashTargetCount : 0,
+            flashUserCount: dividedFlashAnswer || 0,
+            flashAbsError: dividedPlan ? Math.abs((dividedFlashAnswer || 0) - dividedPlan.flashTargetCount) : 0
+          },
+          flags,
+          tags,
+          device
+        });
+        renderHistory();
+        summary.textContent = currentLang === "no"
+          ? "Økt ugyldig: ingen GO-responser."
+          : "Session invalid: no GO responses.";
+        mode = null;
+        dividedPlan = null;
+        dividedFlashAnswer = null;
+        return;
+      }
+      
+      const flashTargetCount = dividedPlan ? dividedPlan.flashTargetCount : 0;
+      const flashUserCount = dividedFlashAnswer || 0;
+      const flashAbsError = Math.abs(flashUserCount - flashTargetCount);
+      
+      // Track hits explicitly (number of GO hits, not total trials)
+      const hits = goHits.length;
+      
+      // Count NO-GO trials for false alarm rate calculation
+      const nogoCount = dividedPlan ? dividedPlan.trialTypes.filter(t => t === "nogo").length : 0;
+      
+      sessionPayload = {
+        mean: mean(goHits),      // mean RT on GO hits
+        sd: stddev(goHits),      // consistency on GO hits
+        trials: totalTrials,     // total trials in session
+        hits,                    // number of GO hits
+        nogoCount,               // number of NO-GO trials
+        best: Math.min(...goHits),
+        worst: Math.max(...goHits),
+        misses,
+        falseAlarms,
+        falseStarts,
+        flashTargetCount,
+        flashUserCount,
+        flashAbsError
+      };
     }
 
     // Always write session record (even if baseline refuses saving later)
     const sessionRecord = {
       id: createdAt,
       createdAt,
-      testType: isReaction ? "reaction" : "gonogo",
-      mode: mode,
+      testType: tt, // Use actual testType value
+      mode: mode || "", // Mode must come from button click, never from dropdown
       metrics: isReaction
         ? {
             avgMs: sessionPayload.mean,
@@ -950,6 +1602,23 @@ function pushHistoryRecord(record) {
             worstMs: sessionPayload.worst,
             trials: sessionPayload.trials,
             falseStarts: sessionPayload.falseStarts
+          }
+        : isDivided
+        ? {
+            avgMs: sessionPayload.mean,
+            sdMs: sessionPayload.sd,
+            bestMs: sessionPayload.best,
+            worstMs: sessionPayload.worst,
+            trials: sessionPayload.trials,
+            hits: sessionPayload.hits,  // Use explicit hits count, not trials
+            nogoCount: sessionPayload.nogoCount,  // Store NO-GO trial count for false alarm rate calculation
+            misses: sessionPayload.misses,
+            falseAlarms: sessionPayload.falseAlarms,
+            correctRejects: results.filter(e => e && e.type === "correct_reject").length,
+            falseStarts: sessionPayload.falseStarts,
+            flashTargetCount: sessionPayload.flashTargetCount,
+            flashUserCount: sessionPayload.flashUserCount,
+            flashAbsError: sessionPayload.flashAbsError
           }
         : {
             avgMs: sessionPayload.mean,
@@ -971,20 +1640,57 @@ function pushHistoryRecord(record) {
     renderHistory();
   
     // ---- Baseline mode: store payload ----
-    if (mode === "baseline") {
-      // Go/No-Go baseline validity rule: require ≥ 10 valid GO responses
-      if (testType.value === "gonogo") {
+    // Defensive guard: only update baseline if mode is baseline AND session is valid
+    // Training mode and invalid sessions should never update baseline (but can still be saved to history)
+    const canUpdateBaseline = (mode === "baseline") && !(flags && flags.invalid);
+    
+    if (canUpdateBaseline) {
+      // Go/No-Go and Divided Attention baseline validity rule: require minimum valid GO responses
+      if (isGoNoGo || isDivided) {
         const goHits = results.filter(e => e && e.type === "go").length;
+        
+        // Different thresholds based on test type:
+        // - Go/No-Go (70% GO ratio): require ≥10 GO responses (fixed threshold)
+        // - Divided Attention (80% GO ratio): require ≥80% of trials as GO responses, minimum 8
+        let minGoHits;
+        if (isDivided) {
+          // For Divided Attention: proportional threshold (80% of trials, minimum 8)
+          minGoHits = Math.max(8, Math.ceil(totalTrials * 0.8));
+        } else {
+          // For Go/No-Go: fixed threshold of 10
+          minGoHits = 10;
+        }
 
-        if (goHits < 10) {
+        if (goHits < minGoHits) {
           // Mark latest history record as invalid (baseline refused)
           sessionRecord.flags = { invalid: true, reason: "baseline_refused_too_few_go" };
-          const hs = loadHistory("gonogo");
+          const hs = loadHistory(tt);
           hs[hs.length - 1] = sessionRecord;
-          saveHistory("gonogo", hs);
+          saveHistory(tt, hs);
           renderHistory();
-          summary.textContent = getBaselineNotSaved();
+          // Use divided-attention specific message if applicable, with flash info if available
+          if (isDivided) {
+            // Try to get flash info from sessionPayload first, fallback to sessionRecord metrics
+            const flashTarget = sessionPayload?.flashTargetCount ?? sessionRecord?.metrics?.flashTargetCount ?? 0;
+            const flashUser = sessionPayload?.flashUserCount ?? sessionRecord?.metrics?.flashUserCount ?? 0;
+            const flashError = sessionPayload?.flashAbsError ?? sessionRecord?.metrics?.flashAbsError ?? 0;
+            
+            if (flashTarget > 0 || flashUser > 0) {
+              const flashInfo = currentLang === "no"
+                ? ` | Flashes: mål ${flashTarget}, svar ${flashUser}, feil ${flashError}`
+                : ` | Flashes: target ${flashTarget}, answer ${flashUser}, error ${flashError}`;
+              summary.textContent = getBaselineNotSavedDivided() + flashInfo;
+            } else {
+              summary.textContent = getBaselineNotSavedDivided();
+            }
+          } else {
+            summary.textContent = getBaselineNotSaved();
+          }
           mode = null;
+          if (isDivided) {
+            dividedPlan = null;
+            dividedFlashAnswer = null;
+          }
           return;
         }
       }
@@ -1008,7 +1714,18 @@ function pushHistoryRecord(record) {
           sessionPayload.falseStarts,
           qualityNote
         );
-      } else {
+      } else if (isDivided) {
+        summary.textContent = getBaselineSavedDivided(
+          sessionPayload.mean,
+          sessionPayload.sd,
+          sessionPayload.misses,
+          sessionPayload.falseAlarms,
+          sessionPayload.falseStarts,
+          sessionPayload.flashTargetCount || 0,
+          sessionPayload.flashAbsError || 0,
+          qualityNote
+        );
+      } else if (isGoNoGo) {
         summary.textContent = getBaselineSavedGoNoGo(
           sessionPayload.mean,
           sessionPayload.sd,
@@ -1020,16 +1737,38 @@ function pushHistoryRecord(record) {
       }
   
       mode = null;
+      if (isDivided) {
+        dividedPlan = null;
+        dividedFlashAnswer = null;
+      }
+      return;
+    }
+
+    // ---- Training mode (or any other mode): show summary if divided attention ----
+    if (isDivided && mode && mode !== "baseline" && mode !== "check") {
+      // For training mode or any other mode, show a summary with flash info
+      const flashInfo = sessionPayload && typeof sessionPayload.flashTargetCount === "number"
+        ? (currentLang === "no"
+            ? ` | Flashes: mål ${sessionPayload.flashTargetCount}, svar ${sessionPayload.flashUserCount || 0}, feil ${sessionPayload.flashAbsError || 0}`
+            : ` | Flashes: target ${sessionPayload.flashTargetCount}, answer ${sessionPayload.flashUserCount || 0}, error ${sessionPayload.flashAbsError || 0}`)
+        : "";
+      summary.textContent = (currentLang === "no"
+        ? `Økt fullført. GO-gjennomsnitt: ${sessionPayload.mean.toFixed(0)} ms | SD: ${sessionPayload.sd.toFixed(0)} ms`
+        : `Session complete. GO mean: ${sessionPayload.mean.toFixed(0)} ms | SD: ${sessionPayload.sd.toFixed(0)} ms`) + flashInfo;
+      mode = null;
+      dividedPlan = null;
+      dividedFlashAnswer = null;
       return;
     }
   
     // ---- Check mode: compare to baseline ----
     if (mode === "check") {
-      const sessions = loadBaseline();
+      const sessionsRaw = loadBaseline();
+      const sessions = filterValidBaselineSessions(sessionsRaw);
   
-      if (sessions.length < 3) {
+      if (sessions.length < minBaselineSessions()) {
         // Mark latest history record as invalid (check cannot compare)
-        const tt = isReaction ? "reaction" : "gonogo";
+        // tt already defined above
         sessionRecord.flags = { invalid: true, reason: "not_enough_baseline" };
         const hs = loadHistory(tt);
         hs[hs.length - 1] = sessionRecord;
@@ -1037,24 +1776,37 @@ function pushHistoryRecord(record) {
         renderHistory();
         summary.textContent = getNotEnoughBaseline();
         mode = null;
+        if (isDivided) {
+          dividedPlan = null;
+          dividedFlashAnswer = null;
+        }
         return;
       }
   
-      const baselineMean = mean(sessions.map(s => s.mean));
-      const baselineSD = mean(sessions.map(s => s.sd));
-  
       let status;
-      if (sessionPayload.mean <= baselineMean + baselineSD) {
-        status = t("status.within");
-      } else if (sessionPayload.mean <= baselineMean + 2 * baselineSD) {
-        status = t("status.slightly");
+      
+      if (isDivided) {
+        // Divided Attention: compare avgMs, falseAlarmsRate, and flashAbsError
+        status = getDividedAttentionStatus(sessionPayload, sessions);
       } else {
-        status = t("status.significantly");
+        // Reaction Time and Go/No-Go: compare avgMs only
+        const baselineMean = mean(sessions.map(s => s.mean));
+        const baselineSD = mean(sessions.map(s => s.sd));
+        
+        if (sessionPayload.mean <= baselineMean + baselineSD) {
+          status = t("status.within");
+        } else if (sessionPayload.mean <= baselineMean + 2 * baselineSD) {
+          status = t("status.slightly");
+        } else {
+          status = t("status.significantly");
+        }
       }
   
       const qualityNote = checkSessionQuality(sessionPayload, totalTrials, isReaction);
       
       if (isReaction) {
+        const baselineMean = mean(sessions.map(s => s.mean));
+        const baselineSD = mean(sessions.map(s => s.sd));
         summary.textContent = getCheckReaction(
           sessionPayload.mean,
           baselineMean,
@@ -1063,9 +1815,38 @@ function pushHistoryRecord(record) {
           sessionPayload.falseStarts,
           qualityNote
         );
+      } else if (isDivided) {
+        // Divided Attention check summary
+        const baselineMean = mean(sessions.map(s => s.mean));
+        const baselineSD = mean(sessions.map(s => s.sd));
+        // False alarm rate: use NO-GO trial count as denominator
+        const baselineFARate = mean(sessions.map(s => {
+          if (typeof s.falseAlarms === "number" && typeof s.nogoCount === "number" && s.nogoCount > 0) {
+            return s.falseAlarms / s.nogoCount;
+          }
+          return 0;
+        }));
+        const baselineFlashError = mean(sessions.map(s => (typeof s.flashAbsError === "number" ? s.flashAbsError : 0)));
+        const nogoCount = sessionPayload.nogoCount || 0;
+        const currentFARate = nogoCount > 0 ? (sessionPayload.falseAlarms || 0) / nogoCount : 0;
+        
+        summary.textContent = getCheckDividedAttention(
+          sessionPayload.mean,
+          baselineMean,
+          baselineSD,
+          status,
+          currentFARate,
+          baselineFARate,
+          sessionPayload.flashAbsError,
+          baselineFlashError,
+          sessionPayload.falseStarts,
+          qualityNote
+        );
       } else {
         // For Go/No-Go, also show error counts clearly.
         // Optional: compare errors vs baseline averages (simple, explainable)
+        const baselineMean = mean(sessions.map(s => s.mean));
+        const baselineSD = mean(sessions.map(s => s.sd));
         const baselineMissAvg = mean(sessions.map(s => (typeof s.misses === "number" ? s.misses : 0)));
         const baselineFAAvg = mean(sessions.map(s => (typeof s.falseAlarms === "number" ? s.falseAlarms : 0)));
 
@@ -1084,6 +1865,10 @@ function pushHistoryRecord(record) {
       }
   
       mode = null;
+      if (isDivided) {
+        dividedPlan = null;
+        dividedFlashAnswer = null;
+      }
       return;
     }
   
@@ -1108,6 +1893,13 @@ function updateProgress(isDone = false) {
 }
 
 function hardReset() {
+  // Clear divided attention state on reset
+  dividedPlan = null;
+  dividedFlashAnswer = null;
+  if (flashOverlayTimeoutId) {
+    clearTimeout(flashOverlayTimeoutId);
+    flashOverlayTimeoutId = null;
+  }
   clearTimeout(timeoutId);
 
   inSession = false;
@@ -1118,6 +1910,7 @@ function hardReset() {
   testArea.classList.add("hidden");
   testArea.textContent = "";
   testArea.style.background = "red";
+  testArea.innerHTML = ""; // Clear any flash overlay or question UI
 
   trialList.innerHTML = "";
   summary.textContent = "";
@@ -1127,6 +1920,7 @@ function hardReset() {
   trialCountInput.disabled = false;
   startBaselineBtn.disabled = false;
   startCheckBtn.disabled = false;
+  if (startTrainingBtn) startTrainingBtn.disabled = false;
   resetBtn.style.display = "none";
 
   updateBaselineInfo();
@@ -1142,27 +1936,38 @@ function loadBaseline() {
   }
   
   function updateBaselineInfo() {
-    const sessions = loadBaseline();
+    const sessionsRaw = loadBaseline();
+    const sessions = filterValidBaselineSessions(sessionsRaw);
 
     // Clear list UI
     baselineList.innerHTML = "";
 
     const minSessions = minBaselineSessions();
     const recTrials = recommendedTrialsPerSession();
-    const isGoNoGo = testType.value === "gonogo";
+    const tt = testType.value;
+    const isGoNoGo = tt === "gonogo";
+    const isDivided = tt === "divided";
 
     // Guidance text (always shown) - update both language spans
     const guidanceEn = baselineGuidance.querySelector(".lang-en");
     const guidanceNo = baselineGuidance.querySelector(".lang-no");
     if (guidanceEn) {
-      guidanceEn.textContent = isGoNoGo
-        ? `Recommended: ≥${minSessions} baseline sessions, ≥${recTrials} trials per session (Go/No-Go needs more trials for stable results).`
-        : `Recommended: ≥${minSessions} baseline sessions, ≥${recTrials} trials per session.`;
+      if (isGoNoGo) {
+        guidanceEn.textContent = `Recommended: ≥${minSessions} baseline sessions, ≥${recTrials} trials per session (Go/No-Go needs more trials for stable results).`;
+      } else if (isDivided) {
+        guidanceEn.textContent = `Recommended: ≥${minSessions} baseline sessions, ≥${recTrials} trials per session (Divided Attention needs more trials for flash counting).`;
+      } else {
+        guidanceEn.textContent = `Recommended: ≥${minSessions} baseline sessions, ≥${recTrials} trials per session.`;
+      }
     }
     if (guidanceNo) {
-      guidanceNo.textContent = isGoNoGo
-        ? `Anbefalt: ≥${minSessions} baseline-økter, ≥${recTrials} forsøk per økt (Go/No-Go trenger flere forsøk for stabile resultater).`
-        : `Anbefalt: ≥${minSessions} baseline-økter, ≥${recTrials} forsøk per økt.`;
+      if (isGoNoGo) {
+        guidanceNo.textContent = `Anbefalt: ≥${minSessions} baseline-økter, ≥${recTrials} forsøk per økt (Go/No-Go trenger flere forsøk for stabile resultater).`;
+      } else if (isDivided) {
+        guidanceNo.textContent = `Anbefalt: ≥${minSessions} baseline-økter, ≥${recTrials} forsøk per økt (Delt oppmerksomhet trenger flere forsøk for flash-telling).`;
+      } else {
+        guidanceNo.textContent = `Anbefalt: ≥${minSessions} baseline-økter, ≥${recTrials} forsøk per økt.`;
+      }
     }
 
     // Progress + button gating - update both language spans
@@ -1197,7 +2002,7 @@ function loadBaseline() {
     // Update both language spans in baselineInfo
     const infoEn = baselineInfo.querySelector(".lang-en");
     const infoNo = baselineInfo.querySelector(".lang-no");
-    const prefix = isGoNoGo ? "GO " : "";
+    const prefix = (isGoNoGo || isDivided) ? "GO " : "";
     if (infoEn) {
       infoEn.textContent =
         `${sessions.length} sessions | ` +
@@ -1233,12 +2038,36 @@ function loadBaseline() {
     return `${yyyy}-${mm}-${dd} ${hh}:${min}`;
   }  
 
+// Helper to get baseline key for a given test type (module scope)
+function baselineKeyFor(tt) {
+  if (tt === "gonogo") return "fce_baseline_gonogo_v1";
+  if (tt === "divided") return "fce_baseline_divided_v1";
+  return "fce_baseline_reaction_v1";
+}
+
 function minBaselineSessions() {
   return 3;
 }
 
+// Helper to filter valid baseline sessions (excludes invalid/malformed entries)
+function filterValidBaselineSessions(sessions) {
+  if (!Array.isArray(sessions)) return [];
+  return sessions.filter(s => {
+    if (!s) return false;
+    // Check if it has required fields (mean, sd) and they are valid numbers
+    if (typeof s.mean !== "number" || typeof s.sd !== "number") return false;
+    if (Number.isNaN(s.mean) || Number.isNaN(s.sd) || !Number.isFinite(s.mean) || !Number.isFinite(s.sd)) return false;
+    // Check if it's not marked as invalid (safety check)
+    if (s.flags && s.flags.invalid === true) return false;
+    return true;
+  });
+}
+
 function recommendedTrialsPerSession() {
-  return testType.value === "gonogo" ? 20 : 5;
+  const tt = testType.value;
+  if (tt === "gonogo") return 20;
+  if (tt === "divided") return 10; // Divided attention needs enough trials for flashes
+  return 5; // Reaction Time
 }
 
 function checkSessionQuality(sessionPayload, totalTrials, isReaction) {
@@ -1466,15 +2295,19 @@ function renderHistory() {
   historyEmpty.textContent = "";
 
   // Baseline reference for compare cards (if available)
-  const baselineSessions = (() => {
+  const baselineSessionsRaw = (() => {
     try {
-      const key = tt === "gonogo" ? "fce_baseline_gonogo_v1" : "fce_baseline_reaction_v1";
+      // Use baselineKeyFor() to get correct key for test type
+      const key = baselineKeyFor(tt);
       const raw = localStorage.getItem(key);
       return raw ? JSON.parse(raw) : [];
     } catch {
       return [];
     }
   })();
+
+  // Filter out invalid baseline sessions before using them
+  const baselineSessions = filterValidBaselineSessions(baselineSessionsRaw);
 
   const baselineMean = baselineSessions.length ? mean(baselineSessions.map(s => s.mean)) : NaN;
   const baselineSD = baselineSessions.length ? mean(baselineSessions.map(s => s.sd)) : NaN;
@@ -1536,7 +2369,23 @@ function renderHistory() {
       errs.className = "history-line";
       errs.textContent = `${t("history.misses")} ${m.misses ?? 0} · ${t("history.falseAlarms")} ${m.falseAlarms ?? 0} · ${t("history.falseStarts")} ${m.falseStarts ?? 0}`;
       body.appendChild(errs);
+    } else if (tt === "divided") {
+      // Show errors for divided attention
+      const errs = document.createElement("div");
+      errs.className = "history-line";
+      errs.textContent = `${t("history.misses")} ${m.misses ?? 0} · ${t("history.falseAlarms")} ${m.falseAlarms ?? 0} · ${t("history.falseStarts")} ${m.falseStarts ?? 0}`;
+      body.appendChild(errs);
+      
+      // Show flash metrics for divided attention
+      if (typeof m.flashTargetCount === "number" && typeof m.flashUserCount === "number" && typeof m.flashAbsError === "number") {
+        const flashLine = document.createElement("div");
+        flashLine.className = "history-line muted";
+        const flashLabel = currentLang === "no" ? "Flashes" : "Flashes";
+        flashLine.textContent = `${flashLabel}: ${currentLang === "no" ? "mål" : "target"} ${m.flashTargetCount} · ${currentLang === "no" ? "svar" : "answer"} ${m.flashUserCount} · ${currentLang === "no" ? "feil" : "error"} ${m.flashAbsError}`;
+        body.appendChild(flashLine);
+      }
     } else {
+      // Reaction Time: only false starts
       const fs = document.createElement("div");
       fs.className = "history-line";
       fs.textContent = `${t("history.falseStarts")} ${m.falseStarts ?? 0}`;
@@ -1545,7 +2394,22 @@ function renderHistory() {
 
     // Compare-to-baseline hint for check sessions
     if (s.mode === "check" && baselineSessions.length) {
-      const status = statusLabelFromCompare(avg, baselineMean, baselineSD);
+      let status;
+      // For divided attention, use multi-metric comparison if available; otherwise use avgMs only
+      if (tt === "divided" && m.nogoCount !== undefined && m.flashAbsError !== undefined) {
+        // Use multi-metric status comparison for divided attention
+        const sessionPayloadMock = {
+          mean: avg,
+          falseAlarms: m.falseAlarms || 0,
+          trials: m.trials || 0,
+          nogoCount: m.nogoCount || 0,
+          flashAbsError: m.flashAbsError || 0
+        };
+        status = getDividedAttentionStatus(sessionPayloadMock, baselineSessions);
+      } else {
+        // For reaction and gonogo, use avgMs only (existing behavior)
+        status = statusLabelFromCompare(avg, baselineMean, baselineSD);
+      }
       const delta = Number.isFinite(avg) && Number.isFinite(baselineMean) ? (avg - baselineMean) : NaN;
       const cmp = document.createElement("div");
       cmp.className = "history-compare";
@@ -1586,6 +2450,7 @@ function renderHistory() {
 }
 
 updateBaselineInfo();
+updateDividedLegend();
 
 // Hide Reset button initially (only show during active session)
 resetBtn.style.display = "none";

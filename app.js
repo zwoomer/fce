@@ -12,6 +12,16 @@ const I18N = {
       runCheck: "Run Functional Check",
       reset: "Reset",
       clearBaseline: "Clear baseline",
+      testType: {
+        reaction: "Reaction Time",
+        gonogo: "Go / No-Go",
+      },
+      mode: {
+        baseline: "Baseline",
+        check: "Check",
+        training: "Training",
+        all: "All",
+      },
     },
     status: {
       within: "Within normal range",
@@ -49,6 +59,16 @@ const I18N = {
       runCheck: "Kjør funksjonssjekk",
       reset: "Nullstill",
       clearBaseline: "Slett baseline",
+      testType: {
+        reaction: "Reaksjonstid",
+        gonogo: "Go / No-Go",
+      },
+      mode: {
+        baseline: "Baseline",
+        check: "Sjekk",
+        training: "Trening",
+        all: "Alle",
+      },
     },
     status: {
       within: "Innenfor normalområdet",
@@ -81,8 +101,13 @@ const I18N = {
 };
 
 function t(path) {
-  const [group, key] = path.split(".");
-  return (I18N[currentLang] && I18N[currentLang][group] && I18N[currentLang][group][key]) || path;
+  const parts = path.split(".");
+  let value = I18N[currentLang];
+  for (const part of parts) {
+    if (!value || typeof value !== "object") return path;
+    value = value[part];
+  }
+  return value !== undefined ? value : path;
 }
 
 // Helper functions for bilingual trial and session strings
@@ -266,6 +291,87 @@ function applyLangUI() {
   // 6) Re-render history if visible
   if (historyListEl) {
     renderHistory();
+  }
+
+  // 7) Update select options for modes and test types
+  updateSelectOptions();
+}
+
+function updateSelectOptions() {
+  // Update testType select options
+  const testTypeSelect = document.getElementById("testType");
+  if (testTypeSelect) {
+    const selectedValue = testTypeSelect.value || "reaction";
+    testTypeSelect.innerHTML = "";
+    const reactionOpt = document.createElement("option");
+    reactionOpt.value = "reaction";
+    reactionOpt.textContent = t("ui.testType.reaction");
+    testTypeSelect.appendChild(reactionOpt);
+    const gonogoOpt = document.createElement("option");
+    gonogoOpt.value = "gonogo";
+    gonogoOpt.textContent = t("ui.testType.gonogo");
+    testTypeSelect.appendChild(gonogoOpt);
+    testTypeSelect.value = selectedValue;
+  }
+
+  // Update historyTest select options
+  const historyTestSelect = document.getElementById("historyTest");
+  if (historyTestSelect) {
+    const selectedValue = historyTestSelect.value || "reaction";
+    historyTestSelect.innerHTML = "";
+    const reactionOpt = document.createElement("option");
+    reactionOpt.value = "reaction";
+    reactionOpt.textContent = t("ui.testType.reaction");
+    historyTestSelect.appendChild(reactionOpt);
+    const gonogoOpt = document.createElement("option");
+    gonogoOpt.value = "gonogo";
+    gonogoOpt.textContent = t("ui.testType.gonogo");
+    historyTestSelect.appendChild(gonogoOpt);
+    historyTestSelect.value = selectedValue;
+  }
+
+  // Update contextMode select options
+  const contextModeSelect = document.getElementById("contextMode");
+  if (contextModeSelect) {
+    const selectedValue = contextModeSelect.value || "baseline";
+    contextModeSelect.innerHTML = "";
+    const baselineOpt = document.createElement("option");
+    baselineOpt.value = "baseline";
+    baselineOpt.textContent = t("ui.mode.baseline");
+    contextModeSelect.appendChild(baselineOpt);
+    const checkOpt = document.createElement("option");
+    checkOpt.value = "check";
+    checkOpt.textContent = t("ui.mode.check");
+    contextModeSelect.appendChild(checkOpt);
+    const trainingOpt = document.createElement("option");
+    trainingOpt.value = "training";
+    trainingOpt.textContent = t("ui.mode.training");
+    contextModeSelect.appendChild(trainingOpt);
+    contextModeSelect.value = selectedValue;
+  }
+
+  // Update historyMode select options
+  const historyModeSelect = document.getElementById("historyMode");
+  if (historyModeSelect) {
+    const selectedValue = historyModeSelect.value || "all";
+    historyModeSelect.innerHTML = "";
+    const allOpt = document.createElement("option");
+    allOpt.value = "all";
+    allOpt.textContent = t("ui.mode.all");
+    historyModeSelect.appendChild(allOpt);
+    const baselineOpt = document.createElement("option");
+    baselineOpt.value = "baseline";
+    baselineOpt.textContent = t("ui.mode.baseline");
+    historyModeSelect.appendChild(baselineOpt);
+    const checkOpt = document.createElement("option");
+    checkOpt.value = "check";
+    checkOpt.textContent = t("ui.mode.check");
+    historyModeSelect.appendChild(checkOpt);
+    const trainingOpt = document.createElement("option");
+    trainingOpt.value = "training";
+    trainingOpt.textContent = t("ui.mode.training");
+    historyModeSelect.appendChild(trainingOpt);
+    historyModeSelect.value = selectedValue;
   }
 }
 

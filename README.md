@@ -99,3 +99,13 @@ It is **not a medical device**, **not a diagnostic tool**, and **not a legal jud
 Measure **function**, not assumption.  
 Replace abstraction with evidence.  
 Give individuals and institutions a clearer mirror of real-world cognitive performance.
+
+---
+
+## License
+
+Copyright © 2026 Arnas (Zwoomer).
+
+All rights reserved.
+
+No part of this project may be copied, modified, or distributed without explicit permission from the author.

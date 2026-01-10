@@ -6,15 +6,18 @@
     overflow-x: hidden;
   }
 
+  /* Improved base typography and body styling */
   body {
-    font-family: system-ui, sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     background: #111;
     color: #eee;
-  
     margin: 0;
     padding: 0;
     min-height: 100vh;
     overflow-y: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.5;
   }
 
   main {
@@ -44,20 +47,29 @@
     text-align: center;
   }
   
+  /* Improved controls spacing */
   .controls {
-    margin: 14px auto 0;
+    margin: 20px auto 0;
     width: min(760px, 100%);
   }
 
+  /* Improved spacing for config and action rows */
   .config-row,
   .action-row,
   .secondary-row {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    margin: 10px 0;
+    margin: 12px 0;
+  }
+  
+  .config-row label {
+    font-weight: 500;
+    font-size: 14px;
+    color: #ddd;
+    opacity: 0.9;
   }
 
   /* Make action buttons feel primary and consistent */
@@ -85,113 +97,339 @@
     }
   }
   
-  input[type="number"] {
-    width: 80px;
-    padding: 8px;
-    font-size: 16px;
+  /* Enhanced form input styling */
+  input[type="number"],
+  input.text,
+  select {
+    padding: 9px 12px;
+    font-size: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    color: #eee;
+    transition: all 0.2s ease;
+    outline: none;
   }
   
+  input[type="number"]:focus,
+  input.text:focus,
+  select:focus {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+  }
+  
+  input[type="number"] {
+    width: 80px;
+  }
+  
+  input.text {
+    flex: 1;
+    min-width: 200px;
+  }
+  
+  /* Modern button styles with hover/active/disabled states */
   button {
-    padding: 12px 18px;
-    font-size: 16px;
+    padding: 12px 20px;
+    font-size: 15px;
+    font-weight: 500;
     cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.05);
+    color: #eee;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+    letter-spacing: 0.2px;
+    outline: none;
+  }
+  
+  button:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  button:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+  }
+  
+  button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+  
+  button:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.3);
+    outline-offset: 2px;
+  }
+  
+  /* Action row buttons (primary actions) */
+  .action-row button {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    font-weight: 600;
+  }
+  
+  .action-row button:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.3);
   }
   
   button.secondary {
-    opacity: 0.9;
+    opacity: 0.85;
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.1);
   }
   
+  button.secondary:hover:not(:disabled) {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.06);
+  }
+  
+  /* Test area with smooth visibility transitions */
   .test-area {
     width: 100%;
     max-width: 520px;
     height: 200px;
-    margin: 14px auto;
-    background: red;
+    margin: 16px auto;
+    background: #151515;
+    border: 2px solid rgba(255, 255, 255, 0.08);
     display: flex;
     justify-content: center;
     align-items: center;
     user-select: none;
-    border-radius: 12px;
+    border-radius: 14px;
     position: relative;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+    transition: border-color 0.3s ease, background-color 0.3s ease;
   }
   
+  .test-area:not(.hidden) {
+    border-color: rgba(255, 255, 255, 0.15);
+    background: #121212;
+    animation: testAreaFadeIn 0.3s ease-out;
+  }
+  
+  @keyframes testAreaFadeIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.98);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  /* Stimulus text styling with smooth appearance */
+  .test-area:not(.hidden) {
+    font-size: clamp(24px, 5vw, 32px);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: #eee;
+    text-align: center;
+    line-height: 1.2;
+  }
+  
+  /* Subtle pulse animation for active test area */
+  @keyframes subtlePulse {
+    0%, 100% {
+      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+    50% {
+      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+  }
+  
+  .test-area:not(.hidden):focus-within {
+    animation: subtlePulse 2s ease-in-out infinite;
+  }
+  
+  /* Flash overlay with smooth fade transitions */
   .flash-overlay {
     position: absolute;
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     background: #4af;
     border-radius: 50%;
     pointer-events: none;
     top: 20px;
     right: 20px;
     z-index: 10;
-    box-shadow: 0 0 10px rgba(68, 170, 255, 0.8);
+    box-shadow: 0 0 16px rgba(68, 170, 255, 0.9), 0 0 32px rgba(68, 170, 255, 0.5);
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  
+  .flash-overlay:not(.hidden) {
+    opacity: 1;
+    transform: scale(1);
+    animation: flashPulse 0.3s ease-out;
+  }
+  
+  @keyframes flashPulse {
+    0% {
+      transform: scale(0.6);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
   }
   
   .hidden {
     display: none;
   }
   
+  /* Card/Panel styling with improved spacing and visual hierarchy */
   .panel {
     width: 100%;
-    margin: 14px auto;
+    margin: 16px auto;
     text-align: left;
     background: #1a1a1a;
-    border-radius: 12px;
-    padding: 12px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    padding: 20px 18px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .panel:hover {
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   }
   
   .panel h2 {
-    margin: 0 0 8px 0;
-    font-size: 16px;
+    margin: 0 0 12px 0;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    color: #eee;
+    opacity: 0.95;
   }
   
+  .panel.context-panel {
+    background: #181818;
+    border-color: rgba(255, 255, 255, 0.05);
+  }
+  
+  /* Enhanced trial list styling */
   #trialList {
     margin: 0;
-    padding-left: 18px;
+    padding-left: 20px;
     max-height: 320px;
     overflow-y: auto;
-    padding-right: 8px;
+    padding-right: 10px;
+    line-height: 1.6;
+    font-size: 14px;
+    color: #ddd;
   }
   
+  #trialList li {
+    margin-bottom: 4px;
+    padding: 2px 0;
+  }
+  
+  #trialList::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  #trialList::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 3px;
+  }
+  
+  #trialList::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 3px;
+  }
+  
+  #trialList::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+  
+  /* Typography improvements for summary and content */
   #summary {
-    margin-top: 10px;
+    margin-top: 14px;
     font-weight: 600;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #eee;
+    opacity: 0.95;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    border-left: 3px solid rgba(255, 255, 255, 0.1);
   }
  
+  /* Improved baseline actions spacing */
   .baseline-actions {
-    margin: 10px 0;
+    margin: 12px 0 8px;
   }
   
   button.danger {
-    border: 1px solid #ff6b6b;
-    background: transparent;
+    border: 1px solid rgba(255, 107, 107, 0.4);
+    background: rgba(255, 107, 107, 0.08);
     color: #ff6b6b;
   }
   
+  button.danger:hover:not(:disabled) {
+    background: rgba(255, 107, 107, 0.15);
+    border-color: rgba(255, 107, 107, 0.6);
+  }
+  
+  button.danger:active:not(:disabled) {
+    background: rgba(255, 107, 107, 0.12);
+  }
+  
+  /* Improved baseline list styling */
   #baselineList {
-    margin: 10px 0 0;
-    padding-left: 18px;
-    line-height: 1.4;
+    margin: 12px 0 0;
+    padding-left: 20px;
+    line-height: 1.5;
     font-size: 14px;
     opacity: 0.95;
+    color: #ddd;
+  }
+  
+  #baselineList li {
+    margin-bottom: 6px;
+    padding: 2px 0;
   }
 
-  select {
-    padding: 8px;
-    font-size: 16px;
-  }
 
+  /* Enhanced baseline progress and guidance */
   #baselineProgress, #baselineGuidance {
-    margin: 6px 0;
-    opacity: 0.95;
+    margin: 8px 0;
+    opacity: 0.9;
     font-size: 14px;
+    line-height: 1.5;
+    color: #ccc;
+  }
+  
+  #baselineInfo {
+    line-height: 1.6;
+    color: #ddd;
   }
 
+  /* Improved note/helper text styling */
   .note {
     font-size: 13px;
     opacity: 0.7;
-    margin-top: 6px;
+    margin-top: 8px;
+    line-height: 1.5;
+    color: #aaa;
+    font-style: italic;
   }
 
   /* Topbar stays pinned */
@@ -326,17 +564,30 @@
   }
 
   /* Documentation-style content (About, How to Use, FAQ, Docs) */
+  /* Enhanced typography for documentation views */
   .view h2 {
     margin-top: 0;
-    margin-bottom: 12px;
-    font-size: 24px;
+    margin-bottom: 16px;
+    font-size: clamp(24px, 5vw, 28px);
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    color: #eee;
+    line-height: 1.2;
   }
-
+  
   .view h3 {
-    margin-top: 28px;
-    margin-bottom: 10px;
-    font-size: 18px;
+    margin-top: 32px;
+    margin-bottom: 12px;
+    font-size: clamp(18px, 4vw, 20px);
+    font-weight: 600;
     opacity: 0.95;
+    color: #eee;
+    letter-spacing: -0.2px;
+    line-height: 1.3;
+  }
+  
+  .view h3:first-child {
+    margin-top: 0;
   }
 
   .view p {
@@ -388,17 +639,26 @@
     margin-right: auto;
   }
 
+  /* Enhanced card styling for documentation */
   .view .card {
     background: #1a1a1a;
-    border-radius: 12px;
-    padding: 20px 24px;
-    margin: 24px auto;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin: 28px auto;
     max-width: 720px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
   }
-
+  
+  .view .card:hover {
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  
   .view .card h3 {
     margin-top: 0;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
   }
 
   .view blockquote.quote,
@@ -532,146 +792,285 @@ img, video, iframe, canvas {
 /* ----------------------------
    History cards (Phase 1.5)
 ---------------------------- */
-.history-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
+  /* Enhanced history list spacing */
+  .history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 16px;
+  }
 
-.history-card {
-  background: #161616;
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 12px;
-  padding: 14px 14px 12px;
-}
+  /* Enhanced history card styling */
+  .history-card {
+    background: #161616;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 16px 16px 14px;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  .history-card:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transform: translateY(-1px);
+  }
 
-.history-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 10px;
-  margin-bottom: 10px;
-}
+  /* Improved history header typography */
+  .history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  
+  .history-ts {
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.2px;
+    color: #eee;
+  }
+  
+  .history-meta {
+    opacity: 0.75;
+    font-size: 13px;
+    margin-top: 3px;
+    color: #aaa;
+    font-weight: 500;
+  }
 
-.history-ts {
-  font-weight: 600;
-  letter-spacing: 0.2px;
-}
+  /* Enhanced badge/chip styles for metrics and quality labels */
+  .badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.05);
+    opacity: 0.95;
+    transition: all 0.2s ease;
+  }
+  
+  .badge.ok {
+    border-color: rgba(58, 221, 58, 0.5);
+    background: rgba(58, 221, 58, 0.12);
+    color: #6f6;
+  }
+  
+  .badge.warn {
+    border-color: rgba(204, 204, 51, 0.5);
+    background: rgba(204, 204, 51, 0.12);
+    color: #ffc;
+  }
+  
+  .badge.bad {
+    border-color: rgba(255, 107, 107, 0.6);
+    background: rgba(255, 107, 107, 0.15);
+    color: #ff6b6b;
+  }
+  
+  .badge.na {
+    border-color: #666;
+    background: rgba(255, 255, 255, 0.03);
+    opacity: 0.7;
+  }
+  
+  /* Quality label badges */
+  .history-line .badge,
+  #summary .badge {
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+  
+  /* Chip style for small inline metrics (errors, flash info) */
+  .chip {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #ccc;
+    margin: 0 2px;
+    letter-spacing: 0.2px;
+  }
 
-.history-meta {
-  opacity: 0.75;
-  font-size: 13px;
-  margin-top: 2px;
-}
+  /* Improved history body spacing */
+  .history-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 4px;
+  }
 
-.badge {
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  letter-spacing: 0.4px;
-  border: 1px solid rgba(255,255,255,0.12);
-  opacity: 0.95;
-}
-
-.badge.ok {
-  border-color: #3a3;
-  background: rgba(255,255,255,0.06);
-}
-
-.badge.warn {
-  border-color: #cc3;
-  background: rgba(255,255,255,0.06);
-}
-
-.badge.bad {
-  border-color: rgba(255,107,107,0.55);
-  background: rgba(255,107,107,0.10);
-}
-
-.badge.na {
-  border-color: #666;
-  opacity: 0.75;
-}
-
-.history-body {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.history-line {
-  font-size: 14px;
-}
-
-.history-compare {
-  margin-top: 6px;
-  padding-top: 8px;
-  border-top: 1px solid rgba(255,255,255,0.08);
-  font-weight: 600;
-}
-
-.history-tags {
-  opacity: 0.8;
-  font-size: 13px;
-}
-
-.history-reason {
-  opacity: 0.75;
-  font-size: 13px;
-}
+  /* Typography improvements for history lines */
+  .history-line {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #ddd;
+  }
+  
+  .history-line.muted {
+    opacity: 0.75;
+    font-size: 13px;
+  }
+  
+  .history-compare {
+    margin-top: 8px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-weight: 600;
+    font-size: 14px;
+    color: #eee;
+  }
+  
+  .history-compare.muted {
+    opacity: 0.7;
+    font-weight: 500;
+  }
+  
+  .history-tags {
+    opacity: 0.85;
+    font-size: 13px;
+    font-style: italic;
+    color: #ccc;
+    margin-top: 4px;
+  }
+  
+  .history-reason {
+    opacity: 0.8;
+    font-size: 13px;
+    color: #ff6b6b;
+    margin-top: 6px;
+    padding: 6px 10px;
+    background: rgba(255, 107, 107, 0.08);
+    border-left: 2px solid rgba(255, 107, 107, 0.4);
+    border-radius: 4px;
+  }
 
 input.text {
   padding: 8px;
   font-size: 16px;
 }
 
-.history-actions {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  margin: 10px 0 14px;
+  /* Enhanced history actions styling */
+  .history-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin: 12px 0 16px;
+  }
+  
+  #exportStatus {
+    font-size: 14px;
+    opacity: 0.85;
+    color: #aaa;
+    font-style: italic;
+  }
+
+  /* Enhanced trend card styling */
+  .trend-card {
+    margin-top: 16px;
+  }
+  
+  .trend-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 12px 0 0;
+    text-align: left;
+  }
+  
+  .trend-item {
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    transition: background-color 0.2s ease;
+  }
+  
+  .trend-item:hover {
+    background-color: rgba(255, 255, 255, 0.02);
+    padding-left: 8px;
+    padding-right: 8px;
+    margin-left: -8px;
+    margin-right: -8px;
+    border-radius: 6px;
+  }
+  
+  .trend-item:last-child {
+    border-bottom: none;
+  }
+  
+  .trend-left {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  
+  .trend-right {
+    text-align: right;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+    color: #ddd;
+  }
+
+/* --- v0.2.2 polish add-on (safe) --- */
+
+/* 1) Make selects feel more deliberate */
+select {
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, rgba(255,255,255,0.55) 50%),
+    linear-gradient(135deg, rgba(255,255,255,0.55) 50%, transparent 50%);
+  background-position:
+    calc(100% - 18px) calc(50% - 2px),
+    calc(100% - 12px) calc(50% - 2px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 34px;
 }
 
-#exportStatus {
-  font-size: 14px;
-  opacity: 0.8;
+/* Try to keep option text readable in dark themes (works in some browsers) */
+select option {
+  background: #151515;
+  color: #eee;
 }
 
-.trend-card {
-  margin-top: 14px;
+/* If options are disabled, make it obvious but not "faded into nothing" */
+select option:disabled {
+  color: rgba(238, 238, 238, 0.55);
 }
 
-.trend-list {
-  list-style: none;
-  padding-left: 0;
-  margin: 10px 0 0;
-  text-align: left;
+/* 2) Calm the "invalid" message tone visually (still red, less alarm) */
+.history-reason {
+  color: rgba(255, 170, 170, 0.95);
+  background: rgba(255, 107, 107, 0.06);
+  border-left: 2px solid rgba(255, 107, 107, 0.28);
 }
 
-.trend-item {
-  display: flex;
-  gap: 10px;
-  align-items: baseline;
-  justify-content: space-between;
-  padding: 10px 0;
-  border-bottom: 1px solid #222;
-}
-
-.trend-item:last-child {
-  border-bottom: none;
-}
-
-.trend-left {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.trend-right {
-  text-align: right;
-  white-space: nowrap;
+/* 3) Chips: make them look a bit more "instrument readout" */
+.chip {
+  border-radius: 999px;
+  padding: 3px 10px;
   font-variant-numeric: tabular-nums;
+}
+
+/* 4) Badge alignment polish */
+.badge {
+  font-variant-numeric: tabular-nums;
+}
+
+/* 5) Reduce hover lift on cards slightly (more "calm instrument") */
+.panel:hover,
+.history-card:hover {
+  transform: translateY(-0.5px);
 }

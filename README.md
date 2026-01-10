@@ -1,9 +1,9 @@
 # FCE — Functional Cognition & Execution  
 *(Internal codename: Anamnora)*
 
-FCE is a digital system for measuring **functional cognitive performance** — such as reaction time, attention, and precision — relative to a person’s **own baseline**.
+FCE is a digital system for measuring **functional cognitive performance** — such as reaction time, attention, and precision — relative to a person's **own baseline**.
 
-Instead of inferring impairment from substances, age, or population averages, FCE measures **how well someone actually functions right now**, compared to their normal, sober performance.
+Instead of inferring impairment from substances, age, or population averages, FCE measures **how well someone actually functions right now**, compared to their normal performance under typical functioning conditions.
 
 ---
 
@@ -26,7 +26,7 @@ FCE addresses this gap by focusing on **function, not chemistry**.
 ## Core principles
 
 - **Personal baseline first**  
-  Each user establishes a baseline through multiple sober sessions.
+  Each user establishes a baseline through multiple sessions performed when functioning normally.
 
 - **Individual thresholds**  
   Impairment is defined as deviation from *your own* normal range, not from a group average.
@@ -64,15 +64,15 @@ It is **not** limited to cannabis or any specific substance.
 
 ## Project status
 
-This repository currently contains:
-- Conceptual architecture
-- Early design sketches
-- Prototype planning
+This repository contains:
+- A working web prototype
+- Baseline-relative test modules (Reaction Time, Go / No-Go)
+- Session history with context tags
+- Local JSON export
+- Trend view (baseline band + recent checks)
+- Bilingual documentation (EN / NO)
 
-The goal of the initial phase is to build a **minimal functional prototype** that demonstrates:
-- baseline creation
-- short test execution
-- comparison of “today vs baseline”
+The initial phase (v0.1) is complete.
 
 ---
 

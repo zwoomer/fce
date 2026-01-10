@@ -589,16 +589,6 @@ function updateSelectOptions() {
     ], "reaction");
   }
 
-  // Update contextMode select options
-  const contextModeSelect = document.getElementById("contextMode");
-  if (contextModeSelect) {
-    populateSelectOptions(contextModeSelect, [
-      { value: "baseline", text: t("ui.mode.baseline") },
-      { value: "check", text: t("ui.mode.check") },
-      { value: "training", text: t("ui.mode.training") }
-    ], "baseline");
-  }
-
   // Update historyMode select options
   const historyModeSelect = document.getElementById("historyMode");
   if (historyModeSelect) {
@@ -627,8 +617,7 @@ const baselineProgress = document.getElementById("baselineProgress");
 const baselineGuidance = document.getElementById("baselineGuidance");
 const testType = document.getElementById("testType");
 
-// Context (optional)
-const contextMode = document.getElementById("contextMode");
+// Context (optional) - sleep, stress, note only (mode is determined by action button clicked)
 const sleepRating = document.getElementById("sleepRating");
 const stressRating = document.getElementById("stressRating");
 const contextNote = document.getElementById("contextNote");
@@ -706,7 +695,7 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") closeMenu();
 });
 
-let mode = null; // "baseline" | "check" | "training" (set by button click, never by dropdown)
+let mode = null; // "baseline" | "check" | "training" (set by action button click - this is the source of truth)
 
 let startTime = null;
 let timeoutId = null;
@@ -758,14 +747,14 @@ const TEST_CONFIG = {
 
 startBaselineBtn.addEventListener("click", () => {
     if (inSession) return;
-    if (contextMode) contextMode.value = "baseline";
+    // Mode is determined by the action button clicked - this is the source of truth
     mode = "baseline";
     beginSession();
   });
   
   startCheckBtn.addEventListener("click", () => {
     if (inSession) return;
-    if (contextMode) contextMode.value = "check";
+    // Mode is determined by the action button clicked - this is the source of truth
     mode = "check";
     beginSession();
   });
@@ -773,7 +762,7 @@ startBaselineBtn.addEventListener("click", () => {
   if (startTrainingBtn) {
     startTrainingBtn.addEventListener("click", () => {
       if (inSession) return;
-      if (contextMode) contextMode.value = "training";
+      // Mode is determined by the action button clicked - this is the source of truth
       mode = "training";
       beginSession();
     });
@@ -1426,6 +1415,9 @@ function saveHistory(tt, sessions) {
   localStorage.setItem(historyKeyFor(tt), JSON.stringify(sessions));
 }
 
+// Get context tags (metadata only - sleep, stress, note)
+// These are saved with each session but do not affect scoring or logic
+// Mode is determined separately by which action button was clicked
 function getContextTags() {
   const safeInt = (v) => {
     const n = parseInt(v, 10);
@@ -1492,7 +1484,7 @@ function pushHistoryRecord(record) {
           id: createdAt,
           createdAt,
           testType: "reaction",
-          mode: mode || "", // Mode must come from button click, not dropdown
+          mode: mode || "", // Mode is determined by which action button was clicked (baseline/check/training)
           metrics: { avgMs: 0, sdMs: 0, bestMs: 0, worstMs: 0, trials: 0, falseStarts },
           flags,
           tags,
@@ -1525,7 +1517,7 @@ function pushHistoryRecord(record) {
           id: createdAt,
           createdAt,
           testType: "gonogo",
-          mode: mode || "", // Mode must come from button click, not dropdown
+          mode: mode || "", // Mode is determined by which action button was clicked (baseline/check/training)
           metrics: {
             avgMs: 0,
             sdMs: 0,
@@ -1572,7 +1564,7 @@ function pushHistoryRecord(record) {
           id: createdAt,
           createdAt,
           testType: "divided",
-          mode: mode || "", // Mode must come from button click, not dropdown
+          mode: mode || "", // Mode is determined by which action button was clicked (baseline/check/training)
           metrics: { 
             avgMs: 0, 
             sdMs: 0, 
@@ -1606,7 +1598,7 @@ function pushHistoryRecord(record) {
           id: createdAt,
           createdAt,
           testType: "divided",
-          mode: mode || "", // Mode must come from button click, not dropdown
+          mode: mode || "", // Mode is determined by which action button was clicked (baseline/check/training)
           metrics: {
             avgMs: 0,
             sdMs: 0,
@@ -1666,7 +1658,7 @@ function pushHistoryRecord(record) {
       id: createdAt,
       createdAt,
       testType: tt, // Use actual testType value
-      mode: mode || "", // Mode must come from button click, never from dropdown
+      mode: mode || "", // Mode is determined by which action button was clicked (baseline/check/training)
       metrics: isReaction
         ? {
             avgMs: sessionPayload.mean,

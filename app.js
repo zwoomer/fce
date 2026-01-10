@@ -50,6 +50,18 @@ const I18N = {
       ok: "OK",
       invalid: "INVALID",
     },
+    history: {
+      avg: "avg",
+      mean: "mean",
+      sd: "SD",
+      trials: "trials",
+      best: "best",
+      worst: "worst",
+      falseStarts: "false starts",
+      misses: "misses",
+      falseAlarms: "false alarms",
+      baseline: "baseline",
+    },
   },
   no: {
     ui: {
@@ -96,6 +108,18 @@ const I18N = {
       status: "Status: {status}",
       ok: "OK",
       invalid: "UGYLDIG",
+    },
+    history: {
+      avg: "gj.snitt",
+      mean: "gjennomsnitt",
+      sd: "SD",
+      trials: "forsøk",
+      best: "best",
+      worst: "verst",
+      falseStarts: "feilstarter",
+      misses: "bom",
+      falseAlarms: "inhibisjonsfeil",
+      baseline: "baseline",
     },
   },
 };
@@ -1193,7 +1217,7 @@ function loadBaseline() {
     for (const s of newestFirst) {
       const li = document.createElement("li");
       li.textContent =
-        `${formatTime(s.timestamp)} — mean ${s.mean.toFixed(0)} ms, SD ${s.sd.toFixed(0)} ms (${s.trials} trials)`;
+        `${formatTime(s.timestamp)} — ${t("history.mean")} ${s.mean.toFixed(0)} ms, ${t("history.sd")} ${s.sd.toFixed(0)} ms (${s.trials} ${t("history.trials")})`;
       baselineList.appendChild(li);
     }
   }
@@ -1469,7 +1493,8 @@ function renderHistory() {
     ts.textContent = formatTs(s.createdAt || s.id);
     const meta = document.createElement("div");
     meta.className = "history-meta";
-    meta.textContent = `${s.mode || ""}`.trim();
+    const modeValue = s.mode || "";
+    meta.textContent = modeValue ? t(`ui.mode.${modeValue}`) || modeValue : "";
     left.appendChild(ts);
     left.appendChild(meta);
 
@@ -1498,23 +1523,23 @@ function renderHistory() {
 
     const line1 = document.createElement("div");
     line1.className = "history-line";
-    line1.textContent = `avg ${Number.isFinite(avg) ? avg.toFixed(0) : "—"} ms · SD ${Number.isFinite(sd) ? sd.toFixed(0) : "—"} · trials ${Number.isFinite(trials) ? trials : "—"}`;
+    line1.textContent = `${t("history.avg")} ${Number.isFinite(avg) ? avg.toFixed(0) : "—"} ms · ${t("history.sd")} ${Number.isFinite(sd) ? sd.toFixed(0) : "—"} · ${t("history.trials")} ${Number.isFinite(trials) ? trials : "—"}`;
     body.appendChild(line1);
 
     const line2 = document.createElement("div");
     line2.className = "history-line muted";
-    line2.textContent = `best ${Number.isFinite(best) ? best.toFixed(0) : "—"} · worst ${Number.isFinite(worst) ? worst.toFixed(0) : "—"}`;
+    line2.textContent = `${t("history.best")} ${Number.isFinite(best) ? best.toFixed(0) : "—"} · ${t("history.worst")} ${Number.isFinite(worst) ? worst.toFixed(0) : "—"}`;
     body.appendChild(line2);
 
     if (tt === "gonogo") {
       const errs = document.createElement("div");
       errs.className = "history-line";
-      errs.textContent = `misses ${m.misses ?? 0} · false alarms ${m.falseAlarms ?? 0} · false starts ${m.falseStarts ?? 0}`;
+      errs.textContent = `${t("history.misses")} ${m.misses ?? 0} · ${t("history.falseAlarms")} ${m.falseAlarms ?? 0} · ${t("history.falseStarts")} ${m.falseStarts ?? 0}`;
       body.appendChild(errs);
     } else {
       const fs = document.createElement("div");
       fs.className = "history-line";
-      fs.textContent = `false starts ${m.falseStarts ?? 0}`;
+      fs.textContent = `${t("history.falseStarts")} ${m.falseStarts ?? 0}`;
       body.appendChild(fs);
     }
 
@@ -1524,7 +1549,7 @@ function renderHistory() {
       const delta = Number.isFinite(avg) && Number.isFinite(baselineMean) ? (avg - baselineMean) : NaN;
       const cmp = document.createElement("div");
       cmp.className = "history-compare";
-      cmp.textContent = `${status} · Δ ${Number.isFinite(delta) ? (delta >= 0 ? "+" : "") + delta.toFixed(0) : "—"} ms (baseline ${baselineMean.toFixed(0)} ± ${baselineSD.toFixed(0)} (±2 SD))`;
+      cmp.textContent = `${status} · Δ ${Number.isFinite(delta) ? (delta >= 0 ? "+" : "") + delta.toFixed(0) : "—"} ms (${t("history.baseline")} ${baselineMean.toFixed(0)} ± ${baselineSD.toFixed(0)} (±2 SD))`;
       body.appendChild(cmp);
     } else if (s.mode === "check" && !baselineSessions.length) {
       const cmp = document.createElement("div");

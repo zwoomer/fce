@@ -560,13 +560,24 @@ img, video, iframe, canvas {
   opacity: 0.95;
 }
 
-.badge-ok {
+.badge.ok {
+  border-color: #3a3;
   background: rgba(255,255,255,0.06);
 }
 
-.badge-bad {
+.badge.warn {
+  border-color: #cc3;
+  background: rgba(255,255,255,0.06);
+}
+
+.badge.bad {
   border-color: rgba(255,107,107,0.55);
   background: rgba(255,107,107,0.10);
+}
+
+.badge.na {
+  border-color: #666;
+  opacity: 0.75;
 }
 
 .history-body {
@@ -613,4 +624,40 @@ input.text {
 #exportStatus {
   font-size: 14px;
   opacity: 0.8;
+}
+
+.trend-card {
+  margin-top: 14px;
+}
+
+.trend-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 10px 0 0;
+  text-align: left;
+}
+
+.trend-item {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #222;
+}
+
+.trend-item:last-child {
+  border-bottom: none;
+}
+
+.trend-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.trend-right {
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }

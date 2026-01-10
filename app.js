@@ -30,6 +30,14 @@ const I18N = {
       empty: "No history to export.",
       failed: "Copy failed — showing text below.",
     },
+    trend: {
+      baselineLine: "Baseline: mean {mean} ms | SD {sd} ms | Band: {lo}–{hi} ms (±1 SD)",
+      noBaseline: "No baseline yet — trend uses baseline sessions.",
+      noChecks: "No check sessions yet.",
+      checkLabel: "Check",
+      delta: "Δ {delta} ms",
+      status: "Status: {status}",
+    },
   },
   no: {
     ui: {
@@ -56,6 +64,14 @@ const I18N = {
       copied: "Kopiert til utklippstavlen.",
       empty: "Ingen historikk å eksportere.",
       failed: "Kopiering feilet — viser tekst under.",
+    },
+    trend: {
+      baselineLine: "Baseline: snitt {mean} ms | SD {sd} ms | Bånd: {lo}–{hi} ms (±1 SD)",
+      noBaseline: "Ingen baseline ennå — trend bruker baseline-økter.",
+      noChecks: "Ingen sjekk-økter ennå.",
+      checkLabel: "Sjekk",
+      delta: "Δ {delta} ms",
+      status: "Status: {status}",
     },
   },
 };
@@ -1139,11 +1155,141 @@ function formatTs(iso) {
   }
 }
 
+function fmt(n, digits = 0) {
+  if (typeof n !== "number" || Number.isNaN(n)) return "—";
+  return n.toFixed(digits);
+}
+
+function formatDateTime(iso) {
+  try {
+    const d = new Date(iso);
+    return d.toLocaleString(undefined, { year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" });
+  } catch {
+    return iso || "—";
+  }
+}
+
+function clampBadgeClass(statusText) {
+  // Map your existing status strings to badges.
+  // Adjust if your exact labels differ.
+  const s = (statusText || "").toLowerCase();
+  if (s.includes("within") || s.includes("innenfor")) return "ok";
+  if (s.includes("slightly") || s.includes("litt")) return "warn";
+  if (s.includes("significantly") || s.includes("betydelig")) return "bad";
+  return "na";
+}
+
+// Compute baseline mean/sd from baseline sessions (excluding invalid)
+function computeBaselineFromHistory(sessions) {
+  const base = sessions
+    .filter(s => s && s.mode === "baseline" && s.flags && s.flags.invalid === false)
+    .map(s => s.metrics && typeof s.metrics.avgMs === "number" ? s.metrics.avgMs : null)
+    .filter(v => typeof v === "number" && !Number.isNaN(v));
+
+  if (base.length < 1) return null;
+
+  // reuse your mean/stddev if you already have them; otherwise:
+  const m = base.reduce((a, b) => a + b, 0) / base.length;
+  const variance = base.length > 1
+    ? base.reduce((acc, x) => acc + Math.pow(x - m, 2), 0) / (base.length - 1)
+    : 0;
+
+  const sd = Math.sqrt(variance);
+  return { mean: m, sd, n: base.length };
+}
+
 function statusLabelFromCompare(meanMs, baselineMean, baselineSD) {
   if (!Number.isFinite(baselineMean) || !Number.isFinite(baselineSD)) return "";
   if (meanMs <= baselineMean + baselineSD) return t("status.within");
   if (meanMs <= baselineMean + 2 * baselineSD) return t("status.slightly");
   return t("status.significantly");
+}
+
+function renderTrendFor(testType) {
+  const baselineLine = document.getElementById("trendBaselineLine");
+  const recentChecksEl = document.getElementById("trendRecentChecks");
+  const emptyNote = document.getElementById("trendEmptyNote");
+
+  if (!baselineLine || !recentChecksEl || !emptyNote) return;
+
+  // Use your existing history loader
+  const sessions = loadHistory(testType);
+
+  recentChecksEl.innerHTML = "";
+  emptyNote.textContent = "";
+
+  const baseline = computeBaselineFromHistory(sessions);
+
+  if (!baseline) {
+    baselineLine.textContent = t("trend.noBaseline");
+  } else {
+    const lo = baseline.mean - baseline.sd;
+    const hi = baseline.mean + baseline.sd;
+    baselineLine.textContent = t("trend.baselineLine")
+      .replace("{mean}", fmt(baseline.mean, 0))
+      .replace("{sd}", fmt(baseline.sd, 0))
+      .replace("{lo}", fmt(lo, 0))
+      .replace("{hi}", fmt(hi, 0));
+  }
+
+  // Recent CHECK sessions (exclude invalid if you prefer; I recommend *including* but marking)
+  const checks = sessions
+    .filter(s => s && s.mode === "check")
+    .sort((a, b) => (b.createdAt || b.id || "").localeCompare(a.createdAt || a.id || ""))
+    .slice(0, 10);
+
+  if (checks.length === 0) {
+    emptyNote.textContent = t("trend.noChecks");
+    return;
+  }
+
+  checks.forEach(s => {
+    const avg = s?.metrics?.avgMs;
+    const isInvalid = !!(s?.flags?.invalid);
+    const when = formatDateTime(s?.createdAt || s?.id);
+    const delta = (baseline && typeof avg === "number") ? (avg - baseline.mean) : null;
+
+    // Use your existing check status logic if you have it.
+    // If you already store s.statusText, prefer that:
+    let statusText = s?.statusText || "";
+    if (!statusText && baseline && typeof avg === "number" && typeof baseline.sd === "number") {
+      // Use existing statusLabelFromCompare function
+      statusText = statusLabelFromCompare(avg, baseline.mean, baseline.sd);
+    }
+
+    const badgeClass = isInvalid ? "na" : clampBadgeClass(statusText);
+
+    const li = document.createElement("li");
+    li.className = "trend-item";
+
+    const left = document.createElement("div");
+    left.className = "trend-left";
+
+    const title = document.createElement("div");
+    title.innerHTML = `<span class="badge ${badgeClass}">${isInvalid ? "INVALID" : "OK"}</span> <strong>${t("trend.checkLabel")}</strong> — ${when}`;
+    left.appendChild(title);
+
+    const sub = document.createElement("div");
+    sub.className = "muted";
+    sub.textContent = statusText ? t("trend.status").replace("{status}", statusText) : "";
+    left.appendChild(sub);
+
+    const right = document.createElement("div");
+    right.className = "trend-right";
+
+    const avgLine = document.createElement("div");
+    avgLine.innerHTML = `<strong>${fmt(avg, 0)}</strong> ms`;
+    right.appendChild(avgLine);
+
+    const deltaLine = document.createElement("div");
+    deltaLine.className = "muted";
+    deltaLine.textContent = (delta === null) ? "" : t("trend.delta").replace("{delta}", fmt(delta, 0));
+    right.appendChild(deltaLine);
+
+    li.appendChild(left);
+    li.appendChild(right);
+    recentChecksEl.appendChild(li);
+  });
 }
 
 function renderHistory() {
@@ -1154,6 +1300,9 @@ function renderHistory() {
 
   let sessions = loadHistory(tt);
   sessions = sessions.sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
+
+  // Render trend panel (needs all sessions, not filtered)
+  renderTrendFor(tt);
 
   if (modeFilter !== "all") {
     sessions = sessions.filter(s => s && s.mode === modeFilter);

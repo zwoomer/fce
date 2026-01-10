@@ -1,7 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
 // Language system
 const LANG_KEY = "fce_lang_v1";
-let currentLang = localStorage.getItem(LANG_KEY) || "en";
+// Check for new key first, then migrate from old key if present
+let currentLang = localStorage.getItem(LANG_KEY);
+if (!currentLang) {
+  // Migrate from old key for backward compatibility
+  const oldLang = localStorage.getItem("fce_lang");
+  if (oldLang) {
+    currentLang = oldLang;
+    localStorage.setItem(LANG_KEY, currentLang);
+  } else {
+    currentLang = "en";
+  }
+}
 
 const I18N = {
   en: {
@@ -707,6 +718,30 @@ function closeMenu() {
   document.body.classList.remove("menu-open");
 }
 
+// Reusable function to switch views (used by menu buttons and URL params)
+function switchView(target) {
+  if (!target) return;
+
+  views.forEach(v => {
+    v.classList.add("hidden");
+    v.classList.remove("active");
+  });
+
+  const activeView = document.getElementById(`view-${target}`);
+  if (activeView) {
+    activeView.classList.remove("hidden");
+    activeView.classList.add("active");
+  }
+
+  if (target === "history") {
+    // Keep history default test aligned with current selection
+    if (historyTest) historyTest.value = testType.value;
+    renderHistory();
+  }
+
+  window.scrollTo(0, 0);
+}
+
 menuBtn.addEventListener("click", () => {
   if (menu.classList.contains("open")) closeMenu();
   else openMenu();
@@ -714,29 +749,21 @@ menuBtn.addEventListener("click", () => {
 
 menuOverlay.addEventListener("click", closeMenu);
 
-menuItems.forEach(btn => {
-  btn.addEventListener("click", () => {
-    const target = btn.dataset.view;
-
-    views.forEach(v => {
-      v.classList.add("hidden");
-      v.classList.remove("active");
-    });
-
-    const activeView = document.getElementById(`view-${target}`);
-    if (activeView) {
-      activeView.classList.remove("hidden");
-      activeView.classList.add("active");
+menuItems.forEach(item => {
+  item.addEventListener("click", (e) => {
+    // If it's a link (<a>), let it navigate normally (don't preventDefault)
+    if (item.tagName === "A") {
+      // Close menu on link click, but allow navigation to proceed
+      closeMenu();
+      return; // Let the browser handle navigation
     }
-
-    if (target === "history") {
-      // Keep history default test aligned with current selection
-      if (historyTest) historyTest.value = testType.value;
-      renderHistory();
+    
+    // For buttons with data-view (Home/History), handle SPA-style navigation
+    const target = item.dataset.view;
+    if (target) {
+      switchView(target);
+      closeMenu();
     }
-
-    closeMenu();
-    window.scrollTo(0, 0);
   });
 });
 
@@ -2743,6 +2770,17 @@ document.getElementById("langNoBtn")?.addEventListener("click", () => setLang("n
 
 // Apply language on startup
 applyLangUI();
+
+// Handle URL parameters for initial view selection (after all initialization)
+const params = new URLSearchParams(location.search);
+if (params.get("home") === "1") {
+  // Force Home view (existing behavior)
+  switchView("home");
+} else if (params.get("view") === "history") {
+  // Switch to History view (same as clicking the History menu button)
+  switchView("history");
+}
+// Default: Home view remains active (already set by HTML class="active" on view-home)
 
 // Sync topbar height for fixed positioning
 function syncTopbarHeight() {

@@ -10,12 +10,12 @@ FCE is designed to support **human interpretation**, not automated judgment.
 
 ## Current status
 
-**Latest release:** v0.2.0  
+**Latest release:** v0.2.2  
 **Status:** Stable (frozen)
 
 ---
 
-## What FCE measures (v0.2.0)
+## What FCE measures (v0.2.x)
 
 ### 1) Reaction Time
 Measures simple response speed and consistency.
@@ -81,6 +81,24 @@ It exists to support later human interpretation.
 
 ---
 
+## Integrity & clarity (v0.2.1)
+
+- Standardized refusal codes (why a session is not usable)
+- Session quality labels (Good / Mixed / Not usable)
+- Non-blocking device consistency warnings for check-mode
+
+No changes to scoring philosophy.
+
+---
+
+## UI polish (v0.2.2)
+
+- Calmer, smoother UI (cards, buttons, chips/badges)
+- Improved dark-theme readability (select/options)
+- CSS-only changes (no logic changes)
+
+---
+
 ## History & trends
 
 - Per-test session history
@@ -94,8 +112,7 @@ It exists to support later human interpretation.
 
 ## Data & privacy
 
-- Local-only storage (browser)
-- No accounts, no servers
+- Local-only storage (no accounts, no servers)
 - Manual JSON export only
 - Exported data is raw session data — no conclusions generated
 
@@ -128,6 +145,8 @@ FCE is suitable for:
 ## Versioning
 
 - v0.1 — core baseline-relative instrument
-- v0.2.0 — Divided Attention module + mode coherence + baseline integrity
+- v0.2.0 — Divided Attention + mode coherence + baseline integrity
+- v0.2.1 — Integrity & clarity pass (quality/refusal/device warning)
+- v0.2.2 — UI polish (CSS-only)
 
 Future work will continue under v0.2.x and v0.3 planning.

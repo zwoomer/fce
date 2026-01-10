@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>FCE — About</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Remember last visited page -->
+  <script>
+    try {
+      const p = location.pathname.split("/").pop() || "index.html";
+      localStorage.setItem("fce_last_page", p);
+    } catch {}
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <a href="index.html?home=1" class="title" style="text-decoration:none; color:inherit;">FCE</a>
+
+    <div class="lang-toggle" role="group" aria-label="Language">
+      <button id="langEnBtn" class="lang-btn" type="button">EN</button>
+      <button id="langNoBtn" class="lang-btn" type="button">NO</button>
+    </div>
+  </header>
+
+  <nav id="menu" class="menu">
+    <div class="menu-header"></div>
+    <a class="menu-item" href="index.html?home=1">Home</a>
+    <a class="menu-item" href="index.html?view=history">History</a>
+    <a class="menu-item" href="about.html">About</a>
+    <a class="menu-item" href="norwegian-context.html">Norwegian Context</a>
+    <a class="menu-item" href="how-to-use.html">How to Use</a>
+    <a class="menu-item" href="faq.html">FAQ</a>
+  </nav>
+
+  <div id="menuOverlay" class="menu-overlay hidden"></div>
+
+  <main class="page">
+    <section class="container">
+      <!-- EN -->
+      <div class="lang lang-en">
+        <section class="hero">
+          <h2>About FCE</h2>
+          <p class="lead">
+            <strong>FCE (Functional Cognition &amp; Execution)</strong> is a fast, baseline-calibrated tool that measures
+            how your cognitive and motor performance compares to <em>your own normal capacity</em> — not to population averages.
+          </p>
+          <blockquote class="quote">"How are you functioning today compared to yourself?"</blockquote>
+        </section>
+
+        <section class="card">
+          <h3>What FCE measures</h3>
+          <p>FCE uses short, focused tasks to assess multiple domains of function. Examples include:</p>
+          <ul>
+            <li><strong>Reaction speed</strong> — time-to-response under standardized prompts</li>
+            <li><strong>Inhibitory control</strong> — the ability to act / not act appropriately</li>
+            <li><strong>Precision &amp; motor control</strong> — accuracy under time pressure</li>
+            <li><strong>Attention &amp; task-switching</strong> — stability of focus across changes</li>
+          </ul>
+          <p class="muted">FCE is not an IQ test. It measures functional execution in the moment.</p>
+        </section>
+
+        <section class="card">
+          <h3>Personal baselines, not population averages</h3>
+          <p>
+            FCE becomes fair when it is calibrated. You build a <strong>personal baseline</strong> using several sessions
+            performed when you are rested and functioning normally. Later checks compare your current performance to
+            <strong>your own baseline profile</strong>.
+          </p>
+          <ul>
+            <li>People differ naturally (speed, coordination, style)</li>
+            <li>Devices differ (desktop vs mobile)</li>
+            <li>Inputs differ (mouse vs touch)</li>
+            <li>Context matters (sleep, stress, posture, distraction)</li>
+          </ul>
+          <p>FCE is designed to respect variance instead of punishing it.</p>
+        </section>
+
+        <section class="card">
+          <h3>Session history and trends</h3>
+          <p>FCE stores completed sessions locally on the user's device and presents:</p>
+          <ul>
+            <li>a session history (baseline and checks)</li>
+            <li>optional context tags (sleep, stress, notes)</li>
+            <li>a simple trend view showing baseline range and recent checks</li>
+          </ul>
+          <p>This allows users and reviewers to see patterns over time rather than relying on single measurements.</p>
+        </section>
+
+        <section class="card">
+          <h3>Privacy</h3>
+          <p>FCE can be implemented in a privacy-first way. A strong default is:</p>
+          <ul>
+            <li>No accounts</li>
+            <li>No tracking</li>
+            <li>No server upload</li>
+            <li>Local-only storage on the user's device</li>
+          </ul>
+          <p class="muted">Clearing the browser data clears FCE data.</p>
+        </section>
+
+        <section class="card">
+          <h3>What FCE is not</h3>
+          <ul>
+            <li>Not a diagnosis</li>
+            <li>Not a clinical assessment</li>
+            <li>Not a legal judgment</li>
+            <li>Not a measure of intelligence or worth</li>
+          </ul>
+          <p>FCE assesses functional performance under standardized conditions. That's it — by design.</p>
+        </section>
+      </div>
+
+      <!-- NO -->
+      <div class="lang lang-no hidden">
+        <section class="hero">
+          <h2>Om FCE</h2>
+          <p class="lead">
+            <strong>FCE (Functional Cognition &amp; Execution)</strong> er et nettbasert verktøy som måler
+            hvordan din nåværende kognitive funksjon sammenlignes med din egen normale
+            kapasitet — ikke med befolkningsgjennomsnitt.
+          </p>
+          <blockquote class="quote">"Hvordan fungerer du i dag, sammenlignet med deg selv?"</blockquote>
+        </section>
+
+        <section class="card">
+          <h3>Hva FCE måler</h3>
+          <p>FCE vurderer flere kognitive funksjonsområder gjennom korte, fokuserte oppgaver, blant annet:</p>
+          <ul>
+            <li><strong>Reaksjonshastighet</strong> — hvor raskt du responderer</li>
+            <li><strong>Inhibitorisk kontroll</strong> — evnen til å handle eller avstå</li>
+            <li><strong>Presisjon og motorisk kontroll</strong> — nøyaktighet i bevegelse</li>
+          </ul>
+          <p class="muted">FCE er ikke en IQ-test. Det måler funksjonell ytelse i øyeblikket.</p>
+        </section>
+
+        <section class="card">
+          <h3>Personlige baselinjer — ikke normtall</h3>
+          <p>
+            FCE fungerer ved å bygge en personlig baseline basert på flere økter som
+            gjennomføres når du er uthvilt og fungerer normalt.
+          </p>
+          <p>
+            Alle senere sjekker sammenlignes med din egen baseline — ikke med aldersgrupper,
+            normverdier eller andre personer.
+          </p>
+          <p>Dette er viktig fordi:</p>
+          <ul>
+            <li>mennesker er forskjellige</li>
+            <li>enheter varierer (mobil vs. desktop)</li>
+            <li>inndata varierer (berøring vs. mus)</li>
+            <li>kontekst betyr noe</li>
+          </ul>
+          <p>FCE er utviklet for å ta hensyn til disse forskjellene, ikke ignorere dem.</p>
+        </section>
+
+        <section class="card">
+          <h3>Økthistorikk og trender</h3>
+          <p>FCE lagrer gjennomførte økter lokalt på brukerens enhet og viser:</p>
+          <ul>
+            <li>økthistorikk (baseline og sjekk)</li>
+            <li>valgfrie konteksttagger (søvn, stress, notat)</li>
+            <li>en enkel trendvisning med baselineområde og nylige sjekker</li>
+          </ul>
+          <p>Dette gir grunnlag for mønstergjenkjenning over tid, ikke enkeltmålinger.</p>
+        </section>
+
+        <section class="card">
+          <h3>Personvern</h3>
+          <p>FCE kan implementeres personvernvennlig. En sterk standard er:</p>
+          <ul>
+            <li>Ingen konto</li>
+            <li>Ingen sporing</li>
+            <li>Ingen serveropplasting</li>
+            <li>Kun lokal lagring på brukerens enhet</li>
+          </ul>
+          <p class="muted">Sletting av nettleserdata fjerner FCE-data.</p>
+        </section>
+
+        <section class="card">
+          <h3>Hva FCE ikke er</h3>
+          <ul>
+            <li>Ikke en diagnose</li>
+            <li>Ikke en klinisk vurdering</li>
+            <li>Ikke en juridisk dom</li>
+            <li>Ikke et mål på intelligens eller verdi</li>
+          </ul>
+          <p>FCE måler funksjon under standardiserte forhold. Det er alt — med vilje.</p>
+        </section>
+      </div>
+
+      <footer class="footer muted">
+        <p>FCE — Functional Cognition &amp; Execution</p>
+      </footer>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      const menu = document.getElementById("menu");
+      const overlay = document.getElementById("menuOverlay");
+      const langEnBtn = document.getElementById("langEnBtn");
+      const langNoBtn = document.getElementById("langNoBtn");
+
+      // Minimal menu: open via click on title if you want (optional). For now: swipe/overlay only.
+      // If you want a menu button on docs pages, add it to the topbar and wire it here.
+
+      function setLang(lang) {
+        try { localStorage.setItem("fce_lang_v1", lang); } catch {}
+        document.querySelectorAll(".lang-en").forEach(el => el.classList.toggle("hidden", lang !== "en"));
+        document.querySelectorAll(".lang-no").forEach(el => el.classList.toggle("hidden", lang !== "no"));
+        langEnBtn.classList.toggle("active", lang === "en");
+        langNoBtn.classList.toggle("active", lang === "no");
+      }
+
+      // Check both old and new keys for backward compatibility
+      const saved = (() => {
+        try {
+          const v1 = localStorage.getItem("fce_lang_v1");
+          if (v1) return v1;
+          // Migrate from old key if present
+          const old = localStorage.getItem("fce_lang");
+          if (old) {
+            localStorage.setItem("fce_lang_v1", old);
+            return old;
+          }
+          return null;
+        } catch { return null; }
+      })();
+        setLang(saved === "no" ? "no" : "en");
+
+      langEnBtn.addEventListener("click", () => setLang("en"));
+      langNoBtn.addEventListener("click", () => setLang("no"));
+
+      // Optional: close menu on overlay click (in case you add open behavior later)
+      overlay && overlay.addEventListener("click", () => {
+        menu.classList.remove("open");
+        overlay.classList.add("hidden");
+        document.body.classList.remove("menu-open");
+      });
+    })();
+  </script>
+</body>
+</html>

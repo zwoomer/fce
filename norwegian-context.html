@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>FCE — Norwegian Context</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Remember last visited page -->
+  <script>
+    try {
+      const p = location.pathname.split("/").pop() || "index.html";
+      localStorage.setItem("fce_last_page", p);
+    } catch {}
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <a href="index.html?home=1" class="title" style="text-decoration:none; color:inherit;">FCE</a>
+
+    <div class="lang-toggle" role="group" aria-label="Language">
+      <button id="langEnBtn" class="lang-btn" type="button">EN</button>
+      <button id="langNoBtn" class="lang-btn" type="button">NO</button>
+    </div>
+  </header>
+
+  <nav id="menu" class="menu">
+    <div class="menu-header"></div>
+    <a class="menu-item" href="index.html?home=1">Home</a>
+    <a class="menu-item" href="index.html?view=history">History</a>
+    <a class="menu-item" href="about.html">About</a>
+    <a class="menu-item" href="norwegian-context.html">Norwegian Context</a>
+    <a class="menu-item" href="how-to-use.html">How to Use</a>
+    <a class="menu-item" href="faq.html">FAQ</a>
+  </nav>
+
+  <div id="menuOverlay" class="menu-overlay hidden"></div>
+
+  <main class="page">
+    <section class="container">
+      <div class="lang lang-en">
+        <section class="hero">
+          <h2>Norwegian Context</h2>
+          <p class="lead">
+            This page explains how <strong>FCE (Functional Cognition &amp; Execution)</strong> could fit Norwegian frameworks
+            — without overclaiming what it is.
+          </p>
+          <blockquote class="quote">"Measure function, not molecules."</blockquote>
+        </section>
+
+        <section class="card">
+          <h3>1) Traffic safety: impairment vs presence</h3>
+          <p>A core challenge in drugs-and-driving policy is the gap between:</p>
+          <ul>
+            <li><strong>Detectability</strong> (a substance can be present long after functional deviation)</li>
+            <li><strong>Functional risk</strong> (reaction time, attention stability, error rate, judgment)</li>
+          </ul>
+          <p>
+            FCE aims to provide a <strong>functional performance signal</strong> that indicates deviation from baseline.
+            It does not try to identify what caused the deviation — it measures whether deviation exists.
+          </p>
+          <p>FCE supports this by:</p>
+          <ul>
+            <li>using personal baselines instead of population limits</li>
+            <li>showing baseline bands and recent checks</li>
+            <li>allowing review of session history rather than single results</li>
+          </ul>
+          <p class="muted">
+            Substance-agnostic by design: sleep loss, stress, illness, medication, alcohol, cannabis — the system measures function.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>2) Workplace safety: risk jobs and functional readiness</h3>
+          <p>
+            Many roles require stable execution: transport, construction, logistics, healthcare, industrial work.
+            A functional tool can help answer:
+          </p>
+          <ul>
+            <li>"Am I stable enough for a safety-critical shift today?"</li>
+            <li>"Did poor sleep or stress reduce my execution?"</li>
+            <li>"Is my performance trending up or down over weeks?"</li>
+          </ul>
+          <p>This supports modern safety logic: <strong>protect people by measuring performance, not by guessing causes.</strong></p>
+        </section>
+
+        <section class="card">
+          <h3>3) NAV / arbeidsevne: function-first without labels</h3>
+          <p>
+            Work capacity discussions often get trapped in categories: diagnosis vs not-diagnosis, "sick" vs "not sick".
+            FCE offers a complementary lens:
+          </p>
+          <ul>
+            <li>Track cognitive-motor function over time</li>
+            <li>Document recovery trajectory</li>
+            <li>Support gradual return-to-work plans</li>
+            <li>Identify which work conditions are realistic (high-focus vs low-focus demands)</li>
+          </ul>
+          <p class="muted">Boundary: FCE is not a diagnosis tool. It is a structured performance mirror.</p>
+        </section>
+
+        <section class="card">
+          <h3>4) Institutional safety: non-negotiable boundaries</h3>
+          <p>For ethical deployment, FCE must encode limits clearly. FCE is:</p>
+          <ul>
+            <li><strong>Not</strong> diagnosis</li>
+            <li><strong>Not</strong> a medical evaluation</li>
+            <li><strong>Not</strong> a legal judgment</li>
+            <li><strong>Not</strong> a guilt/innocence machine</li>
+            <li><strong>Not</strong> a "one score decides your life" tool</li>
+          </ul>
+          <p>A safe framing:</p>
+          <blockquote class="quote">
+            "FCE assesses functional cognitive–motor coherence under standardized conditions. It does not determine legal guilt,
+            replace clinical judgment, or diagnose pathology."
+          </blockquote>
+        </section>
+
+        <section class="card">
+          <h3>5) Fairness: personal baselines protect individual differences</h3>
+          <p>Population averages punish variance. FCE uses <strong>personal baselines</strong> so comparison is:</p>
+          <ul>
+            <li>You today</li>
+            <li>vs</li>
+            <li>You when you are functioning normally</li>
+          </ul>
+          <p>
+            This can protect people with stable but naturally different profiles — including older adults and neurodivergent users —
+            <em>if</em> pilots include diverse data and bias checks.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>6) Anti-gaming: preventing false baselines</h3>
+          <p>A reasonable concern is: "Can someone practice or cheat to show normal results while deviating from baseline?"</p>
+          <p>FCE addresses manipulation risk through layered safeguards:</p>
+          <ul>
+            <li>Baseline requires multiple sessions performed when functioning normally</li>
+            <li>Consistency checks for implausible baselines</li>
+            <li>Integrity pattern detection (variance signatures, suspicious dips)</li>
+            <li>Retest logic and uncertainty handling</li>
+          </ul>
+          <p class="muted">No system is magic. The goal is: make manipulation difficult, and make misclassification rare.</p>
+        </section>
+
+        <section class="card">
+          <h3>7) A realistic pilot path in Norway</h3>
+          <ol>
+            <li><strong>Voluntary pilot</strong> with research partners</li>
+            <li>Validate accuracy, fairness, and bias risk across groups</li>
+            <li>Build trust through transparency, audits, and clear boundaries</li>
+            <li>Only then discuss broader integration</li>
+          </ol>
+        </section>
+
+        <section class="card">
+          <h3>8) The ethical spine</h3>
+          <p>FCE is designed around harm reduction:</p>
+          <ul>
+            <li>Minimize false positives</li>
+            <li>Allow retesting and reversibility</li>
+            <li>Treat uncertainty as "pause + reassess", not punishment</li>
+            <li>Prioritize safety without stigma</li>
+          </ul>
+          <blockquote class="quote">"FCE is a tool of discernment, not punishment."</blockquote>
+        </section>
+      </div>
+
+      <div class="lang lang-no hidden">
+        <section class="hero">
+          <h2>Norsk kontekst</h2>
+          <p class="lead">
+            <strong>FCE (Functional Cognition &amp; Execution)</strong> er utviklet med tanke på bruk i sammenhenger der
+            <strong>funksjon, gjennomføringsevne og sikkerhet</strong> er viktigere enn biokjemiske målinger eller generelle normtall.
+          </p>
+          <p>
+            I norsk kontekst kan FCE forstås som et <strong>funksjonsbasert vurderingsverktøy</strong>, ikke som en medisinsk test
+            eller juridisk avgjørelse.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Arbeidsevne og NAV</h3>
+          <p>I arbeidsevnevurdering handler det ofte om spørsmål som:</p>
+          <ul>
+            <li>Klarer personen å opprettholde oppmerksomhet?</li>
+            <li>Reagerer vedkommende tilstrekkelig raskt og presist?</li>
+            <li>Er funksjonen stabil over tid, eller varierer den betydelig?</li>
+          </ul>
+          <p>
+            FCE er utformet for å gi <strong>objektive, repeterbare målinger</strong> av slike funksjoner, basert på individets
+            <strong>egen normaltilstand</strong>, ikke sammenligning med befolkningsgjennomsnitt.
+          </p>
+          <p>Dette gjør verktøyet relevant som et <strong>supplement</strong> i sammenhenger knyttet til:</p>
+          <ul>
+            <li>arbeidsevnevurdering</li>
+            <li>tilrettelegging</li>
+            <li>rehabilitering</li>
+            <li>egenmonitorering</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h3>Trafikk og sikkerhet</h3>
+          <p>I trafikksammenheng fokuserer FCE på <strong>faktisk funksjon her og nå</strong>, slik som:</p>
+          <ul>
+            <li>reaksjonstid</li>
+            <li>inhibisjonskontroll (evnen til å stoppe handling)</li>
+            <li>konsistens i utførelse</li>
+          </ul>
+          <p><strong>FCE måler ikke:</strong></p>
+          <ul>
+            <li>rusnivå</li>
+            <li>tilstedeværelse av stoffer</li>
+            <li>skyld eller lovbrudd</li>
+          </ul>
+          <p>Resultater fra FCE er ment å gi <strong>indikasjon på funksjon</strong>, ikke juridisk konklusjon.</p>
+          <p>FCE støtter dette ved å:</p>
+          <ul>
+            <li>bruke personlig baseline fremfor faste grenseverdier</li>
+            <li>vise baselinebånd og nylige sjekker</li>
+            <li>legge vekt på historikk fremfor enkeltresultater</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h3>Etisk ramme</h3>
+          <p>FCE er utviklet etter prinsipper om:</p>
+          <ul>
+            <li>personlig baseline (egen referanse)</li>
+            <li>lokal datalagring</li>
+            <li>frivillig bruk</li>
+            <li>ingen sentral profilering</li>
+          </ul>
+          <p>
+            Verktøyet er <strong>ikke-diagnostisk</strong> og skal ikke brukes alene til å trekke beslutninger med rettslige eller
+            medisinske konsekvenser.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Under utvikling</h3>
+          <p>Dette er en tidlig funksjonell prototype. Videre utvikling vil kunne inkludere:</p>
+          <ul>
+            <li>flere funksjonsmoduler</li>
+            <li>bedre visualisering av utvikling over tid</li>
+            <li>tydeligere kontekstmerking (arbeid, trafikk, restitusjon)</li>
+          </ul>
+          <p>Utviklingen skjer trinnvis, med vekt på <strong>forståelighet, etterprøvbarhet og etisk bruk</strong>.</p>
+        </section>
+
+        <section class="card">
+          <h3>Kort oppsummert</h3>
+          <p>FCE er ment som et verktøy for å:</p>
+          <ul>
+            <li>støtte forståelse av egen funksjon</li>
+            <li>bidra til bedre beslutningsgrunnlag</li>
+            <li>redusere avhengighet av rigide terskelverdier</li>
+          </ul>
+          <p>Ikke som erstatning for faglige vurderinger, men som et <strong>funksjonsnært supplement</strong>.</p>
+        </section>
+      </div>
+
+      <footer class="footer muted">
+        <p>FCE — Functional Cognition &amp; Execution</p>
+      </footer>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      const menu = document.getElementById("menu");
+      const overlay = document.getElementById("menuOverlay");
+      const langEnBtn = document.getElementById("langEnBtn");
+      const langNoBtn = document.getElementById("langNoBtn");
+
+      function setLang(lang) {
+        try { localStorage.setItem("fce_lang_v1", lang); } catch {}
+        document.querySelectorAll(".lang-en").forEach(el => el.classList.toggle("hidden", lang !== "en"));
+        document.querySelectorAll(".lang-no").forEach(el => el.classList.toggle("hidden", lang !== "no"));
+        langEnBtn.classList.toggle("active", lang === "en");
+        langNoBtn.classList.toggle("active", lang === "no");
+      }
+
+      // Check both old and new keys for backward compatibility
+      const saved = (() => {
+        try {
+          const v1 = localStorage.getItem("fce_lang_v1");
+          if (v1) return v1;
+          // Migrate from old key if present
+          const old = localStorage.getItem("fce_lang");
+          if (old) {
+            localStorage.setItem("fce_lang_v1", old);
+            return old;
+          }
+          return null;
+        } catch { return null; }
+      })();
+        setLang(saved === "no" ? "no" : "en");
+
+      langEnBtn.addEventListener("click", () => setLang("en"));
+      langNoBtn.addEventListener("click", () => setLang("no"));
+
+      overlay && overlay.addEventListener("click", () => {
+        menu.classList.remove("open");
+        overlay.classList.add("hidden");
+        document.body.classList.remove("menu-open");
+      });
+    })();
+  </script>
+</body>
+</html>

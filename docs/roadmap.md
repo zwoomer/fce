@@ -19,15 +19,34 @@ Status: ✅ Shipped (frozen)
 - History clarity improvements
 - Translation and UX consistency
 
-Status: ✅ Shipped (current stable)
+Status: ✅ Shipped
 
 ---
 
-## v0.2.1 — Integrity polish (planned)
-- Session quality labels
-- Standardized refusal semantics
-- Device consistency warnings
-- Review-oriented messaging improvements
+## v0.2.1 — Integrity & clarity (completed)
+- Session quality labels (Good / Mixed / Not usable)
+- Standardized refusal semantics (refusal codes + messages)
+- Device consistency warning (baseline vs check, non-blocking)
+
+Status: ✅ Shipped
+
+---
+
+## v0.2.2 — UI polish pass (completed)
+- Card/panel visual polish
+- Buttons: hover/active/disabled + focus-visible
+- Chips/badges with tabular numbers
+- Calmer invalid-session styling
+- Dark-theme select readability improvements
+
+Status: ✅ Shipped (CSS-only)
+
+---
+
+## v0.2.3 — Documentation & navigation (planned)
+- Split About / How to Use / Norwegian Context / FAQ into separate HTML pages
+- Add top navigation across pages
+- Remember last page (so refresh doesn’t always return to Home)
 
 Status: ⏳ Planned
 

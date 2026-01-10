@@ -1,32 +1,34 @@
 # Next steps
 
-## v0.2.0 — Completed (frozen)
+## v0.2.2 — Completed (frozen)
 
-Shipped features:
+Shipped features across v0.2.0–v0.2.2:
 - Divided Attention (dual-task) module
 - Clear mode authority (Baseline / Check / Training via action buttons)
 - Context treated as metadata only (sleep, stress, note)
 - Consistent baseline filtering (invalid sessions excluded everywhere)
-- Per-test baseline isolation
-- Improved history clarity and translations
-- Defensive handling of incomplete or low-quality sessions
+- Session quality labels + refusal codes (integrity clarity)
+- Device consistency warning (non-blocking)
+- UI polish pass (CSS-only)
 
-This version is frozen and tagged as **v0.2.0**.
+This version line is frozen and tagged up to **v0.2.2**.
 
 ---
 
-## v0.2.1 — Integrity & clarity pass (planned)
+## v0.2.3 — Documentation & navigation (next)
 
-Focus: trust, transparency, and reviewability.
+Goal: improve usability and institution-readiness of documentation.
 
-Planned improvements:
-- Session quality indicator (Good / Mixed / Not usable)
-- Standardized refusal / invalid reasons
-- Device mismatch warnings (baseline vs check)
-- Clearer baseline provenance messaging
-- Minor UI polish (no new tests)
+Planned work:
+- Split site docs into separate pages:
+  - about.html
+  - how-to-use.html
+  - norwegian-context.html
+  - faq.html
+- Add a shared navigation header
+- Persist the last visited page so refresh returns you where you left off
 
-No changes to scoring philosophy.
+No test logic changes planned.
 
 ---
 

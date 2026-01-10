@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>FCE — How to Use</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Remember last visited page -->
+  <script>
+    try {
+      const p = location.pathname.split("/").pop() || "index.html";
+      localStorage.setItem("fce_last_page", p);
+    } catch {}
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <a href="index.html?home=1" class="title" style="text-decoration:none; color:inherit;">FCE</a>
+
+    <div class="lang-toggle" role="group" aria-label="Language">
+      <button id="langEnBtn" class="lang-btn" type="button">EN</button>
+      <button id="langNoBtn" class="lang-btn" type="button">NO</button>
+    </div>
+  </header>
+
+  <nav id="menu" class="menu">
+    <div class="menu-header"></div>
+    <a class="menu-item" href="index.html?home=1">Home</a>
+    <a class="menu-item" href="index.html?view=history">History</a>
+    <a class="menu-item" href="about.html">About</a>
+    <a class="menu-item" href="norwegian-context.html">Norwegian Context</a>
+    <a class="menu-item" href="how-to-use.html">How to Use</a>
+    <a class="menu-item" href="faq.html">FAQ</a>
+  </nav>
+
+  <div id="menuOverlay" class="menu-overlay hidden"></div>
+
+  <main class="page">
+    <section class="container">
+      <div class="lang lang-en">
+        <section class="hero">
+          <h2>How to Use</h2>
+        </section>
+
+        <section class="card">
+          <h3>1) Choose a test</h3>
+          <p>Reaction Time or Go / No-Go.</p>
+        </section>
+
+        <section class="card">
+          <h3>2) Build your baseline (first time)</h3>
+          <ul>
+            <li>Be rested and functioning normally</li>
+            <li>Use the same device and input method</li>
+            <li>Complete 3–5 baseline sessions</li>
+          </ul>
+          <p>Baseline sessions define your personal normal range.</p>
+        </section>
+
+        <section class="card">
+          <h3>3) Run a functional check</h3>
+          <ul>
+            <li>Run a short check session</li>
+            <li>Results are compared to your baseline</li>
+            <li>Status is shown as:
+              <ul>
+                <li>Within normal range</li>
+                <li>Slightly below normal</li>
+                <li>Significantly below normal</li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h3>4) Review history and trends</h3>
+          <ul>
+            <li>View past sessions in History</li>
+            <li>See baseline range and recent checks in the Trend panel</li>
+            <li>Optional context tags help interpret variation</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h3>5) Export data (optional)</h3>
+          <ul>
+            <li>History can be exported as JSON</li>
+            <li>Export is manual and local-only</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="lang lang-no hidden">
+        <section class="hero">
+          <h2>Hvordan bruke FCE</h2>
+        </section>
+
+        <section class="card">
+          <h3>1) Velg en test</h3>
+          <p>Reaksjonstid eller Go / No-Go.</p>
+        </section>
+
+        <section class="card">
+          <h3>2) Bygg din baseline (første gang)</h3>
+          <ul>
+            <li>Vær uthvilt og fungerer normalt</li>
+            <li>Bruk samme enhet og inndatametode</li>
+            <li>Fullfør 3–5 baseline-økter</li>
+          </ul>
+          <p>Baseline-økter definerer ditt personlige normalområde.</p>
+        </section>
+
+        <section class="card">
+          <h3>3) Kjør en funksjonssjekk</h3>
+          <ul>
+            <li>Gjennomfør en kort sjekk-økt</li>
+            <li>Resultater sammenlignes med din baseline</li>
+            <li>Status vises som:
+              <ul>
+                <li>Innenfor normalområdet</li>
+                <li>Lett under normalområdet</li>
+                <li>Betydelig under normalområdet</li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h3>4) Gjennomse historikk og trender</h3>
+          <ul>
+            <li>Se tidligere økter i Historikk</li>
+            <li>Se baselineområde og nylige sjekker i Trend-panelet</li>
+            <li>Valgfrie konteksttagger hjelper med å tolke variasjon</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h3>5) Eksporter data (valgfritt)</h3>
+          <ul>
+            <li>Historikk kan eksporteres som JSON</li>
+            <li>Eksport er manuell og kun lokalt</li>
+          </ul>
+        </section>
+      </div>
+
+      <footer class="footer muted">
+        <p>FCE — Functional Cognition &amp; Execution</p>
+      </footer>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      const menu = document.getElementById("menu");
+      const overlay = document.getElementById("menuOverlay");
+      const langEnBtn = document.getElementById("langEnBtn");
+      const langNoBtn = document.getElementById("langNoBtn");
+
+      function setLang(lang) {
+        try { localStorage.setItem("fce_lang_v1", lang); } catch {}
+        document.querySelectorAll(".lang-en").forEach(el => el.classList.toggle("hidden", lang !== "en"));
+        document.querySelectorAll(".lang-no").forEach(el => el.classList.toggle("hidden", lang !== "no"));
+        langEnBtn.classList.toggle("active", lang === "en");
+        langNoBtn.classList.toggle("active", lang === "no");
+      }
+
+      // Check both old and new keys for backward compatibility
+      const saved = (() => {
+        try {
+          const v1 = localStorage.getItem("fce_lang_v1");
+          if (v1) return v1;
+          // Migrate from old key if present
+          const old = localStorage.getItem("fce_lang");
+          if (old) {
+            localStorage.setItem("fce_lang_v1", old);
+            return old;
+          }
+          return null;
+        } catch { return null; }
+      })();
+        setLang(saved === "no" ? "no" : "en");
+
+      langEnBtn.addEventListener("click", () => setLang("en"));
+      langNoBtn.addEventListener("click", () => setLang("no"));
+
+      overlay && overlay.addEventListener("click", () => {
+        menu.classList.remove("open");
+        overlay.classList.add("hidden");
+        document.body.classList.remove("menu-open");
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -412,6 +412,179 @@ function reRenderTrialList() {
   });
 }
 
+// Helper function to set summary text and store data for language switching
+function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
+  if (!summary) return;
+  
+  // Store data for regeneration (testTypeParam is already a string value, not an element)
+  lastSummaryData = { type, testType: testTypeParam || testType.value || null, mode: modeParam, data: dataObj };
+  
+  // Generate summary text based on type
+  switch (type) {
+    case "training_divided":
+      const flashInfo = dataObj.flashTargetCount !== undefined
+        ? (currentLang === "no"
+            ? ` | Flashes: mål ${dataObj.flashTargetCount}, svar ${dataObj.flashUserCount || 0}, feil ${dataObj.flashAbsError || 0}`
+            : ` | Flashes: target ${dataObj.flashTargetCount}, answer ${dataObj.flashUserCount || 0}, error ${dataObj.flashAbsError || 0}`)
+        : "";
+      summary.textContent = (currentLang === "no"
+        ? `Økt fullført. GO-gjennomsnitt: ${dataObj.mean.toFixed(0)} ms | SD: ${dataObj.sd.toFixed(0)} ms`
+        : `Session complete. GO mean: ${dataObj.mean.toFixed(0)} ms | SD: ${dataObj.sd.toFixed(0)} ms`) + flashInfo;
+      break;
+      
+    case "baseline_saved_reaction":
+      summary.textContent = getBaselineSavedReaction(dataObj.mean, dataObj.sd, dataObj.falseStarts, dataObj.qualityNote || "");
+      break;
+      
+    case "baseline_saved_gonogo":
+      summary.textContent = getBaselineSavedGoNoGo(dataObj.mean, dataObj.sd, dataObj.misses, dataObj.falseAlarms, dataObj.falseStarts, dataObj.qualityNote || "");
+      break;
+      
+    case "baseline_saved_divided":
+      summary.textContent = getBaselineSavedDivided(dataObj.mean, dataObj.sd, dataObj.misses, dataObj.falseAlarms, dataObj.falseStarts, dataObj.flashTargetCount || 0, dataObj.flashAbsError || 0, dataObj.qualityNote || "");
+      break;
+      
+    case "check_reaction":
+      summary.textContent = getCheckReaction(dataObj.mean, dataObj.baselineMean, dataObj.baselineSD, dataObj.status, dataObj.falseStarts, dataObj.qualityNote || "");
+      break;
+      
+    case "check_gonogo":
+      summary.textContent = getCheckGoNoGo(dataObj.mean, dataObj.baselineMean, dataObj.baselineSD, dataObj.status, dataObj.misses, dataObj.baselineMissAvg, dataObj.falseAlarms, dataObj.baselineFAAvg, dataObj.falseStarts, dataObj.qualityNote || "");
+      break;
+      
+    case "check_divided":
+      summary.textContent = getCheckDividedAttention(dataObj.mean, dataObj.baselineMean, dataObj.baselineSD, dataObj.status, dataObj.falseAlarmsRate, dataObj.baselineFARate, dataObj.flashAbsError, dataObj.baselineFlashError, dataObj.falseStarts, dataObj.qualityNote || "");
+      break;
+      
+    case "invalid_no_reaction":
+      summary.textContent = getSessionInvalidNoReaction();
+      break;
+      
+    case "invalid_no_go":
+      summary.textContent = getSessionInvalidNoGo();
+      break;
+      
+    case "not_enough_baseline":
+      summary.textContent = getNotEnoughBaseline();
+      break;
+      
+    case "baseline_not_saved":
+      summary.textContent = getBaselineNotSaved();
+      break;
+      
+    case "baseline_not_saved_divided":
+      const flashInfo2 = dataObj.flashTarget !== undefined
+        ? (currentLang === "no"
+            ? ` | Flashes: mål ${dataObj.flashTarget}, svar ${dataObj.flashUser}, feil ${dataObj.flashError}`
+            : ` | Flashes: target ${dataObj.flashTarget}, answer ${dataObj.flashUser}, error ${dataObj.flashError}`)
+        : "";
+      summary.textContent = getBaselineNotSavedDivided() + flashInfo2;
+      break;
+      
+    case "invalid_missing_answer":
+      summary.textContent = currentLang === "no"
+        ? "Kan ikke sammenlignes: mangler svar"
+        : "Session not usable for comparison: missing answer";
+      break;
+      
+    case "invalid_no_go_responses_divided":
+      summary.textContent = currentLang === "no"
+        ? "Økt ugyldig: ingen GO-responser."
+        : "Session invalid: no GO responses.";
+      break;
+      
+    default:
+      // Unknown type, just set text directly
+      break;
+  }
+}
+
+// Regenerate summary text based on stored data and current language
+function regenerateSummary() {
+  if (!lastSummaryData || !summary) return;
+  
+  const { type, testType: tt, mode: m, data } = lastSummaryData;
+  
+  switch (type) {
+    case "training_divided":
+      // Training mode for Divided Attention
+      const flashInfo = data.flashTargetCount !== undefined
+        ? (currentLang === "no"
+            ? ` | Flashes: mål ${data.flashTargetCount}, svar ${data.flashUserCount || 0}, feil ${data.flashAbsError || 0}`
+            : ` | Flashes: target ${data.flashTargetCount}, answer ${data.flashUserCount || 0}, error ${data.flashAbsError || 0}`)
+        : "";
+      summary.textContent = (currentLang === "no"
+        ? `Økt fullført. GO-gjennomsnitt: ${data.mean.toFixed(0)} ms | SD: ${data.sd.toFixed(0)} ms`
+        : `Session complete. GO mean: ${data.mean.toFixed(0)} ms | SD: ${data.sd.toFixed(0)} ms`) + flashInfo;
+      break;
+      
+    case "baseline_saved_reaction":
+      summary.textContent = getBaselineSavedReaction(data.mean, data.sd, data.falseStarts, data.qualityNote || "");
+      break;
+      
+    case "baseline_saved_gonogo":
+      summary.textContent = getBaselineSavedGoNoGo(data.mean, data.sd, data.misses, data.falseAlarms, data.falseStarts, data.qualityNote || "");
+      break;
+      
+    case "baseline_saved_divided":
+      summary.textContent = getBaselineSavedDivided(data.mean, data.sd, data.misses, data.falseAlarms, data.falseStarts, data.flashTargetCount || 0, data.flashAbsError || 0, data.qualityNote || "");
+      break;
+      
+    case "check_reaction":
+      summary.textContent = getCheckReaction(data.mean, data.baselineMean, data.baselineSD, data.status, data.falseStarts, data.qualityNote || "");
+      break;
+      
+    case "check_gonogo":
+      summary.textContent = getCheckGoNoGo(data.mean, data.baselineMean, data.baselineSD, data.status, data.misses, data.baselineMissAvg, data.falseAlarms, data.baselineFAAvg, data.falseStarts, data.qualityNote || "");
+      break;
+      
+    case "check_divided":
+      summary.textContent = getCheckDividedAttention(data.mean, data.baselineMean, data.baselineSD, data.status, data.falseAlarmsRate, data.baselineFARate, data.flashAbsError, data.baselineFlashError, data.falseStarts, data.qualityNote || "");
+      break;
+      
+    case "invalid_no_reaction":
+      summary.textContent = getSessionInvalidNoReaction();
+      break;
+      
+    case "invalid_no_go":
+      summary.textContent = getSessionInvalidNoGo();
+      break;
+      
+    case "not_enough_baseline":
+      summary.textContent = getNotEnoughBaseline();
+      break;
+      
+    case "baseline_not_saved":
+      summary.textContent = getBaselineNotSaved();
+      break;
+      
+    case "baseline_not_saved_divided":
+      const flashInfo2 = data.flashTarget !== undefined
+        ? (currentLang === "no"
+            ? ` | Flashes: mål ${data.flashTarget}, svar ${data.flashUser}, feil ${data.flashError}`
+            : ` | Flashes: target ${data.flashTarget}, answer ${data.flashUser}, error ${data.flashError}`)
+        : "";
+      summary.textContent = getBaselineNotSavedDivided() + flashInfo2;
+      break;
+      
+    case "invalid_missing_answer":
+      summary.textContent = currentLang === "no"
+        ? "Kan ikke sammenlignes: mangler svar"
+        : "Session not usable for comparison: missing answer";
+      break;
+      
+    case "invalid_no_go_responses_divided":
+      summary.textContent = currentLang === "no"
+        ? "Økt ugyldig: ingen GO-responser."
+        : "Session invalid: no GO responses.";
+      break;
+      
+    default:
+      // Unknown type, don't change summary
+      break;
+  }
+}
+
 function applyLangUI() {
   // 1) Toggle docs language blocks
   document.querySelectorAll(".lang-en").forEach(el => el.classList.toggle("hidden", currentLang !== "en"));
@@ -438,11 +611,8 @@ function applyLangUI() {
   }
   
   // 5) Update summary if it exists and is not empty
-  if (summary && summary.textContent) {
-    // Summary is dynamically generated, so we need to re-generate it
-    // This happens automatically when endSession is called, but if we're viewing
-    // a completed session, we'd need to re-run endSession logic - for now,
-    // we'll leave summary as-is since it requires full session data to regenerate
+  if (summary && summary.textContent && lastSummaryData) {
+    regenerateSummary();
   }
 
   // 6) Re-render history if visible
@@ -579,6 +749,9 @@ const trialCountInput = document.getElementById("trialCount");
 const progress = document.getElementById("progress");
 const trialList = document.getElementById("trialList");
 const summary = document.getElementById("summary");
+
+// Store last summary generation data for language switching
+let lastSummaryData = null;
 
 const menuBtn = document.getElementById("menuBtn");
 const menu = document.getElementById("menu");
@@ -1429,7 +1602,7 @@ function pushHistoryRecord(record) {
           device
         });
         renderHistory();
-        summary.textContent = getSessionInvalidNoReaction();
+        setSummary("invalid_no_reaction", {}, "reaction", mode);
         mode = null;
         return;
       }
@@ -1473,7 +1646,7 @@ function pushHistoryRecord(record) {
           device
         });
         renderHistory();
-        summary.textContent = getSessionInvalidNoGo();
+        setSummary("invalid_no_go", {}, "gonogo", mode);
         mode = null;
         return;
       }
@@ -1523,9 +1696,7 @@ function pushHistoryRecord(record) {
           device
         });
         renderHistory();
-        summary.textContent = currentLang === "no"
-          ? "Kan ikke sammenlignes: mangler svar"
-          : "Session not usable for comparison: missing answer";
+        setSummary("invalid_missing_answer", {}, "divided", mode);
         mode = null;
         dividedPlan = null;
         dividedFlashAnswer = null;
@@ -1559,9 +1730,7 @@ function pushHistoryRecord(record) {
           device
         });
         renderHistory();
-        summary.textContent = currentLang === "no"
-          ? "Økt ugyldig: ingen GO-responser."
-          : "Session invalid: no GO responses.";
+        setSummary("invalid_no_go_responses_divided", {}, "divided", mode);
         mode = null;
         dividedPlan = null;
         dividedFlashAnswer = null;
@@ -1682,16 +1851,13 @@ function pushHistoryRecord(record) {
             const flashUser = sessionPayload?.flashUserCount ?? sessionRecord?.metrics?.flashUserCount ?? 0;
             const flashError = sessionPayload?.flashAbsError ?? sessionRecord?.metrics?.flashAbsError ?? 0;
             
-            if (flashTarget > 0 || flashUser > 0) {
-              const flashInfo = currentLang === "no"
-                ? ` | Flashes: mål ${flashTarget}, svar ${flashUser}, feil ${flashError}`
-                : ` | Flashes: target ${flashTarget}, answer ${flashUser}, error ${flashError}`;
-              summary.textContent = getBaselineNotSavedDivided() + flashInfo;
-            } else {
-              summary.textContent = getBaselineNotSavedDivided();
-            }
+            setSummary("baseline_not_saved_divided", {
+              flashTarget: flashTarget > 0 || flashUser > 0 ? flashTarget : undefined,
+              flashUser: flashTarget > 0 || flashUser > 0 ? flashUser : undefined,
+              flashError: flashTarget > 0 || flashUser > 0 ? flashError : undefined
+            }, tt, mode);
           } else {
-            summary.textContent = getBaselineNotSaved();
+            setSummary("baseline_not_saved", {}, tt, mode);
           }
           mode = null;
           if (isDivided) {
@@ -1715,34 +1881,34 @@ function pushHistoryRecord(record) {
       const qualityNote = checkSessionQuality(sessionPayload, totalTrials, isReaction);
       
       if (isReaction) {
-        summary.textContent = getBaselineSavedReaction(
-          sessionPayload.mean,
-          sessionPayload.sd,
-          sessionPayload.falseStarts,
+        setSummary("baseline_saved_reaction", {
+          mean: sessionPayload.mean,
+          sd: sessionPayload.sd,
+          falseStarts: sessionPayload.falseStarts,
           qualityNote
-        );
+        }, tt, mode);
       } else if (isDivided) {
-        summary.textContent = getBaselineSavedDivided(
-          sessionPayload.mean,
-          sessionPayload.sd,
-          sessionPayload.misses,
-          sessionPayload.falseAlarms,
-          sessionPayload.falseStarts,
-          sessionPayload.flashTargetCount || 0,
-          sessionPayload.flashAbsError || 0,
+        setSummary("baseline_saved_divided", {
+          mean: sessionPayload.mean,
+          sd: sessionPayload.sd,
+          misses: sessionPayload.misses,
+          falseAlarms: sessionPayload.falseAlarms,
+          falseStarts: sessionPayload.falseStarts,
+          flashTargetCount: sessionPayload.flashTargetCount || 0,
+          flashAbsError: sessionPayload.flashAbsError || 0,
           qualityNote
-        );
+        }, tt, mode);
       } else if (isGoNoGo) {
-        summary.textContent = getBaselineSavedGoNoGo(
-          sessionPayload.mean,
-          sessionPayload.sd,
-          sessionPayload.misses,
-          sessionPayload.falseAlarms,
-          sessionPayload.falseStarts,
+        setSummary("baseline_saved_gonogo", {
+          mean: sessionPayload.mean,
+          sd: sessionPayload.sd,
+          misses: sessionPayload.misses,
+          falseAlarms: sessionPayload.falseAlarms,
+          falseStarts: sessionPayload.falseStarts,
           qualityNote
-        );
+        }, tt, mode);
       }
-  
+
       mode = null;
       if (isDivided) {
         dividedPlan = null;
@@ -1754,17 +1920,18 @@ function pushHistoryRecord(record) {
     // ---- Training mode (or any other mode): show summary if divided attention ----
     if (isDivided && mode && mode !== "baseline" && mode !== "check") {
       // For training mode or any other mode, show a summary with flash info
-      const flashInfo = sessionPayload && typeof sessionPayload.flashTargetCount === "number"
-        ? (currentLang === "no"
-            ? ` | Flashes: mål ${sessionPayload.flashTargetCount}, svar ${sessionPayload.flashUserCount || 0}, feil ${sessionPayload.flashAbsError || 0}`
-            : ` | Flashes: target ${sessionPayload.flashTargetCount}, answer ${sessionPayload.flashUserCount || 0}, error ${sessionPayload.flashAbsError || 0}`)
-        : "";
-      summary.textContent = (currentLang === "no"
-        ? `Økt fullført. GO-gjennomsnitt: ${sessionPayload.mean.toFixed(0)} ms | SD: ${sessionPayload.sd.toFixed(0)} ms`
-        : `Session complete. GO mean: ${sessionPayload.mean.toFixed(0)} ms | SD: ${sessionPayload.sd.toFixed(0)} ms`) + flashInfo;
+      setSummary("training_divided", {
+        mean: sessionPayload.mean,
+        sd: sessionPayload.sd,
+        flashTargetCount: sessionPayload.flashTargetCount,
+        flashUserCount: sessionPayload.flashUserCount,
+        flashAbsError: sessionPayload.flashAbsError
+      }, tt, mode);
       mode = null;
       dividedPlan = null;
       dividedFlashAnswer = null;
+      // Update baseline info to ensure button states are correct (training doesn't update baseline, so button should be disabled if no baseline exists)
+      updateBaselineInfo();
       return;
     }
   
@@ -1781,7 +1948,7 @@ function pushHistoryRecord(record) {
         hs[hs.length - 1] = sessionRecord;
         saveHistory(tt, hs);
         renderHistory();
-        summary.textContent = getNotEnoughBaseline();
+        setSummary("not_enough_baseline", {}, tt, mode);
         mode = null;
         if (isDivided) {
           dividedPlan = null;
@@ -1814,14 +1981,14 @@ function pushHistoryRecord(record) {
       if (isReaction) {
         const baselineMean = mean(sessions.map(s => s.mean));
         const baselineSD = mean(sessions.map(s => s.sd));
-        summary.textContent = getCheckReaction(
-          sessionPayload.mean,
+        setSummary("check_reaction", {
+          mean: sessionPayload.mean,
           baselineMean,
           baselineSD,
           status,
-          sessionPayload.falseStarts,
+          falseStarts: sessionPayload.falseStarts,
           qualityNote
-        );
+        }, tt, mode);
       } else if (isDivided) {
         // Divided Attention check summary
         const baselineMean = mean(sessions.map(s => s.mean));
@@ -1837,18 +2004,18 @@ function pushHistoryRecord(record) {
         const nogoCount = sessionPayload.nogoCount || 0;
         const currentFARate = nogoCount > 0 ? (sessionPayload.falseAlarms || 0) / nogoCount : 0;
         
-        summary.textContent = getCheckDividedAttention(
-          sessionPayload.mean,
+        setSummary("check_divided", {
+          mean: sessionPayload.mean,
           baselineMean,
           baselineSD,
           status,
-          currentFARate,
+          falseAlarmsRate: currentFARate,
           baselineFARate,
-          sessionPayload.flashAbsError,
+          flashAbsError: sessionPayload.flashAbsError,
           baselineFlashError,
-          sessionPayload.falseStarts,
+          falseStarts: sessionPayload.falseStarts,
           qualityNote
-        );
+        }, tt, mode);
       } else {
         // For Go/No-Go, also show error counts clearly.
         // Optional: compare errors vs baseline averages (simple, explainable)
@@ -1857,18 +2024,18 @@ function pushHistoryRecord(record) {
         const baselineMissAvg = mean(sessions.map(s => (typeof s.misses === "number" ? s.misses : 0)));
         const baselineFAAvg = mean(sessions.map(s => (typeof s.falseAlarms === "number" ? s.falseAlarms : 0)));
 
-        summary.textContent = getCheckGoNoGo(
-          sessionPayload.mean,
+        setSummary("check_gonogo", {
+          mean: sessionPayload.mean,
           baselineMean,
           baselineSD,
           status,
-          sessionPayload.misses,
+          misses: sessionPayload.misses,
           baselineMissAvg,
-          sessionPayload.falseAlarms,
+          falseAlarms: sessionPayload.falseAlarms,
           baselineFAAvg,
-          sessionPayload.falseStarts,
+          falseStarts: sessionPayload.falseStarts,
           qualityNote
-        );
+        }, tt, mode);
       }
   
       mode = null;
@@ -1921,6 +2088,7 @@ function hardReset() {
 
   trialList.innerHTML = "";
   summary.textContent = "";
+  lastSummaryData = null; // Clear summary data on reset
   progress.textContent = "";
 
 

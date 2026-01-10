@@ -37,6 +37,8 @@ const I18N = {
       checkLabel: "Check",
       delta: "Δ {delta} ms",
       status: "Status: {status}",
+      ok: "OK",
+      invalid: "INVALID",
     },
   },
   no: {
@@ -72,6 +74,8 @@ const I18N = {
       checkLabel: "Sjekk",
       delta: "Δ {delta} ms",
       status: "Status: {status}",
+      ok: "OK",
+      invalid: "UGYLDIG",
     },
   },
 };
@@ -1163,7 +1167,20 @@ function fmt(n, digits = 0) {
 function formatDateTime(iso) {
   try {
     const d = new Date(iso);
-    return d.toLocaleString(undefined, { year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" });
+
+    const locale = currentLang === "no" ? "nb-NO" : undefined;
+
+    // NO: 24h clock; EN: system default (often 12h)
+    const opts = {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: currentLang === "no" ? false : undefined
+    };
+
+    return d.toLocaleString(locale, opts);
   } catch {
     return iso || "—";
   }
@@ -1265,8 +1282,9 @@ function renderTrendFor(testType) {
     const left = document.createElement("div");
     left.className = "trend-left";
 
+    const badgeText = isInvalid ? t("trend.invalid") : t("trend.ok");
     const title = document.createElement("div");
-    title.innerHTML = `<span class="badge ${badgeClass}">${isInvalid ? "INVALID" : "OK"}</span> <strong>${t("trend.checkLabel")}</strong> — ${when}`;
+    title.innerHTML = `<span class="badge ${badgeClass}">${badgeText}</span> <strong>${t("trend.checkLabel")}</strong> — ${when}`;
     left.appendChild(title);
 
     const sub = document.createElement("div");
@@ -1400,7 +1418,7 @@ function renderHistory() {
       const delta = Number.isFinite(avg) && Number.isFinite(baselineMean) ? (avg - baselineMean) : NaN;
       const cmp = document.createElement("div");
       cmp.className = "history-compare";
-      cmp.textContent = `${status} · Δ ${Number.isFinite(delta) ? (delta >= 0 ? "+" : "") + delta.toFixed(0) : "—"} ms (baseline ${baselineMean.toFixed(0)} ± ${baselineSD.toFixed(0)})`;
+      cmp.textContent = `${status} · Δ ${Number.isFinite(delta) ? (delta >= 0 ? "+" : "") + delta.toFixed(0) : "—"} ms (baseline ${baselineMean.toFixed(0)} ± ${baselineSD.toFixed(0)} (±2 SD))`;
       body.appendChild(cmp);
     } else if (s.mode === "check" && !baselineSessions.length) {
       const cmp = document.createElement("div");

@@ -1,4 +1,9 @@
-# Next Steps (v0.1) — Week 3 Focus: History + Context Tags
+# Next Steps — v0.1 Completed / v0.2 Planning
+
+> ✅ **v0.1 COMPLETE**
+>  
+> History, context tags, export, and trend view have been implemented.
+> This document now serves as an archive of completed work and a bridge to v0.2 planning.
 
 This document turns the roadmap into a practical build checklist.
 Goal: make FCE feel like an **instrument** (not just tests) by adding
@@ -15,7 +20,7 @@ Goal: make FCE feel like an **instrument** (not just tests) by adding
 
 ---
 
-## Phase B — History + Tags (recommended next)
+## Phase B — History + Tags (COMPLETED in v0.1)
 
 ### B1) Data model for session history (per test type)
 **Goal:** store *every completed session* (baseline + check), not just baseline summaries.
@@ -68,161 +73,128 @@ Goal: make FCE feel like an **instrument** (not just tests) by adding
     userAgentHint: "mobile" // keep minimal
   }
 }
+```
 
-Acceptance criteria
+**Acceptance criteria:**
+- A completed session adds one history record.
+- Baseline sessions and check sessions both appear.
+- History is stored separately per test type.
 
-A completed session adds one history record.
+**Commit suggestion:** Add history storage model for sessions
 
-Baseline sessions and check sessions both appear.
+### B2) "History" page (UI shell)
 
-History is stored separately per test type.
+**Goal:** add a docs-style page that lists past sessions.
 
-Commit suggestion
+**Menu:**
+- Add a new menu item: History
 
-Add history storage model for sessions
+**Empty state:**
+- If no sessions exist: show "No history yet" + guidance.
 
-B2) “History” page (UI shell)
+**Filters (simple):**
+- Test type: Reaction / Go-No-Go
+- Mode: All / Baseline / Check / Training
 
-Goal: add a docs-style page that lists past sessions.
+**Acceptance criteria:**
+- Page exists and routing works.
+- Empty state shows correctly.
 
-Menu
+**Commit suggestion:** Add History page shell and navigation
 
-Add a new menu item: History
+### B3) Render session list
 
-Empty state
+**Goal:** show a clear list of sessions with key metrics.
 
-If no sessions exist: show “No history yet” + guidance.
+**Display fields:**
+- Timestamp (formatted)
+- Mode label (baseline/check/training)
+- Average + SD (reaction and gonogo)
+- Errors (gonogo): misses, false alarms, false starts
+- Tags summary (sleep/stress if set)
 
-Filters (simple)
+**Sorting:**
+- Newest first
 
-Test type: Reaction / Go-No-Go
+**Acceptance criteria:**
+- List renders.
+- Filters work.
+- Language toggle updates labels.
 
-Mode: All / Baseline / Check / Training
+**Commit suggestion:** Render session history list with filters
 
-Acceptance criteria
+### B4) Add tags UI (sleep/stress/context)
 
-Page exists and routing works.
+**Goal:** allow adding optional context tags before saving a session.
 
-Empty state shows correctly.
+**Minimal UI (recommended):**
+- Context dropdown: baseline / check / training
+- Sleep 0–5
+- Stress 0–5
+- Note (optional short text)
 
-Commit suggestion
+**Where to place:**
+- Near the start controls (small "Context (optional)" panel)
 
-Add History page shell and navigation
+**Acceptance criteria:**
+- Tags are saved into history record.
+- Tags are shown in History list.
 
-B3) Render session list
+**Commit suggestion:** Add optional context tags to sessions
 
-Goal: show a clear list of sessions with key metrics.
+### B5) Add a simple trend visualization (minimal)
 
-Display fields
+**Goal:** show "baseline band + check points" (very high credibility boost).
 
-Timestamp (formatted)
+**Minimum viable chart:**
+- Show baseline mean (and maybe ±1 SD band)
+- Plot check sessions as points/values over time
 
-Mode label (baseline/check/training)
+**If you want ultra-minimal:**
+- No chart yet: show a compact "Recent checks" list
+- avgMs vs baselineAvgMs (+delta)
 
-Average + SD (reaction and gonogo)
+**Acceptance criteria:**
+- Non-technical readers can see "stable vs drifting" at a glance.
 
-Errors (gonogo): misses, false alarms, false starts
+**Commit suggestion:** Add baseline vs check trend view (minimal)
 
-Tags summary (sleep/stress if set)
+### Optional safety improvements (small wins)
+- Translate all remaining dynamic status strings through i18n
+- Confirm dialog for "Clear history"
+- Add "Export (copy JSON)" button (optional placeholder)
+- Add "Device warning" (mobile vs desktop baseline differences)
 
-Sorting
+### Suggested small commit sequence (recommended)
+1. History storage model (save sessions)
+2. History page shell + navigation
+3. Render session list + filters
+4. Add context tags UI + persistence
+5. Minimal trend view (baseline band vs checks)
 
-Newest first
-
-Acceptance criteria
-
-List renders.
-
-Filters work.
-
-Language toggle updates labels.
-
-Commit suggestion
-
-Render session history list with filters
-
-B4) Add tags UI (sleep/stress/context)
-
-Goal: allow adding optional context tags before saving a session.
-
-Minimal UI (recommended)
-
-Context dropdown: baseline / check / training
-
-Sleep 0–5
-
-Stress 0–5
-
-Note (optional short text)
-
-Where to place
-
-Near the start controls (small “Context (optional)” panel)
-
-Acceptance criteria
-
-Tags are saved into history record.
-
-Tags are shown in History list.
-
-Commit suggestion
-
-Add optional context tags to sessions
-
-B5) Add a simple trend visualization (minimal)
-
-Goal: show “baseline band + check points” (very high credibility boost).
-
-Minimum viable chart
-
-Show baseline mean (and maybe ±1 SD band)
-
-Plot check sessions as points/values over time
-
-If you want ultra-minimal
-
-No chart yet: show a compact “Recent checks” list
-
-avgMs vs baselineAvgMs (+delta)
-
-Acceptance criteria
-
-Non-technical readers can see “stable vs drifting” at a glance.
-
-Commit suggestion
-
-Add baseline vs check trend view (minimal)
-
-Optional safety improvements (small wins)
-
-Translate all remaining dynamic status strings through i18n
-
-Confirm dialog for “Clear history”
-
-Add “Export (copy JSON)” button (optional placeholder)
-
-Add “Device warning” (mobile vs desktop baseline differences)
-
-Suggested small commit sequence (recommended)
-
-History storage model (save sessions)
-
-History page shell + navigation
-
-Render session list + filters
-
-Add context tags UI + persistence
-
-Minimal trend view (baseline band vs checks)
-
-Done definition for Week 3
+### Done definition for Week 3
 
 Week 3 is considered done when:
+- History exists and shows sessions
+- Sessions have optional tags
+- You can demonstrate "baseline → checks over time"
+- The UI stays calm and non-judgmental (no "fail")
 
-History exists and shows sessions
+**Status:** Completed  
+**Implemented features:**
+- Per-test session history (`fce_history_v1_*`)
+- Context tags (sleep, stress, note)
+- History view with filters
+- Local-only JSON export
+- Minimal trend view (baseline band + recent checks)
 
-Sessions have optional tags
+---
 
-You can demonstrate “baseline → checks over time”
+## Next focus (v0.2 – not started)
 
-The UI stays calm and non-judgmental (no “fail”)
+Potential directions (no commitment yet):
+- Additional test modules (e.g. Precision Taps, Divided Attention)
+- Stronger integrity flags (still lightweight)
+- Pilot-oriented UX polish
+
+v0.2 work will begin only after v0.1 review and feedback.

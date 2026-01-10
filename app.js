@@ -34,7 +34,6 @@ const I18N = {
     baseline: {
       noSessions: "No baseline sessions recorded.",
       sessions: "sessions",
-      økter: "sessions",
     },
     export: {
       btn: "Export (Copy JSON)",
@@ -412,6 +411,19 @@ function reRenderTrialList() {
   });
 }
 
+// Helper function to generate flash info string for summaries
+function getFlashInfoString(target, user, error) {
+  if (target === undefined && user === undefined && error === undefined) return "";
+  
+  const tgt = target || 0;
+  const usr = user || 0;
+  const err = error || 0;
+  
+  return currentLang === "no"
+    ? ` | Flashes: mål ${tgt}, svar ${usr}, feil ${err}`
+    : ` | Flashes: target ${tgt}, answer ${usr}, error ${err}`;
+}
+
 // Helper function to set summary text and store data for language switching
 function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
   if (!summary) return;
@@ -422,11 +434,7 @@ function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
   // Generate summary text based on type
   switch (type) {
     case "training_divided":
-      const flashInfo = dataObj.flashTargetCount !== undefined
-        ? (currentLang === "no"
-            ? ` | Flashes: mål ${dataObj.flashTargetCount}, svar ${dataObj.flashUserCount || 0}, feil ${dataObj.flashAbsError || 0}`
-            : ` | Flashes: target ${dataObj.flashTargetCount}, answer ${dataObj.flashUserCount || 0}, error ${dataObj.flashAbsError || 0}`)
-        : "";
+      const flashInfo = getFlashInfoString(dataObj.flashTargetCount, dataObj.flashUserCount, dataObj.flashAbsError);
       summary.textContent = (currentLang === "no"
         ? `Økt fullført. GO-gjennomsnitt: ${dataObj.mean.toFixed(0)} ms | SD: ${dataObj.sd.toFixed(0)} ms`
         : `Session complete. GO mean: ${dataObj.mean.toFixed(0)} ms | SD: ${dataObj.sd.toFixed(0)} ms`) + flashInfo;
@@ -473,11 +481,7 @@ function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
       break;
       
     case "baseline_not_saved_divided":
-      const flashInfo2 = dataObj.flashTarget !== undefined
-        ? (currentLang === "no"
-            ? ` | Flashes: mål ${dataObj.flashTarget}, svar ${dataObj.flashUser}, feil ${dataObj.flashError}`
-            : ` | Flashes: target ${dataObj.flashTarget}, answer ${dataObj.flashUser}, error ${dataObj.flashError}`)
-        : "";
+      const flashInfo2 = getFlashInfoString(dataObj.flashTarget, dataObj.flashUser, dataObj.flashError);
       summary.textContent = getBaselineNotSavedDivided() + flashInfo2;
       break;
       
@@ -503,86 +507,9 @@ function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
 function regenerateSummary() {
   if (!lastSummaryData || !summary) return;
   
+  // Simply call setSummary with stored data - it will regenerate the text with current language
   const { type, testType: tt, mode: m, data } = lastSummaryData;
-  
-  switch (type) {
-    case "training_divided":
-      // Training mode for Divided Attention
-      const flashInfo = data.flashTargetCount !== undefined
-        ? (currentLang === "no"
-            ? ` | Flashes: mål ${data.flashTargetCount}, svar ${data.flashUserCount || 0}, feil ${data.flashAbsError || 0}`
-            : ` | Flashes: target ${data.flashTargetCount}, answer ${data.flashUserCount || 0}, error ${data.flashAbsError || 0}`)
-        : "";
-      summary.textContent = (currentLang === "no"
-        ? `Økt fullført. GO-gjennomsnitt: ${data.mean.toFixed(0)} ms | SD: ${data.sd.toFixed(0)} ms`
-        : `Session complete. GO mean: ${data.mean.toFixed(0)} ms | SD: ${data.sd.toFixed(0)} ms`) + flashInfo;
-      break;
-      
-    case "baseline_saved_reaction":
-      summary.textContent = getBaselineSavedReaction(data.mean, data.sd, data.falseStarts, data.qualityNote || "");
-      break;
-      
-    case "baseline_saved_gonogo":
-      summary.textContent = getBaselineSavedGoNoGo(data.mean, data.sd, data.misses, data.falseAlarms, data.falseStarts, data.qualityNote || "");
-      break;
-      
-    case "baseline_saved_divided":
-      summary.textContent = getBaselineSavedDivided(data.mean, data.sd, data.misses, data.falseAlarms, data.falseStarts, data.flashTargetCount || 0, data.flashAbsError || 0, data.qualityNote || "");
-      break;
-      
-    case "check_reaction":
-      summary.textContent = getCheckReaction(data.mean, data.baselineMean, data.baselineSD, data.status, data.falseStarts, data.qualityNote || "");
-      break;
-      
-    case "check_gonogo":
-      summary.textContent = getCheckGoNoGo(data.mean, data.baselineMean, data.baselineSD, data.status, data.misses, data.baselineMissAvg, data.falseAlarms, data.baselineFAAvg, data.falseStarts, data.qualityNote || "");
-      break;
-      
-    case "check_divided":
-      summary.textContent = getCheckDividedAttention(data.mean, data.baselineMean, data.baselineSD, data.status, data.falseAlarmsRate, data.baselineFARate, data.flashAbsError, data.baselineFlashError, data.falseStarts, data.qualityNote || "");
-      break;
-      
-    case "invalid_no_reaction":
-      summary.textContent = getSessionInvalidNoReaction();
-      break;
-      
-    case "invalid_no_go":
-      summary.textContent = getSessionInvalidNoGo();
-      break;
-      
-    case "not_enough_baseline":
-      summary.textContent = getNotEnoughBaseline();
-      break;
-      
-    case "baseline_not_saved":
-      summary.textContent = getBaselineNotSaved();
-      break;
-      
-    case "baseline_not_saved_divided":
-      const flashInfo2 = data.flashTarget !== undefined
-        ? (currentLang === "no"
-            ? ` | Flashes: mål ${data.flashTarget}, svar ${data.flashUser}, feil ${data.flashError}`
-            : ` | Flashes: target ${data.flashTarget}, answer ${data.flashUser}, error ${data.flashError}`)
-        : "";
-      summary.textContent = getBaselineNotSavedDivided() + flashInfo2;
-      break;
-      
-    case "invalid_missing_answer":
-      summary.textContent = currentLang === "no"
-        ? "Kan ikke sammenlignes: mangler svar"
-        : "Session not usable for comparison: missing answer";
-      break;
-      
-    case "invalid_no_go_responses_divided":
-      summary.textContent = currentLang === "no"
-        ? "Økt ugyldig: ingen GO-responser."
-        : "Session invalid: no GO responses.";
-      break;
-      
-    default:
-      // Unknown type, don't change summary
-      break;
-  }
+  setSummary(type, data, tt, m);
 }
 
 function applyLangUI() {
@@ -627,89 +554,60 @@ function applyLangUI() {
   updateDividedLegend();
 }
 
+// Helper function to populate select options
+function populateSelectOptions(selectEl, options, defaultValue) {
+  if (!selectEl) return;
+  const selectedValue = selectEl.value || defaultValue;
+  selectEl.innerHTML = "";
+  options.forEach(opt => {
+    const optionEl = document.createElement("option");
+    optionEl.value = opt.value;
+    optionEl.textContent = opt.text;
+    selectEl.appendChild(optionEl);
+  });
+  selectEl.value = selectedValue;
+}
+
 function updateSelectOptions() {
   // Update testType select options
   const testTypeSelect = document.getElementById("testType");
   if (testTypeSelect) {
-    const selectedValue = testTypeSelect.value || "reaction";
-    testTypeSelect.innerHTML = "";
-    const reactionOpt = document.createElement("option");
-    reactionOpt.value = "reaction";
-    reactionOpt.textContent = t("ui.testType.reaction");
-    testTypeSelect.appendChild(reactionOpt);
-    const gonogoOpt = document.createElement("option");
-    gonogoOpt.value = "gonogo";
-    gonogoOpt.textContent = t("ui.testType.gonogo");
-    testTypeSelect.appendChild(gonogoOpt);
-    const dividedOpt = document.createElement("option");
-    dividedOpt.value = "divided";
-    dividedOpt.textContent = t("ui.testType.divided");
-    testTypeSelect.appendChild(dividedOpt);
-    testTypeSelect.value = selectedValue;
+    populateSelectOptions(testTypeSelect, [
+      { value: "reaction", text: t("ui.testType.reaction") },
+      { value: "gonogo", text: t("ui.testType.gonogo") },
+      { value: "divided", text: t("ui.testType.divided") }
+    ], "reaction");
   }
 
   // Update historyTest select options
   const historyTestSelect = document.getElementById("historyTest");
   if (historyTestSelect) {
-    const selectedValue = historyTestSelect.value || "reaction";
-    historyTestSelect.innerHTML = "";
-    const reactionOpt = document.createElement("option");
-    reactionOpt.value = "reaction";
-    reactionOpt.textContent = t("ui.testType.reaction");
-    historyTestSelect.appendChild(reactionOpt);
-    const gonogoOpt = document.createElement("option");
-    gonogoOpt.value = "gonogo";
-    gonogoOpt.textContent = t("ui.testType.gonogo");
-    historyTestSelect.appendChild(gonogoOpt);
-    const dividedOpt = document.createElement("option");
-    dividedOpt.value = "divided";
-    dividedOpt.textContent = t("ui.testType.divided");
-    historyTestSelect.appendChild(dividedOpt);
-    historyTestSelect.value = selectedValue;
+    populateSelectOptions(historyTestSelect, [
+      { value: "reaction", text: t("ui.testType.reaction") },
+      { value: "gonogo", text: t("ui.testType.gonogo") },
+      { value: "divided", text: t("ui.testType.divided") }
+    ], "reaction");
   }
 
   // Update contextMode select options
   const contextModeSelect = document.getElementById("contextMode");
   if (contextModeSelect) {
-    const selectedValue = contextModeSelect.value || "baseline";
-    contextModeSelect.innerHTML = "";
-    const baselineOpt = document.createElement("option");
-    baselineOpt.value = "baseline";
-    baselineOpt.textContent = t("ui.mode.baseline");
-    contextModeSelect.appendChild(baselineOpt);
-    const checkOpt = document.createElement("option");
-    checkOpt.value = "check";
-    checkOpt.textContent = t("ui.mode.check");
-    contextModeSelect.appendChild(checkOpt);
-    const trainingOpt = document.createElement("option");
-    trainingOpt.value = "training";
-    trainingOpt.textContent = t("ui.mode.training");
-    contextModeSelect.appendChild(trainingOpt);
-    contextModeSelect.value = selectedValue;
+    populateSelectOptions(contextModeSelect, [
+      { value: "baseline", text: t("ui.mode.baseline") },
+      { value: "check", text: t("ui.mode.check") },
+      { value: "training", text: t("ui.mode.training") }
+    ], "baseline");
   }
 
   // Update historyMode select options
   const historyModeSelect = document.getElementById("historyMode");
   if (historyModeSelect) {
-    const selectedValue = historyModeSelect.value || "all";
-    historyModeSelect.innerHTML = "";
-    const allOpt = document.createElement("option");
-    allOpt.value = "all";
-    allOpt.textContent = t("ui.mode.all");
-    historyModeSelect.appendChild(allOpt);
-    const baselineOpt = document.createElement("option");
-    baselineOpt.value = "baseline";
-    baselineOpt.textContent = t("ui.mode.baseline");
-    historyModeSelect.appendChild(baselineOpt);
-    const checkOpt = document.createElement("option");
-    checkOpt.value = "check";
-    checkOpt.textContent = t("ui.mode.check");
-    historyModeSelect.appendChild(checkOpt);
-    const trainingOpt = document.createElement("option");
-    trainingOpt.value = "training";
-    trainingOpt.textContent = t("ui.mode.training");
-    historyModeSelect.appendChild(trainingOpt);
-    historyModeSelect.value = selectedValue;
+    populateSelectOptions(historyModeSelect, [
+      { value: "all", text: t("ui.mode.all") },
+      { value: "baseline", text: t("ui.mode.baseline") },
+      { value: "check", text: t("ui.mode.check") },
+      { value: "training", text: t("ui.mode.training") }
+    ], "all");
   }
 }
 
@@ -1306,9 +1204,8 @@ clearBaselineBtn.addEventListener("click", () => {
     
     // Warn if we couldn't fit all requested flashes (due to small trial count)
     const actualFlashCount = flashTrialIndices.length;
-    if (actualFlashCount < flashCount) {
-      console.warn(`Divided Attention: Requested ${flashCount} flashes but only ${actualFlashCount} fit in ${trials} trials. Adjusting flashTargetCount.`);
-    }
+    // Note: If actualFlashCount < flashCount, we silently adjust to actual count
+    // This can happen with small trial counts (< 10-12) where spacing constraints prevent all flashes
     
     return {
       trialTypes,
@@ -1330,10 +1227,10 @@ clearBaselineBtn.addEventListener("click", () => {
     const config = TEST_CONFIG.divided;
     const currentTrialIdx = trialIndex - 1; // trialIndex is already incremented
     
-    // Explicitly block flashes in first 2 trials
+    // Explicitly block flashes in first 2 trials (defensive check - plan generation should prevent this)
     if (currentTrialIdx < 2 && dividedPlan.flashTrialIndices.includes(currentTrialIdx)) {
-      // Should not happen due to plan generation, but defensive check
-      console.warn("Flash scheduled in first 2 trials - ignoring");
+      // Silently skip flash if somehow scheduled in first 2 trials
+      return;
     }
     
     const isGo = dividedPlan.trialTypes[currentTrialIdx] === "go";
@@ -1957,6 +1854,10 @@ function pushHistoryRecord(record) {
         return;
       }
   
+      // Calculate baseline stats once (used for status and summary)
+      const baselineMean = mean(sessions.map(s => s.mean));
+      const baselineSD = mean(sessions.map(s => s.sd));
+      
       let status;
       
       if (isDivided) {
@@ -1964,9 +1865,6 @@ function pushHistoryRecord(record) {
         status = getDividedAttentionStatus(sessionPayload, sessions);
       } else {
         // Reaction Time and Go/No-Go: compare avgMs only
-        const baselineMean = mean(sessions.map(s => s.mean));
-        const baselineSD = mean(sessions.map(s => s.sd));
-        
         if (sessionPayload.mean <= baselineMean + baselineSD) {
           status = t("status.within");
         } else if (sessionPayload.mean <= baselineMean + 2 * baselineSD) {
@@ -1975,12 +1873,10 @@ function pushHistoryRecord(record) {
           status = t("status.significantly");
         }
       }
-  
+
       const qualityNote = checkSessionQuality(sessionPayload, totalTrials, isReaction);
       
       if (isReaction) {
-        const baselineMean = mean(sessions.map(s => s.mean));
-        const baselineSD = mean(sessions.map(s => s.sd));
         setSummary("check_reaction", {
           mean: sessionPayload.mean,
           baselineMean,
@@ -1991,8 +1887,6 @@ function pushHistoryRecord(record) {
         }, tt, mode);
       } else if (isDivided) {
         // Divided Attention check summary
-        const baselineMean = mean(sessions.map(s => s.mean));
-        const baselineSD = mean(sessions.map(s => s.sd));
         // False alarm rate: use NO-GO trial count as denominator
         const baselineFARate = mean(sessions.map(s => {
           if (typeof s.falseAlarms === "number" && typeof s.nogoCount === "number" && s.nogoCount > 0) {
@@ -2019,8 +1913,6 @@ function pushHistoryRecord(record) {
       } else {
         // For Go/No-Go, also show error counts clearly.
         // Optional: compare errors vs baseline averages (simple, explainable)
-        const baselineMean = mean(sessions.map(s => s.mean));
-        const baselineSD = mean(sessions.map(s => s.sd));
         const baselineMissAvg = mean(sessions.map(s => (typeof s.misses === "number" ? s.misses : 0)));
         const baselineFAAvg = mean(sessions.map(s => (typeof s.falseAlarms === "number" ? s.falseAlarms : 0)));
 

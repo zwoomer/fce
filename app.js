@@ -63,6 +63,17 @@ const I18N = {
       falseAlarms: "false alarms",
       baseline: "baseline",
     },
+    quality: {
+      good: "Good",
+      mixed: "Mixed",
+      not_usable: "Not usable",
+      label: "Quality",
+    },
+    refusal: {
+      R1_INVALID_EXECUTION: "Session not usable: execution failure (no valid responses recorded).",
+      R2_INSUFFICIENT_DATA: "Session not usable: insufficient data (too few valid responses).",
+      R3_EXCESS_NOISE: "Session not usable: excessive errors (too many false starts or inhibitory errors).",
+    },
     stimulus: {
       ready: "Ready…",
       reaction: {
@@ -138,6 +149,17 @@ const I18N = {
       misses: "bom",
       falseAlarms: "inhibisjonsfeil",
       baseline: "baseline",
+    },
+    quality: {
+      good: "God",
+      mixed: "Blandet",
+      not_usable: "Ikke brukbar",
+      label: "Kvalitet",
+    },
+    refusal: {
+      R1_INVALID_EXECUTION: "Økt ikke brukbar: utførelsesfeil (ingen gyldige responser registrert).",
+      R2_INSUFFICIENT_DATA: "Økt ikke brukbar: utilstrekkelige data (for få gyldige responser).",
+      R3_EXCESS_NOISE: "Økt ikke brukbar: for mange feil (for mange feilstarter eller inhibisjonsfeil).",
     },
     stimulus: {
       ready: "Klar…",
@@ -264,27 +286,31 @@ function getNotEnoughBaseline() {
     : "Not enough baseline sessions. Please record at least 3 baseline sessions.";
 }
 
-function getBaselineSavedReaction(mean, sd, falseStarts, qualityNote) {
+function getBaselineSavedReaction(mean, sd, falseStarts, qualityNote, quality, deviceWarning) {
   const falseStartsText = falseStarts 
     ? (currentLang === "no" ? ` | Feilstarter: ${falseStarts}` : ` | False starts: ${falseStarts}`)
     : "";
+  const qualityText = quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${quality}`)}` : ` | Quality: ${t(`quality.${quality}`)}`) : "";
+  const warningText = deviceWarning || "";
   if (currentLang === "no") {
-    return `Baseline-økt lagret. Gjennomsnitt: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms${falseStartsText}${qualityNote}`;
+    return `Baseline-økt lagret. Gjennomsnitt: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms${falseStartsText}${qualityText}${qualityNote}${warningText}`;
   }
-  return `Baseline session saved. Mean: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms${falseStartsText}${qualityNote}`;
+  return `Baseline session saved. Mean: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms${falseStartsText}${qualityText}${qualityNote}${warningText}`;
 }
 
-function getBaselineSavedGoNoGo(mean, sd, misses, falseAlarms, falseStarts, qualityNote) {
+function getBaselineSavedGoNoGo(mean, sd, misses, falseAlarms, falseStarts, qualityNote, quality, deviceWarning) {
   const falseStartsText = falseStarts
     ? (currentLang === "no" ? ` | Feilstarter: ${falseStarts}` : ` | False starts: ${falseStarts}`)
     : "";
+  const qualityText = quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${quality}`)}` : ` | Quality: ${t(`quality.${quality}`)}`) : "";
+  const warningText = deviceWarning || "";
   if (currentLang === "no") {
-    return `Baseline-økt lagret. GO-gjennomsnitt: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms | Bom: ${misses} | Inhibisjonsfeil: ${falseAlarms}${falseStartsText}${qualityNote}`;
+    return `Baseline-økt lagret. GO-gjennomsnitt: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms | Bom: ${misses} | Inhibisjonsfeil: ${falseAlarms}${falseStartsText}${qualityText}${qualityNote}${warningText}`;
   }
-  return `Baseline session saved. GO mean: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms | Misses: ${misses} | Inhibitory errors: ${falseAlarms}${falseStartsText}${qualityNote}`;
+  return `Baseline session saved. GO mean: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms | Misses: ${misses} | Inhibitory errors: ${falseAlarms}${falseStartsText}${qualityText}${qualityNote}${warningText}`;
 }
 
-function getBaselineSavedDivided(mean, sd, misses, falseAlarms, falseStarts, flashTargetCount, flashAbsError, qualityNote) {
+function getBaselineSavedDivided(mean, sd, misses, falseAlarms, falseStarts, flashTargetCount, flashAbsError, qualityNote, quality, deviceWarning) {
   const falseStartsText = falseStarts
     ? (currentLang === "no" ? ` | Feilstarter: ${falseStarts}` : ` | False starts: ${falseStarts}`)
     : "";
@@ -293,30 +319,36 @@ function getBaselineSavedDivided(mean, sd, misses, falseAlarms, falseStarts, fla
         ? ` | Flash-feil snitt: ${flashAbsError.toFixed(1)} (målt: ${flashTargetCount})`
         : ` | Flash error avg: ${flashAbsError.toFixed(1)} (target: ${flashTargetCount})`)
     : "";
+  const qualityText = quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${quality}`)}` : ` | Quality: ${t(`quality.${quality}`)}`) : "";
+  const warningText = deviceWarning || "";
   if (currentLang === "no") {
-    return `Baseline-økt lagret. GO-gjennomsnitt: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms | Bom: ${misses} | Inhibisjonsfeil: ${falseAlarms}${flashText}${falseStartsText}${qualityNote}`;
+    return `Baseline-økt lagret. GO-gjennomsnitt: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms | Bom: ${misses} | Inhibisjonsfeil: ${falseAlarms}${flashText}${falseStartsText}${qualityText}${qualityNote}${warningText}`;
   }
-  return `Baseline session saved. GO mean: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms | Misses: ${misses} | Inhibitory errors: ${falseAlarms}${flashText}${falseStartsText}${qualityNote}`;
+  return `Baseline session saved. GO mean: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms | Misses: ${misses} | Inhibitory errors: ${falseAlarms}${flashText}${falseStartsText}${qualityText}${qualityNote}${warningText}`;
 }
 
-function getCheckReaction(mean, baselineMean, baselineSD, status, falseStarts, qualityNote) {
+function getCheckReaction(mean, baselineMean, baselineSD, status, falseStarts, qualityNote, quality, deviceWarning) {
   const falseStartsText = falseStarts
     ? (currentLang === "no" ? ` | Feilstarter: ${falseStarts}` : ` | False starts: ${falseStarts}`)
     : "";
+  const qualityText = quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${quality}`)}` : ` | Quality: ${t(`quality.${quality}`)}`) : "";
+  const warningText = deviceWarning || "";
   if (currentLang === "no") {
-    return `Dagens gjennomsnitt: ${mean.toFixed(0)} ms | Baseline-gjennomsnitt: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status}${falseStartsText}${qualityNote}`;
+    return `Dagens gjennomsnitt: ${mean.toFixed(0)} ms | Baseline-gjennomsnitt: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status}${falseStartsText}${qualityText}${qualityNote}${warningText}`;
   }
-  return `Today mean: ${mean.toFixed(0)} ms | Baseline mean: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status}${falseStartsText}${qualityNote}`;
+  return `Today mean: ${mean.toFixed(0)} ms | Baseline mean: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status}${falseStartsText}${qualityText}${qualityNote}${warningText}`;
 }
 
-function getCheckGoNoGo(mean, baselineMean, baselineSD, status, misses, baselineMissAvg, falseAlarms, baselineFAAvg, falseStarts, qualityNote) {
+function getCheckGoNoGo(mean, baselineMean, baselineSD, status, misses, baselineMissAvg, falseAlarms, baselineFAAvg, falseStarts, qualityNote, quality, deviceWarning) {
   const falseStartsText = falseStarts
     ? (currentLang === "no" ? ` | Feilstarter: ${falseStarts}` : ` | False starts: ${falseStarts}`)
     : "";
+  const qualityText = quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${quality}`)}` : ` | Quality: ${t(`quality.${quality}`)}`) : "";
+  const warningText = deviceWarning || "";
   if (currentLang === "no") {
-    return `Dagens GO-gjennomsnitt: ${mean.toFixed(0)} ms | Baseline-gjennomsnitt: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status} | Bom: ${misses} (baseline snitt ${baselineMissAvg.toFixed(1)}) | Inhibisjonsfeil: ${falseAlarms} (baseline snitt ${baselineFAAvg.toFixed(1)})${falseStartsText}${qualityNote}`;
+    return `Dagens GO-gjennomsnitt: ${mean.toFixed(0)} ms | Baseline-gjennomsnitt: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status} | Bom: ${misses} (baseline snitt ${baselineMissAvg.toFixed(1)}) | Inhibisjonsfeil: ${falseAlarms} (baseline snitt ${baselineFAAvg.toFixed(1)})${falseStartsText}${qualityText}${qualityNote}${warningText}`;
   }
-  return `Today GO mean: ${mean.toFixed(0)} ms | Baseline mean: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status} | Misses: ${misses} (baseline avg ${baselineMissAvg.toFixed(1)}) | Inhibitory errors: ${falseAlarms} (baseline avg ${baselineFAAvg.toFixed(1)})${falseStartsText}${qualityNote}`;
+  return `Today GO mean: ${mean.toFixed(0)} ms | Baseline mean: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status} | Misses: ${misses} (baseline avg ${baselineMissAvg.toFixed(1)}) | Inhibitory errors: ${falseAlarms} (baseline avg ${baselineFAAvg.toFixed(1)})${falseStartsText}${qualityText}${qualityNote}${warningText}`;
 }
 
 // Divided Attention status comparison (avgMs, falseAlarmsRate, flashAbsError)
@@ -387,14 +419,16 @@ function getDividedAttentionStatus(sessionPayload, baselineSessions) {
   return t("status.within");
 }
 
-function getCheckDividedAttention(mean, baselineMean, baselineSD, status, falseAlarmsRate, baselineFARate, flashAbsError, baselineFlashError, falseStarts, qualityNote) {
+function getCheckDividedAttention(mean, baselineMean, baselineSD, status, falseAlarmsRate, baselineFARate, flashAbsError, baselineFlashError, falseStarts, qualityNote, quality, deviceWarning) {
   const falseStartsText = falseStarts > 0
     ? (currentLang === "no" ? ` | Feilstarter: ${falseStarts}` : ` | False starts: ${falseStarts}`)
     : "";
+  const qualityText = quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${quality}`)}` : ` | Quality: ${t(`quality.${quality}`)}`) : "";
+  const warningText = deviceWarning || "";
   if (currentLang === "no") {
-    return `Dagens GO-gjennomsnitt: ${mean.toFixed(0)} ms | Baseline-gjennomsnitt: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status} | Inhibisjonsfeil-rate: ${(falseAlarmsRate * 100).toFixed(1)}% (baseline ${(baselineFARate * 100).toFixed(1)}%) | Flash-feil: ${flashAbsError} (baseline snitt ${baselineFlashError.toFixed(1)})${falseStartsText}${qualityNote}`;
+    return `Dagens GO-gjennomsnitt: ${mean.toFixed(0)} ms | Baseline-gjennomsnitt: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status} | Inhibisjonsfeil-rate: ${(falseAlarmsRate * 100).toFixed(1)}% (baseline ${(baselineFARate * 100).toFixed(1)}%) | Flash-feil: ${flashAbsError} (baseline snitt ${baselineFlashError.toFixed(1)})${falseStartsText}${qualityText}${qualityNote}${warningText}`;
   }
-  return `Today GO mean: ${mean.toFixed(0)} ms | Baseline mean: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status} | False alarm rate: ${(falseAlarmsRate * 100).toFixed(1)}% (baseline ${(baselineFARate * 100).toFixed(1)}%) | Flash error: ${flashAbsError} (baseline avg ${baselineFlashError.toFixed(1)})${falseStartsText}${qualityNote}`;
+  return `Today GO mean: ${mean.toFixed(0)} ms | Baseline mean: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status} | False alarm rate: ${(falseAlarmsRate * 100).toFixed(1)}% (baseline ${(baselineFARate * 100).toFixed(1)}%) | Flash error: ${flashAbsError} (baseline avg ${baselineFlashError.toFixed(1)})${falseStartsText}${qualityText}${qualityNote}${warningText}`;
 }
 
 function reRenderTrialList() {
@@ -435,66 +469,81 @@ function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
   switch (type) {
     case "training_divided":
       const flashInfo = getFlashInfoString(dataObj.flashTargetCount, dataObj.flashUserCount, dataObj.flashAbsError);
+      const qualityTextTraining = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
       summary.textContent = (currentLang === "no"
         ? `Økt fullført. GO-gjennomsnitt: ${dataObj.mean.toFixed(0)} ms | SD: ${dataObj.sd.toFixed(0)} ms`
-        : `Session complete. GO mean: ${dataObj.mean.toFixed(0)} ms | SD: ${dataObj.sd.toFixed(0)} ms`) + flashInfo;
+        : `Session complete. GO mean: ${dataObj.mean.toFixed(0)} ms | SD: ${dataObj.sd.toFixed(0)} ms`) + flashInfo + qualityTextTraining;
       break;
       
     case "baseline_saved_reaction":
-      summary.textContent = getBaselineSavedReaction(dataObj.mean, dataObj.sd, dataObj.falseStarts, dataObj.qualityNote || "");
+      summary.textContent = getBaselineSavedReaction(dataObj.mean, dataObj.sd, dataObj.falseStarts, dataObj.qualityNote || "", dataObj.quality, dataObj.deviceWarning || "");
       break;
       
     case "baseline_saved_gonogo":
-      summary.textContent = getBaselineSavedGoNoGo(dataObj.mean, dataObj.sd, dataObj.misses, dataObj.falseAlarms, dataObj.falseStarts, dataObj.qualityNote || "");
+      summary.textContent = getBaselineSavedGoNoGo(dataObj.mean, dataObj.sd, dataObj.misses, dataObj.falseAlarms, dataObj.falseStarts, dataObj.qualityNote || "", dataObj.quality, dataObj.deviceWarning || "");
       break;
       
     case "baseline_saved_divided":
-      summary.textContent = getBaselineSavedDivided(dataObj.mean, dataObj.sd, dataObj.misses, dataObj.falseAlarms, dataObj.falseStarts, dataObj.flashTargetCount || 0, dataObj.flashAbsError || 0, dataObj.qualityNote || "");
+      summary.textContent = getBaselineSavedDivided(dataObj.mean, dataObj.sd, dataObj.misses, dataObj.falseAlarms, dataObj.falseStarts, dataObj.flashTargetCount || 0, dataObj.flashAbsError || 0, dataObj.qualityNote || "", dataObj.quality, dataObj.deviceWarning || "");
       break;
       
     case "check_reaction":
-      summary.textContent = getCheckReaction(dataObj.mean, dataObj.baselineMean, dataObj.baselineSD, dataObj.status, dataObj.falseStarts, dataObj.qualityNote || "");
+      summary.textContent = getCheckReaction(dataObj.mean, dataObj.baselineMean, dataObj.baselineSD, dataObj.status, dataObj.falseStarts, dataObj.qualityNote || "", dataObj.quality, dataObj.deviceWarning || "");
       break;
       
     case "check_gonogo":
-      summary.textContent = getCheckGoNoGo(dataObj.mean, dataObj.baselineMean, dataObj.baselineSD, dataObj.status, dataObj.misses, dataObj.baselineMissAvg, dataObj.falseAlarms, dataObj.baselineFAAvg, dataObj.falseStarts, dataObj.qualityNote || "");
+      summary.textContent = getCheckGoNoGo(dataObj.mean, dataObj.baselineMean, dataObj.baselineSD, dataObj.status, dataObj.misses, dataObj.baselineMissAvg, dataObj.falseAlarms, dataObj.baselineFAAvg, dataObj.falseStarts, dataObj.qualityNote || "", dataObj.quality, dataObj.deviceWarning || "");
       break;
       
     case "check_divided":
-      summary.textContent = getCheckDividedAttention(dataObj.mean, dataObj.baselineMean, dataObj.baselineSD, dataObj.status, dataObj.falseAlarmsRate, dataObj.baselineFARate, dataObj.flashAbsError, dataObj.baselineFlashError, dataObj.falseStarts, dataObj.qualityNote || "");
+      summary.textContent = getCheckDividedAttention(dataObj.mean, dataObj.baselineMean, dataObj.baselineSD, dataObj.status, dataObj.falseAlarmsRate, dataObj.baselineFARate, dataObj.flashAbsError, dataObj.baselineFlashError, dataObj.falseStarts, dataObj.qualityNote || "", dataObj.quality, dataObj.deviceWarning || "");
       break;
       
     case "invalid_no_reaction":
-      summary.textContent = getSessionInvalidNoReaction();
+      const refusalMsg1 = dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : getSessionInvalidNoReaction();
+      const qualityText1 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
+      summary.textContent = refusalMsg1 + qualityText1;
       break;
       
     case "invalid_no_go":
-      summary.textContent = getSessionInvalidNoGo();
+      const refusalMsg2 = dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : getSessionInvalidNoGo();
+      const qualityText2 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
+      summary.textContent = refusalMsg2 + qualityText2;
       break;
       
     case "not_enough_baseline":
-      summary.textContent = getNotEnoughBaseline();
+      const refusalMsg3 = dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : getNotEnoughBaseline();
+      const qualityText3 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
+      summary.textContent = refusalMsg3 + qualityText3;
       break;
       
     case "baseline_not_saved":
-      summary.textContent = getBaselineNotSaved();
+      const refusalMsg4 = dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : getBaselineNotSaved();
+      const qualityText4 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
+      summary.textContent = refusalMsg4 + qualityText4;
       break;
       
     case "baseline_not_saved_divided":
       const flashInfo2 = getFlashInfoString(dataObj.flashTarget, dataObj.flashUser, dataObj.flashError);
-      summary.textContent = getBaselineNotSavedDivided() + flashInfo2;
+      const refusalMsg5 = dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : getBaselineNotSavedDivided();
+      const qualityText5 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
+      summary.textContent = refusalMsg5 + flashInfo2 + qualityText5;
       break;
       
     case "invalid_missing_answer":
-      summary.textContent = currentLang === "no"
+      const refusalMsg6 = dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : (currentLang === "no"
         ? "Kan ikke sammenlignes: mangler svar"
-        : "Session not usable for comparison: missing answer";
+        : "Session not usable for comparison: missing answer");
+      const qualityText6 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
+      summary.textContent = refusalMsg6 + qualityText6;
       break;
       
     case "invalid_no_go_responses_divided":
-      summary.textContent = currentLang === "no"
+      const refusalMsg7 = dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : (currentLang === "no"
         ? "Økt ugyldig: ingen GO-responser."
-        : "Session invalid: no GO responses.";
+        : "Session invalid: no GO responses.");
+      const qualityText7 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
+      summary.textContent = refusalMsg7 + qualityText7;
       break;
       
     default:
@@ -1478,9 +1527,9 @@ function pushHistoryRecord(record) {
       const falseStarts = results.filter(e => e && e.type === "false_start").length;
   
       if (rts.length === 0) {
-        flags = { invalid: true, reason: "no_valid_trials" };
+        flags = { invalid: true, reason: "no_valid_trials", refusalCode: "R1_INVALID_EXECUTION" };
         // Store invalid session in history
-        pushHistoryRecord({
+        const invalidRecord = {
           id: createdAt,
           createdAt,
           testType: "reaction",
@@ -1489,9 +1538,14 @@ function pushHistoryRecord(record) {
           flags,
           tags,
           device
-        });
+        };
+        invalidRecord.quality = computeSessionQuality(invalidRecord);
+        pushHistoryRecord(invalidRecord);
         renderHistory();
-        setSummary("invalid_no_reaction", {}, "reaction", mode);
+        setSummary("invalid_no_reaction", {
+          refusalCode: flags.refusalCode,
+          quality: invalidRecord.quality
+        }, "reaction", mode);
         mode = null;
         return;
       }
@@ -1512,8 +1566,8 @@ function pushHistoryRecord(record) {
       const falseStarts = results.filter(e => e && e.type === "false_start").length;
   
       if (goHits.length === 0) {
-        flags = { invalid: true, reason: "no_go_responses" };
-        pushHistoryRecord({
+        flags = { invalid: true, reason: "no_go_responses", refusalCode: "R1_INVALID_EXECUTION" };
+        const invalidRecord = {
           id: createdAt,
           createdAt,
           testType: "gonogo",
@@ -1533,9 +1587,14 @@ function pushHistoryRecord(record) {
           flags,
           tags,
           device
-        });
+        };
+        invalidRecord.quality = computeSessionQuality(invalidRecord);
+        pushHistoryRecord(invalidRecord);
         renderHistory();
-        setSummary("invalid_no_go", {}, "gonogo", mode);
+        setSummary("invalid_no_go", {
+          refusalCode: flags.refusalCode,
+          quality: invalidRecord.quality
+        }, "gonogo", mode);
         mode = null;
         return;
       }
@@ -1559,8 +1618,8 @@ function pushHistoryRecord(record) {
       
       // Check for missing flash answer
       if (dividedFlashAnswer === null || dividedFlashAnswer === undefined) {
-        flags = { invalid: true, reason: "missing_secondary_answer" };
-        pushHistoryRecord({
+        flags = { invalid: true, reason: "missing_secondary_answer", refusalCode: "R1_INVALID_EXECUTION" };
+        const invalidRecord = {
           id: createdAt,
           createdAt,
           testType: "divided",
@@ -1583,9 +1642,14 @@ function pushHistoryRecord(record) {
           flags,
           tags,
           device
-        });
+        };
+        invalidRecord.quality = computeSessionQuality(invalidRecord);
+        pushHistoryRecord(invalidRecord);
         renderHistory();
-        setSummary("invalid_missing_answer", {}, "divided", mode);
+        setSummary("invalid_missing_answer", {
+          refusalCode: flags.refusalCode,
+          quality: invalidRecord.quality
+        }, "divided", mode);
         mode = null;
         dividedPlan = null;
         dividedFlashAnswer = null;
@@ -1593,8 +1657,8 @@ function pushHistoryRecord(record) {
       }
       
       if (goHits.length === 0) {
-        flags = { invalid: true, reason: "no_go_responses" };
-        pushHistoryRecord({
+        flags = { invalid: true, reason: "no_go_responses", refusalCode: "R1_INVALID_EXECUTION" };
+        const invalidRecord = {
           id: createdAt,
           createdAt,
           testType: "divided",
@@ -1617,9 +1681,14 @@ function pushHistoryRecord(record) {
           flags,
           tags,
           device
-        });
+        };
+        invalidRecord.quality = computeSessionQuality(invalidRecord);
+        pushHistoryRecord(invalidRecord);
         renderHistory();
-        setSummary("invalid_no_go_responses_divided", {}, "divided", mode);
+        setSummary("invalid_no_go_responses_divided", {
+          refusalCode: flags.refusalCode,
+          quality: invalidRecord.quality
+        }, "divided", mode);
         mode = null;
         dividedPlan = null;
         dividedFlashAnswer = null;
@@ -1653,6 +1722,21 @@ function pushHistoryRecord(record) {
       };
     }
 
+    // Check for R3_EXCESS_NOISE (high error rates) - but only mark invalid if extreme
+    // This is a quality issue, but we still allow baseline updates if thresholds are met
+    // We'll mark as "mixed" quality rather than invalid unless error rates are extreme
+    const falseStartRate = totalTrials > 0 ? (sessionPayload.falseStarts || 0) / totalTrials : 0;
+    const missRate = totalTrials > 0 ? (sessionPayload.misses || 0) / totalTrials : 0;
+    const falseAlarmRate = totalTrials > 0 && sessionPayload.nogoCount > 0 
+      ? (sessionPayload.falseAlarms || 0) / sessionPayload.nogoCount 
+      : 0;
+    
+    // Only mark as R3_INVALID if error rates are extremely high (>50% false starts or >60% miss/false alarm rate)
+    // Otherwise, quality will be "mixed" but session is still valid
+    if (!flags.invalid && (falseStartRate > 0.5 || missRate > 0.6 || falseAlarmRate > 0.6)) {
+      flags = { invalid: true, reason: "excess_noise", refusalCode: "R3_EXCESS_NOISE" };
+    }
+    
     // Always write session record (even if baseline refuses saving later)
     const sessionRecord = {
       id: createdAt,
@@ -1701,6 +1785,10 @@ function pushHistoryRecord(record) {
       tags,
       device
     };
+    
+    // Compute and store quality
+    sessionRecord.quality = computeSessionQuality(sessionRecord);
+    
     pushHistoryRecord(sessionRecord);
     renderHistory();
   
@@ -1728,7 +1816,9 @@ function pushHistoryRecord(record) {
 
         if (goHits < minGoHits) {
           // Mark latest history record as invalid (baseline refused)
-          sessionRecord.flags = { invalid: true, reason: "baseline_refused_too_few_go" };
+          sessionRecord.flags = { invalid: true, reason: "baseline_refused_too_few_go", refusalCode: "R2_INSUFFICIENT_DATA" };
+          // Recompute quality with updated flags
+          sessionRecord.quality = computeSessionQuality(sessionRecord);
           const hs = loadHistory(tt);
           hs[hs.length - 1] = sessionRecord;
           saveHistory(tt, hs);
@@ -1743,10 +1833,15 @@ function pushHistoryRecord(record) {
             setSummary("baseline_not_saved_divided", {
               flashTarget: flashTarget > 0 || flashUser > 0 ? flashTarget : undefined,
               flashUser: flashTarget > 0 || flashUser > 0 ? flashUser : undefined,
-              flashError: flashTarget > 0 || flashUser > 0 ? flashError : undefined
+              flashError: flashTarget > 0 || flashUser > 0 ? flashError : undefined,
+              refusalCode: sessionRecord.flags.refusalCode,
+              quality: sessionRecord.quality
             }, tt, mode);
           } else {
-            setSummary("baseline_not_saved", {}, tt, mode);
+            setSummary("baseline_not_saved", {
+              refusalCode: sessionRecord.flags.refusalCode,
+              quality: sessionRecord.quality
+            }, tt, mode);
           }
           mode = null;
           if (isDivided) {
@@ -1759,9 +1854,11 @@ function pushHistoryRecord(record) {
 
       const sessions = loadBaseline();
 
+      // Store device info with baseline session for consistency (used for device comparison warnings)
       sessions.push({
         ...sessionPayload,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        device: device // Store device info with baseline for device consistency checking
       });
   
       saveBaseline(sessions);
@@ -1774,7 +1871,9 @@ function pushHistoryRecord(record) {
           mean: sessionPayload.mean,
           sd: sessionPayload.sd,
           falseStarts: sessionPayload.falseStarts,
-          qualityNote
+          qualityNote,
+          quality: sessionRecord.quality || "good",
+          deviceWarning: ""
         }, tt, mode);
       } else if (isDivided) {
         setSummary("baseline_saved_divided", {
@@ -1785,7 +1884,9 @@ function pushHistoryRecord(record) {
           falseStarts: sessionPayload.falseStarts,
           flashTargetCount: sessionPayload.flashTargetCount || 0,
           flashAbsError: sessionPayload.flashAbsError || 0,
-          qualityNote
+          qualityNote,
+          quality: sessionRecord.quality || "good",
+          deviceWarning: ""
         }, tt, mode);
       } else if (isGoNoGo) {
         setSummary("baseline_saved_gonogo", {
@@ -1794,7 +1895,9 @@ function pushHistoryRecord(record) {
           misses: sessionPayload.misses,
           falseAlarms: sessionPayload.falseAlarms,
           falseStarts: sessionPayload.falseStarts,
-          qualityNote
+          qualityNote,
+          quality: sessionRecord.quality || "good",
+          deviceWarning: ""
         }, tt, mode);
       }
 
@@ -1814,7 +1917,8 @@ function pushHistoryRecord(record) {
         sd: sessionPayload.sd,
         flashTargetCount: sessionPayload.flashTargetCount,
         flashUserCount: sessionPayload.flashUserCount,
-        flashAbsError: sessionPayload.flashAbsError
+        flashAbsError: sessionPayload.flashAbsError,
+        quality: sessionRecord.quality || "good"
       }, tt, mode);
       mode = null;
       dividedPlan = null;
@@ -1832,12 +1936,17 @@ function pushHistoryRecord(record) {
       if (sessions.length < minBaselineSessions()) {
         // Mark latest history record as invalid (check cannot compare)
         // tt already defined above
-        sessionRecord.flags = { invalid: true, reason: "not_enough_baseline" };
+        sessionRecord.flags = { invalid: true, reason: "not_enough_baseline", refusalCode: "R2_INSUFFICIENT_DATA" };
+        // Recompute quality with updated flags
+        sessionRecord.quality = computeSessionQuality(sessionRecord);
         const hs = loadHistory(tt);
         hs[hs.length - 1] = sessionRecord;
         saveHistory(tt, hs);
         renderHistory();
-        setSummary("not_enough_baseline", {}, tt, mode);
+        setSummary("not_enough_baseline", {
+          refusalCode: sessionRecord.flags.refusalCode,
+          quality: sessionRecord.quality
+        }, tt, mode);
         mode = null;
         if (isDivided) {
           dividedPlan = null;
@@ -1846,6 +1955,33 @@ function pushHistoryRecord(record) {
         return;
       }
   
+      // Device consistency check (non-blocking warning)
+      // Get device info from history records (baseline sessions in history)
+      const historySessions = loadHistory(tt);
+      const baselineHistorySessions = historySessions.filter(s => s && s.mode === "baseline" && s.device);
+      const baselineDevices = baselineHistorySessions.map(s => s.device).filter(d => d);
+      const currentDevice = getDeviceHints();
+      let deviceWarning = "";
+      
+      if (baselineDevices.length > 0) {
+        // Check if baseline devices differ from current device
+        const baselineTouchCount = baselineDevices.filter(d => d.isTouch === true).length;
+        const baselineMobileCount = baselineDevices.filter(d => d.userAgentHint === "mobile").length;
+        
+        // Check for mismatch (most common device type in baseline vs current)
+        const mostCommonBaselineIsTouch = baselineTouchCount > baselineDevices.length / 2;
+        const mostCommonBaselineIsMobile = baselineMobileCount > baselineDevices.length / 2;
+        
+        const hasDeviceMismatch = (mostCommonBaselineIsTouch !== currentDevice.isTouch) || 
+                                   (mostCommonBaselineIsMobile !== (currentDevice.userAgentHint === "mobile"));
+        
+        if (hasDeviceMismatch) {
+          deviceWarning = currentLang === "no"
+            ? " Advarsel: Baselinesøkter ble utført på en annen enhetstype (mobil vs desktop). Sammenligning kan være mindre pålitelig."
+            : " Warning: Baseline sessions were performed on a different device type (mobile vs desktop). Comparison may be less reliable.";
+        }
+      }
+      
       // Calculate baseline stats once (used for status and summary)
       const baselineMean = mean(sessions.map(s => s.mean));
       const baselineSD = mean(sessions.map(s => s.sd));
@@ -1875,7 +2011,9 @@ function pushHistoryRecord(record) {
           baselineSD,
           status,
           falseStarts: sessionPayload.falseStarts,
-          qualityNote
+          qualityNote,
+          quality: sessionRecord.quality || "good",
+          deviceWarning: deviceWarning || ""
         }, tt, mode);
       } else if (isDivided) {
         // Divided Attention check summary
@@ -1900,7 +2038,9 @@ function pushHistoryRecord(record) {
           flashAbsError: sessionPayload.flashAbsError,
           baselineFlashError,
           falseStarts: sessionPayload.falseStarts,
-          qualityNote
+          qualityNote,
+          quality: sessionRecord.quality || "good",
+          deviceWarning: deviceWarning || ""
         }, tt, mode);
       } else {
         // For Go/No-Go, also show error counts clearly.
@@ -1918,7 +2058,9 @@ function pushHistoryRecord(record) {
           falseAlarms: sessionPayload.falseAlarms,
           baselineFAAvg,
           falseStarts: sessionPayload.falseStarts,
-          qualityNote
+          qualityNote,
+          quality: sessionRecord.quality || "good",
+          deviceWarning: deviceWarning || ""
         }, tt, mode);
       }
   
@@ -2127,6 +2269,68 @@ function recommendedTrialsPerSession() {
   if (tt === "gonogo") return 20;
   if (tt === "divided") return 10; // Divided attention needs enough trials for flashes
   return 5; // Reaction Time
+}
+
+// Map invalid reason to standardized refusal code
+function reasonToRefusalCode(reason) {
+  if (!reason) return null;
+  
+  // R1: Invalid execution - execution failures (no valid responses)
+  if (reason === "no_valid_trials" || reason === "no_go_responses" || reason === "missing_secondary_answer") {
+    return "R1_INVALID_EXECUTION";
+  }
+  
+  // R2: Insufficient data - not enough valid data
+  if (reason === "not_enough_baseline" || reason === "baseline_refused_too_few_go") {
+    return "R2_INSUFFICIENT_DATA";
+  }
+  
+  // R3: Excess noise - high error rates (will be set based on error thresholds)
+  // This is handled separately in computeSessionQuality
+  return null;
+}
+
+// Compute session quality classification: "good" | "mixed" | "not_usable"
+function computeSessionQuality(session) {
+  if (!session) return "not_usable";
+  
+  // If explicitly marked invalid, return "not_usable"
+  if (session.flags && session.flags.invalid === true) {
+    return "not_usable";
+  }
+  
+  const metrics = session.metrics || {};
+  const totalTrials = metrics.trials || 0;
+  
+  if (totalTrials === 0) return "not_usable";
+  
+  // Calculate error rates
+  const falseStarts = metrics.falseStarts || 0;
+  const misses = metrics.misses || 0;
+  const falseAlarms = metrics.falseAlarms || 0;
+  const hits = metrics.hits || metrics.trials || 0;
+  const nogoCount = metrics.nogoCount || 0;
+  
+  const falseStartRate = totalTrials > 0 ? falseStarts / totalTrials : 0;
+  const missRate = totalTrials > 0 ? misses / totalTrials : 0;
+  // False alarm rate: use NO-GO count as denominator if available, otherwise use totalTrials as fallback
+  const falseAlarmRate = nogoCount > 0 ? falseAlarms / nogoCount : (totalTrials > 0 ? falseAlarms / totalTrials : 0);
+  const validHitRate = totalTrials > 0 ? hits / totalTrials : 0;
+  
+  // Thresholds for "mixed" quality
+  // High error rates indicate mixed quality
+  const hasHighFalseStartRate = falseStartRate > 0.2;
+  const hasLowValidHitRate = validHitRate < 0.5;
+  const hasHighMissRate = missRate > 0.3;
+  const hasHighFalseAlarmRate = falseAlarmRate > 0.3;
+  
+  // If multiple issues or severe issues, mark as "mixed"
+  if (hasHighFalseStartRate || hasLowValidHitRate || hasHighMissRate || hasHighFalseAlarmRate) {
+    return "mixed";
+  }
+  
+  // Otherwise "good"
+  return "good";
 }
 
 function checkSessionQuality(sessionPayload, totalTrials, isReaction) {
@@ -2495,12 +2699,31 @@ function renderHistory() {
       body.appendChild(tagLine);
     }
 
-    // Invalid reason (if present)
-    if (isInvalid && s.flags && s.flags.reason) {
+    // Quality label (always show)
+    const sessionQuality = s.quality || computeSessionQuality(s);
+    if (sessionQuality) {
+      const qualityLine = document.createElement("div");
+      qualityLine.className = "history-line muted";
+      qualityLine.textContent = `${t("quality.label")}: ${t(`quality.${sessionQuality}`)}`;
+      body.appendChild(qualityLine);
+    }
+    
+    // Invalid reason / refusal code (if present)
+    if (isInvalid && s.flags) {
       const why = document.createElement("div");
       why.className = "history-reason";
-      why.textContent = (currentLang === "no" ? "Årsak: " : "Reason: ") + String(s.flags.reason);
-      body.appendChild(why);
+      let reasonText = "";
+      if (s.flags.refusalCode) {
+        // Use standardized refusal message
+        reasonText = t(`refusal.${s.flags.refusalCode}`);
+      } else if (s.flags.reason) {
+        // Fallback to old reason format (for backward compatibility)
+        reasonText = (currentLang === "no" ? "Årsak: " : "Reason: ") + String(s.flags.reason);
+      }
+      if (reasonText) {
+        why.textContent = reasonText;
+        body.appendChild(why);
+      }
     }
 
     card.appendChild(body);

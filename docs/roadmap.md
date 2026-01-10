@@ -25,7 +25,7 @@ Status: ✅ Shipped
 
 ## v0.2.1 — Integrity & clarity (completed)
 - Session quality labels (Good / Mixed / Not usable)
-- Standardized refusal semantics (refusal codes + messages)
+- Standardized refusal semantics
 - Device consistency warning (baseline vs check, non-blocking)
 
 Status: ✅ Shipped
@@ -43,12 +43,14 @@ Status: ✅ Shipped (CSS-only)
 
 ---
 
-## v0.2.3 — Documentation & navigation (planned)
-- Split About / How to Use / Norwegian Context / FAQ into separate HTML pages
-- Add top navigation across pages
-- Remember last page (so refresh doesn’t always return to Home)
+## v0.2.3 — Documentation & navigation (completed)
+- Standalone documentation pages
+- Hybrid SPA + normal link navigation
+- Direct History deep-linking
+- Language preference sync across all pages
+- Cleaned and reduced `index.html`
 
-Status: ⏳ Planned
+Status: ✅ Shipped
 
 ---
 

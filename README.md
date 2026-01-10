@@ -10,7 +10,7 @@ FCE is designed to support **human interpretation**, not automated judgment.
 
 ## Current status
 
-**Latest release:** v0.2.2  
+**Latest release:** v0.2.3  
 **Status:** Stable (frozen)
 
 ---
@@ -99,6 +99,22 @@ No changes to scoring philosophy.
 
 ---
 
+## Documentation & navigation (v0.2.3)
+
+- Documentation split into standalone pages:
+  - About
+  - Norwegian Context
+  - How to Use
+  - FAQ
+- Hybrid navigation:
+  - Instrument remains SPA (Home + History)
+  - Docs are normal HTML pages
+- Direct History deep-linking (`index.html?view=history`)
+- Shared language preference across all pages
+- Cleaner, smaller `index.html` focused only on the instrument
+
+---
+
 ## History & trends
 
 - Per-test session history
@@ -145,8 +161,9 @@ FCE is suitable for:
 ## Versioning
 
 - v0.1 — core baseline-relative instrument
-- v0.2.0 — Divided Attention + mode coherence + baseline integrity
-- v0.2.1 — Integrity & clarity pass (quality/refusal/device warning)
+- v0.2.0 — Divided Attention & mode coherence
+- v0.2.1 — Integrity & clarity pass
 - v0.2.2 — UI polish (CSS-only)
+- v0.2.3 — Documentation & navigation split
 
 Future work will continue under v0.2.x and v0.3 planning.

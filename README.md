@@ -1,111 +1,133 @@
-# FCE — Functional Cognition & Execution  
-*(Internal codename: Anamnora)*
+# FCE — Functional Cognition & Execution
 
-FCE is a digital system for measuring **functional cognitive performance** — such as reaction time, attention, and precision — relative to a person's **own baseline**.
+FCE is a **baseline-relative functional assessment instrument** for measuring cognitive and execution performance over time.
 
-Instead of inferring impairment from substances, age, or population averages, FCE measures **how well someone actually functions right now**, compared to their normal performance under typical functioning conditions.
+Rather than comparing users to population averages, FCE compares performance **against the individual’s own baseline**, under consistent conditions, on the same device.
 
----
-
-## What problem does FCE solve?
-
-Current systems for assessing impairment (traffic, work, sport, health) rely heavily on:
-- biological markers (blood, saliva, urine)
-- fixed legal limits
-- population averages
-
-These methods often:
-- misclassify people
-- ignore individual differences
-- fail to measure real-world functional ability
-
-FCE addresses this gap by focusing on **function, not chemistry**.
+FCE is designed to support **human interpretation**, not automated judgment.
 
 ---
 
-## Core principles
+## Current status
 
-- **Personal baseline first**  
-  Each user establishes a baseline through multiple sessions performed when functioning normally.
-
-- **Individual thresholds**  
-  Impairment is defined as deviation from *your own* normal range, not from a group average.
-
-- **Short, repeatable tests**  
-  2–5 minute test battery measuring:
-  - reaction time
-  - divided attention
-  - task switching
-  - motor precision
-  - consistency under pressure
-
-- **Integrity-aware**  
-  The system detects inconsistent or low-effort attempts and excludes them from baselines.
-
-- **Substance-agnostic**  
-  FCE does not care *why* performance changes — only *whether* it has changed.
+**Latest release:** v0.2.0  
+**Status:** Stable (frozen)
 
 ---
 
-## Intended use cases
+## What FCE measures (v0.2.0)
 
-FCE is designed as a **general functional assessment tool**, applicable to:
+### 1) Reaction Time
+Measures simple response speed and consistency.
 
-- Traffic safety
-- Workplace safety
-- Sports and performance contexts
-- Fatigue, stress, and sleep-related impairment
-- Medication-related cognitive effects
-- Personal self-awareness and self-monitoring
-
-It is **not** limited to cannabis or any specific substance.
+- Average reaction time (ms)
+- Variability (SD)
+- False starts
+- Personal baseline and deviation-based status
 
 ---
 
-## Project status
+### 2) Go / No-Go
+Measures inhibitory control under time pressure.
 
-This repository contains:
-- A working web prototype
-- Baseline-relative test modules (Reaction Time, Go / No-Go)
-- Session history with context tags
-- Local JSON export
-- Trend view (baseline band + recent checks)
-- Bilingual documentation (EN / NO)
-
-The initial phase (v0.1) is complete.
+- GO response speed (avg / SD)
+- Misses
+- False alarms
+- False starts
+- Baseline-relative evaluation
 
 ---
 
-## Naming
+### 3) Divided Attention (dual-task)
+Measures execution quality under split attention.
 
-- **FCE (Functional Cognition & Execution)**  
-  Public, institutional-facing name.
+Primary task:
+- Go / No-Go execution (speed + inhibition)
 
-- **Anamnora**  
-  Internal codename representing the underlying architecture:
-  *Cognitive Origin Resonance Architecture.*
+Secondary task:
+- Visual count (brief blue flashes during trials)
 
----
+Evaluation combines:
+- Reaction speed
+- Inhibitory control
+- Attention accuracy
 
-## Disclaimer
-
-FCE is currently a research and prototype project.  
-It is **not a medical device**, **not a diagnostic tool**, and **not a legal judgment system**.
-
----
-
-## Vision (short)
-
-Measure **function**, not assumption.  
-Replace abstraction with evidence.  
-Give individuals and institutions a clearer mirror of real-world cognitive performance.
+The overall status reflects the **worst deviation** among these signals.
 
 ---
 
-## License
+## Modes of use
 
-Copyright © 2026 Arnas (Zwoomer).
+FCE supports three explicit session modes:
 
-All rights reserved.
+- **Baseline** — establish personal normal performance
+- **Check** — compare current performance to baseline
+- **Training** — practice only (never updates baseline)
 
-No part of this project may be copied, modified, or distributed without explicit permission from the author.
+**Mode is determined solely by the action button clicked**, not by settings or context.
+
+---
+
+## Context metadata
+
+Optional context fields are saved with each session:
+
+- Sleep
+- Stress
+- Note
+
+Context is **metadata only** and **does not affect scoring or comparison**.  
+It exists to support later human interpretation.
+
+---
+
+## History & trends
+
+- Per-test session history
+- Mode-aware filtering (Baseline / Check / Training)
+- Clear handling of invalid or low-quality sessions
+- Minimal trend view showing:
+  - Baseline band (±1 SD)
+  - Recent check sessions
+
+---
+
+## Data & privacy
+
+- Local-only storage (browser)
+- No accounts, no servers
+- Manual JSON export only
+- Exported data is raw session data — no conclusions generated
+
+---
+
+## Non-goals
+
+FCE is **not**:
+
+- A medical or legal diagnostic tool
+- A substance detection system
+- A population-norm assessment
+- A decision engine
+
+Interpretation and decisions remain human-led.
+
+---
+
+## Intended use
+
+FCE is suitable for:
+
+- Functional self-monitoring
+- Performance and fatigue research
+- Traffic and workplace safety discussions
+- Pilot studies and institutional evaluation
+
+---
+
+## Versioning
+
+- v0.1 — core baseline-relative instrument
+- v0.2.0 — Divided Attention module + mode coherence + baseline integrity
+
+Future work will continue under v0.2.x and v0.3 planning.

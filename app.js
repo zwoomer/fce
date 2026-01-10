@@ -852,12 +852,19 @@ function updateDividedLegend() {
     legend.appendChild(legendEn);
     
     const legendNo = document.createElement("span");
-    legendNo.className = "lang lang-no hidden";
+    legendNo.className = "lang lang-no";
     legendNo.textContent = I18N.no.stimulus.divided.legend;
     legend.appendChild(legendNo);
     
     instructionEl.appendChild(legend);
-    // Language visibility will be handled by applyLangUI() automatically via .lang-en/.lang-no classes
+    // Update visibility based on current language (applyLangUI will also handle this, but set initial state correctly)
+    if (currentLang === "no") {
+      legendEn.classList.add("hidden");
+      legendNo.classList.remove("hidden");
+    } else {
+      legendEn.classList.remove("hidden");
+      legendNo.classList.add("hidden");
+    }
   }
 }
 

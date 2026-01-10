@@ -306,6 +306,21 @@
           </section>
 
           <section class="card">
+            <h3>Session history and trends</h3>
+            <p>
+              FCE stores completed sessions locally on the user's device and presents:
+            </p>
+            <ul>
+              <li>a session history (baseline and checks)</li>
+              <li>optional context tags (sleep, stress, notes)</li>
+              <li>a simple trend view showing baseline range and recent checks</li>
+            </ul>
+            <p>
+              This allows users and reviewers to see patterns over time rather than relying on single measurements.
+            </p>
+          </section>
+
+          <section class="card">
             <h3>Context-aware by design</h3>
             <p>
               Performance is context-sensitive. For that reason, baselines should be valid for the same context used to build them:
@@ -346,7 +361,7 @@
             <ul>
               <li>Repeated drops across key measures</li>
               <li>Deviations exceeding your normal day-to-day variability</li>
-              <li>Patterns consistent with fatigue / impairment (not one unlucky click)</li>
+              <li>Patterns consistent with deviation from baseline (not one unlucky click)</li>
             </ul>
             <p class="muted">
               FCE results are signals, not labels.
@@ -359,7 +374,7 @@
               Real life has noise: poor sleep, stress, illness, pain, distraction. FCE treats uncertainty carefully:
             </p>
             <ul>
-              <li><strong>Inconclusive ≠ failure</strong></li>
+              <li><strong>Inconclusive ≠ below normal</strong></li>
               <li><strong>Variability ≠ dysfunction</strong></li>
               <li>A low result means: <strong>pause, assess context, retest</strong> — not a verdict</li>
             </ul>
@@ -418,7 +433,7 @@
               "Functional performance matters more than assumptions."
             </blockquote>
             <p>
-              By focusing on function rather than categories, FCE aims to support fairer decisions in safety-critical contexts.
+              By focusing on function rather than categories, FCE aims to provide signals that support fairer assessment in safety-critical contexts.
             </p>
           </section>
         </div>
@@ -473,6 +488,21 @@
               FCE er utviklet for å ta hensyn til disse forskjellene, ikke ignorere dem.
             </p>
           </section>
+
+          <section class="card">
+            <h3>Økthistorikk og trender</h3>
+            <p>
+              FCE lagrer gjennomførte økter lokalt på brukerens enhet og viser:
+            </p>
+            <ul>
+              <li>økthistorikk (baseline og sjekk)</li>
+              <li>valgfrie konteksttagger (søvn, stress, notat)</li>
+              <li>en enkel trendvisning med baselineområde og nylige sjekker</li>
+            </ul>
+            <p>
+              Dette gir grunnlag for mønstergjenkjenning over tid, ikke enkeltmålinger.
+            </p>
+          </section>
         </div>
 
         <footer class="footer muted">
@@ -501,13 +531,21 @@
               A core challenge in drugs-and-driving policy is the gap between:
             </p>
             <ul>
-              <li><strong>Detectability</strong> (a substance can be present long after acute impairment)</li>
+              <li><strong>Detectability</strong> (a substance can be present long after functional deviation)</li>
               <li><strong>Functional risk</strong> (reaction time, attention stability, error rate, judgment)</li>
             </ul>
             <p>
-              FCE aims to provide a <strong>functional performance signal</strong> that supports safer decisions in the moment.
+              FCE aims to provide a <strong>functional performance signal</strong> that indicates deviation from baseline.
               It does not try to identify what caused the deviation — it measures whether deviation exists.
             </p>
+            <p>
+              FCE supports this by:
+            </p>
+            <ul>
+              <li>using personal baselines instead of population limits</li>
+              <li>showing baseline bands and recent checks</li>
+              <li>allowing review of session history rather than single results</li>
+            </ul>
             <p class="muted">
               Substance-agnostic by design: sleep loss, stress, illness, medication, alcohol, cannabis — the system measures function.
             </p>
@@ -586,7 +624,7 @@
           <section class="card">
             <h3>6) Anti-gaming: preventing false baselines</h3>
             <p>
-              A reasonable concern is: "Can someone practice or cheat to pass while impaired?"
+              A reasonable concern is: "Can someone practice or cheat to show normal results while deviating from baseline?"
             </p>
             <p>
               FCE addresses manipulation risk through layered safeguards:
@@ -682,6 +720,14 @@
             <p>
               Resultater fra FCE er ment å gi <strong>indikasjon på funksjon</strong>, ikke juridisk konklusjon.
             </p>
+            <p>
+              FCE støtter dette ved å:
+            </p>
+            <ul>
+              <li>bruke personlig baseline fremfor faste grenseverdier</li>
+              <li>vise baselinebånd og nylige sjekker</li>
+              <li>legge vekt på historikk fremfor enkeltresultater</li>
+            </ul>
           </section>
 
           <section class="card">
@@ -739,84 +785,56 @@
         <div class="lang lang-en">
           <section class="hero">
             <h2>How to Use</h2>
-            <p class="lead">
-              FCE is designed to be simple: build a <strong>personal baseline</strong> first, then run quick checks later.
-              Your results are compared to <em>your own normal performance</em> — not other people.
+          </section>
+
+          <section class="card">
+            <h3>1) Choose a test</h3>
+            <p>
+              Reaction Time or Go / No-Go.
             </p>
           </section>
 
           <section class="card">
-            <h3>1) Choose your test</h3>
+            <h3>2) Build your baseline (first time)</h3>
             <ul>
-              <li><strong>Reaction Time</strong> — measures response speed and consistency.</li>
-              <li><strong>Go / No-Go</strong> — measures response speed <em>and</em> inhibitory control (don't click on NO-GO).</li>
+              <li>Be rested and functioning normally</li>
+              <li>Use the same device and input method</li>
+              <li>Complete 3–5 baseline sessions</li>
             </ul>
-            <p class="muted">
-              Tip: Reaction Time is easiest to start with. Go/No-Go usually needs more trials to stabilize.
+            <p>
+              Baseline sessions define your personal normal range.
             </p>
           </section>
 
           <section class="card">
-            <h3>2) Set trials</h3>
+            <h3>3) Run a functional check</h3>
             <ul>
-              <li><strong>Reaction Time:</strong> start with 5–10 trials per session.</li>
-              <li><strong>Go / No-Go:</strong> start with 20–30 trials per session.</li>
-            </ul>
-            <p class="muted">
-              More trials = more stable results, but don't grind yourself into fatigue.
-            </p>
-          </section>
-
-          <section class="card">
-            <h3>3) Build your baseline (first time)</h3>
-            <ol>
-              <li>Be rested, sober, and "normal."</li>
-              <li>Use the same device + input method (mouse vs touch) you plan to use later.</li>
-              <li>Click <strong>Add Baseline Session</strong>.</li>
-              <li>Repeat until you have at least <strong>3 baseline sessions</strong> (recommended 3–5).</li>
-            </ol>
-            <p class="muted">
-              Baseline is stored locally in your browser (device-specific). If you switch device, your baseline won't follow.
-            </p>
-          </section>
-
-          <section class="card">
-            <h3>4) Run a functional check (later)</h3>
-            <ol>
-              <li>Choose the same test you have baseline for.</li>
-              <li>Click <strong>Run Functional Check</strong>.</li>
-              <li>Review the status (e.g., "Within normal range", "Slightly below", "Significantly below").</li>
-            </ol>
-          </section>
-
-          <section class="card">
-            <h3>Interpreting results</h3>
-            <ul>
-              <li><strong>Within normal range</strong> — performance matches your baseline signature.</li>
-              <li><strong>Slightly below normal</strong> — some deviation (could be stress, fatigue, distraction, etc.).</li>
-              <li><strong>Significantly below normal</strong> — larger deviation; consider rest and retest.</li>
-            </ul>
-            <p class="muted">
-              Important: This is a prototype tool for self-checking and research direction — not a medical diagnosis.
-              If you feel unsafe, don't drive/work just because a test looks "fine."
-            </p>
-          </section>
-
-          <section class="card">
-            <h3>Best practices</h3>
-            <ul>
-              <li>Test in a similar environment each time (lighting, noise, posture).</li>
-              <li>Avoid "warming up" with many runs before recording baseline (it can bias your baseline).</li>
-              <li>If you get a weird session (many misses / false starts), retake and use the cleaner session.</li>
-              <li>Use the baseline list to verify you're building consistency over time.</li>
+              <li>Run a short check session</li>
+              <li>Results are compared to your baseline</li>
+              <li>Status is shown as:
+                <ul>
+                  <li>Within normal range</li>
+                  <li>Slightly below normal</li>
+                  <li>Significantly below normal</li>
+                </ul>
+              </li>
             </ul>
           </section>
 
           <section class="card">
-            <h3>Reset and baseline management</h3>
+            <h3>4) Review history and trends</h3>
             <ul>
-              <li><strong>Reset</strong> clears the current session UI and stops a running session.</li>
-              <li><strong>Clear baseline</strong> deletes saved baseline sessions for the selected test type.</li>
+              <li>View past sessions in History</li>
+              <li>See baseline range and recent checks in the Trend panel</li>
+              <li>Optional context tags help interpret variation</li>
+            </ul>
+          </section>
+
+          <section class="card">
+            <h3>5) Export data (optional)</h3>
+            <ul>
+              <li>History can be exported as JSON</li>
+              <li>Export is manual and local-only</li>
             </ul>
           </section>
         </div>
@@ -824,105 +842,57 @@
         <div class="lang lang-no hidden">
           <section class="hero">
             <h2>Hvordan bruke FCE</h2>
-            <p class="lead">
-              FCE er laget for å være <strong>enkelt å bruke</strong>, samtidig som det gir
-              <strong>meningsfulle og sammenlignbare målinger</strong> over tid.
-              Det viktigste er ikke én enkelt test, men hvordan resultatene utvikler seg
-              sammenlignet med din egen normaltilstand.
+          </section>
+
+          <section class="card">
+            <h3>1) Velg en test</h3>
+            <p>
+              Reaksjonstid eller Go / No-Go.
             </p>
           </section>
 
           <section class="card">
-            <h3>1. Bygg en personlig baseline</h3>
-            <p>
-              Før FCE kan brukes til funksjonssjekk, må det etableres en
-              <strong>personlig baseline</strong>.
-            </p>
+            <h3>2) Bygg din baseline (første gang)</h3>
             <ul>
-              <li>Velg ønsket test (for eksempel Reaksjonstid eller Go / No-Go)</li>
-              <li>Velg antall forsøk per økt</li>
-              <li>Klikk <strong>«Legg til baseline-økt»</strong></li>
-              <li>Gjenta 3–5 ganger på ulike tidspunkt</li>
+              <li>Vær uthvilt og fungerer normalt</li>
+              <li>Bruk samme enhet og inndatametode</li>
+              <li>Fullfør 3–5 baseline-økter</li>
             </ul>
             <p>
-              Baseline-øktene bør gjennomføres når du er
-              <em>uthvilt, edru og fungerer normalt</em>.
-              Dette danner referansen som senere økter sammenlignes mot.
+              Baseline-økter definerer ditt personlige normalområde.
             </p>
           </section>
 
           <section class="card">
-            <h3>2. Gjennomfør en funksjonssjekk</h3>
-            <p>
-              Når tilstrekkelig baseline er etablert, kan du gjennomføre en
-              <strong>funksjonssjekk</strong>.
-            </p>
+            <h3>3) Kjør en funksjonssjekk</h3>
             <ul>
-              <li>Velg samme testtype som brukt i baseline</li>
-              <li>Klikk <strong>«Kjør funksjonssjekk»</strong></li>
-              <li>Utfør testen som normalt</li>
-            </ul>
-            <p>
-              Resultatene sammenlignes automatisk med din baseline og presenteres som
-              funksjonsstatus.
-            </p>
-          </section>
-
-          <section class="card">
-            <h3>3. Forstå resultatene</h3>
-            <p>
-              FCE viser ikke «bestått / ikke bestått».
-              I stedet vises en <strong>relativ vurdering</strong> basert på avvik fra din egen baseline.
-            </p>
-            <ul>
-              <li><strong>Innenfor normalområdet</strong> – funksjonen er stabil</li>
-              <li><strong>Lett redusert</strong> – mindre avvik, bør tolkes kontekstuelt</li>
-              <li><strong>Markant redusert</strong> – tydelig avvik fra normal funksjon</li>
-            </ul>
-            <p>
-              Avvik kan skyldes mange faktorer, som søvn, stress, sykdom, restitusjon
-              eller midlertidig belastning.
-            </p>
-          </section>
-
-          <section class="card">
-            <h3>4. Tolkning og kontekst</h3>
-            <p>
-              Resultater fra FCE må alltid forstås i sammenheng med
-              <strong>kontekst</strong>.
-            </p>
-            <ul>
-              <li>Hvordan har du sovet?</li>
-              <li>Er du stresset eller mentalt belastet?</li>
-              <li>Har du gjennomført fysisk eller kognitiv krevende aktivitet?</li>
-            </ul>
-            <p>
-              FCE er et verktøy for innsikt – ikke en endelig dom.
-            </p>
-          </section>
-
-          <section class="card">
-            <h3>5. Viktige prinsipper</h3>
-            <ul>
-              <li>FCE sammenligner deg med deg selv, ikke andre</li>
-              <li>Ingen data sendes til eksterne servere</li>
-              <li>Resultater lagres lokalt på enheten</li>
-              <li>Verktøyet er frivillig og selvstyrt</li>
+              <li>Gjennomfør en kort sjekk-økt</li>
+              <li>Resultater sammenlignes med din baseline</li>
+              <li>Status vises som:
+                <ul>
+                  <li>Innenfor normalområdet</li>
+                  <li>Lett under normalområdet</li>
+                  <li>Betydelig under normalområdet</li>
+                </ul>
+              </li>
             </ul>
           </section>
 
           <section class="card">
-            <h3>Hva FCE ikke er</h3>
+            <h3>4) Gjennomse historikk og trender</h3>
             <ul>
-              <li>En medisinsk diagnose</li>
-              <li>En rus- eller stofftest</li>
-              <li>En juridisk avgjørelse</li>
-              <li>En erstatning for faglig vurdering</li>
+              <li>Se tidligere økter i Historikk</li>
+              <li>Se baselineområde og nylige sjekker i Trend-panelet</li>
+              <li>Valgfrie konteksttagger hjelper med å tolke variasjon</li>
             </ul>
-            <p>
-              FCE er utviklet som et <strong>funksjonsnært supplement</strong>
-              for bedre forståelse av egen kognitiv gjennomføringsevne.
-            </p>
+          </section>
+
+          <section class="card">
+            <h3>5) Eksporter data (valgfritt)</h3>
+            <ul>
+              <li>Historikk kan eksporteres som JSON</li>
+              <li>Eksport er manuell og kun lokalt</li>
+            </ul>
           </section>
         </div>
 
@@ -957,7 +927,7 @@
               No. FCE is <strong>not</strong> a medical or diagnostic tool.
             </p>
             <p>
-              It does not diagnose conditions, determine fitness to drive, or replace professional judgment.
+              It does not diagnose conditions, indicate fitness for specific activities, or replace professional assessment.
               It is a <em>functional self-check</em> designed for awareness, research, and future policy exploration.
             </p>
           </section>
@@ -1003,17 +973,30 @@
           </section>
 
           <section class="card">
-            <h3>Where is my data stored?</h3>
+            <h3>Does FCE store my data?</h3>
             <p>
-              All data is stored <strong>locally in your browser</strong> using localStorage.
+              Sessions are stored locally in your browser. No accounts, no server upload. Clearing browser data removes FCE data.
             </p>
-            <ul>
-              <li>No accounts</li>
-              <li>No cloud sync</li>
-              <li>No data leaves your device</li>
-            </ul>
+          </section>
+
+          <section class="card">
+            <h3>Can results be shared?</h3>
             <p>
-              Clearing browser storage or switching devices will remove your baseline.
+              History can be exported manually as JSON. Sharing is entirely user-controlled.
+            </p>
+          </section>
+
+          <section class="card">
+            <h3>Does FCE decide if someone is fit to drive or work?</h3>
+            <p>
+              No. FCE presents functional performance relative to a personal baseline. Interpretation and decisions remain human.
+            </p>
+          </section>
+
+          <section class="card">
+            <h3>Why not use population averages?</h3>
+            <p>
+              Population averages ignore individual variance. FCE compares you to yourself under normal conditions.
             </p>
           </section>
 
@@ -1057,7 +1040,7 @@
           <section class="card">
             <h3>What is FCE ultimately for?</h3>
             <p>
-              FCE explores a different way of thinking about impairment:
+              FCE explores a different way of thinking about functional deviation:
             </p>
             <ul>
               <li>Measure function, not substances</li>
@@ -1153,10 +1136,30 @@
           </section>
 
           <section class="card">
-            <h3>Lagres eller deles dataene mine?</h3>
+            <h3>Lagrer FCE dataene mine?</h3>
             <p>
-              Nei. All informasjon lagres <strong>lokalt på enheten</strong>.
-              Ingen data sendes til eksterne servere eller tredjeparter.
+              Økter lagres lokalt i nettleseren din. Ingen kontoer, ingen serveropplasting. Sletting av nettleserdata fjerner FCE-data.
+            </p>
+          </section>
+
+          <section class="card">
+            <h3>Kan resultater deles?</h3>
+            <p>
+              Historikk kan eksporteres manuelt som JSON. Deling er helt brukerstyrt.
+            </p>
+          </section>
+
+          <section class="card">
+            <h3>Avgjør FCE om noen er skikket til å kjøre eller arbeide?</h3>
+            <p>
+              Nei. FCE presenterer funksjonsytelse relativt til en personlig baseline. Tolkning og beslutninger forblir menneskelige.
+            </p>
+          </section>
+
+          <section class="card">
+            <h3>Hvorfor ikke bruke befolkningsgjennomsnitt?</h3>
+            <p>
+              Befolkningsgjennomsnitt ignorerer individuell variasjon. FCE sammenligner deg med deg selv under normale forhold.
             </p>
           </section>
 

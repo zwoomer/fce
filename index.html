@@ -12,6 +12,10 @@
     try {
       const p = location.pathname.split("/").pop() || "index.html";
       localStorage.setItem("fce_last_page", p);
+      // Also track last docs page (exclude index.html)
+      if (p && p.endsWith(".html") && !p.includes("index.html")) {
+        localStorage.setItem("fce_last_docs_page", p);
+      }
     } catch {}
   </script>
 </head>
@@ -21,9 +25,9 @@
     <span class="title">FCE</span>
     <span class="topbar-page" id="topbarPage" aria-hidden="true"></span>
     <div class="topbar-right">
-      <a href="about.html" class="topbar-link">
+      <a href="about.html" class="topbar-link topbar-cta" id="learnMoreLink">
         <span class="lang lang-en">Learn more</span>
-        <span class="lang lang-no hidden">Lær mer</span>
+        <span class="lang lang-no hidden">Les mer</span>
       </a>
       <div class="lang-select-wrapper">
         <select id="langSelect" class="lang-select" aria-label="Language">
@@ -50,14 +54,27 @@
       <span class="lang lang-en">About</span>
       <span class="lang lang-no hidden">Om</span>
     </a>
+
+    <a href="concept.html" class="menu-item">
+      <span class="lang lang-en">Concept</span>
+      <span class="lang lang-no hidden">Konsept</span>
+    </a>
+
+    <a href="scope.html" class="menu-item">
+      <span class="lang lang-en">Scope &amp; Limits</span>
+      <span class="lang lang-no hidden">Omfang &amp; begrensninger</span>
+    </a>
+
     <a href="norwegian-context.html" class="menu-item">
       <span class="lang lang-en">Norwegian Context</span>
       <span class="lang lang-no hidden">Norsk kontekst</span>
     </a>
+
     <a href="how-to-use.html" class="menu-item">
       <span class="lang lang-en">How to Use</span>
       <span class="lang lang-no hidden">Hvordan bruke</span>
     </a>
+
     <a href="faq.html" class="menu-item">
       <span class="lang lang-en">FAQ</span>
       <span class="lang lang-no hidden">FAQ</span>
@@ -379,6 +396,31 @@
       if (window.location.hash === '#instrument') {
         // Small delay to ensure DOM is ready
         setTimeout(scrollToInstrument, 100);
+      }
+    })();
+  </script>
+
+  <script>
+    (function () {
+      const link = document.getElementById("learnMoreLink");
+      if (!link) return;
+
+      try {
+        // Use dedicated docs page tracker, fallback to general tracker
+        const lastDocs = localStorage.getItem("fce_last_docs_page");
+        const last = localStorage.getItem("fce_last_page");
+
+        // Prefer dedicated docs page tracker
+        const target = (lastDocs && lastDocs.endsWith(".html") && !lastDocs.includes("index.html"))
+          ? lastDocs
+          : (last && last.endsWith(".html") && !last.includes("index.html"))
+            ? last
+            : "about.html";
+
+        link.setAttribute("href", target);
+      } catch {
+        // Fallback if storage is unavailable
+        link.setAttribute("href", "about.html");
       }
     })();
   </script>

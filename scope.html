@@ -11,6 +11,10 @@
     try {
       const p = location.pathname.split("/").pop() || "index.html";
       localStorage.setItem("fce_last_page", p);
+      // Also track last docs page (exclude index.html)
+      if (p && p.endsWith(".html") && !p.includes("index.html")) {
+        localStorage.setItem("fce_last_docs_page", p);
+      }
     } catch {}
   </script>
 </head>

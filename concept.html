@@ -11,6 +11,10 @@
     try {
       const p = location.pathname.split("/").pop() || "index.html";
       localStorage.setItem("fce_last_page", p);
+      // Also track last docs page (exclude index.html)
+      if (p && p.endsWith(".html") && !p.includes("index.html")) {
+        localStorage.setItem("fce_last_docs_page", p);
+      }
     } catch {}
   </script>
 </head>
@@ -203,13 +207,13 @@
           </p>
           <ul>
             <li><strong>Not diagnostic:</strong> no medical, psychiatric, or neurological diagnoses</li>
-            <li><strong>Not legal judgment:</strong> no “fit/unfit” verdicts, no guilt/innocence outputs</li>
+            <li><strong>Not legal judgment:</strong> no "fit/unfit" verdicts, no guilt/innocence outputs</li>
             <li><strong>Not substance detection:</strong> measures function, not causes</li>
             <li><strong>Not automated decision-making:</strong> not a decision engine for institutions</li>
             <li><strong>Not single-session determinism:</strong> one session should not be treated as a decisive outcome</li>
           </ul>
           <p class="muted">
-            Any institutional exploration must remain voluntary, transparent, and contestable, with human oversight.
+            A full, copy-ready scope statement is available on the <a href="scope.html">Scope &amp; Limits</a> page.
           </p>
         </section>
       </div>
@@ -335,13 +339,13 @@
           </p>
           <ul>
             <li><strong>Ikke diagnostisk:</strong> ingen medisinske, psykiatriske eller nevrologiske diagnoser</li>
-            <li><strong>Ikke juridisk dom:</strong> ingen “egnet/uegnet”-dom, ingen skyld/uskyld</li>
+            <li><strong>Ikke juridisk dom:</strong> ingen "egnet/uegnet"-dom, ingen skyld/uskyld</li>
             <li><strong>Ikke rus-/stoffdeteksjon:</strong> måler funksjon, ikke årsak</li>
             <li><strong>Ikke automatisert beslutning:</strong> ikke en beslutningsmotor for institusjoner</li>
             <li><strong>Ikke basert på én økt:</strong> én økt skal ikke behandles som et avgjørende utfall</li>
           </ul>
           <p class="muted">
-            All institusjonell utforskning må være frivillig, transparent og etterprøvbar, med menneskelig vurdering.
+            En fullstendig, kopierklar omfangserklæring finnes på siden <a href="scope.html">Omfang &amp; begrensninger</a>.
           </p>
         </section>
       </div>

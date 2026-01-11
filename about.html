@@ -11,6 +11,10 @@
     try {
       const p = location.pathname.split("/").pop() || "index.html";
       localStorage.setItem("fce_last_page", p);
+      // Also track last docs page (exclude index.html)
+      if (p && p.endsWith(".html") && !p.includes("index.html")) {
+        localStorage.setItem("fce_last_docs_page", p);
+      }
     } catch {}
   </script>
 </head>
@@ -148,8 +152,8 @@
         <section class="card">
           <h3>What FCE measures (and what it does not)</h3>
           <p>
-            FCE uses short, standardized tasks to measure functional execution in the moment —
-            such as reaction speed, inhibitory control, and attention under divided load.
+            FCE is a short-task instrument that captures functional execution signals such as:
+            reaction speed, response stability, inhibitory control, and attention under divided load.
           </p>
 
           <hr />
@@ -167,6 +171,10 @@
             <li>Detect substances or infer causes of deviation</li>
             <li>Produce automated or binding decisions</li>
           </ul>
+
+          <p class="muted">
+            FCE focuses on execution under time and attention constraints, not on intelligence, knowledge, or aptitude.
+          </p>
 
           <p class="muted">
             FCE is designed to support human interpretation, not replace it.
@@ -286,8 +294,8 @@
         <section class="card">
           <h3>Hva FCE måler (og hva det ikke gjør)</h3>
           <p>
-            FCE bruker korte, standardiserte oppgaver for å måle funksjonell utførelse i øyeblikket —
-            for eksempel reaksjonshastighet, inhibisjonskontroll og oppmerksomhet under delt belastning.
+            FCE er et kort-oppgave instrument som fanger funksjonelle utførelsessignaler som:
+            reaksjonshastighet, responsstabilitet, inhibisjonskontroll og oppmerksomhet under delt belastning.
           </p>
 
           <hr />
@@ -305,6 +313,10 @@
             <li>Påvise rusmidler eller trekke slutninger om årsak</li>
             <li>Gi automatiserte eller bindende beslutninger</li>
           </ul>
+
+          <p class="muted">
+            FCE fokuserer på utførelse under tid- og oppmerksomhetskrav, ikke på intelligens, kunnskap eller evnenivå.
+          </p>
 
           <p class="muted">
             FCE er laget for å støtte menneskelig vurdering, ikke erstatte den.

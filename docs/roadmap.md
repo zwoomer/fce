@@ -85,7 +85,19 @@ Status: ✅ Shipped
 - Navigation enhancements: styled "Learn more" CTA, smart redirect, page tracking
 - Documentation utilities: shared copy-to-clipboard utility (`docs.js`), copy-ready blocks, standardized patterns
 
-Status: ✅ Completed (not yet tagged)
+Status: ✅ Shipped
+
+---
+
+## v0.2.7 — Explanatory clarity & visual documentation (completed)
+- Baseline-relative visual explanation page (`baseline-relative.html`) with diagram
+- Variability & recovery interpretation notes
+- Documentation navigation consolidation (contextual links)
+- Copy-ready summaries with shared utility
+- Diagram improvements: micro-labels, time direction clarity, visual anchoring
+- No changes to measurement logic or scoring
+
+Status: ✅ Shipped
 
 ---
 

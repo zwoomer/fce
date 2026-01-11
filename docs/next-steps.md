@@ -84,6 +84,20 @@ This work expands documentation coverage, improves navigation consistency, and p
 
 ---
 
+## v0.2.7 — Explanatory clarity & visual documentation (completed)
+
+Shipped improvements:
+- Baseline-relative visual explanation page (`baseline-relative.html`) with diagram
+- Variability & recovery interpretation notes added to baseline-relative page
+- Documentation navigation consolidation (contextual links from Concept, About, Norwegian Context)
+- Copy-ready summaries with shared utility (docs.js)
+- Diagram improvements: micro-labels, time direction clarity, visual anchoring
+- No changes to measurement logic or scoring
+
+Tagged as **v0.2.7**.
+
+---
+
 ## v0.3 — Exploratory (future)
 
 Potential directions (not commitments):

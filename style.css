@@ -426,11 +426,111 @@
     box-shadow: 0 0 0 2px rgba(255,255,255,0.08);
   }
 
-  .copy-status {
-    display: block;
-    margin-top: 6px;
-    font-size: 12px;
+.copy-status {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+}
+
+/* Baseline-relative diagram */
+.baseline-diagram {
+  position: relative;
+  height: 120px;
+  margin: 24px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.baseline-diagram .band {
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  height: 28px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.10);
+}
+
+.points {
+  position: relative;
+  display: flex;
+  gap: 10px;
+  z-index: 1;
+}
+
+.points.baseline {
+  margin-left: 4%;
+}
+
+.points.check {
+  margin-right: 4%;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.55);
+}
+
+.dot.single {
+  background: rgba(255,255,255,0.90);
+}
+
+.diagram-micro {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 6px 0 14px;
+  font-size: 12px;
+}
+
+.diagram-micro > div {
+  flex: 1;
+}
+
+.micro-mid {
+  text-align: center;
+}
+
+.micro-right {
+  text-align: right;
+}
+
+.micro-time {
+  display: inline-block;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  margin-right: 8px;
+}
+
+.micro-desc {
+  opacity: 0.75;
+}
+
+@media (max-width: 640px) {
+  .diagram-micro {
+    flex-direction: column;
+    gap: 8px;
   }
+  .micro-mid,
+  .micro-right {
+    text-align: left;
+  }
+}
+
+@media (max-width: 520px) {
+  .baseline-dot:nth-child(4) {
+    display: none;
+  }
+}
+
+.diagram-labels {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+}
   
   .panel.context-panel {
     background: #181818;

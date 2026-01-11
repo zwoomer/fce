@@ -10,8 +10,8 @@ FCE is designed to support **human interpretation**, not automated judgment.
 
 ## Current status
 
-**Latest release:** v0.2.6  
-**Status:** Stable
+**Latest release:** v0.2.7  
+**Status:** Stable (documentation & explanation complete)
 
 ---
 
@@ -139,7 +139,18 @@ No test logic changes.
 
 ---
 
-## Documentation expansion & utilities (post-v0.2.5)
+## Explanatory clarity & visual documentation (v0.2.7)
+
+- Baseline-relative visual explanation page (`baseline-relative.html`) with diagram
+- Variability & recovery interpretation notes
+- Documentation navigation consolidation (contextual links from Concept, About, Norwegian Context)
+- Copy-ready summaries with shared utility
+- Diagram improvements: micro-labels, time direction clarity, visual anchoring
+- No changes to measurement logic or scoring
+
+---
+
+## Documentation expansion & utilities (v0.2.6)
 
 ### New documentation pages
 - **Concept page** (`concept.html`) — Core concepts, baseline-relative measurement, system properties
@@ -225,5 +236,6 @@ FCE is suitable for:
 - v0.2.4 — Refinement-only UX polish
 - v0.2.5 — Critical bug fixes
 - v0.2.6 — Documentation expansion & utilities
+- v0.2.7 — Explanatory clarity & visual documentation
 
 Future work will continue under v0.2.x and v0.3 planning.

@@ -14,6 +14,9 @@ if (!currentLang) {
   }
 }
 
+// Test type persistence
+const TEST_TYPE_KEY = "fce_test_type_v1";
+
 const I18N = {
   en: {
     ui: {
@@ -24,6 +27,13 @@ const I18N = {
       runTraining: "Run Training",
       reset: "Reset",
       clearBaseline: "Clear baseline",
+      history: "History",
+      historyDisabled: "History (available after first run)",
+      home: "Home",
+      about: "About",
+      howToUse: "How to use",
+      faq: "FAQ",
+      norwegianContext: "Norwegian Context",
       testType: {
         reaction: "Reaction Time",
         gonogo: "Go / No-Go",
@@ -110,6 +120,13 @@ const I18N = {
       runTraining: "Kjør trening",
       reset: "Nullstill",
       clearBaseline: "Slett baseline",
+      history: "Historikk",
+      historyDisabled: "Historikk (tilgjengelig etter første kjøring)",
+      home: "Hjem",
+      about: "Om",
+      howToUse: "Hvordan bruke",
+      faq: "FAQ",
+      norwegianContext: "Norsk kontekst",
       testType: {
         reaction: "Reaksjonstid",
         gonogo: "Go / No-Go",
@@ -584,30 +601,45 @@ function applyLangUI() {
   });
 
   // 3) Toggle active state on buttons
-  const enBtn = document.getElementById("langEnBtn");
-  const noBtn = document.getElementById("langNoBtn");
-  if (enBtn && noBtn) {
-    enBtn.classList.toggle("active", currentLang === "en");
-    noBtn.classList.toggle("active", currentLang === "no");
+  const langSelect = document.getElementById("langSelect");
+  if (langSelect) {
+    langSelect.value = currentLang;
   }
 
-  // 4) Re-render trial list and progress if in session or has results
+  // 4) Update History menu item text (it has dynamic text based on state)
+  updateHistoryMenuState();
+
+  // 5) Update topbar page label based on current view
+  const topbarPage = document.getElementById("topbarPage");
+  if (topbarPage) {
+    const activeView = document.querySelector(".view.active");
+    if (activeView) {
+      const viewId = activeView.id;
+      if (viewId === "view-home") {
+        topbarPage.textContent = t("ui.home");
+      } else if (viewId === "view-history") {
+        topbarPage.textContent = t("ui.history");
+      }
+    }
+  }
+
+  // 6) Re-render trial list and progress if in session or has results
   if (inSession || results.length > 0) {
     reRenderTrialList();
     updateProgress(results.length === totalTrials);
   }
   
-  // 5) Update summary if it exists and is not empty
+  // 7) Update summary if it exists and is not empty
   if (summary && summary.textContent && lastSummaryData) {
     regenerateSummary();
   }
 
-  // 6) Re-render history if visible
+  // 8) Re-render history if visible
   if (historyListEl) {
     renderHistory();
   }
 
-  // 7) Update select options for modes and test types
+  // 9) Update select options for modes and test types
   updateSelectOptions();
   
   // 8) Update divided attention legend if applicable
@@ -703,6 +735,7 @@ let lastSummaryData = null;
 const menuBtn = document.getElementById("menuBtn");
 const menu = document.getElementById("menu");
 const menuOverlay = document.getElementById("menuOverlay");
+const closeMenuBtn = document.getElementById("closeMenuBtn");
 const menuItems = document.querySelectorAll(".menu-item");
 const views = document.querySelectorAll(".view");
 
@@ -710,17 +743,60 @@ function openMenu() {
   menu.classList.add("open");
   menuOverlay.classList.remove("hidden");
   document.body.classList.add("menu-open");
+  if (menuBtn) menuBtn.setAttribute("aria-expanded", "true");
 }
 
 function closeMenu() {
   menu.classList.remove("open");
   menuOverlay.classList.add("hidden");
   document.body.classList.remove("menu-open");
+  if (menuBtn) menuBtn.setAttribute("aria-expanded", "false");
+}
+
+// Update History menu item state (enabled/disabled)
+function updateHistoryMenuState() {
+  const historyBtn = document.getElementById("menuHistoryBtn");
+  const homeHistoryPanel = document.getElementById("homeHistoryPanel");
+  const homeHistoryBtn = document.getElementById("homeHistoryBtn");
+  
+  const hasHistoryData = hasHistory();
+  
+  if (historyBtn) {
+    const langEn = historyBtn.querySelector(".lang-en");
+    const langNo = historyBtn.querySelector(".lang-no");
+    
+    if (hasHistoryData) {
+      historyBtn.classList.remove("is-disabled");
+      historyBtn.removeAttribute("tabindex");
+      
+      // Update text using language spans with respective translations
+      if (langEn) langEn.textContent = I18N.en.ui.history;
+      if (langNo) langNo.textContent = I18N.no.ui.history;
+    } else {
+      historyBtn.classList.add("is-disabled");
+      historyBtn.setAttribute("tabindex", "-1");
+      historyBtn.removeAttribute("aria-current");
+      
+      // Update text using language spans with respective translations
+      if (langEn) langEn.textContent = I18N.en.ui.historyDisabled;
+      if (langNo) langNo.textContent = I18N.no.ui.historyDisabled;
+    }
+  }
+  
+  // Show/hide History panel on Home view
+  if (homeHistoryPanel) {
+    homeHistoryPanel.style.display = hasHistoryData ? "block" : "none";
+  }
 }
 
 // Reusable function to switch views (used by menu buttons and URL params)
 function switchView(target) {
   if (!target) return;
+  
+  // Prevent switching to history if no data exists
+  if (target === "history" && !hasHistory()) {
+    return;
+  }
 
   views.forEach(v => {
     v.classList.add("hidden");
@@ -731,6 +807,23 @@ function switchView(target) {
   if (activeView) {
     activeView.classList.remove("hidden");
     activeView.classList.add("active");
+  }
+
+  // Update aria-current on menu items
+  document.querySelectorAll('.menu-item[data-view]').forEach(item => {
+    if (item.classList.contains("is-disabled")) {
+      item.removeAttribute("aria-current");
+    } else if (item.dataset.view === target) {
+      item.setAttribute("aria-current", "page");
+    } else {
+      item.removeAttribute("aria-current");
+    }
+  });
+
+  // Update topbar page label
+  const topbarPage = document.getElementById("topbarPage");
+  if (topbarPage) {
+    topbarPage.textContent = target === "history" ? t("ui.history") : t("ui.home");
   }
 
   if (target === "history") {
@@ -747,6 +840,10 @@ menuBtn.addEventListener("click", () => {
   else openMenu();
 });
 
+if (closeMenuBtn) {
+  closeMenuBtn.addEventListener("click", closeMenu);
+}
+
 menuOverlay.addEventListener("click", closeMenu);
 
 menuItems.forEach(item => {
@@ -756,6 +853,11 @@ menuItems.forEach(item => {
       // Close menu on link click, but allow navigation to proceed
       closeMenu();
       return; // Let the browser handle navigation
+    }
+    
+    // Skip disabled items
+    if (item.classList.contains("is-disabled")) {
+      return;
     }
     
     // For buttons with data-view (Home/History), handle SPA-style navigation
@@ -768,7 +870,7 @@ menuItems.forEach(item => {
 });
 
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") closeMenu();
+  if (e.key === "Escape" && menu.classList.contains("open")) closeMenu();
 });
 
 let mode = null; // "baseline" | "check" | "training" (set by action button click - this is the source of truth)
@@ -879,6 +981,12 @@ startBaselineBtn.addEventListener("click", () => {
     if (startTrainingBtn) startTrainingBtn.disabled = true;
     resetBtn.style.display = "";
   
+    // Hide context panel when session starts
+    const contextPanel = document.getElementById("contextPanel");
+    if (contextPanel) {
+      contextPanel.classList.add("is-hidden");
+    }
+  
     nextTrial();
   }
 
@@ -951,10 +1059,16 @@ function updateTrialCountMax() {
 }
 
 testType.addEventListener("change", () => {
+    // Store selected test type in localStorage
+    try {
+      localStorage.setItem(TEST_TYPE_KEY, testType.value);
+    } catch (_) {}
+    
     hardReset();
     updateTrialCountMax();
     updateBaselineInfo();
     updateDividedLegend();
+    updateHistoryMenuState();
     // Keep history filter aligned with current test by default
     if (historyTest) {
       historyTest.value = testType.value;
@@ -1024,6 +1138,7 @@ if (clearHistoryBtn) {
     if (!ok) return;
     saveHistory(tt, []);
     renderHistory();
+    updateHistoryMenuState();
   });
 }
 
@@ -1115,6 +1230,7 @@ clearBaselineBtn.addEventListener("click", () => {
   
     saveBaseline([]);
     updateBaselineInfo();
+    updateHistoryMenuState();
   });
 
   function nextTrial() {
@@ -1487,6 +1603,41 @@ function loadHistory(tt = testType.value) {
   }
 }
 
+// Check if stored records exist for a specific test type (history or baseline)
+function hasHistoryForTestType(testTypeValue) {
+  const tt = testTypeValue || "reaction";
+  
+  // Check history
+  try {
+    const historyRaw = localStorage.getItem(historyKeyFor(tt));
+    if (historyRaw) {
+      const history = JSON.parse(historyRaw);
+      if (Array.isArray(history) && history.length > 0) {
+        return true;
+      }
+    }
+  } catch (_) {}
+  
+  // Check baseline
+  try {
+    const baselineRaw = localStorage.getItem(baselineKeyFor(tt));
+    if (baselineRaw) {
+      const baseline = JSON.parse(baselineRaw);
+      if (Array.isArray(baseline) && baseline.length > 0) {
+        return true;
+      }
+    }
+  } catch (_) {}
+  
+  return false;
+}
+
+// Check if stored records exist for the current test type (history or baseline)
+function hasHistory() {
+  const tt = testType ? testType.value : "reaction";
+  return hasHistoryForTestType(tt);
+}
+
 function saveHistory(tt, sessions) {
   localStorage.setItem(historyKeyFor(tt), JSON.stringify(sessions));
 }
@@ -1518,6 +1669,7 @@ function pushHistoryRecord(record) {
   const sessions = loadHistory(tt);
   sessions.push(record);
   saveHistory(tt, sessions);
+  updateHistoryMenuState();
 }
 
   function endSession() {
@@ -1533,6 +1685,12 @@ function pushHistoryRecord(record) {
     startCheckBtn.disabled = false;
     if (startTrainingBtn) startTrainingBtn.disabled = false;
     resetBtn.style.display = "none";
+  
+    // Show context panel when session ends
+    const contextPanel = document.getElementById("contextPanel");
+    if (contextPanel) {
+      contextPanel.classList.remove("is-hidden");
+    }
   
     updateProgress(true);
   
@@ -1890,6 +2048,7 @@ function pushHistoryRecord(record) {
   
       saveBaseline(sessions);
       updateBaselineInfo();
+      updateHistoryMenuState();
   
       const qualityNote = checkSessionQuality(sessionPayload, totalTrials, isReaction);
       
@@ -2143,6 +2302,12 @@ function hardReset() {
   summary.textContent = "";
   lastSummaryData = null; // Clear summary data on reset
   progress.textContent = "";
+
+  // Show context panel when reset to idle
+  const contextPanel = document.getElementById("contextPanel");
+  if (contextPanel) {
+    contextPanel.classList.remove("is-hidden");
+  }
 
 
   trialCountInput.disabled = false;
@@ -2764,12 +2929,22 @@ updateDividedLegend();
 // Hide Reset button initially (only show during active session)
 resetBtn.style.display = "none";
 
-// Language toggle
-document.getElementById("langEnBtn")?.addEventListener("click", () => setLang("en"));
-document.getElementById("langNoBtn")?.addEventListener("click", () => setLang("no"));
-
 // Apply language on startup
 applyLangUI();
+
+// Load and restore test type from localStorage
+if (testType) {
+  try {
+    const savedTestType = localStorage.getItem(TEST_TYPE_KEY);
+    if (savedTestType && (savedTestType === "reaction" || savedTestType === "gonogo" || savedTestType === "divided")) {
+      testType.value = savedTestType;
+      // Trigger change handlers to update UI
+      updateTrialCountMax();
+      updateBaselineInfo();
+      updateDividedLegend();
+    }
+  } catch (_) {}
+}
 
 // Handle URL parameters for initial view selection (after all initialization)
 const params = new URLSearchParams(location.search);
@@ -2779,8 +2954,40 @@ if (params.get("home") === "1") {
 } else if (params.get("view") === "history") {
   // Switch to History view (same as clicking the History menu button)
   switchView("history");
+} else {
+  // Default: Home view (already set by HTML class="active" on view-home)
+  // Initialize aria-current and topbar page label for default view
+  document.querySelectorAll('.menu-item[data-view]').forEach(item => {
+    if (item.dataset.view === "home") {
+      item.setAttribute("aria-current", "page");
+    } else {
+      item.removeAttribute("aria-current");
+    }
+  });
+  const topbarPage = document.getElementById("topbarPage");
+  if (topbarPage) {
+    topbarPage.textContent = t("ui.home");
+  }
 }
-// Default: Home view remains active (already set by HTML class="active" on view-home)
+
+// Initialize History menu state
+updateHistoryMenuState();
+
+// Home History button click handler
+const homeHistoryBtn = document.getElementById("homeHistoryBtn");
+if (homeHistoryBtn) {
+  homeHistoryBtn.addEventListener("click", () => {
+    switchView("history");
+  });
+}
+
+// Language select change handler
+const langSelect = document.getElementById("langSelect");
+if (langSelect) {
+  langSelect.addEventListener("change", (e) => {
+    setLang(e.target.value);
+  });
+}
 
 // Sync topbar height for fixed positioning
 function syncTopbarHeight() {

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>FCE – Reaction Time Test</title>
+  <title>FCE — Baseline-relative functional check</title>
   <link rel="stylesheet" href="style.css" />
   
   <!-- Remember last visited page (works across all pages) -->
@@ -17,22 +17,51 @@
 </head>
 <body>
   <header class="topbar">
-    <button id="menuBtn" aria-label="Menu">☰</button>
+    <button id="menuBtn" aria-label="Menu" aria-controls="menu" aria-expanded="false">☰</button>
     <span class="title">FCE</span>
-    <div class="lang-toggle" role="group" aria-label="Language">
-      <button id="langEnBtn" class="lang-btn" type="button">EN</button>
-      <button id="langNoBtn" class="lang-btn" type="button">NO</button>
+    <span class="topbar-page" id="topbarPage" aria-hidden="true"></span>
+    <div class="topbar-right">
+      <a href="about.html" class="topbar-link">
+        <span class="lang lang-en">Learn more</span>
+        <span class="lang lang-no hidden">Lær mer</span>
+      </a>
+      <div class="lang-select-wrapper">
+        <select id="langSelect" class="lang-select" aria-label="Language">
+          <option value="en">EN</option>
+          <option value="no">NO</option>
+        </select>
+      </div>
     </div>
   </header>
 
   <nav id="menu" class="menu">
-    <div class="menu-header"></div>
-    <button class="menu-item" data-view="home">Home</button>
-    <button class="menu-item" data-view="history">History</button>
-    <a href="about.html" class="menu-item">About</a>
-    <a href="norwegian-context.html" class="menu-item">Norwegian Context</a>
-    <a href="how-to-use.html" class="menu-item">How to Use</a>
-    <a href="faq.html" class="menu-item">FAQ</a>
+    <div class="menu-header">
+      <button id="closeMenuBtn" class="menu-close-btn" aria-label="Close menu">×</button>
+    </div>
+    <button class="menu-item" data-view="home">
+      <span class="lang lang-en">Home</span>
+      <span class="lang lang-no hidden">Hjem</span>
+    </button>
+    <button class="menu-item" id="menuHistoryBtn" data-view="history">
+      <span class="lang lang-en">History</span>
+      <span class="lang lang-no hidden">Historikk</span>
+    </button>
+    <a href="about.html" class="menu-item">
+      <span class="lang lang-en">About</span>
+      <span class="lang lang-no hidden">Om</span>
+    </a>
+    <a href="norwegian-context.html" class="menu-item">
+      <span class="lang lang-en">Norwegian Context</span>
+      <span class="lang lang-no hidden">Norsk kontekst</span>
+    </a>
+    <a href="how-to-use.html" class="menu-item">
+      <span class="lang lang-en">How to Use</span>
+      <span class="lang lang-no hidden">Hvordan bruke</span>
+    </a>
+    <a href="faq.html" class="menu-item">
+      <span class="lang lang-en">FAQ</span>
+      <span class="lang lang-no hidden">FAQ</span>
+    </a>
   </nav>
 
   <div id="menuOverlay" class="menu-overlay hidden"></div>
@@ -41,32 +70,47 @@
     <section id="view-home" class="view active">
       <div class="container instrument">
         <h1>
-          <span class="lang lang-en">Reaction Time Test</span>
-          <span class="lang lang-no hidden">Reaksjonstidstest</span>
+          <span class="lang lang-en">Functional Check</span>
+          <span class="lang lang-no hidden">Funksjonssjekk</span>
         </h1>
         <div id="instruction">
           <div class="lang lang-en">
             <p>
-              Click <strong>Add Baseline Session</strong> to build your baseline (3–5 sessions).
-              Click <strong>Run Functional Check</strong> to compare today vs baseline.
-              Early clicks count as false starts.
+              Build a personal baseline (typically 3–5 sessions). Then run a Functional Check to compare today's performance to your baseline. Training runs the same tasks without comparison. Early inputs count as false starts.
             </p>
           </div>
           <div class="lang lang-no hidden">
             <p>
-              Klikk <strong>Legg til baseline-økt</strong> for å bygge en personlig baseline (3–5 økter).
-              Klikk <strong>Kjør funksjonssjekk</strong> for å sammenligne dagens funksjon mot baseline.
-              Tidlige klikk registreres som feilstart.
+              Bygg en personlig baseline (typisk 3–5 økter). Deretter kjører du en Funksjonssjekk for å sammenligne dagens ytelse med din baseline. Trening kjører samme oppgaver uten sammenligning. Tidlige inndata teller som feilstart.
             </p>
           </div>
         </div>
+
         <!-- Controls -->
-        <div class="controls">
+        <div id="instrument" class="controls">
+          <div class="config-row">
+            <label for="testType" data-i18n="ui.test">Test</label>
+            <select id="testType">
+              <option value="reaction">Reaction Time</option>
+              <option value="gonogo">Go / No-Go</option>
+              <option value="divided">Divided Attention</option>
+            </select>
+
+            <label for="trialCount" data-i18n="ui.trials">Trials</label>
+            <input id="trialCount" type="number" min="3" max="40" value="10" />
+          </div>
+
+          <div class="action-row">
+            <button id="startBaselineBtn" data-i18n="ui.addBaseline">Add Baseline Session</button>
+            <button id="startCheckBtn" data-i18n="ui.runCheck">Run Functional Check</button>
+            <button id="startTrainingBtn" data-i18n="ui.runTraining">Run Training</button>
+          </div>
+
           <!-- Context (optional) -->
-          <div class="panel context-panel">
+          <div class="panel context-panel" id="contextPanel">
             <h2>
-              <span class="lang lang-en">Context (optional)</span>
-              <span class="lang lang-no hidden">Kontekst (valgfritt)</span>
+              <span class="lang lang-en">Optional context (before starting)</span>
+              <span class="lang lang-no hidden">Valgfri kontekst (før start)</span>
             </h2>
             <div class="config-row">
               <label for="sleepRating">
@@ -107,24 +151,6 @@
               <span class="lang lang-en">Saved with each session. Does not affect scoring.</span>
               <span class="lang lang-no hidden">Lagres med hver økt. Påvirker ikke vurderingen.</span>
             </p>
-          </div>
-
-          <div class="config-row">
-            <label for="testType" data-i18n="ui.test">Test</label>
-            <select id="testType">
-              <option value="reaction">Reaction Time</option>
-              <option value="gonogo">Go / No-Go</option>
-              <option value="divided">Divided Attention</option>
-            </select>
-
-            <label for="trialCount" data-i18n="ui.trials">Trials</label>
-            <input id="trialCount" type="number" min="3" max="40" value="10" />
-          </div>
-
-          <div class="action-row">
-            <button id="startBaselineBtn" data-i18n="ui.addBaseline">Add Baseline Session</button>
-            <button id="startCheckBtn" data-i18n="ui.runCheck">Run Functional Check</button>
-            <button id="startTrainingBtn" data-i18n="ui.runTraining">Run Training</button>
           </div>
 
           <div class="secondary-row">
@@ -177,6 +203,20 @@
           </div>
         
           <ul id="baselineList"></ul>
+        </div>
+
+        <!-- History panel -->
+        <div class="panel" id="homeHistoryPanel" style="display: none;">
+          <h2>
+            <span class="lang lang-en">History</span>
+            <span class="lang lang-no hidden">Historikk</span>
+          </h2>
+          <div class="action-row">
+            <button id="homeHistoryBtn" data-view="history">
+              <span class="lang lang-en">View History</span>
+              <span class="lang lang-no hidden">Se historikk</span>
+            </button>
+          </div>
         </div>
 
         <footer class="footer muted">
@@ -268,7 +308,7 @@
 
   </main>
 
-  <script src="app.js"></script>
+  <script src="app.js" defer></script>
   
   <!-- Resume last page logic (only on index.html) -->
   <script>
@@ -298,6 +338,34 @@
         if (params.get("home") !== "1") {
           location.href = last;
         }
+      }
+    })();
+  </script>
+
+  <!-- Handle anchor link focus for accessibility -->
+  <script>
+    (function () {
+      function scrollToInstrument() {
+        const actionRow = document.querySelector(".action-row");
+        if (actionRow) {
+          // Scroll to action buttons (which are now above Context)
+          const topbarHeight = 64; // Match --topbar-h
+          const targetY = actionRow.getBoundingClientRect().top + window.pageYOffset - topbarHeight - 20;
+          window.scrollTo({ top: targetY, behavior: 'smooth' });
+          // Focus first action button after scroll
+          setTimeout(function() {
+            const firstActionBtn = document.querySelector(".action-row button");
+            if (firstActionBtn) {
+              firstActionBtn.focus();
+            }
+          }, 300);
+        }
+      }
+
+      // Handle #instrument hash when arriving from external links (e.g., docs pages)
+      if (window.location.hash === '#instrument') {
+        // Small delay to ensure DOM is ready
+        setTimeout(scrollToInstrument, 100);
       }
     })();
   </script>

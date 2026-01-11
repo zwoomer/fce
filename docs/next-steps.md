@@ -19,14 +19,20 @@ This version line is frozen and tagged up to **v0.2.3**.
 
 ---
 
-## v0.2.4 — Minor polish (optional)
+## v0.2.4 — Refinement-only UX polish (completed)
 
-Possible scope (not committed yet):
-- Small documentation refinements
-- Navigation micro-polish
-- Copy or accessibility improvements
+Shipped improvements:
+- Performance micro-optimization: add `defer` to app.js script tag
+- Context panel: pre-action metadata behavior (visible before session, hidden during)
+- Navigation clarity: menu toggle on all docs pages, close button, accessibility improvements
+- Topbar enhancements: page labels (Home/History/docs), scroll-based hiding on docs pages
+- Language selector: dropdown (replacing toggle buttons) for better UX and scalability
+- Menu translations: all menu items translated (Home, History, About, etc.)
+- History menu availability: context-aware across all pages based on selected test type
+- Home page updates: title/description, "Learn more" moved to topbar
+- Internal cleanup: consistent language handling, CSS organization, accessibility attributes
 
-No test logic changes planned.
+No test logic changes. This version line is frozen and tagged up to **v0.2.4**.
 
 ---
 

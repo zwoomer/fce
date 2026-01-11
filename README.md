@@ -10,7 +10,7 @@ FCE is designed to support **human interpretation**, not automated judgment.
 
 ## Current status
 
-**Latest release:** v0.2.3  
+**Latest release:** v0.2.4  
 **Status:** Stable (frozen)
 
 ---
@@ -115,6 +115,22 @@ No changes to scoring philosophy.
 
 ---
 
+## Refinement-only UX polish (v0.2.4)
+
+- Performance micro-optimization: add `defer` to app.js script tag
+- Context panel: pre-action metadata behavior (visible before session, hidden during)
+- Navigation clarity: menu toggle on all docs pages, close button, accessibility improvements
+- Topbar enhancements: page labels (Home/History/docs), scroll-based hiding on docs pages
+- Language selector: dropdown (replacing toggle buttons) for better UX and scalability
+- Menu translations: all menu items translated (Home, History, About, etc.)
+- History menu availability: context-aware across all pages based on selected test type
+- Home page updates: title/description, "Learn more" moved to topbar
+- Internal cleanup: consistent language handling, CSS organization, accessibility attributes
+
+No test logic changes.
+
+---
+
 ## History & trends
 
 - Per-test session history
@@ -165,5 +181,6 @@ FCE is suitable for:
 - v0.2.1 — Integrity & clarity pass
 - v0.2.2 — UI polish (CSS-only)
 - v0.2.3 — Documentation & navigation split
+- v0.2.4 — Refinement-only UX polish
 
 Future work will continue under v0.2.x and v0.3 planning.

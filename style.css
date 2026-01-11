@@ -470,27 +470,85 @@
     opacity: 0.95;
   }
 
-  /* Language toggle buttons */
-  .lang-toggle {
-    margin-left: auto;
-    display: flex;
-    gap: 6px;
+  .topbar-page {
+    font-size: 15px;
+    opacity: 0.75;
+    margin-left: 10px;
+    transition: opacity 0.2s ease, transform 0.2s ease;
   }
 
-  .lang-btn {
-    padding: 6px 10px;
+  .topbar-page::before {
+    content: "·";
+    margin: 0 8px;
+    opacity: 0.6;
+  }
+
+  .topbar-page.is-hidden {
+    opacity: 0;
+    transform: translateY(-2px);
+    pointer-events: none;
+  }
+
+  /* Topbar right section */
+  .topbar-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .topbar-link {
+    font-size: 14px;
+    color: inherit;
+    text-decoration: none;
+    opacity: 0.85;
+    transition: opacity 0.2s ease;
+  }
+
+  .topbar-link:hover {
+    opacity: 1;
+  }
+
+  /* Language selector */
+  .lang-select-wrapper {
+    position: relative;
+  }
+
+  .lang-select {
+    padding: 6px 28px 6px 10px;
     border: 1px solid #333;
     background: transparent;
     color: inherit;
-    border-radius: 10px;
+    border-radius: 8px;
     cursor: pointer;
-    opacity: 0.9;
+    font-size: 14px;
+    font-weight: 500;
+    appearance: none;
+    background-image:
+      linear-gradient(45deg, transparent 50%, rgba(255,255,255,0.6) 50%),
+      linear-gradient(135deg, rgba(255,255,255,0.6) 50%, transparent 50%);
+    background-position:
+      calc(100% - 12px) calc(50% - 1px),
+      calc(100% - 8px) calc(50% - 1px);
+    background-size: 4px 4px, 4px 4px;
+    background-repeat: no-repeat;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
   }
 
-  .lang-btn.active {
+  .lang-select:hover {
+    border-color: #555;
+    background-color: rgba(255, 255, 255, 0.03);
+  }
+
+  .lang-select:focus {
+    outline: none;
     border-color: #666;
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  .lang-select option {
     background: #1a1a1a;
-    opacity: 1;
+    color: #eee;
   }
 
   body.menu-open .topbar {
@@ -533,7 +591,34 @@
   }
 
   .menu-header {
-    height: 10px;   /* or 12px */
+    height: auto;
+    padding: 0 0 10px 0;
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 0;
+  }
+
+  .menu-close-btn {
+    width: 36px;
+    height: 36px;
+    background: none;
+    border: none;
+    color: #eee;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .menu-close-btn:hover {
+    opacity: 1;
   }
 
   .menu.open {
@@ -567,6 +652,21 @@
   
   .menu-item:hover {
     background: #1a1a1a;
+  }
+
+  #menu .menu-item[aria-current="page"] {
+    font-weight: 600;
+    background: #1a1a1a;
+  }
+
+  #menu .menu-item[aria-current="page"]:hover {
+    background: #222;
+  }
+
+  #menu .menu-item.is-disabled {
+    opacity: 0.45;
+    pointer-events: none;
+    cursor: default;
   }
 
   .view.hidden {
@@ -1078,6 +1178,67 @@ select option:disabled {
   font-variant-numeric: tabular-nums;
 }
 
+/* Docs navigation */
+.docs-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin: 32px auto;
+  max-width: 720px;
+  padding: 0 16px;
+  flex-wrap: wrap;
+}
+
+.docs-nav-left,
+.docs-nav-center,
+.docs-nav-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+}
+
+.docs-nav-left {
+  justify-content: flex-start;
+}
+
+.docs-nav-right {
+  justify-content: flex-end;
+}
+
+.docs-nav-btn {
+  padding: 10px 20px;
+  font-size: 14px;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #eee;
+  transition: all 0.2s ease;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.docs-nav-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+@media (max-width: 600px) {
+  .docs-nav {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .docs-nav-left,
+  .docs-nav-center,
+  .docs-nav-right {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 /* 4) Badge alignment polish */
 .badge {
   font-variant-numeric: tabular-nums;
@@ -1109,4 +1270,9 @@ select option:disabled {
 
 .inline-toggle:hover {
   opacity: 1;
+}
+
+/* Context panel visibility */
+.context-panel.is-hidden {
+  display: none !important;
 }

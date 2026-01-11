@@ -10,8 +10,8 @@ FCE is designed to support **human interpretation**, not automated judgment.
 
 ## Current status
 
-**Latest release:** v0.2.5  
-**Status:** Stable (frozen)
+**Latest release:** v0.2.6  
+**Status:** Stable
 
 ---
 
@@ -224,5 +224,6 @@ FCE is suitable for:
 - v0.2.3 — Documentation & navigation split
 - v0.2.4 — Refinement-only UX polish
 - v0.2.5 — Critical bug fixes
+- v0.2.6 — Documentation expansion & utilities
 
 Future work will continue under v0.2.x and v0.3 planning.

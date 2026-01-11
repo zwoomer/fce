@@ -721,6 +721,10 @@ const historyEmpty = document.getElementById("historyEmpty");
 const historyListEl = document.getElementById("historyList");
 const clearHistoryBtn = document.getElementById("clearHistoryBtn");
 
+// Home history preview
+const homeHistoryListEl = document.getElementById("homeHistoryList");
+const homeHistoryEmptyEl = document.getElementById("homeHistoryEmpty");
+
 const resetBtn = document.getElementById("resetBtn");
 const testArea = document.getElementById("testArea");
 
@@ -787,6 +791,9 @@ function updateHistoryMenuState() {
   if (homeHistoryPanel) {
     homeHistoryPanel.style.display = hasHistoryData ? "block" : "none";
   }
+
+  // Keep Home preview in sync
+  renderHomeHistoryPreview();
 }
 
 // Reusable function to switch views (used by menu buttons and URL params)
@@ -997,8 +1004,10 @@ resetBtn.addEventListener("click", () => {
 testArea.addEventListener("click", (e) => {
     if (!inSession) return;
     
-    // Don't process clicks if flash question is showing (for divided attention)
-    if (testType.value === "divided" && trialIndex > totalTrials) return;
+    // Don't process clicks if we've completed all trials (prevents race conditions)
+    // Note: trialIndex is incremented in nextTrial() BEFORE the check, so we use >
+    // to block clicks that would result in trialIndex > totalTrials
+    if (trialIndex > totalTrials) return;
     
     const tt = testType.value;
     
@@ -1234,6 +1243,9 @@ clearBaselineBtn.addEventListener("click", () => {
   });
 
   function nextTrial() {
+    // Guard: prevent processing if session already ended
+    if (!inSession) return;
+    
     startTime = null;
     currentStim = null;
     responded = false;
@@ -1669,10 +1681,14 @@ function pushHistoryRecord(record) {
   const sessions = loadHistory(tt);
   sessions.push(record);
   saveHistory(tt, sessions);
+  renderHomeHistoryPreview();
   updateHistoryMenuState();
 }
 
   function endSession() {
+    // Guard against duplicate calls (race condition protection)
+    if (!inSession) return;
+    
     inSession = false;
   
     // Hide test area
@@ -2111,6 +2127,18 @@ function pushHistoryRecord(record) {
       dividedFlashAnswer = null;
       // Update baseline info to ensure button states are correct (training doesn't update baseline, so button should be disabled if no baseline exists)
       updateBaselineInfo();
+      return;
+    }
+  
+    // ---- Training mode (non-divided): ensure baseline info is updated ----
+    if (mode === "training") {
+      // Training mode doesn't update baseline, so ensure button states are correct
+      updateBaselineInfo();
+      mode = null;
+      if (isDivided) {
+        dividedPlan = null;
+        dividedFlashAnswer = null;
+      }
       return;
     }
   
@@ -2634,6 +2662,137 @@ function statusLabelFromCompare(meanMs, baselineMean, baselineSD) {
   if (meanMs <= baselineMean + baselineSD) return t("status.within");
   if (meanMs <= baselineMean + 2 * baselineSD) return t("status.slightly");
   return t("status.significantly");
+}
+
+// Small helper: human-friendly mode label (EN/NO via current language)
+function modeLabel(mode) {
+  const m = String(mode).toLowerCase();
+  if (m === "baseline") return currentLang === "no" ? "Baseline" : "Baseline";
+  if (m === "check") return currentLang === "no" ? "Sjekk" : "Check";
+  if (m === "training") return currentLang === "no" ? "Trening" : "Training";
+  return mode;
+}
+
+function renderHomeHistoryPreview() {
+  if (!homeHistoryListEl) return;
+
+  const tt = (testType && testType.value) ? testType.value : "reaction";
+  let sessions = loadHistory(tt) || [];
+  sessions = sessions
+    .filter(s => s && (s.createdAt || s.id))
+    .sort((a, b) => String(b.createdAt || b.id).localeCompare(String(a.createdAt || a.id)));
+
+  const recent = sessions.slice(0, 3);
+
+  homeHistoryListEl.innerHTML = "";
+
+  // Empty state (per-test)
+  if (homeHistoryEmptyEl) {
+    homeHistoryEmptyEl.style.display = recent.length ? "none" : "block";
+  }
+
+  if (!recent.length) return;
+
+  recent.forEach(s => {
+    const isInvalid = !!(s?.flags?.invalid);
+    const when = formatDateTime(s?.createdAt || s?.id);
+
+    // Metrics (kept calm + minimal)
+    const avg = s?.metrics?.avgMs;
+    const trials = s?.metrics?.trials ?? s?.trials;
+    const mode = s?.mode || "";
+
+    // Prefer stored statusText; else compute if baseline exists
+    let statusText = s?.statusText || "";
+    if (!statusText && typeof avg === "number") {
+      // Load baseline sessions and compute mean/sd (same pattern as renderHistory)
+      const baselineSessionsRaw = (() => {
+        try {
+          const key = baselineKeyFor(tt);
+          const raw = localStorage.getItem(key);
+          return raw ? JSON.parse(raw) : [];
+        } catch {
+          return [];
+        }
+      })();
+      const baselineSessions = filterValidBaselineSessions(baselineSessionsRaw);
+      if (baselineSessions.length > 0) {
+        const baselineMean = mean(baselineSessions.map(s => s.mean));
+        const baselineSD = mean(baselineSessions.map(s => s.sd));
+        if (Number.isFinite(baselineMean) && Number.isFinite(baselineSD)) {
+          statusText = statusLabelFromCompare(avg, baselineMean, baselineSD);
+        }
+      }
+    }
+
+    const badgeClass = isInvalid ? "na" : clampBadgeClass(statusText);
+    const badgeText = isInvalid ? t("trend.invalid") : t("trend.ok");
+
+    const li = document.createElement("li");
+    li.className = `home-history-item ${isInvalid ? "is-invalid" : "is-valid"}`;
+    li.setAttribute("role", "button");
+    li.setAttribute("tabindex", "0");
+
+    // Top row
+    const top = document.createElement("div");
+    top.className = "home-history-top";
+
+    const title = document.createElement("div");
+    title.className = "home-history-title";
+    title.innerHTML = `
+      <span class="badge ${badgeClass}">${badgeText}</span>
+      <strong>${mode ? modeLabel(mode) : ""}</strong>
+    `;
+
+    const rightWhen = document.createElement("div");
+    rightWhen.className = "home-history-when muted";
+    rightWhen.textContent = when;
+
+    top.appendChild(title);
+    top.appendChild(rightWhen);
+
+    // Sub row
+    const sub = document.createElement("div");
+    sub.className = "home-history-sub";
+
+    const metrics = document.createElement("div");
+    metrics.className = "home-history-metrics muted";
+
+    const avgStr = (typeof avg === "number") ? `${fmt(avg, 0)} ms` : "—";
+    const trialsStr = (typeof trials === "number") ? `${trials}` : "—";
+
+    metrics.innerHTML = `
+      <span><strong>${avgStr}</strong></span>
+      <span>${t("history.trials")}: <strong>${trialsStr}</strong></span>
+    `;
+
+    const status = document.createElement("div");
+    status.className = "muted";
+    status.textContent = statusText ? t("trend.status").replace("{status}", statusText) : "";
+
+    sub.appendChild(metrics);
+    sub.appendChild(status);
+
+    li.appendChild(top);
+    li.appendChild(sub);
+
+    // Open History view on click (already wired by switchView)
+    const open = () => {
+      if (historyTest) historyTest.value = tt;
+      if (historyMode) historyMode.value = "all";
+      switchView("history");
+    };
+
+    li.addEventListener("click", open);
+    li.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        open();
+      }
+    });
+
+    homeHistoryListEl.appendChild(li);
+  });
 }
 
 function renderTrendFor(testType) {

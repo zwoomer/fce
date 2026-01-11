@@ -78,6 +78,17 @@ Status: ✅ Shipped
 
 ---
 
+## Documentation expansion & utilities (completed)
+- New documentation pages: Concept (`concept.html`) and Scope & Limits (`scope.html`)
+- Navigation consolidation: consistent menu and bottom navigation across all docs pages
+- Content improvements: updated descriptions, added clarifications, fixed translations
+- Navigation enhancements: styled "Learn more" CTA, smart redirect, page tracking
+- Documentation utilities: shared copy-to-clipboard utility (`docs.js`), copy-ready blocks, standardized patterns
+
+Status: ✅ Completed (not yet tagged)
+
+---
+
 ## v0.3 — Research expansion (exploratory)
 - Additional paradigms
 - Deeper trend analysis

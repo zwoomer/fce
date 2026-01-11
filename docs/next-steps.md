@@ -47,6 +47,43 @@ These fixes address critical data integrity issues and UI state consistency prob
 
 ---
 
+## Documentation expansion & utilities (completed)
+
+Major documentation improvements:
+
+**New pages:**
+- Concept page (`concept.html`) — Core concepts and system properties
+- Scope & Limits page (`scope.html`) — Explicit boundaries and interpretation rules
+
+**Navigation consolidation:**
+- Consistent menu navigation across all docs pages (canonical sequence)
+- Updated bottom navigation (docs-nav) to follow consistent sequence
+- Added Concept and Scope & Limits to index.html menu
+- Fixed I18N_PAGES mappings and added accessibility attributes
+
+**Content improvements:**
+- Updated "functional execution signals" description (added response stability)
+- Added clarifying sentence about execution vs intelligence/aptitude
+- Updated Scope & limits section in concept.html to point to scope.html
+- Removed obsolete "not present" notes
+- Fixed Norwegian translations
+
+**Navigation enhancements:**
+- Styled "Learn more" button as topbar CTA (pill button)
+- Smart redirect for "Learn more" button (tracks last visited docs page)
+- All doc pages track `fce_last_docs_page` for navigation continuity
+
+**Documentation utilities:**
+- Created shared copy-to-clipboard utility (`docs.js`) with double-binding protection
+- Added copy-ready blocks to Concept and About pages (EN/NO)
+- Standardized utility-header pattern across all copy blocks
+- Deduplicated copy logic: removed duplicate code, now uses shared docs.js
+- All doc pages updated to include docs.js script
+
+This work expands documentation coverage, improves navigation consistency, and provides reusable patterns for future copy-ready content blocks.
+
+---
+
 ## v0.3 — Exploratory (future)
 
 Potential directions (not commitments):

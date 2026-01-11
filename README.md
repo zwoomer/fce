@@ -139,6 +139,39 @@ No test logic changes.
 
 ---
 
+## Documentation expansion & utilities (post-v0.2.5)
+
+### New documentation pages
+- **Concept page** (`concept.html`) — Core concepts, baseline-relative measurement, system properties
+- **Scope & Limits page** (`scope.html`) — Explicit boundaries, interpretation rules, institutional constraints
+
+### Navigation consolidation
+- Consolidated menu navigation across all documentation pages (canonical sequence: About → Concept → Scope → Norwegian Context → How to Use → FAQ)
+- Added Concept and Scope & Limits to index.html menu
+- Updated bottom navigation (docs-nav) to follow consistent sequence
+- Fixed I18N_PAGES mappings for all pages
+- Added `aria-current="page"` attributes for accessibility
+
+### Content improvements
+- Updated "functional execution signals" description (added response stability)
+- Added clarifying sentence separating FCE from intelligence/aptitude assessments
+- Updated Scope & limits section in concept.html to point to scope.html
+- Removed obsolete "not present" notes from all documentation pages
+- Fixed Norwegian translations (e.g., "Lære mer" → "Les mer")
+
+### Navigation enhancements
+- Styled "Learn more" button as topbar CTA (pill button with hover effects and arrow)
+- Implemented smart redirect for "Learn more" button (tracks last visited docs page)
+- All doc pages track `fce_last_docs_page` for navigation continuity
+
+### Documentation utilities
+- Shared copy-to-clipboard utility (`docs.js`) for all documentation pages
+- Copy-ready blocks added to Concept and About pages (EN/NO)
+- Standardized utility-header pattern with tooltip, icon, and status feedback
+- Code deduplication: removed duplicate copy logic from individual pages
+
+---
+
 ## History & trends
 
 - Per-test session history
@@ -190,5 +223,6 @@ FCE is suitable for:
 - v0.2.2 — UI polish (CSS-only)
 - v0.2.3 — Documentation & navigation split
 - v0.2.4 — Refinement-only UX polish
+- v0.2.5 — Critical bug fixes
 
 Future work will continue under v0.2.x and v0.3 planning.

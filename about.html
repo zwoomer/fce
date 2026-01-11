@@ -125,6 +125,26 @@
           </a>
         </div>
 
+        <section class="card copy-block">
+          <div class="card-utility">
+            <h3>One-paragraph overview (copy-ready)</h3>
+            <button
+              class="copy-btn"
+              type="button"
+              data-copy-target="#aboutOverviewEn"
+              data-tooltip="Copy to clipboard"
+              aria-label="Copy overview to clipboard"
+            >
+              <span class="copy-icon" aria-hidden="true">📋</span>
+              <span class="copy-label">Copy</span>
+            </button>
+          </div>
+          <p class="note" id="aboutOverviewEn">
+            FCE is a baseline-relative functional performance instrument that measures short-task execution and tracks change relative to an individual&rsquo;s normal range. It is designed for repeatable checks and transparent history, with local-only data by default and refusal logic that protects against misleading results. FCE is not diagnostic and does not produce automated decisions.
+          </p>
+          <span class="muted copy-status" data-copy-status="en" aria-live="polite"></span>
+        </section>
+
         <section class="card">
           <h3>Start here</h3>
           <p>
@@ -264,6 +284,26 @@
           </a>
         </div>
 
+        <section class="card copy-block">
+          <div class="card-utility">
+            <h3>Kort oversikt (klar til å kopiere)</h3>
+            <button
+              class="copy-btn"
+              type="button"
+              data-copy-target="#aboutOverviewNo"
+              data-tooltip="Kopier"
+              aria-label="Kopier oversikt"
+            >
+              <span class="copy-icon" aria-hidden="true">📋</span>
+              <span class="copy-label">Kopier</span>
+            </button>
+          </div>
+          <p class="note" id="aboutOverviewNo">
+            FCE er et baseline-relativt instrument for funksjonell prestasjon som måler utførelse i korte oppgaver og følger endring relativt til individets normalområde. Det er laget for repeterbare sjekker og transparent historikk, med lokal lagring som standard og avslaglogikk som beskytter mot misvisende resultater. FCE er ikke diagnostisk og gir ikke automatiserte beslutninger.
+          </p>
+          <span class="muted copy-status" data-copy-status="no" aria-live="polite"></span>
+        </section>
+
         <section class="card">
           <h3>Start her</h3>
           <p>
@@ -285,10 +325,6 @@
             <a href="faq.html" class="badge" style="text-decoration:none;">FAQ</a>
             <a href="norwegian-context.html" class="badge" style="text-decoration:none;">Norsk kontekst</a>
           </div>
-
-          <p class="note">
-            Hvis <code>concept.html</code> ikke finnes ennå, legg den ved siden av denne filen (samme mappe) så fungerer lenken.
-          </p>
         </section>
 
         <section class="card">
@@ -520,5 +556,6 @@
       applyLanguage(currentLang);
     })();
   </script>
+  <script src="docs.js"></script>
 </body>
 </html>

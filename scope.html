@@ -199,25 +199,20 @@
           </ul>
         </section>
 
-        <section class="card">
-          <h3>Short disclaimer (copy-ready)</h3>
+        <section class="card copy-block">
+          <div class="card-utility">
+            <h3>Short disclaimer (copy-ready)</h3>
 
-          <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin: 8px 0 12px;">
-            <button class="btn" type="button" data-copy-target="#disclaimerEn" style="
-              padding: 8px 12px;
-              border: 1px solid rgba(255,255,255,0.15);
-              border-radius: 8px;
-              background: rgba(255,255,255,0.05);
-              color: #eee;
-              cursor: pointer;
-              display: inline-flex;
-              align-items: center;
-              gap: 8px;
-            ">
-              <span aria-hidden="true" style="font-size:16px; line-height:1;">📋</span>
-              Copy to clipboard
+            <button
+              class="copy-btn"
+              type="button"
+              data-copy-target="#disclaimerEn"
+              data-tooltip="Copy to clipboard"
+              aria-label="Copy disclaimer to clipboard"
+            >
+              <span class="copy-icon" aria-hidden="true">📋</span>
+              <span class="copy-label">Copy</span>
             </button>
-            <span class="muted" data-copy-status="en" style="min-height: 1em;"></span>
           </div>
 
           <p class="note" id="disclaimerEn">
@@ -226,6 +221,8 @@
             automated or binding decisions. Results must be interpreted by a human and should be considered together with
             context and history.
           </p>
+
+          <span class="muted copy-status" data-copy-status="en" aria-live="polite"></span>
         </section>
       </div>
 
@@ -342,25 +339,20 @@
           </ul>
         </section>
 
-        <section class="card">
-          <h3>Kort ansvarsfraskrivelse (klar til å kopiere)</h3>
+        <section class="card copy-block">
+          <div class="card-utility">
+            <h3>Kort ansvarsfraskrivelse (klar til å kopiere)</h3>
 
-          <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin: 8px 0 12px;">
-            <button class="btn" type="button" data-copy-target="#disclaimerNo" style="
-              padding: 8px 12px;
-              border: 1px solid rgba(255,255,255,0.15);
-              border-radius: 8px;
-              background: rgba(255,255,255,0.05);
-              color: #eee;
-              cursor: pointer;
-              display: inline-flex;
-              align-items: center;
-              gap: 8px;
-            ">
-              <span aria-hidden="true" style="font-size:16px; line-height:1;">📋</span>
-              Kopier
+            <button
+              class="copy-btn"
+              type="button"
+              data-copy-target="#disclaimerNo"
+              data-tooltip="Kopier"
+              aria-label="Kopier ansvarsfraskrivelse"
+            >
+              <span class="copy-icon" aria-hidden="true">📋</span>
+              <span class="copy-label">Kopier</span>
             </button>
-            <span class="muted" data-copy-status="no" style="min-height: 1em;"></span>
           </div>
 
           <p class="note" id="disclaimerNo">
@@ -369,6 +361,8 @@
             om årsak og gir ikke automatiserte eller bindende beslutninger. Resultater må tolkes av et menneske og bør sees i
             sammenheng med kontekst og historikk.
           </p>
+
+          <span class="muted copy-status" data-copy-status="no" aria-live="polite"></span>
         </section>
       </div>
 
@@ -520,61 +514,10 @@
 
       langSelect && langSelect.addEventListener("change", (e) => applyLanguage(e.target.value));
 
-      // Copy-to-clipboard buttons (Scope & Limits)
-      async function copyTextFromSelector(selector) {
-        const el = document.querySelector(selector);
-        if (!el) return false;
-        const text = (el.innerText || el.textContent || "").trim();
-        if (!text) return false;
-
-        // Prefer modern clipboard API
-        try {
-          await navigator.clipboard.writeText(text);
-          return true;
-        } catch {
-          // Fallback
-          try {
-            const ta = document.createElement("textarea");
-            ta.value = text;
-            ta.setAttribute("readonly", "");
-            ta.style.position = "fixed";
-            ta.style.top = "-1000px";
-            document.body.appendChild(ta);
-            ta.select();
-            const ok = document.execCommand("copy");
-            document.body.removeChild(ta);
-            return ok;
-          } catch {
-            return false;
-          }
-        }
-      }
-
-      function setCopyStatus(lang, msg) {
-        const status = document.querySelector(`[data-copy-status="${lang}"]`);
-        if (!status) return;
-        status.textContent = msg;
-        clearTimeout(status._t);
-        status._t = setTimeout(() => { status.textContent = ""; }, 1800);
-      }
-
-      document.querySelectorAll("[data-copy-target]").forEach(btn => {
-        btn.addEventListener("click", async () => {
-          const target = btn.getAttribute("data-copy-target");
-          const ok = await copyTextFromSelector(target);
-
-          // Detect which language button this is in (by nearest visible .lang block)
-          const inNo = !!btn.closest(".lang-no");
-          const lang = inNo ? "no" : "en";
-
-          if (ok) setCopyStatus(lang, lang === "no" ? "Kopiert." : "Copied.");
-          else setCopyStatus(lang, lang === "no" ? "Kunne ikke kopiere." : "Could not copy.");
-        });
-      });
-
       // Init
       applyLanguage(currentLang);
     })();
   </script>
+  <script src="docs.js"></script>
 </body>
 </html>

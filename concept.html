@@ -162,6 +162,26 @@
           </p>
         </section>
 
+        <section class="card copy-block">
+          <div class="card-utility">
+            <h3>Short concept summary (copy-ready)</h3>
+            <button
+              class="copy-btn"
+              type="button"
+              data-copy-target="#conceptSummaryEn"
+              data-tooltip="Copy to clipboard"
+              aria-label="Copy concept summary to clipboard"
+            >
+              <span class="copy-icon" aria-hidden="true">📋</span>
+              <span class="copy-label">Copy</span>
+            </button>
+          </div>
+          <p class="note" id="conceptSummaryEn">
+            FCE (Functional Cognition &amp; Execution) is a baseline-relative functional assessment system. It measures short-task execution (reaction speed, inhibitory control, and divided attention) and compares performance to a personal baseline rather than population averages. FCE is designed to support repeatable monitoring and careful interpretation. It is not diagnostic, does not detect substances, and does not produce automated or binding decisions.
+          </p>
+          <span class="muted copy-status" data-copy-status="en" aria-live="polite"></span>
+        </section>
+
         <section class="card">
           <h3>How FCE works (at a high level)</h3>
           <ul>
@@ -292,6 +312,26 @@
           <p class="muted">
             Enkeltøkter er signaler, ikke dommer. Trender over tid betyr mer enn én økt.
           </p>
+        </section>
+
+        <section class="card copy-block">
+          <div class="card-utility">
+            <h3>Kort konseptoppsummering (klar til å kopiere)</h3>
+            <button
+              class="copy-btn"
+              type="button"
+              data-copy-target="#conceptSummaryNo"
+              data-tooltip="Kopier"
+              aria-label="Kopier konseptoppsummering"
+            >
+              <span class="copy-icon" aria-hidden="true">📋</span>
+              <span class="copy-label">Kopier</span>
+            </button>
+          </div>
+          <p class="note" id="conceptSummaryNo">
+            FCE (Functional Cognition &amp; Execution) er et baseline-relativt system for funksjonell vurdering. Det måler utførelse i korte oppgaver (reaksjonshastighet, inhibisjon og delt oppmerksomhet) og sammenligner prestasjon mot personlig baseline fremfor befolkningsgjennomsnitt. FCE er laget for repeterbar oppfølging og varsom tolkning. Det er ikke diagnostisk, påviser ikke rusmidler og gir ikke automatiserte eller bindende beslutninger.
+          </p>
+          <span class="muted copy-status" data-copy-status="no" aria-live="polite"></span>
         </section>
 
         <section class="card">
@@ -503,5 +543,6 @@
       applyLanguage(currentLang);
     })();
   </script>
+  <script src="docs.js"></script>
 </body>
 </html>

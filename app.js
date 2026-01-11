@@ -205,6 +205,99 @@ const I18N = {
       },
     },
   },
+  lt: {
+    ui: {
+      test: "Testas",
+      trials: "Bandymai",
+      addBaseline: "Pridėti bazinio lygio sesiją",
+      runCheck: "Atlikti funkcinę patikrą",
+      runTraining: "Paleisti treniruotę",
+      reset: "Atstatyti",
+      clearBaseline: "Išvalyti bazinį lygį",
+      history: "Istorija",
+      historyDisabled: "Istorija (prieinama po pirmo paleidimo)",
+      home: "Pradžia",
+      about: "Apie",
+      howToUse: "Kaip naudoti",
+      faq: "DUK",
+      norwegianContext: "Norvegiškas kontekstas",
+      testType: {
+        reaction: "Reakcijos laikas",
+        gonogo: "Spausk / Nespausk",
+        divided: "Padalinta dėmesys",
+      },
+      mode: {
+        baseline: "Bazinis lygis",
+        check: "Patikra",
+        training: "Treniruotė",
+        all: "Visi",
+      },
+    },
+    status: {
+      within: "Įprastame diapazone",
+      slightly: "Šiek tiek žemiau įprasto",
+      significantly: "Reikšmingai žemiau įprasto",
+      noBaseline: "Dar nėra bazinio lygio — pirmiausia pridėkite bazinio lygio sesijas.",
+    },
+    baseline: {
+      noSessions: "Nėra užregistruotų bazinio lygio sesijų.",
+      sessions: "sesijos",
+    },
+    export: {
+      btn: "Eksportuoti (kopijuoti JSON)",
+      copied: "Kopijuota į iškarpinę.",
+      empty: "Nėra istorijos eksportavimui.",
+      failed: "Kopijavimas nepavyko — rodomas tekstas žemiau.",
+    },
+    trend: {
+      baselineLine: "Bazinis lygis: vidurkis {mean} ms | SD {sd} ms | Diapazonas: {lo}–{hi} ms (±1 SD)",
+      noBaseline: "Dar nėra bazinio lygio — tendencija naudoja bazinio lygio sesijas.",
+      noChecks: "Dar nėra patikros sesijų.",
+      checkLabel: "Patikra",
+      delta: "Δ {delta} ms",
+      status: "Būsena: {status}",
+      ok: "Gerai",
+      invalid: "NETINKAMA",
+    },
+    history: {
+      avg: "vid.",
+      mean: "vidurkis",
+      sd: "SD",
+      trials: "bandymai",
+      best: "geriausias",
+      worst: "blogiausias",
+      falseStarts: "klaidingi startai",
+      misses: "praleistai",
+      falseAlarms: "slopinimo klaidos",
+      baseline: "bazinis lygis",
+    },
+    quality: {
+      good: "Gera",
+      mixed: "Mišri",
+      not_usable: "Netinkama",
+      label: "Kokybė",
+    },
+    refusal: {
+      R1_INVALID_EXECUTION: "Sesija netinkama: vykdymo klaida (nėra užregistruotų galiojančių atsakų).",
+      R2_INSUFFICIENT_DATA: "Sesija netinkama: nepakanka duomenų (per mažai galiojančių atsakų).",
+      R3_EXCESS_NOISE: "Sesija netinkama: per daug klaidų (per daug klaidingų startų arba slopinimo klaidų).",
+    },
+    stimulus: {
+      ready: "Pasiruošti…",
+      reaction: {
+        go: "SPAUSKITE!",
+      },
+      gonogo: {
+        go: "SPAUSKITE (spauskite)",
+        nogo: "NESPĮKITE (nespauskite)",
+      },
+      divided: {
+        go: "SPAUSKITE",
+        nogo: "NESPĮKITE",
+        legend: "SPAUSKITE = atsakyti · NESPĮKITE = laukti · Suskaičiuokite mėlynus blyksnius",
+      },
+    },
+  },
 };
 
 function t(path) {
@@ -222,12 +315,18 @@ function getTrialProgress(current, total, completed) {
   if (currentLang === "no") {
     return `Forsøk ${current}/${total} (fullført: ${completed})`;
   }
+  if (currentLang === "lt") {
+    return `Bandymas ${current}/${total} (baigta: ${completed})`;
+  }
   return `Trial ${current}/${total} (completed: ${completed})`;
 }
 
 function getSessionComplete(done, total) {
   if (currentLang === "no") {
     return `Økt fullført (${done}/${total} forsøk).`;
+  }
+  if (currentLang === "lt") {
+    return `Sesija baigta (${done}/${total} bandymų).`;
   }
   return `Session complete (${done}/${total} trials).`;
 }
@@ -255,6 +354,29 @@ function getTrialText(n, entry, testType) {
         return `Forsøk ${n}: feilstart (klikket under ventetid)`;
       default:
         return `Forsøk ${n}: ukjent`;
+    }
+  } else if (currentLang === "lt") {
+    if (testType === "reaction") {
+      if (entry.type === "false_start") {
+        return `Bandymas ${n}: klaidingas startas (per anksti)`;
+      } else {
+        return `Bandymas ${n}: ${entry.rt} ms`;
+      }
+    }
+    // Go/No-Go and Divided Attention (same trial types)
+    switch (entry.type) {
+      case "go":
+        return `Bandymas ${n}: GO atsakas — ${entry.rt} ms`;
+      case "miss":
+        return `Bandymas ${n}: GO praleistas (nėra paspaudimo)`;
+      case "correct_reject":
+        return `Bandymas ${n}: NO-GO teisingai (nėra paspaudimo)`;
+      case "false_alarm":
+        return `Bandymas ${n}: NO-GO slopinimo klaida — ${entry.rt} ms`;
+      case "false_start":
+        return `Bandymas ${n}: klaidingas startas (paspausta laukiant)`;
+      default:
+        return `Bandymas ${n}: nežinomas`;
     }
   } else {
     // English
@@ -285,96 +407,133 @@ function getTrialText(n, entry, testType) {
 
 // Helper functions for bilingual session summary strings
 function getSessionInvalidNoReaction() {
-  return currentLang === "no" 
-    ? "Økt ugyldig (ingen gyldige reaksjonstidforsøk)."
-    : "Session invalid (no valid reaction time trials).";
+  if (currentLang === "no") {
+    return "Økt ugyldig (ingen gyldige reaksjonstidforsøk).";
+  }
+  if (currentLang === "lt") {
+    return "Sesija netinkama (nėra galiojančių reakcijos laiko bandymų).";
+  }
+  return "Session invalid (no valid reaction time trials).";
 }
 
 function getSessionInvalidNoGo() {
-  return currentLang === "no"
-    ? "Økt ugyldig (ingen GO-responser registrert)."
-    : "Session invalid (no GO responses recorded).";
+  if (currentLang === "no") {
+    return "Økt ugyldig (ingen GO-responser registrert).";
+  }
+  if (currentLang === "lt") {
+    return "Sesija netinkama (nėra užregistruotų GO atsakų).";
+  }
+  return "Session invalid (no GO responses recorded).";
 }
 
 function getBaselineNotSaved() {
-  return currentLang === "no"
-    ? "Baseline-økt ikke lagret: for få gyldige GO-responser. Øk antall forsøk for stabile resultater."
-    : "Baseline session not saved: too few valid GO responses. Increase trials for stable results.";
+  if (currentLang === "no") {
+    return "Baseline-økt ikke lagret: for få gyldige GO-responser. Øk antall forsøk for stabile resultater.";
+  }
+  if (currentLang === "lt") {
+    return "Bazinio lygio sesija neišsaugota: per mažai galiojančių GO atsakų. Padidinkite bandymų skaičių, kad gautumėte stabilūs rezultatai.";
+  }
+  return "Baseline session not saved: too few valid GO responses. Increase trials for stable results.";
 }
 
 function getBaselineNotSavedDivided() {
-  return currentLang === "no"
-    ? "Baseline-økt ikke lagret: for få gyldige GO-responser (minimum 80% av forsøk, minst 8). Øk antall forsøk for stabile resultater."
-    : "Baseline session not saved: too few valid GO responses (minimum 80% of trials, at least 8). Increase trials for stable results.";
+  if (currentLang === "no") {
+    return "Baseline-økt ikke lagret: for få gyldige GO-responser (minimum 80% av forsøk, minst 8). Øk antall forsøk for stabile resultater.";
+  }
+  if (currentLang === "lt") {
+    return "Bazinio lygio sesija neišsaugota: per mažai galiojančių GO atsakų (mažiausiai 80% bandymų, bent 8). Padidinkite bandymų skaičių, kad gautumėte stabilūs rezultatai.";
+  }
+  return "Baseline session not saved: too few valid GO responses (minimum 80% of trials, at least 8). Increase trials for stable results.";
 }
 
 function getNotEnoughBaseline() {
-  return currentLang === "no"
-    ? "Ikke nok baseline-økter. Vennligst registrer minst 3 baseline-økter."
-    : "Not enough baseline sessions. Please record at least 3 baseline sessions.";
+  if (currentLang === "no") {
+    return "Ikke nok baseline-økter. Vennligst registrer minst 3 baseline-økter.";
+  }
+  if (currentLang === "lt") {
+    return "Nepakanka bazinio lygio sesijų. Prašome užregistruoti bent 3 bazinio lygio sesijas.";
+  }
+  return "Not enough baseline sessions. Please record at least 3 baseline sessions.";
 }
 
 function getBaselineSavedReaction(mean, sd, falseStarts, qualityNote, quality, deviceWarning) {
   const falseStartsText = falseStarts 
-    ? (currentLang === "no" ? ` | Feilstarter: ${falseStarts}` : ` | False starts: ${falseStarts}`)
+    ? (currentLang === "no" ? ` | Feilstarter: ${falseStarts}` : currentLang === "lt" ? ` | Klaidingi startai: ${falseStarts}` : ` | False starts: ${falseStarts}`)
     : "";
-  const qualityText = quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${quality}`)}` : ` | Quality: ${t(`quality.${quality}`)}`) : "";
+  const qualityText = quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${quality}`)}` : ` | Quality: ${t(`quality.${quality}`)}`) : "";
   const warningText = deviceWarning || "";
   if (currentLang === "no") {
     return `Baseline-økt lagret. Gjennomsnitt: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms${falseStartsText}${qualityText}${qualityNote}${warningText}`;
+  }
+  if (currentLang === "lt") {
+    return `Bazinio lygio sesija išsaugota. Vidurkis: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms${falseStartsText}${qualityText}${qualityNote}${warningText}`;
   }
   return `Baseline session saved. Mean: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms${falseStartsText}${qualityText}${qualityNote}${warningText}`;
 }
 
 function getBaselineSavedGoNoGo(mean, sd, misses, falseAlarms, falseStarts, qualityNote, quality, deviceWarning) {
   const falseStartsText = falseStarts
-    ? (currentLang === "no" ? ` | Feilstarter: ${falseStarts}` : ` | False starts: ${falseStarts}`)
+    ? (currentLang === "no" ? ` | Feilstarter: ${falseStarts}` : currentLang === "lt" ? ` | Klaidingi startai: ${falseStarts}` : ` | False starts: ${falseStarts}`)
     : "";
-  const qualityText = quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${quality}`)}` : ` | Quality: ${t(`quality.${quality}`)}`) : "";
+  const qualityText = quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${quality}`)}` : ` | Quality: ${t(`quality.${quality}`)}`) : "";
   const warningText = deviceWarning || "";
   if (currentLang === "no") {
     return `Baseline-økt lagret. GO-gjennomsnitt: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms | Bom: ${misses} | Inhibisjonsfeil: ${falseAlarms}${falseStartsText}${qualityText}${qualityNote}${warningText}`;
+  }
+  if (currentLang === "lt") {
+    return `Bazinio lygio sesija išsaugota. GO vidurkis: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms | Praleistai: ${misses} | Slopinimo klaidos: ${falseAlarms}${falseStartsText}${qualityText}${qualityNote}${warningText}`;
   }
   return `Baseline session saved. GO mean: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms | Misses: ${misses} | Inhibitory errors: ${falseAlarms}${falseStartsText}${qualityText}${qualityNote}${warningText}`;
 }
 
 function getBaselineSavedDivided(mean, sd, misses, falseAlarms, falseStarts, flashTargetCount, flashAbsError, qualityNote, quality, deviceWarning) {
   const falseStartsText = falseStarts
-    ? (currentLang === "no" ? ` | Feilstarter: ${falseStarts}` : ` | False starts: ${falseStarts}`)
+    ? (currentLang === "no" ? ` | Feilstarter: ${falseStarts}` : currentLang === "lt" ? ` | Klaidingi startai: ${falseStarts}` : ` | False starts: ${falseStarts}`)
     : "";
   const flashText = flashTargetCount > 0
     ? (currentLang === "no" 
         ? ` | Flash-feil snitt: ${flashAbsError.toFixed(1)} (målt: ${flashTargetCount})`
-        : ` | Flash error avg: ${flashAbsError.toFixed(1)} (target: ${flashTargetCount})`)
+        : currentLang === "lt"
+          ? ` | Blyksnių klaida vid.: ${flashAbsError.toFixed(1)} (tikslas: ${flashTargetCount})`
+          : ` | Flash error avg: ${flashAbsError.toFixed(1)} (target: ${flashTargetCount})`)
     : "";
-  const qualityText = quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${quality}`)}` : ` | Quality: ${t(`quality.${quality}`)}`) : "";
+  const qualityText = quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${quality}`)}` : ` | Quality: ${t(`quality.${quality}`)}`) : "";
   const warningText = deviceWarning || "";
   if (currentLang === "no") {
     return `Baseline-økt lagret. GO-gjennomsnitt: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms | Bom: ${misses} | Inhibisjonsfeil: ${falseAlarms}${flashText}${falseStartsText}${qualityText}${qualityNote}${warningText}`;
+  }
+  if (currentLang === "lt") {
+    return `Bazinio lygio sesija išsaugota. GO vidurkis: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms | Praleistai: ${misses} | Slopinimo klaidos: ${falseAlarms}${flashText}${falseStartsText}${qualityText}${qualityNote}${warningText}`;
   }
   return `Baseline session saved. GO mean: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms | Misses: ${misses} | Inhibitory errors: ${falseAlarms}${flashText}${falseStartsText}${qualityText}${qualityNote}${warningText}`;
 }
 
 function getCheckReaction(mean, baselineMean, baselineSD, status, falseStarts, qualityNote, quality, deviceWarning) {
   const falseStartsText = falseStarts
-    ? (currentLang === "no" ? ` | Feilstarter: ${falseStarts}` : ` | False starts: ${falseStarts}`)
+    ? (currentLang === "no" ? ` | Feilstarter: ${falseStarts}` : currentLang === "lt" ? ` | Klaidingi startai: ${falseStarts}` : ` | False starts: ${falseStarts}`)
     : "";
-  const qualityText = quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${quality}`)}` : ` | Quality: ${t(`quality.${quality}`)}`) : "";
+  const qualityText = quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${quality}`)}` : ` | Quality: ${t(`quality.${quality}`)}`) : "";
   const warningText = deviceWarning || "";
   if (currentLang === "no") {
     return `Dagens gjennomsnitt: ${mean.toFixed(0)} ms | Baseline-gjennomsnitt: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status}${falseStartsText}${qualityText}${qualityNote}${warningText}`;
+  }
+  if (currentLang === "lt") {
+    return `Šiandienos vidurkis: ${mean.toFixed(0)} ms | Bazinio lygio vidurkis: ${baselineMean.toFixed(0)} ms | Bazinio lygio SD: ${baselineSD.toFixed(0)} ms | Būsena: ${status}${falseStartsText}${qualityText}${qualityNote}${warningText}`;
   }
   return `Today mean: ${mean.toFixed(0)} ms | Baseline mean: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status}${falseStartsText}${qualityText}${qualityNote}${warningText}`;
 }
 
 function getCheckGoNoGo(mean, baselineMean, baselineSD, status, misses, baselineMissAvg, falseAlarms, baselineFAAvg, falseStarts, qualityNote, quality, deviceWarning) {
   const falseStartsText = falseStarts
-    ? (currentLang === "no" ? ` | Feilstarter: ${falseStarts}` : ` | False starts: ${falseStarts}`)
+    ? (currentLang === "no" ? ` | Feilstarter: ${falseStarts}` : currentLang === "lt" ? ` | Klaidingi startai: ${falseStarts}` : ` | False starts: ${falseStarts}`)
     : "";
-  const qualityText = quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${quality}`)}` : ` | Quality: ${t(`quality.${quality}`)}`) : "";
+  const qualityText = quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${quality}`)}` : ` | Quality: ${t(`quality.${quality}`)}`) : "";
   const warningText = deviceWarning || "";
   if (currentLang === "no") {
     return `Dagens GO-gjennomsnitt: ${mean.toFixed(0)} ms | Baseline-gjennomsnitt: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status} | Bom: ${misses} (baseline snitt ${baselineMissAvg.toFixed(1)}) | Inhibisjonsfeil: ${falseAlarms} (baseline snitt ${baselineFAAvg.toFixed(1)})${falseStartsText}${qualityText}${qualityNote}${warningText}`;
+  }
+  if (currentLang === "lt") {
+    return `Šiandienos GO vidurkis: ${mean.toFixed(0)} ms | Bazinio lygio vidurkis: ${baselineMean.toFixed(0)} ms | Bazinio lygio SD: ${baselineSD.toFixed(0)} ms | Būsena: ${status} | Praleistai: ${misses} (bazinio lygio vid. ${baselineMissAvg.toFixed(1)}) | Slopinimo klaidos: ${falseAlarms} (bazinio lygio vid. ${baselineFAAvg.toFixed(1)})${falseStartsText}${qualityText}${qualityNote}${warningText}`;
   }
   return `Today GO mean: ${mean.toFixed(0)} ms | Baseline mean: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status} | Misses: ${misses} (baseline avg ${baselineMissAvg.toFixed(1)}) | Inhibitory errors: ${falseAlarms} (baseline avg ${baselineFAAvg.toFixed(1)})${falseStartsText}${qualityText}${qualityNote}${warningText}`;
 }
@@ -449,12 +608,15 @@ function getDividedAttentionStatus(sessionPayload, baselineSessions) {
 
 function getCheckDividedAttention(mean, baselineMean, baselineSD, status, falseAlarmsRate, baselineFARate, flashAbsError, baselineFlashError, falseStarts, qualityNote, quality, deviceWarning) {
   const falseStartsText = falseStarts > 0
-    ? (currentLang === "no" ? ` | Feilstarter: ${falseStarts}` : ` | False starts: ${falseStarts}`)
+    ? (currentLang === "no" ? ` | Feilstarter: ${falseStarts}` : currentLang === "lt" ? ` | Klaidingi startai: ${falseStarts}` : ` | False starts: ${falseStarts}`)
     : "";
-  const qualityText = quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${quality}`)}` : ` | Quality: ${t(`quality.${quality}`)}`) : "";
+  const qualityText = quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${quality}`)}` : ` | Quality: ${t(`quality.${quality}`)}`) : "";
   const warningText = deviceWarning || "";
   if (currentLang === "no") {
     return `Dagens GO-gjennomsnitt: ${mean.toFixed(0)} ms | Baseline-gjennomsnitt: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status} | Inhibisjonsfeil-rate: ${(falseAlarmsRate * 100).toFixed(1)}% (baseline ${(baselineFARate * 100).toFixed(1)}%) | Flash-feil: ${flashAbsError} (baseline snitt ${baselineFlashError.toFixed(1)})${falseStartsText}${qualityText}${qualityNote}${warningText}`;
+  }
+  if (currentLang === "lt") {
+    return `Šiandienos GO vidurkis: ${mean.toFixed(0)} ms | Bazinio lygio vidurkis: ${baselineMean.toFixed(0)} ms | Bazinio lygio SD: ${baselineSD.toFixed(0)} ms | Būsena: ${status} | Slopinimo klaidų dažnis: ${(falseAlarmsRate * 100).toFixed(1)}% (bazinis lygis ${(baselineFARate * 100).toFixed(1)}%) | Blyksnių klaida: ${flashAbsError} (bazinio lygio vid. ${baselineFlashError.toFixed(1)})${falseStartsText}${qualityText}${qualityNote}${warningText}`;
   }
   return `Today GO mean: ${mean.toFixed(0)} ms | Baseline mean: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status} | False alarm rate: ${(falseAlarmsRate * 100).toFixed(1)}% (baseline ${(baselineFARate * 100).toFixed(1)}%) | Flash error: ${flashAbsError} (baseline avg ${baselineFlashError.toFixed(1)})${falseStartsText}${qualityText}${qualityNote}${warningText}`;
 }
@@ -481,9 +643,13 @@ function getFlashInfoString(target, user, error) {
   const usr = user || 0;
   const err = error || 0;
   
-  return currentLang === "no"
-    ? ` | Flashes: mål ${tgt}, svar ${usr}, feil ${err}`
-    : ` | Flashes: target ${tgt}, answer ${usr}, error ${err}`;
+  if (currentLang === "no") {
+    return ` | Flashes: mål ${tgt}, svar ${usr}, feil ${err}`;
+  }
+  if (currentLang === "lt") {
+    return ` | Blyksniai: tikslas ${tgt}, atsakas ${usr}, klaida ${err}`;
+  }
+  return ` | Flashes: target ${tgt}, answer ${usr}, error ${err}`;
 }
 
 // Helper function to set summary text and store data for language switching
@@ -497,10 +663,16 @@ function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
   switch (type) {
     case "training_divided":
       const flashInfo = getFlashInfoString(dataObj.flashTargetCount, dataObj.flashUserCount, dataObj.flashAbsError);
-      const qualityTextTraining = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
-      summary.textContent = (currentLang === "no"
-        ? `Økt fullført. GO-gjennomsnitt: ${dataObj.mean.toFixed(0)} ms | SD: ${dataObj.sd.toFixed(0)} ms`
-        : `Session complete. GO mean: ${dataObj.mean.toFixed(0)} ms | SD: ${dataObj.sd.toFixed(0)} ms`) + flashInfo + qualityTextTraining;
+      const qualityTextTraining = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
+      let trainingText = "";
+      if (currentLang === "no") {
+        trainingText = `Økt fullført. GO-gjennomsnitt: ${dataObj.mean.toFixed(0)} ms | SD: ${dataObj.sd.toFixed(0)} ms`;
+      } else if (currentLang === "lt") {
+        trainingText = `Sesija baigta. GO vidurkis: ${dataObj.mean.toFixed(0)} ms | SD: ${dataObj.sd.toFixed(0)} ms`;
+      } else {
+        trainingText = `Session complete. GO mean: ${dataObj.mean.toFixed(0)} ms | SD: ${dataObj.sd.toFixed(0)} ms`;
+      }
+      summary.textContent = trainingText + flashInfo + qualityTextTraining;
       break;
       
     case "baseline_saved_reaction":
@@ -529,48 +701,62 @@ function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
       
     case "invalid_no_reaction":
       const refusalMsg1 = dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : getSessionInvalidNoReaction();
-      const qualityText1 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
+      const qualityText1 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
       summary.textContent = refusalMsg1 + qualityText1;
       break;
       
     case "invalid_no_go":
       const refusalMsg2 = dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : getSessionInvalidNoGo();
-      const qualityText2 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
+      const qualityText2 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
       summary.textContent = refusalMsg2 + qualityText2;
       break;
       
     case "not_enough_baseline":
       const refusalMsg3 = dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : getNotEnoughBaseline();
-      const qualityText3 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
+      const qualityText3 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
       summary.textContent = refusalMsg3 + qualityText3;
       break;
       
     case "baseline_not_saved":
       const refusalMsg4 = dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : getBaselineNotSaved();
-      const qualityText4 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
+      const qualityText4 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
       summary.textContent = refusalMsg4 + qualityText4;
       break;
       
     case "baseline_not_saved_divided":
       const flashInfo2 = getFlashInfoString(dataObj.flashTarget, dataObj.flashUser, dataObj.flashError);
       const refusalMsg5 = dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : getBaselineNotSavedDivided();
-      const qualityText5 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
+      const qualityText5 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
       summary.textContent = refusalMsg5 + flashInfo2 + qualityText5;
       break;
       
     case "invalid_missing_answer":
-      const refusalMsg6 = dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : (currentLang === "no"
-        ? "Kan ikke sammenlignes: mangler svar"
-        : "Session not usable for comparison: missing answer");
-      const qualityText6 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
+      let refusalMsg6 = "";
+      if (dataObj.refusalCode) {
+        refusalMsg6 = t(`refusal.${dataObj.refusalCode}`);
+      } else if (currentLang === "no") {
+        refusalMsg6 = "Kan ikke sammenlignes: mangler svar";
+      } else if (currentLang === "lt") {
+        refusalMsg6 = "Sesija netinkama palyginimui: trūksta atsako";
+      } else {
+        refusalMsg6 = "Session not usable for comparison: missing answer";
+      }
+      const qualityText6 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
       summary.textContent = refusalMsg6 + qualityText6;
       break;
       
     case "invalid_no_go_responses_divided":
-      const refusalMsg7 = dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : (currentLang === "no"
-        ? "Økt ugyldig: ingen GO-responser."
-        : "Session invalid: no GO responses.");
-      const qualityText7 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
+      let refusalMsg7 = "";
+      if (dataObj.refusalCode) {
+        refusalMsg7 = t(`refusal.${dataObj.refusalCode}`);
+      } else if (currentLang === "no") {
+        refusalMsg7 = "Økt ugyldig: ingen GO-responser.";
+      } else if (currentLang === "lt") {
+        refusalMsg7 = "Sesija netinkama: nėra GO atsakų.";
+      } else {
+        refusalMsg7 = "Session invalid: no GO responses.";
+      }
+      const qualityText7 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
       summary.textContent = refusalMsg7 + qualityText7;
       break;
       
@@ -593,6 +779,7 @@ function applyLangUI() {
   // 1) Toggle docs language blocks
   document.querySelectorAll(".lang-en").forEach(el => el.classList.toggle("hidden", currentLang !== "en"));
   document.querySelectorAll(".lang-no").forEach(el => el.classList.toggle("hidden", currentLang !== "no"));
+  document.querySelectorAll(".lang-lt").forEach(el => el.classList.toggle("hidden", currentLang !== "lt"));
 
   // 2) Update any elements that opt-in via data-i18n (C-lite)
   document.querySelectorAll("[data-i18n]").forEach(el => {
@@ -600,9 +787,17 @@ function applyLangUI() {
     el.textContent = t(key);
   });
 
-  // 3) Toggle active state on buttons
+  // 3) Toggle active state on buttons and add LT option if needed
   const langSelect = document.getElementById("langSelect");
   if (langSelect) {
+    // Dynamically add LT option if it doesn't exist (for index.html)
+    const hasLtOption = Array.from(langSelect.options).some(opt => opt.value === "lt");
+    if (!hasLtOption) {
+      const ltOption = document.createElement("option");
+      ltOption.value = "lt";
+      ltOption.textContent = "LT";
+      langSelect.appendChild(ltOption);
+    }
     langSelect.value = currentLang;
   }
 
@@ -768,6 +963,7 @@ function updateHistoryMenuState() {
   if (historyBtn) {
     const langEn = historyBtn.querySelector(".lang-en");
     const langNo = historyBtn.querySelector(".lang-no");
+    const langLt = historyBtn.querySelector(".lang-lt");
     
     if (hasHistoryData) {
       historyBtn.classList.remove("is-disabled");
@@ -776,6 +972,7 @@ function updateHistoryMenuState() {
       // Update text using language spans with respective translations
       if (langEn) langEn.textContent = I18N.en.ui.history;
       if (langNo) langNo.textContent = I18N.no.ui.history;
+      if (langLt) langLt.textContent = I18N.lt.ui.history;
     } else {
       historyBtn.classList.add("is-disabled");
       historyBtn.setAttribute("tabindex", "-1");
@@ -784,6 +981,7 @@ function updateHistoryMenuState() {
       // Update text using language spans with respective translations
       if (langEn) langEn.textContent = I18N.en.ui.historyDisabled;
       if (langNo) langNo.textContent = I18N.no.ui.historyDisabled;
+      if (langLt) langLt.textContent = I18N.lt.ui.historyDisabled;
     }
   }
   
@@ -1115,14 +1313,25 @@ function updateDividedLegend() {
     legendNo.textContent = I18N.no.stimulus.divided.legend;
     legend.appendChild(legendNo);
     
+    const legendLt = document.createElement("span");
+    legendLt.className = "lang lang-lt";
+    legendLt.textContent = I18N.lt.stimulus.divided.legend;
+    legend.appendChild(legendLt);
+    
     instructionEl.appendChild(legend);
     // Update visibility based on current language (applyLangUI will also handle this, but set initial state correctly)
     if (currentLang === "no") {
       legendEn.classList.add("hidden");
       legendNo.classList.remove("hidden");
+      legendLt.classList.add("hidden");
+    } else if (currentLang === "lt") {
+      legendEn.classList.add("hidden");
+      legendNo.classList.add("hidden");
+      legendLt.classList.remove("hidden");
     } else {
       legendEn.classList.remove("hidden");
       legendNo.classList.add("hidden");
+      legendLt.classList.add("hidden");
     }
   }
 }
@@ -1143,7 +1352,15 @@ if (clearHistoryBtn) {
     const tt = (historyTest && historyTest.value) ? historyTest.value : testType.value;
     const sessions = loadHistory(tt);
     if (!sessions.length) return;
-    const ok = confirm(currentLang === "no" ? "Slett all historikk for denne testen?" : "Clear all history for this test?");
+    let confirmMsg = "";
+    if (currentLang === "no") {
+      confirmMsg = "Slett all historikk for denne testen?";
+    } else if (currentLang === "lt") {
+      confirmMsg = "Išvalyti visą šio testo istoriją?";
+    } else {
+      confirmMsg = "Clear all history for this test?";
+    }
+    const ok = confirm(confirmMsg);
     if (!ok) return;
     saveHistory(tt, []);
     renderHistory();
@@ -1234,7 +1451,15 @@ clearBaselineBtn.addEventListener("click", () => {
     const sessions = loadBaseline();
     if (sessions.length === 0) return;
   
-    const ok = confirm("Clear all baseline sessions? This cannot be undone.");
+    let confirmMsg = "";
+    if (currentLang === "no") {
+      confirmMsg = "Slett alle baseline-økter? Dette kan ikke angres.";
+    } else if (currentLang === "lt") {
+      confirmMsg = "Išvalyti visas bazinio lygio sesijas? To negalima atšaukti.";
+    } else {
+      confirmMsg = "Clear all baseline sessions? This cannot be undone.";
+    }
+    const ok = confirm(confirmMsg);
     if (!ok) return;
   
     saveBaseline([]);
@@ -1499,9 +1724,13 @@ clearBaselineBtn.addEventListener("click", () => {
     questionDiv.className = "divided-question";
     
     const prompt = document.createElement("p");
-    prompt.textContent = currentLang === "no" 
-      ? "Hvor mange blå blink så du?" 
-      : "How many blue flashes did you see?";
+    if (currentLang === "no") {
+      prompt.textContent = "Hvor mange blå blink så du?";
+    } else if (currentLang === "lt") {
+      prompt.textContent = "Kiek mėlynų blyksnių matei?";
+    } else {
+      prompt.textContent = "How many blue flashes did you see?";
+    }
     prompt.style.marginBottom = "12px";
     prompt.style.textAlign = "center";
     questionDiv.appendChild(prompt);
@@ -1531,13 +1760,27 @@ clearBaselineBtn.addEventListener("click", () => {
     selectContainer.appendChild(select);
     
     const confirmBtn = document.createElement("button");
-    confirmBtn.textContent = currentLang === "no" ? "Bekreft" : "Confirm";
+    if (currentLang === "no") {
+      confirmBtn.textContent = "Bekreft";
+    } else if (currentLang === "lt") {
+      confirmBtn.textContent = "Patvirtinti";
+    } else {
+      confirmBtn.textContent = "Confirm";
+    }
     confirmBtn.className = "primary";
     confirmBtn.addEventListener("click", (e) => {
       e.stopPropagation(); // Prevent triggering testArea click handler
       const answer = parseInt(select.value, 10);
       if (isNaN(answer)) {
-        alert(currentLang === "no" ? "Velg et tall før du fortsetter." : "Please select a number before continuing.");
+        let alertMsg = "";
+        if (currentLang === "no") {
+          alertMsg = "Velg et tall før du fortsetter.";
+        } else if (currentLang === "lt") {
+          alertMsg = "Pasirinkite skaičių prieš tęsdami.";
+        } else {
+          alertMsg = "Please select a number before continuing.";
+        }
+        alert(alertMsg);
         return;
       }
       dividedFlashAnswer = answer;

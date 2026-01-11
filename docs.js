@@ -35,8 +35,10 @@
     status._t = setTimeout(() => { status.textContent = ""; }, 1800);
   }
 
-  function isNorwegian(btn) {
-    return !!btn.closest(".lang-no");
+  function detectLangFromContext(el) {
+    if (el.closest(".lang-lt")) return "lt";
+    if (el.closest(".lang-no")) return "no";
+    return "en";
   }
 
   function setTempCopiedState(btn, lang) {
@@ -48,7 +50,11 @@
 
     btn.classList.add("is-copied");
     if (icon) icon.textContent = "✅";
-    if (label) label.textContent = (lang === "no") ? "Kopiert" : "Copied";
+    if (label) {
+      if (lang === "no") label.textContent = "Kopiert";
+      else if (lang === "lt") label.textContent = "Kopijuota";
+      else label.textContent = "Copied";
+    }
 
     clearTimeout(btn._copyT);
     btn._copyT = setTimeout(() => {
@@ -69,14 +75,18 @@
 
     btn.addEventListener("click", async () => {
       const target = btn.getAttribute("data-copy-target");
-      const lang = isNorwegian(btn) ? "no" : "en";
+      const lang = detectLangFromContext(btn);
 
       const ok = await copyTextFromSelector(target);
       if (ok) {
         setTempCopiedState(btn, lang);
-        setCopyStatus(lang, lang === "no" ? "Kopiert." : "Copied.");
+        if (lang === "no") setCopyStatus(lang, "Kopiert.");
+        else if (lang === "lt") setCopyStatus(lang, "Kopijuota.");
+        else setCopyStatus(lang, "Copied.");
       } else {
-        setCopyStatus(lang, lang === "no" ? "Kunne ikke kopiere." : "Could not copy.");
+        if (lang === "no") setCopyStatus(lang, "Kunne ikke kopiere.");
+        else if (lang === "lt") setCopyStatus(lang, "Nepavyko nukopijuoti.");
+        else setCopyStatus(lang, "Could not copy.");
       }
     });
   });

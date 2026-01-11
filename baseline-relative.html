@@ -43,41 +43,49 @@
     <a class="menu-item" href="index.html?home=1">
       <span class="lang lang-en">Home</span>
       <span class="lang lang-no hidden">Hjem</span>
+      <span class="lang lang-lt hidden">Pradžia</span>
     </a>
 
     <a class="menu-item" href="index.html?view=history">
       <span class="lang lang-en">History</span>
       <span class="lang lang-no hidden">Historikk</span>
+      <span class="lang lang-lt hidden">Istorija</span>
     </a>
 
     <a class="menu-item" href="about.html">
       <span class="lang lang-en">About</span>
       <span class="lang lang-no hidden">Om</span>
+      <span class="lang lang-lt hidden">Apie</span>
     </a>
 
     <a class="menu-item" href="concept.html">
       <span class="lang lang-en">Concept</span>
       <span class="lang lang-no hidden">Konsept</span>
+      <span class="lang lang-lt hidden">Koncepcija</span>
     </a>
 
     <a class="menu-item" href="scope.html">
       <span class="lang lang-en">Scope &amp; Limits</span>
       <span class="lang lang-no hidden">Omfang &amp; begrensninger</span>
+      <span class="lang lang-lt hidden">Apimtis ir ribos</span>
     </a>
 
     <a class="menu-item" href="norwegian-context.html">
       <span class="lang lang-en">Norwegian Context</span>
       <span class="lang lang-no hidden">Norsk kontekst</span>
+      <span class="lang lang-lt hidden">Norvegiškas kontekstas</span>
     </a>
 
     <a class="menu-item" href="how-to-use.html">
       <span class="lang lang-en">How to Use</span>
       <span class="lang lang-no hidden">Hvordan bruke</span>
+      <span class="lang lang-lt hidden">Kaip naudoti</span>
     </a>
 
     <a class="menu-item" href="faq.html">
       <span class="lang lang-en">FAQ</span>
       <span class="lang lang-no hidden">FAQ</span>
+      <span class="lang lang-lt hidden">DUK</span>
     </a>
   </nav>
 
@@ -173,6 +181,88 @@
           <p class="muted">
             This does not explain why performance changes.
             It only describes how change is interpreted within a baseline-relative framework.
+          </p>
+        </section>
+      </div>
+
+      <!-- LT -->
+      <div class="lang lang-lt hidden">
+        <section class="hero">
+          <h2>Kaip veikia palyginimas su asmeniniu baziniu lygiu</h2>
+          <p class="lead">
+            FCE vertina pokytį, lygindama šiandienos vykdymą su asmens baziniu lygiu.
+            Ši schema parodo principą supaprastinta forma.
+          </p>
+        </section>
+
+        <section class="card">
+          <div class="baseline-diagram">
+            <div class="band" aria-hidden="true"></div>
+
+            <div class="points baseline">
+              <span class="dot baseline-dot"></span>
+              <span class="dot baseline-dot"></span>
+              <span class="dot baseline-dot"></span>
+              <span class="dot baseline-dot"></span>
+            </div>
+
+            <div class="points check">
+              <span class="dot single"></span>
+            </div>
+          </div>
+
+          <div class="diagram-micro">
+            <div class="micro-left">
+              <span class="micro-time">Anksčiau</span>
+              <span class="micro-desc">Pakartotiniai bazinio lygio matavimai</span>
+            </div>
+            <div class="micro-mid">
+              <span class="micro-desc">Normalus diapazonas (iš bazės)</span>
+            </div>
+            <div class="micro-right">
+              <span class="micro-time">Vėliau</span>
+              <span class="micro-desc">Vienas vėlesnis matavimas</span>
+            </div>
+          </div>
+
+          <div class="diagram-labels">
+            <div>
+              <strong>Bazinis lygis</strong><br />
+              <span class="muted">Asmens įprastas diapazonas</span>
+            </div>
+            <div>
+              <strong>Normalus diapazonas</strong><br />
+              <span class="muted">Tikėtina variacija</span>
+            </div>
+            <div>
+              <strong>Vėlesnė patikra</strong><br />
+              <span class="muted">Lyginama su baze</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <p>
+            Baziniu lygiu pagrįstoje sistemoje matavimai interpretuojami lyginant su asmens pačios(-io) nustatytu įprastu diapazonu,
+            o ne su populiacijos vidurkiais.
+          </p>
+          <p class="muted">
+            Vienas matavimas nėra lemiamas savaime. Interpretacija turi remtis kontekstu ir istorija.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Variacija ir sugrįžimas link bazės</h3>
+          <p>
+            Trumpalaikė variacija yra normali žmogaus vykdymo dalis.
+            Vienkartiniai matavimai gali svyruoti dėl konteksto, dėmesio, nuovargio ar kitų laikinų veiksnių.
+          </p>
+          <p>
+            Baziniu lygiu pagrįstoje interpretacijoje svarbiau matyti dėsningumus per laiką, o ne pavienius taškus.
+            Kaip vykdymas grįžta link bazės per pakartotines patikras, dažnai yra informatyviau nei vienas nukrypimas.
+          </p>
+          <p class="muted">
+            Tai nepaaiškina, kodėl vykdymas keičiasi. Tai tik aprašo, kaip pokytis interpretuojamas baziniu lygiu pagrįstame rėme.
           </p>
         </section>
       </div>
@@ -273,6 +363,7 @@
           <a href="concept.html" class="docs-nav-btn">
             <span class="lang lang-en">← Concept</span>
             <span class="lang lang-no hidden">← Konsept</span>
+            <span class="lang lang-lt hidden">← Koncepcija</span>
           </a>
         </div>
 
@@ -280,6 +371,7 @@
           <a href="index.html#instrument" class="docs-nav-btn">
             <span class="lang lang-en">Open instrument</span>
             <span class="lang lang-no hidden">Åpne instrument</span>
+            <span class="lang lang-lt hidden">Atidaryti instrumentą</span>
           </a>
         </div>
 
@@ -287,6 +379,7 @@
           <a href="scope.html" class="docs-nav-btn">
             <span class="lang lang-en">Scope &amp; Limits →</span>
             <span class="lang lang-no hidden">Omfang &amp; begrensninger →</span>
+            <span class="lang lang-lt hidden">Apimtis ir ribos →</span>
           </a>
         </div>
       </nav>
@@ -338,19 +431,40 @@
         });
       });
 
-      const LANG_KEY = "fce_lang_v1";
+      const LANG_KEY = "fce_lang";
+      const hasLtContent = !!document.querySelector(".lang-lt");
+      
+      // Check for legacy key first, then use fce_lang
       let currentLang = localStorage.getItem(LANG_KEY);
       if (!currentLang) {
-        const oldLang = localStorage.getItem("fce_lang");
+        const oldLang = localStorage.getItem("fce_lang_v1");
         if (oldLang) {
           currentLang = oldLang;
-          localStorage.setItem(LANG_KEY, currentLang);
+          try { localStorage.setItem(LANG_KEY, currentLang); } catch {}
         } else {
           currentLang = "en";
         }
       }
 
+      // Fallback: if LT is selected but page has no LT content, use EN
+      if (currentLang === "lt" && !hasLtContent) {
+        currentLang = "en";
+        try { localStorage.setItem(LANG_KEY, currentLang); } catch {}
+      }
+
       const langSelect = document.getElementById("langSelect");
+      
+      // Dynamically add LT option if LT content exists
+      if (langSelect && hasLtContent) {
+        const hasLtOption = Array.from(langSelect.options).some(opt => opt.value === "lt");
+        if (!hasLtOption) {
+          const ltOption = document.createElement("option");
+          ltOption.value = "lt";
+          ltOption.textContent = "LT";
+          langSelect.appendChild(ltOption);
+        }
+      }
+      
       if (langSelect) langSelect.value = currentLang;
 
       const I18N_PAGES = {
@@ -371,6 +485,15 @@
           "how-to-use": "Hvordan bruke",
           faq: "FAQ",
           "baseline-relative": "Baseline-relativ"
+        },
+        lt: {
+          about: "Apie",
+          concept: "Koncepcija",
+          scope: "Apimtis ir ribos",
+          "norwegian-context": "Norvegiškas kontekstas",
+          "how-to-use": "Kaip naudoti",
+          faq: "DUK",
+          "baseline-relative": "Palyginimas su baziniu lygiu"
         }
       };
 
@@ -383,15 +506,39 @@
 
       function updateTopbarPage() {
         const topbarPage = document.getElementById("topbarPage");
-        if (topbarPage) topbarPage.textContent = getPageTitle(currentLang);
+        if (topbarPage) {
+          topbarPage.textContent = getPageTitle(currentLang);
+        }
       }
 
       function applyLanguage(lang) {
-        currentLang = lang;
-        try { localStorage.setItem(LANG_KEY, lang); } catch {}
+        // Determine content language (with fallback)
+        let contentLang = lang;
+        if (contentLang === "lt" && !hasLtContent) {
+          contentLang = "en";
+        }
+        
+        // Determine UI language (LT labels now available)
+        const uiLang = contentLang;
+        
+        currentLang = contentLang;
+        try { localStorage.setItem(LANG_KEY, contentLang); } catch {}
 
-        document.querySelectorAll(".lang-en").forEach(el => el.classList.toggle("hidden", lang !== "en"));
-        document.querySelectorAll(".lang-no").forEach(el => el.classList.toggle("hidden", lang !== "no"));
+        // Apply content visibility
+        document.querySelectorAll(".lang-en").forEach(el => el.classList.toggle("hidden", contentLang !== "en"));
+        document.querySelectorAll(".lang-no").forEach(el => el.classList.toggle("hidden", contentLang !== "no"));
+        document.querySelectorAll(".lang-lt").forEach(el => el.classList.toggle("hidden", contentLang !== "lt"));
+
+        // Apply UI label visibility (menu/nav items)
+        document.querySelectorAll(".menu .lang-en, .docs-nav .lang-en").forEach(el => {
+          el.classList.toggle("hidden", uiLang !== "en");
+        });
+        document.querySelectorAll(".menu .lang-no, .docs-nav .lang-no").forEach(el => {
+          el.classList.toggle("hidden", uiLang !== "no");
+        });
+        document.querySelectorAll(".menu .lang-lt, .docs-nav .lang-lt").forEach(el => {
+          el.classList.toggle("hidden", uiLang !== "lt");
+        });
 
         updateTopbarPage();
         setupScrollObserver();

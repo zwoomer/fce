@@ -28,6 +28,7 @@
       <a href="about.html" class="topbar-link topbar-cta" id="learnMoreLink">
         <span class="lang lang-en">Learn more</span>
         <span class="lang lang-no hidden">Les mer</span>
+        <span class="lang lang-lt hidden">Sužinoti daugiau</span>
       </a>
       <div class="lang-select-wrapper">
         <select id="langSelect" class="lang-select" aria-label="Language">
@@ -45,39 +46,47 @@
     <button class="menu-item" data-view="home">
       <span class="lang lang-en">Home</span>
       <span class="lang lang-no hidden">Hjem</span>
+      <span class="lang lang-lt hidden">Pradžia</span>
     </button>
     <button class="menu-item" id="menuHistoryBtn" data-view="history">
       <span class="lang lang-en">History</span>
       <span class="lang lang-no hidden">Historikk</span>
+      <span class="lang lang-lt hidden">Istorija</span>
     </button>
     <a href="about.html" class="menu-item">
       <span class="lang lang-en">About</span>
       <span class="lang lang-no hidden">Om</span>
+      <span class="lang lang-lt hidden">Apie</span>
     </a>
 
     <a href="concept.html" class="menu-item">
       <span class="lang lang-en">Concept</span>
       <span class="lang lang-no hidden">Konsept</span>
+      <span class="lang lang-lt hidden">Koncepcija</span>
     </a>
 
     <a href="scope.html" class="menu-item">
       <span class="lang lang-en">Scope &amp; Limits</span>
       <span class="lang lang-no hidden">Omfang &amp; begrensninger</span>
+      <span class="lang lang-lt hidden">Apimtis ir ribos</span>
     </a>
 
     <a href="norwegian-context.html" class="menu-item">
       <span class="lang lang-en">Norwegian Context</span>
       <span class="lang lang-no hidden">Norsk kontekst</span>
+      <span class="lang lang-lt hidden">Norvegiškas kontekstas</span>
     </a>
 
     <a href="how-to-use.html" class="menu-item">
       <span class="lang lang-en">How to Use</span>
       <span class="lang lang-no hidden">Hvordan bruke</span>
+      <span class="lang lang-lt hidden">Kaip naudoti</span>
     </a>
 
     <a href="faq.html" class="menu-item">
       <span class="lang lang-en">FAQ</span>
       <span class="lang lang-no hidden">FAQ</span>
+      <span class="lang lang-lt hidden">DUK</span>
     </a>
   </nav>
 
@@ -89,6 +98,7 @@
         <h1>
           <span class="lang lang-en">Functional Check</span>
           <span class="lang lang-no hidden">Funksjonssjekk</span>
+          <span class="lang lang-lt hidden">Funkcinė patikra</span>
         </h1>
         <div id="instruction">
           <div class="lang lang-en">
@@ -99,6 +109,13 @@
           <div class="lang lang-no hidden">
             <p>
               Bygg en personlig baseline (typisk 3–5 økter). Deretter kjører du en Funksjonssjekk for å sammenligne dagens ytelse med din baseline. Trening kjører samme oppgaver uten sammenligning. Tidlige inndata teller som feilstart.
+            </p>
+          </div>
+          <div class="lang lang-lt hidden">
+            <p>
+              Sukurkite asmeninį bazinį lygį (dažniausiai 3–5 sesijos). Tada atlikite funkcinę patikrą,
+              kad palygintumėte šiandienos vykdymą su savo baze. Treniruotė vykdo tas pačias užduotis
+              be palyginimo. Per ankstyvi paspaudimai laikomi klaidingu startu.
             </p>
           </div>
         </div>
@@ -128,11 +145,13 @@
             <h2>
               <span class="lang lang-en">Optional context (before starting)</span>
               <span class="lang lang-no hidden">Valgfri kontekst (før start)</span>
+              <span class="lang lang-lt hidden">Pasirenkamas kontekstas (prieš pradedant)</span>
             </h2>
             <div class="config-row">
               <label for="sleepRating">
                 <span class="lang lang-en">Sleep</span>
                 <span class="lang lang-no hidden">Søvn</span>
+                <span class="lang lang-lt hidden">Miegas</span>
               </label>
               <select id="sleepRating">
                 <option value="0">0</option>
@@ -146,6 +165,7 @@
               <label for="stressRating">
                 <span class="lang lang-en">Stress</span>
                 <span class="lang lang-no hidden">Stress</span>
+                <span class="lang lang-lt hidden">Stresas</span>
               </label>
               <select id="stressRating">
                 <option value="0">0</option>
@@ -161,12 +181,14 @@
               <label for="contextNote">
                 <span class="lang lang-en">Note</span>
                 <span class="lang lang-no hidden">Notat</span>
+                <span class="lang lang-lt hidden">Pastaba</span>
               </label>
               <input id="contextNote" class="text" type="text" maxlength="140" placeholder="" />
             </div>
             <p class="note">
               <span class="lang lang-en">Saved with each session. Does not affect scoring.</span>
               <span class="lang lang-no hidden">Lagres med hver økt. Påvirker ikke vurderingen.</span>
+              <span class="lang lang-lt hidden">Išsaugoma su kiekviena sesija. Neturi įtakos vertinimui.</span>
             </p>
           </div>
 
@@ -182,6 +204,7 @@
           <h2>
             <span class="lang lang-en">Session</span>
             <span class="lang lang-no hidden">Økt</span>
+            <span class="lang lang-lt hidden">Sesija</span>
           </h2>
           <p id="progress"></p>
           <ul id="trialList"></ul>
@@ -193,18 +216,22 @@
           <h2>
             <span class="lang lang-en">Baseline</span>
             <span class="lang lang-no hidden">Baseline</span>
+            <span class="lang lang-lt hidden">Bazinis lygis</span>
           </h2>
           <p id="baselineInfo">
             <span class="lang lang-en">No baseline sessions recorded.</span>
             <span class="lang lang-no hidden">Ingen baseline-økter er registrert.</span>
+            <span class="lang lang-lt hidden">Nėra užregistruotų bazinio lygio sesijų.</span>
           </p>
           <p id="baselineProgress">
             <span class="lang lang-en"></span>
             <span class="lang lang-no hidden"></span>
+            <span class="lang lang-lt hidden"></span>
           </p>
           <p id="baselineGuidance">
             <span class="lang lang-en"></span>
             <span class="lang lang-no hidden"></span>
+            <span class="lang lang-lt hidden"></span>
           </p>
           <p class="note">
             <span class="lang lang-en">
@@ -212,6 +239,9 @@
             </span>
             <span class="lang lang-no hidden">
               Baseline gjelder kun for denne enheten og samme inndatametode.
+            </span>
+            <span class="lang lang-lt hidden">
+              Bazinis lygis galioja tik šiam įrenginiui ir tam pačiam įvesties būdui.
             </span>
           </p>
 
@@ -227,11 +257,13 @@
           <h2>
             <span class="lang lang-en">History</span>
             <span class="lang lang-no hidden">Historikk</span>
+            <span class="lang lang-lt hidden">Istorija</span>
           </h2>
 
           <p class="muted home-history-note" id="homeHistoryNote">
             <span class="lang lang-en">Recent sessions (this test)</span>
             <span class="lang lang-no hidden">Siste økter (denne testen)</span>
+            <span class="lang lang-lt hidden">Naujausios sesijos (šis testas)</span>
           </p>
 
           <ul class="home-history-list" id="homeHistoryList"></ul>
@@ -239,12 +271,14 @@
           <p class="muted" id="homeHistoryEmpty" style="display:none;">
             <span class="lang lang-en">No sessions yet for this test.</span>
             <span class="lang lang-no hidden">Ingen økter ennå for denne testen.</span>
+            <span class="lang lang-lt hidden">Šiam testui dar nėra sesijų.</span>
           </p>
 
           <div class="action-row">
             <button id="homeHistoryBtn" data-view="history">
               <span class="lang lang-en">View History</span>
               <span class="lang lang-no hidden">Se historikk</span>
+              <span class="lang lang-lt hidden">Peržiūrėti istoriją</span>
             </button>
           </div>
         </div>
@@ -256,6 +290,7 @@
               <input type="checkbox" id="resumeLastPage" />
               <span class="lang lang-en">Resume last page</span>
               <span class="lang lang-no hidden">Gjenoppta siste side</span>
+              <span class="lang lang-lt hidden">Tęsti nuo paskutinio puslapio</span>
             </label>
           </div>
         </footer>
@@ -276,12 +311,19 @@
             <p class="lead">Økter lagres lokalt på denne enheten. Bruk filter for å se mønster og kontekst.</p>
           </section>
         </div>
+        <div class="lang lang-lt hidden">
+          <section class="hero">
+            <h2>Istorija</h2>
+            <p class="lead">Sesijos saugomos lokaliai šiame įrenginyje. Naudokite filtrus tendencijoms ir kontekstui peržiūrėti.</p>
+          </section>
+        </div>
 
         <section class="card">
           <div class="config-row">
             <label for="historyTest">
               <span class="lang lang-en">Test</span>
               <span class="lang lang-no hidden">Test</span>
+              <span class="lang lang-lt hidden">Testas</span>
             </label>
             <select id="historyTest">
               <option value="reaction">Reaction Time</option>
@@ -292,6 +334,7 @@
             <label for="historyMode">
               <span class="lang lang-en">Mode</span>
               <span class="lang lang-no hidden">Modus</span>
+              <span class="lang lang-lt hidden">Režimas</span>
             </label>
             <select id="historyMode">
               <option value="all">All</option>
@@ -310,6 +353,7 @@
             <button id="clearHistoryBtn" class="danger" type="button">
               <span class="lang lang-en">Clear history (this test)</span>
               <span class="lang lang-no hidden">Slett historikk (denne testen)</span>
+              <span class="lang lang-lt hidden">Išvalyti istoriją (šis testas)</span>
             </button>
           </div>
 
@@ -317,6 +361,7 @@
             <h3>
               <span class="lang lang-en">Trend</span>
               <span class="lang lang-no hidden">Trend</span>
+              <span class="lang lang-lt hidden">Tendencija</span>
             </h3>
 
             <p id="trendBaselineLine" class="muted"></p>

@@ -317,6 +317,120 @@
     color: #eee;
     opacity: 0.95;
   }
+
+  /* Utility header for cards (title left, actions right) */
+  .card-utility {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .card-utility h3 {
+    margin: 0;
+  }
+
+  /* Copy-ready blocks */
+  .copy-block {
+    position: relative;
+  }
+
+  .copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 6px 10px;
+    font-size: 12px;
+    line-height: 1;
+
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.06);
+    color: #eee;
+
+    cursor: pointer;
+    opacity: 0.85;
+
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      opacity 0.2s ease,
+      transform 0.15s ease;
+  }
+
+  .copy-btn:hover {
+    opacity: 1;
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.30);
+    box-shadow: 0 0 0 2px rgba(255,255,255,0.06);
+    transform: translateY(-0.5px);
+  }
+
+  .copy-btn:active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+
+  .copy-btn:focus-visible {
+    outline: 2px solid rgba(255,255,255,0.35);
+    outline-offset: 2px;
+  }
+
+  .copy-icon {
+    font-size: 14px;
+    line-height: 1;
+  }
+
+  /* Tooltip (shown on hover/focus) */
+  .copy-btn[data-tooltip] {
+    position: relative;
+  }
+
+  .copy-btn[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+
+    padding: 6px 8px;
+    font-size: 12px;
+    line-height: 1.1;
+    white-space: nowrap;
+
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.14);
+    background: rgba(0,0,0,0.85);
+    color: rgba(255,255,255,0.92);
+
+    opacity: 0;
+    transform: translateY(-4px);
+    pointer-events: none;
+
+    transition: opacity 0.18s ease, transform 0.18s ease;
+    z-index: 10;
+  }
+
+  .copy-btn:hover::after,
+  .copy-btn:focus-visible::after {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Copied state (micro-polish) */
+  .copy-btn.is-copied {
+    opacity: 1;
+    background: rgba(255,255,255,0.14);
+    border-color: rgba(255,255,255,0.34);
+    box-shadow: 0 0 0 2px rgba(255,255,255,0.08);
+  }
+
+  .copy-status {
+    display: block;
+    margin-top: 6px;
+    font-size: 12px;
+  }
   
   .panel.context-panel {
     background: #181818;

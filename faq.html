@@ -63,13 +63,24 @@
 
   <main class="page">
     <section class="container">
+      <!-- EN -->
       <div class="lang lang-en">
         <section class="hero">
           <h2>FAQ</h2>
+          <p class="lead">
+            Short answers, clear boundaries, and practical definitions.
+          </p>
         </section>
 
         <div style="margin: 24px auto; text-align: center; max-width: 600px; padding: 0 16px;">
-          <a href="index.html#instrument" style="padding: 10px 20px; font-size: 14px; text-decoration: none; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; background: rgba(255,255,255,0.05); color: #eee; transition: all 0.2s ease; display: inline-block;">
+          <a href="index.html#instrument"
+             style="padding: 10px 20px; font-size: 14px; text-decoration: none;
+                    border: 1px solid rgba(255,255,255,0.15);
+                    border-radius: 8px;
+                    background: rgba(255,255,255,0.05);
+                    color: #eee;
+                    transition: all 0.2s ease;
+                    display: inline-block;">
             <span class="lang lang-en">Open instrument</span>
             <span class="lang lang-no hidden">Åpne instrument</span>
           </a>
@@ -78,295 +89,328 @@
         <section class="card">
           <h3>What is FCE?</h3>
           <p>
-            <strong>FCE (Functional Cognition &amp; Execution)</strong> is a web-based tool that measures how you are functioning
-            <em>right now</em> compared to your own normal performance.
+            <strong>FCE (Functional Cognition &amp; Execution)</strong> is a baseline-relative instrument that measures
+            how you are functioning <em>today</em> compared to your own normal performance.
           </p>
-          <p>
-            It focuses on function — reaction speed, control, precision — rather than substances, diagnoses, or population averages.
+          <p class="muted">
+            It measures function (speed, control, consistency) — not diagnoses, substances, or personal worth.
           </p>
         </section>
 
         <section class="card">
           <h3>Is this a medical test?</h3>
+          <p><strong>No.</strong> FCE is not a medical or diagnostic tool.</p>
           <p>
-            No. FCE is <strong>not</strong> a medical or diagnostic tool.
-          </p>
-          <p>
-            It does not diagnose conditions, indicate fitness for specific activities, or replace professional assessment.
-            It is a <em>functional self-check</em> designed for awareness, research, and future policy exploration.
+            It does not diagnose conditions, determine fitness for specific activities, or replace professional assessment.
+            It is a <em>functional self-check</em> designed to support awareness, tracking, and careful pilot exploration.
           </p>
         </section>
 
         <section class="card">
-          <h3>How is this different from reaction time websites?</h3>
+          <h3>What tests are included?</h3>
+          <ul>
+            <li><strong>Reaction Time</strong> — response speed and consistency</li>
+            <li><strong>Go / No-Go</strong> — inhibition and control under time pressure</li>
+            <li><strong>Divided Attention</strong> — Go / No-Go while counting brief visual flashes</li>
+          </ul>
+          <p class="muted">
+            Divided Attention evaluates multiple signals. The overall status follows the <strong>worst deviation</strong>,
+            so one strong signal can't hide another weak signal.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>How is this different from "reaction time" websites?</h3>
           <ul>
             <li>FCE builds a <strong>personal baseline</strong> instead of comparing you to others</li>
             <li>Results are interpreted relative to <em>your own normal</em></li>
-            <li>Multiple cognitive domains are measured separately</li>
+            <li>Multiple execution domains are measured (not one number)</li>
             <li>Sessions are stored locally and shown transparently</li>
           </ul>
-          <p>
-            Many sites show a number. FCE explains what that number means <em>for you</em>.
-          </p>
         </section>
 
         <section class="card">
-          <h3>Why does my reaction time differ between tests?</h3>
-          <p>
-            Different tasks measure different cognitive demands.
-          </p>
+          <h3>What do "Baseline", "Check", and "Training" mean?</h3>
           <ul>
-            <li><strong>Reaction Time</strong> focuses on pure speed</li>
-            <li><strong>Go / No-Go</strong> adds inhibition and decision-making</li>
+            <li><strong>Baseline</strong> — builds your normal range</li>
+            <li><strong>Check</strong> — compares today to your baseline</li>
+            <li><strong>Training</strong> — practice only (never updates baseline)</li>
           </ul>
-          <p>
-            It is normal for Go / No-Go to be slower or more variable — control and speed are not the same thing.
+          <p class="muted">
+            Mode is determined by the action button you choose.
           </p>
         </section>
 
         <section class="card">
-          <h3>Why do results differ between desktop and mobile?</h3>
-          <ul>
-            <li>Touchscreens introduce latency</li>
-            <li>Screen size and posture differ</li>
-            <li>Input method (mouse vs touch) changes precision</li>
-          </ul>
+          <h3>Why do I need multiple baseline sessions?</h3>
           <p>
-            This is why FCE baselines are <strong>device-specific</strong>.
-            Always compare checks on the same device and input method.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Does FCE store my data?</h3>
-          <p>
-            Sessions are stored locally in your browser. No accounts, no server upload. Clearing browser data removes FCE data.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Can results be shared?</h3>
-          <p>
-            History can be exported manually as JSON. Sharing is entirely user-controlled.
+            Your performance naturally varies day to day.
+            A baseline is not one "best" score — it's a stable reference built from multiple sessions.
           </p>
           <p class="muted">
-            Exported data is raw session data, not a report or conclusion.
+            Most people should collect <strong>3–5</strong> baseline sessions under normal conditions.
           </p>
         </section>
 
         <section class="card">
-          <h3>Does FCE decide if someone is fit to drive or work?</h3>
+          <h3>Can I compare results across devices?</h3>
           <p>
-            No. FCE presents functional performance relative to a personal baseline. Interpretation and decisions remain human.
+            Not reliably.
+            Different devices and input methods (mouse vs touch) can change timing and error patterns.
+          </p>
+          <p class="muted">
+            For clean comparisons, build and check on the same device and input method.
           </p>
         </section>
 
         <section class="card">
-          <h3>Why not use population averages?</h3>
+          <h3>What do "Mean" and "SD" mean?</h3>
           <p>
-            Population averages ignore individual variance. FCE compares you to yourself under normal conditions.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Can I cheat the test?</h3>
-          <p>
-            You can try — but it usually shows.
-          </p>
-          <p>
-            Inconsistent reaction times, excessive false starts, or abnormal variance
-            tend to degrade baseline quality and are flagged in session feedback.
-          </p>
-          <p>
-            FCE is designed to reward <em>honest, calm participation</em>, not gaming the system.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>What does "Within normal range" actually mean?</h3>
-          <p>
-            It means your current performance falls within the expected variation
-            of your personal baseline — usually within one standard deviation.
-          </p>
-          <p>
-            It does <strong>not</strong> mean "safe", "fit", or "approved".
-            Context always matters.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Why build a baseline at all?</h3>
-          <p>
-            Humans differ naturally. Speed, control, and precision vary by person.
-          </p>
-          <p>
-            Comparing you to yourself is often fairer, more accurate, and more informative
-            than comparing you to population averages.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>What is FCE ultimately for?</h3>
-          <p>
-            FCE explores a different way of thinking about functional deviation:
+            FCE often summarizes performance using two simple statistics:
           </p>
           <ul>
-            <li>Measure function, not substances</li>
-            <li>Respect individual differences</li>
-            <li>Increase awareness of cognitive state</li>
+            <li>
+              <strong>Mean</strong> — the average value.
+              Example: average reaction time across trials.
+            </li>
+            <li>
+              <strong>SD (Standard Deviation)</strong> — how variable the results are.
+              Low SD = stable/consistent. High SD = more "spread" and less stable performance.
+            </li>
           </ul>
-          <p>
-            It is both a practical tool and a prototype for future systems.
+          <p class="muted">
+            In practice: two sessions can have the same mean but different SD.
+            One can be steady, the other can be uneven.
           </p>
+        </section>
+
+        <section class="card">
+          <h3>What does "Not usable" mean?</h3>
+          <p>
+            Sometimes a session is marked as <em>not usable</em>. This is intentional.
+          </p>
+          <ul>
+            <li>It protects accuracy when data quality is too low</li>
+            <li>It prevents false certainty from incomplete or distorted input</li>
+          </ul>
+          <p class="muted">
+            Refusal is protection, not failure. Retesting is always allowed.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Do context fields change my result?</h3>
+          <p>
+            No. Context fields (sleep, stress, note) are saved as metadata only.
+            They do not affect scoring or comparison.
+          </p>
+          <p class="muted">
+            Measurement first. Interpretation second.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Can FCE tell whether I'm impaired by a specific substance?</h3>
+          <p><strong>No.</strong></p>
+          <p>
+            FCE measures function — not cause.
+            Sleep loss, stress, illness, medication, alcohol, cannabis, distraction: different causes can produce similar functional deviation.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Is FCE meant to be used for legal enforcement?</h3>
+          <p>
+            No. FCE is not a legal verdict engine and should not be used for automatic enforcement decisions.
+          </p>
+          <p class="muted">
+            If FCE is ever explored institutionally, it must remain voluntary, transparent, and contestable.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Where is my data stored?</h3>
+          <p>
+            Locally in your browser on this device. FCE does not require an account and does not upload data by default.
+          </p>
+          <ul>
+            <li>Clearing browser data clears FCE data on that device</li>
+            <li>Export is manual (JSON) if you choose to export</li>
+          </ul>
         </section>
       </div>
 
+      <!-- NO -->
       <div class="lang lang-no hidden">
         <section class="hero">
-          <h2>Ofte stilte spørsmål (FAQ)</h2>
+          <h2>FAQ</h2>
+          <p class="lead">
+            Korte svar, tydelige grenser og enkle definisjoner.
+          </p>
         </section>
 
         <div style="margin: 24px auto; text-align: center; max-width: 600px; padding: 0 16px;">
-          <a href="index.html#instrument" style="padding: 10px 20px; font-size: 14px; text-decoration: none; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; background: rgba(255,255,255,0.05); color: #eee; transition: all 0.2s ease; display: inline-block;">
-            <span class="lang lang-en hidden">Open instrument</span>
-            <span class="lang lang-no">Åpne instrument</span>
+          <a href="index.html#instrument"
+             style="padding: 10px 20px; font-size: 14px; text-decoration: none;
+                    border: 1px solid rgba(255,255,255,0.15);
+                    border-radius: 8px;
+                    background: rgba(255,255,255,0.05);
+                    color: #eee;
+                    transition: all 0.2s ease;
+                    display: inline-block;">
+            <span class="lang lang-en">Open instrument</span>
+            <span class="lang lang-no hidden">Åpne instrument</span>
           </a>
         </div>
 
         <section class="card">
           <h3>Hva er FCE?</h3>
           <p>
-            FCE (Functional Cognition &amp; Execution) er et verktøy som måler
-            <strong>kognitiv og motorisk funksjon</strong> gjennom korte, standardiserte tester.
-            Resultatene vurderes relativt til din <strong>egen baseline</strong>, ikke mot
-            befolkningsgjennomsnitt.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Er FCE en medisinsk test?</h3>
-          <p>
-            Nei. FCE er <strong>ikke-diagnostisk</strong> og erstatter ikke medisinske,
-            psykologiske eller kliniske vurderinger.
-            Det er et funksjonsbasert supplement for innsikt og sammenligning over tid.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Er FCE en rus- eller stofftest?</h3>
-          <p>
-            Nei. FCE måler <strong>ikke</strong> rusnivå, tilstedeværelse av stoffer
-            eller biokjemiske markører.
-            Det fokuserer kun på <strong>faktisk funksjon</strong> i testøyeblikket.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Hva betyr «baseline»?</h3>
-          <p>
-            En baseline er en personlig referanse som bygges opp gjennom flere økter
-            når du er uthvilt og fungerer normalt.
-            Alle senere tester sammenlignes med denne referansen.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Hvor mange baseline-økter trenger jeg?</h3>
-          <p>
-            Vanligvis anbefales <strong>3–5 økter</strong> gjennomført på ulike tidspunkt.
-            Flere økter gir en mer stabil og pålitelig baseline.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Hva betyr «avvik fra baseline»?</h3>
-          <p>
-            Et avvik betyr at resultatet skiller seg fra din normale funksjon.
-            Dette kan skyldes mange faktorer, som:
-          </p>
-          <ul>
-            <li>søvnmangel</li>
-            <li>stress eller mental belastning</li>
-            <li>sykdom eller restitusjon</li>
-            <li>midlertidig tretthet</li>
-          </ul>
-          <p>
-            Avvik indikerer <strong>tilstand</strong>, ikke permanente egenskaper.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Hvordan tolkes resultatene?</h3>
-          <p>
-            FCE bruker relative kategorier som:
-          </p>
-          <ul>
-            <li><strong>Innenfor normalområdet</strong></li>
-            <li><strong>Lett redusert</strong></li>
-            <li><strong>Markant redusert</strong></li>
-          </ul>
-          <p>
-            Disse er ment som veiledende og må alltid tolkes i sammenheng med kontekst.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Lagrer FCE dataene mine?</h3>
-          <p>
-            Økter lagres lokalt i nettleseren din. Ingen kontoer, ingen serveropplasting. Sletting av nettleserdata fjerner FCE-data.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Kan resultater deles?</h3>
-          <p>
-            Historikk kan eksporteres manuelt som JSON. Deling er helt brukerstyrt.
+            <strong>FCE (Functional Cognition &amp; Execution)</strong> er et baseline-relativt instrument som måler
+            hvordan du fungerer <em>i dag</em> sammenlignet med ditt normale nivå.
           </p>
           <p class="muted">
-            Eksporterte data er rå øktdata, ikke en rapport eller konklusjon.
+            Det måler funksjon (hastighet, kontroll, stabilitet) — ikke diagnoser, stoffer eller verdi som menneske.
           </p>
         </section>
 
         <section class="card">
-          <h3>Avgjør FCE om noen er skikket til å kjøre eller arbeide?</h3>
+          <h3>Er dette en medisinsk test?</h3>
+          <p><strong>Nei.</strong> FCE er ikke et medisinsk eller diagnostisk verktøy.</p>
           <p>
-            Nei. FCE presenterer funksjonsytelse relativt til en personlig baseline. Tolkning og beslutninger forblir menneskelige.
+            Det stiller ikke diagnose, avgjør ikke egnethet for spesifikke aktiviteter og erstatter ikke faglig vurdering.
+            Det er en <em>funksjonssjekk</em> for bevissthet, sporing og forsiktig pilotutforskning.
           </p>
         </section>
 
         <section class="card">
-          <h3>Hvorfor ikke bruke befolkningsgjennomsnitt?</h3>
-          <p>
-            Befolkningsgjennomsnitt ignorerer individuell variasjon. FCE sammenligner deg med deg selv under normale forhold.
+          <h3>Hvilke tester finnes?</h3>
+          <ul>
+            <li><strong>Reaksjonstid</strong> — responshastighet og stabilitet</li>
+            <li><strong>Go / No-Go</strong> — kontroll og inhibisjon under tidspress</li>
+            <li><strong>Delt oppmerksomhet</strong> — Go / No-Go mens du teller korte visuelle blink</li>
+          </ul>
+          <p class="muted">
+            Delt oppmerksomhet vurderer flere signaler. Totalstatus følger <strong>største avvik</strong>,
+            slik at ett sterkt signal ikke kan skjule et annet svakt signal.
           </p>
         </section>
 
         <section class="card">
-          <h3>Kan FCE brukes i arbeid eller trafikk?</h3>
-          <p>
-            FCE er utviklet med slike bruksområder i tankene, men
-            <strong>er ikke et beslutningsverktøy alene</strong>.
-            Eventuell bruk i arbeid, trafikk eller rehabilitering må skje som
-            et supplement til faglige vurderinger.
+          <h3>Hvordan skiller dette seg fra "reaksjonstid"-sider?</h3>
+          <ul>
+            <li>FCE bygger en <strong>personlig baseline</strong> i stedet for å sammenligne med andre</li>
+            <li>Resultater tolkes mot <em>ditt eget normale nivå</em></li>
+            <li>Flere domener måles (ikke bare ett tall)</li>
+            <li>Økter lagres lokalt og vises åpent</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h3>Hva betyr "Baseline", "Sjekk" og "Trening"?</h3>
+          <ul>
+            <li><strong>Baseline</strong> — bygger normalområdet ditt</li>
+            <li><strong>Sjekk</strong> — sammenligner i dag med baseline</li>
+            <li><strong>Trening</strong> — kun øving (oppdaterer aldri baseline)</li>
+          </ul>
+          <p class="muted">
+            Modus bestemmes av knappen/handlingen du velger.
           </p>
         </section>
 
         <section class="card">
-          <h3>Er FCE ferdig utviklet?</h3>
+          <h3>Hvorfor trenger jeg flere baseline-økter?</h3>
           <p>
-            Nei. Dette er en <strong>tidlig funksjonell prototype</strong>.
-            Videre utvikling vil kunne inkludere flere tester, bedre visualisering
-            og utvidet kontekstforståelse.
+            Prestasjon varierer naturlig fra dag til dag.
+            Baseline er ikke én "beste" økt — den bygges av flere økter og blir et stabilt referansepunkt.
+          </p>
+          <p class="muted">
+            De fleste bør samle <strong>3–5</strong> baseline-økter under normale forhold.
           </p>
         </section>
 
         <section class="card">
-          <h3>Hvem er FCE ment for?</h3>
+          <h3>Kan jeg sammenligne mellom ulike enheter?</h3>
           <p>
-            FCE er ment for personer og fagmiljøer som ønsker bedre innsikt i
-            <strong>funksjon, regulering og gjennomføringsevne</strong>,
-            uten å redusere dette til diagnoser eller terskelverdier.
+            Ikke pålitelig.
+            Ulike enheter og input (mus vs touch) påvirker timing og feilbilde.
           </p>
+          <p class="muted">
+            For ryddig sammenligning: bygg baseline og kjør sjekk på samme enhet og input.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Hva betyr "Mean" og "SD"?</h3>
+          <p>
+            FCE oppsummerer ofte prestasjon med to enkle mål:
+          </p>
+          <ul>
+            <li>
+              <strong>Mean (gjennomsnitt)</strong> — gjennomsnittsverdien.
+              Eksempel: gjennomsnittlig reaksjonstid.
+            </li>
+            <li>
+              <strong>SD (standardavvik)</strong> — hvor mye resultatene varierer.
+              Lav SD = stabilt/jevnt. Høy SD = mer spredning og mindre stabilitet.
+            </li>
+          </ul>
+          <p class="muted">
+            To økter kan ha samme gjennomsnitt, men ulik SD.
+            Den ene kan være jevn, den andre ujevn.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Hva betyr "Ikke brukbar"?</h3>
+          <p>
+            Noen ganger markeres en økt som <em>ikke brukbar</em>. Dette er bevisst.
+          </p>
+          <ul>
+            <li>Det beskytter nøyaktighet når datakvaliteten er for lav</li>
+            <li>Det hindrer falsk sikkerhet basert på dårlig eller ufullstendig data</li>
+          </ul>
+          <p class="muted">
+            Avslag er beskyttelse — ikke feil. Du kan alltid teste på nytt.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Endrer kontekstfeltene resultatet?</h3>
+          <p>
+            Nei. Kontekst (søvn, stress, notat) lagres kun som metadata.
+            Det påvirker ikke scoring eller sammenligning.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Kan FCE si om jeg er påvirket av et spesifikt stoff?</h3>
+          <p><strong>Nei.</strong></p>
+          <p>
+            FCE måler funksjon — ikke årsak.
+            Søvnmangel, stress, sykdom, medisin, alkohol, cannabis, distraksjon: ulike årsaker kan gi likt funksjonsavvik.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Er FCE ment for juridisk håndheving?</h3>
+          <p>
+            Nei. FCE er ikke en juridisk "domsmotor" og skal ikke brukes til automatisk håndheving.
+          </p>
+          <p class="muted">
+            Hvis FCE noen gang utforskes institusjonelt, må det være frivillig, transparent og mulig å bestride.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Hvor lagres dataene mine?</h3>
+          <p>
+            Lokalt i nettleseren på denne enheten. FCE krever ikke konto og laster ikke opp data som standard.
+          </p>
+          <ul>
+            <li>Hvis du sletter nettleserdata, forsvinner FCE-data på enheten</li>
+            <li>Eksport er manuell (JSON) hvis du velger å eksportere</li>
+          </ul>
         </section>
       </div>
 

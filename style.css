@@ -679,7 +679,8 @@
 
   /* Documentation-style content (About, How to Use, FAQ, Docs) */
   /* Enhanced typography for documentation views */
-  .view h2 {
+  .view h2,
+  .page h2 {
     margin-top: 0;
     margin-bottom: 16px;
     font-size: clamp(24px, 5vw, 28px);
@@ -689,7 +690,8 @@
     line-height: 1.2;
   }
   
-  .view h3 {
+  .view h3,
+  .page h3 {
     margin-top: 32px;
     margin-bottom: 12px;
     font-size: clamp(18px, 4vw, 20px);
@@ -700,51 +702,61 @@
     line-height: 1.3;
   }
   
-  .view h3:first-child {
+  .view h3:first-child,
+  .page h3:first-child {
     margin-top: 0;
   }
 
-  .view p {
+  .view p,
+  .page p {
     margin-left: auto;
     margin-right: auto;
   }
 
-  .view ul {
+  .view ul,
+  .page ul {
     max-width: 720px;
     margin: 10px auto 14px;
     padding-left: 22px;
     text-align: left;
   }
 
-  .view li {
+  .view li,
+  .page li {
     text-align: left;
   }
 
-  .view blockquote {
+  .view blockquote,
+  .page blockquote {
     margin-left: auto;
     margin-right: auto;
   }
 
-  .view hr {
+  .view hr,
+  .page hr {
     border: none;
     border-top: 1px solid #222;
     margin: 24px 0;
   }
 
-  .view strong {
+  .view strong,
+  .page strong {
     font-weight: 600;
   }
 
-  .view em {
+  .view em,
+  .page em {
     opacity: 0.85;
   }
 
   /* Documentation page styles (applies to all view sections) */
-  .view .hero {
+  .view .hero,
+  .page .hero {
     margin-bottom: 32px;
   }
 
-  .view .lead {
+  .view .lead,
+  .page .lead {
     font-size: 18px;
     line-height: 1.6;
     margin: 16px 0;
@@ -754,7 +766,8 @@
   }
 
   /* Enhanced card styling for documentation */
-  .view .card {
+  .view .card,
+  .page .card {
     background: #1a1a1a;
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 14px;
@@ -765,18 +778,22 @@
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
   }
   
-  .view .card:hover {
+  .view .card:hover,
+  .page .card:hover {
     border-color: rgba(255, 255, 255, 0.1);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   }
   
-  .view .card h3 {
+  .view .card h3,
+  .page .card h3 {
     margin-top: 0;
     margin-bottom: 14px;
   }
 
   .view blockquote.quote,
-  .view .quote {
+  .view .quote,
+  .page blockquote.quote,
+  .page .quote {
     margin: 20px auto;
     padding: 16px 20px;
     border-left: 3px solid #444;
@@ -787,12 +804,14 @@
     margin-right: auto;
   }
 
-  .view .muted {
+  .view .muted,
+  .page .muted {
     opacity: 0.7;
     font-size: 14px;
   }
 
-  .view .footer {
+  .view .footer,
+  .page .footer {
     margin-top: 48px;
     padding-top: 24px;
     border-top: 1px solid #222;
@@ -802,7 +821,8 @@
   }
 
   /* Ensure note class works within cards */
-  .view .card .note {
+  .view .card .note,
+  .page .card .note {
     margin-top: 12px;
     font-size: 13px;
     opacity: 0.7;
@@ -999,6 +1019,17 @@ img, video, iframe, canvas {
     vertical-align: middle;
   }
   
+  /* Chip rows (useful on doc pages too) */
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    max-width: 720px;
+    margin: 12px auto 0;
+  }
+
   /* Chip style for small inline metrics (errors, flash info) */
   .chip {
     display: inline-block;
@@ -1011,6 +1042,13 @@ img, video, iframe, canvas {
     color: #ccc;
     margin: 0 2px;
     letter-spacing: 0.2px;
+  }
+
+  /* Slightly roomier chips when used as semantic tags */
+  .chips .chip {
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 999px;
   }
 
   /* Improved history body spacing */
@@ -1059,11 +1097,81 @@ img, video, iframe, canvas {
     opacity: 0.8;
     font-size: 13px;
     color: #ff6b6b;
+  }
+
+  /* Home — History preview */
+  .home-history-note {
+    margin: 6px 0 10px;
+  }
+
+  .home-history-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 12px;
+    display: grid;
+    gap: 10px;
+  }
+
+  .home-history-item {
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 12px;
+    padding: 10px 12px;
+    background: rgba(255,255,255,0.03);
+    cursor: pointer;
+  }
+
+  .home-history-item:hover {
+    border-color: rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.05);
+  }
+
+  .home-history-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .home-history-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .home-history-title strong {
+    font-weight: 650;
+  }
+
+  .home-history-when {
+    white-space: nowrap;
+  }
+
+  .home-history-sub {
     margin-top: 6px;
-    padding: 6px 10px;
-    background: rgba(255, 107, 107, 0.08);
-    border-left: 2px solid rgba(255, 107, 107, 0.4);
-    border-radius: 4px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .home-history-metrics {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .home-history-metrics span {
+    white-space: nowrap;
+  }
+
+  /* Tiny accent strip to make it feel "earned" */
+  .home-history-item.is-valid {
+    box-shadow: inset 3px 0 0 rgba(255,255,255,0.20);
+  }
+  .home-history-item.is-invalid {
+    box-shadow: inset 3px 0 0 rgba(255,255,255,0.08);
+    opacity: 0.92;
   }
 
 input.text {

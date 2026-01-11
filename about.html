@@ -67,15 +67,33 @@
       <div class="lang lang-en">
         <section class="hero">
           <h2>About FCE</h2>
+
           <p class="lead">
-            <strong>FCE (Functional Cognition &amp; Execution)</strong> is a fast, baseline-calibrated tool that measures
-            how your cognitive and motor performance compares to <em>your own normal capacity</em> — not to population averages.
+            <strong>FCE (Functional Cognition &amp; Execution)</strong> is a baseline-relative instrument that measures
+            how your performance today compares to <em>your own normal range</em> — not to population averages.
           </p>
-          <blockquote class="quote">"How are you functioning today compared to yourself?"</blockquote>
+
+          <blockquote class="quote">
+            "How are you functioning today compared to yourself?"
+          </blockquote>
+
+          <div style="margin: 18px auto 0; text-align: center; max-width: 720px;">
+            <div class="chips" aria-label="FCE principles">
+              <span class="chip">Calm UX</span>
+              <span class="chip">Baseline-relative</span>
+              <span class="chip">Offline-first</span>
+              <span class="chip">Privacy-first</span>
+              <span class="chip">Refusal protects</span>
+            </div>
+          </div>
         </section>
 
         <div style="margin: 24px auto; text-align: center; max-width: 600px; padding: 0 16px;">
-          <a href="index.html#instrument" style="padding: 10px 20px; font-size: 14px; text-decoration: none; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; background: rgba(255,255,255,0.05); color: #eee; transition: all 0.2s ease; display: inline-block;">
+          <a href="index.html#instrument"
+            style="padding: 10px 20px; font-size: 14px; text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.15); border-radius: 8px;
+            background: rgba(255,255,255,0.05); color: #eee;
+            transition: all 0.2s ease; display: inline-block;">
             <span class="lang lang-en">Open instrument</span>
             <span class="lang lang-no hidden">Åpne instrument</span>
           </a>
@@ -83,53 +101,114 @@
 
         <section class="card">
           <h3>What FCE measures</h3>
-          <p>FCE uses short, focused tasks to assess multiple domains of function. Examples include:</p>
+          <p>
+            FCE uses short, standardized tasks to measure functional execution in the moment.
+            It focuses on <strong>how you perform</strong>, not why.
+          </p>
           <ul>
-            <li><strong>Reaction speed</strong> — time-to-response under standardized prompts</li>
-            <li><strong>Inhibitory control</strong> — the ability to act / not act appropriately</li>
-            <li><strong>Precision &amp; motor control</strong> — accuracy under time pressure</li>
-            <li><strong>Attention &amp; task-switching</strong> — stability of focus across changes</li>
+            <li><strong>Reaction speed</strong> — time-to-response and stability</li>
+            <li><strong>Inhibitory control</strong> — acting / not acting under time pressure</li>
+            <li><strong>Precision &amp; consistency</strong> — errors and variability</li>
+            <li><strong>Attention under load</strong> — performance when focus is split</li>
           </ul>
-          <p class="muted">FCE is not an IQ test. It measures functional execution in the moment.</p>
+          <p class="muted">
+            FCE is not an IQ test. It measures functional execution under standardized prompts.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Tests included (v0.2.x)</h3>
+          <ul>
+            <li><strong>Reaction Time</strong> — simple response speed and consistency</li>
+            <li><strong>Go / No-Go</strong> — inhibition and control</li>
+            <li><strong>Divided Attention</strong> — Go / No-Go while counting brief visual flashes</li>
+          </ul>
+          <p class="muted">
+            Divided Attention evaluates multiple signals, and the overall result follows the <strong>worst deviation</strong>.
+            This prevents strong performance in one area from masking difficulty in another.
+          </p>
         </section>
 
         <section class="card">
           <h3>Personal baselines, not population averages</h3>
           <p>
-            FCE becomes fair when it is calibrated. You build a <strong>personal baseline</strong> using several sessions
-            performed when you are rested and functioning normally. Later checks compare your current performance to
-            <strong>your own baseline profile</strong>.
+            FCE becomes meaningful when you build a baseline.
+            A baseline is a small set of sessions collected when you are rested and functioning normally.
           </p>
           <ul>
             <li>People differ naturally (speed, coordination, style)</li>
-            <li>Devices differ (desktop vs mobile)</li>
-            <li>Inputs differ (mouse vs touch)</li>
-            <li>Context matters (sleep, stress, posture, distraction)</li>
+            <li>Devices and input methods differ (mouse vs touch)</li>
+            <li>Context affects performance (sleep, stress, distraction)</li>
           </ul>
-          <p>FCE is designed to respect variance instead of punishing it.</p>
+          <p class="muted">
+            For fairness, compare checks to a baseline built on the same device and input method.
+          </p>
         </section>
 
         <section class="card">
-          <h3>Session history and trends</h3>
-          <p>FCE stores completed sessions locally on the user's device and presents:</p>
+          <h3>Modes of use</h3>
+          <p>FCE supports three clear modes:</p>
           <ul>
-            <li>a session history (baseline and checks)</li>
-            <li>optional context tags (sleep, stress, notes)</li>
-            <li>a simple trend view showing baseline range and recent checks</li>
+            <li><strong>Baseline</strong> — builds your personal normal range</li>
+            <li><strong>Check</strong> — compares today to your baseline</li>
+            <li><strong>Training</strong> — practice only (never updates baseline)</li>
           </ul>
-          <p>This allows users and reviewers to see patterns over time rather than relying on single measurements.</p>
+          <p class="muted">
+            Mode is determined by the action you choose — not by context fields.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Context is metadata, not scoring</h3>
+          <p>
+            Optional context fields (sleep, stress, notes) can be saved with each session.
+            They exist to support interpretation, not to influence the result.
+          </p>
+          <p class="muted">
+            This keeps the instrument honest: measurement first, interpretation second.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>History and trends</h3>
+          <p>
+            FCE stores sessions locally and shows:
+          </p>
+          <ul>
+            <li>Session history (Baseline / Check / Training)</li>
+            <li>A simple trend view with baseline band and recent checks</li>
+            <li>Clear labels when a session is mixed or not usable</li>
+          </ul>
+          <p class="muted">
+            Patterns over time matter more than any single session.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Refusal as protection</h3>
+          <p>
+            Sometimes a session is marked as <em>not usable</em> (for example due to low data quality).
+            This is intentional.
+          </p>
+          <p>
+            Refusal protects accuracy and prevents false certainty.
+          </p>
         </section>
 
         <section class="card">
           <h3>Privacy</h3>
-          <p>FCE can be implemented in a privacy-first way. A strong default is:</p>
+          <p>
+            FCE is designed to work offline and store data locally by default.
+          </p>
           <ul>
             <li>No accounts</li>
             <li>No tracking</li>
             <li>No server upload</li>
-            <li>Local-only storage on the user's device</li>
+            <li>Manual JSON export (optional)</li>
           </ul>
-          <p class="muted">Clearing the browser data clears FCE data.</p>
+          <p class="muted">
+            Clearing browser data clears FCE data on that device.
+          </p>
         </section>
 
         <section class="card">
@@ -139,8 +218,11 @@
             <li>Not a clinical assessment</li>
             <li>Not a legal judgment</li>
             <li>Not a measure of intelligence or worth</li>
+            <li>Not a substance detection tool</li>
           </ul>
-          <p>FCE assesses functional performance under standardized conditions. That's it — by design.</p>
+          <p class="muted">
+            FCE measures functional performance under standardized conditions — by design.
+          </p>
         </section>
       </div>
 
@@ -148,16 +230,33 @@
       <div class="lang lang-no hidden">
         <section class="hero">
           <h2>Om FCE</h2>
+
           <p class="lead">
-            <strong>FCE (Functional Cognition &amp; Execution)</strong> er et nettbasert verktøy som måler
-            hvordan din nåværende kognitive funksjon sammenlignes med din egen normale
-            kapasitet — ikke med befolkningsgjennomsnitt.
+            <strong>FCE (Functional Cognition &amp; Execution)</strong> er et baseline-relativt instrument som måler
+            hvordan du fungerer i dag sammenlignet med <em>ditt eget normalområde</em> — ikke mot befolkningsgjennomsnitt.
           </p>
-          <blockquote class="quote">"Hvordan fungerer du i dag, sammenlignet med deg selv?"</blockquote>
+
+          <blockquote class="quote">
+            "Hvordan fungerer du i dag sammenlignet med deg selv?"
+          </blockquote>
+
+          <div style="margin: 18px auto 0; text-align: center; max-width: 720px;">
+            <div class="chips" aria-label="FCE prinsipper">
+              <span class="chip">Rolig UX</span>
+              <span class="chip">Baseline-relativ</span>
+              <span class="chip">Offline først</span>
+              <span class="chip">Personvern først</span>
+              <span class="chip">Avslag beskytter</span>
+            </div>
+          </div>
         </section>
 
         <div style="margin: 24px auto; text-align: center; max-width: 600px; padding: 0 16px;">
-          <a href="index.html#instrument" style="padding: 10px 20px; font-size: 14px; text-decoration: none; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; background: rgba(255,255,255,0.05); color: #eee; transition: all 0.2s ease; display: inline-block;">
+          <a href="index.html#instrument"
+            style="padding: 10px 20px; font-size: 14px; text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.15); border-radius: 8px;
+            background: rgba(255,255,255,0.05); color: #eee;
+            transition: all 0.2s ease; display: inline-block;">
             <span class="lang lang-en hidden">Open instrument</span>
             <span class="lang lang-no">Åpne instrument</span>
           </a>
@@ -165,56 +264,106 @@
 
         <section class="card">
           <h3>Hva FCE måler</h3>
-          <p>FCE vurderer flere kognitive funksjonsområder gjennom korte, fokuserte oppgaver, blant annet:</p>
+          <p>
+            FCE bruker korte, standardiserte oppgaver for å måle funksjonell utførelse her og nå.
+            Det handler om <strong>hvordan du presterer</strong>, ikke hvorfor.
+          </p>
           <ul>
-            <li><strong>Reaksjonshastighet</strong> — hvor raskt du responderer</li>
-            <li><strong>Inhibitorisk kontroll</strong> — evnen til å handle eller avstå</li>
-            <li><strong>Presisjon og motorisk kontroll</strong> — nøyaktighet i bevegelse</li>
+            <li><strong>Reaksjonshastighet</strong> — responstid og stabilitet</li>
+            <li><strong>Inhibisjonskontroll</strong> — handle / ikke handle under tidspress</li>
+            <li><strong>Presisjon &amp; stabilitet</strong> — feil og variasjon</li>
+            <li><strong>Oppmerksomhet under belastning</strong> — når fokuset deles</li>
           </ul>
-          <p class="muted">FCE er ikke en IQ-test. Det måler funksjonell ytelse i øyeblikket.</p>
+          <p class="muted">
+            FCE er ikke en IQ-test. Det måler funksjonell utførelse under standardiserte signaler.
+          </p>
         </section>
 
         <section class="card">
-          <h3>Personlige baselinjer — ikke normtall</h3>
-          <p>
-            FCE fungerer ved å bygge en personlig baseline basert på flere økter som
-            gjennomføres når du er uthvilt og fungerer normalt.
-          </p>
-          <p>
-            Alle senere sjekker sammenlignes med din egen baseline — ikke med aldersgrupper,
-            normverdier eller andre personer.
-          </p>
-          <p>Dette er viktig fordi:</p>
+          <h3>Tester (v0.2.x)</h3>
           <ul>
-            <li>mennesker er forskjellige</li>
-            <li>enheter varierer (mobil vs. desktop)</li>
-            <li>inndata varierer (berøring vs. mus)</li>
-            <li>kontekst betyr noe</li>
+            <li><strong>Reaksjonstid</strong> — enkel responshastighet og stabilitet</li>
+            <li><strong>Go / No-Go</strong> — kontroll og inhibisjon</li>
+            <li><strong>Delt oppmerksomhet</strong> — Go / No-Go mens du teller korte visuelle blink</li>
           </ul>
-          <p>FCE er utviklet for å ta hensyn til disse forskjellene, ikke ignorere dem.</p>
+          <p class="muted">
+            Delt oppmerksomhet vurderer flere signaler, og totalresultatet følger <strong>største avvik</strong>.
+            Dette hindrer at god ytelse på ett område skjuler vansker på et annet.
+          </p>
         </section>
 
         <section class="card">
-          <h3>Økthistorikk og trender</h3>
-          <p>FCE lagrer gjennomførte økter lokalt på brukerens enhet og viser:</p>
+          <h3>Personlig baseline, ikke gjennomsnitt</h3>
+          <p>
+            FCE blir meningsfullt når du bygger en baseline.
+            Baseline er noen økter samlet når du er uthvilt og fungerer normalt.
+          </p>
           <ul>
-            <li>økthistorikk (baseline og sjekk)</li>
-            <li>valgfrie konteksttagger (søvn, stress, notat)</li>
-            <li>en enkel trendvisning med baselineområde og nylige sjekker</li>
+            <li>Folk er naturlig ulike (hastighet, koordinasjon, stil)</li>
+            <li>Enheter og input varierer (mus vs touch)</li>
+            <li>Kontekst påvirker (søvn, stress, distraksjon)</li>
           </ul>
-          <p>Dette gir grunnlag for mønstergjenkjenning over tid, ikke enkeltmålinger.</p>
+          <p class="muted">
+            For rettferdig sammenligning: bygg baseline og kjør sjekker på samme enhet og input.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Bruksmoduser</h3>
+          <p>FCE har tre tydelige moduser:</p>
+          <ul>
+            <li><strong>Baseline</strong> — bygger ditt normalområde</li>
+            <li><strong>Sjekk</strong> — sammenligner i dag med baseline</li>
+            <li><strong>Trening</strong> — kun øving (oppdaterer aldri baseline)</li>
+          </ul>
+          <p class="muted">
+            Modus bestemmes av handlingen du velger — ikke av kontekstfeltene.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Kontekst er metadata, ikke scoring</h3>
+          <p>
+            Valgfrie felt (søvn, stress, notat) kan lagres sammen med økten.
+            De er til tolkning — ikke til å påvirke resultatet.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Historikk og trender</h3>
+          <ul>
+            <li>Historikk per test (Baseline / Sjekk / Trening)</li>
+            <li>En enkel trendvisning med baseline-bånd og nylige sjekker</li>
+            <li>Tydelige merkelapper når en økt er blandet eller ikke brukbar</li>
+          </ul>
+          <p class="muted">
+            Mønstre over tid betyr mer enn én enkelt økt.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Avslag som beskyttelse</h3>
+          <p>
+            Noen økter markeres som <em>ikke brukbare</em> (for eksempel ved lav datakvalitet).
+            Dette er bevisst.
+          </p>
+          <p>
+            Avslag beskytter nøyaktighet og hindrer falsk sikkerhet.
+          </p>
         </section>
 
         <section class="card">
           <h3>Personvern</h3>
-          <p>FCE kan implementeres personvernvennlig. En sterk standard er:</p>
+          <p>FCE er laget for å fungere offline og lagre data lokalt som standard.</p>
           <ul>
             <li>Ingen konto</li>
             <li>Ingen sporing</li>
-            <li>Ingen serveropplasting</li>
-            <li>Kun lokal lagring på brukerens enhet</li>
+            <li>Ingen opplasting</li>
+            <li>Manuell JSON-eksport (valgfritt)</li>
           </ul>
-          <p class="muted">Sletting av nettleserdata fjerner FCE-data.</p>
+          <p class="muted">
+            Sletting av nettleserdata sletter FCE-data på enheten.
+          </p>
         </section>
 
         <section class="card">
@@ -224,8 +373,11 @@
             <li>Ikke en klinisk vurdering</li>
             <li>Ikke en juridisk dom</li>
             <li>Ikke et mål på intelligens eller verdi</li>
+            <li>Ikke et rusmiddel-/stofftestsystem</li>
           </ul>
-          <p>FCE måler funksjon under standardiserte forhold. Det er alt — med vilje.</p>
+          <p class="muted">
+            FCE måler funksjonell prestasjon under standardiserte forhold — med vilje.
+          </p>
         </section>
       </div>
 

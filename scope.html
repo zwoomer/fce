@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>FCE — Scope & Limits</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Remember last visited page -->
+  <script>
+    try {
+      const p = location.pathname.split("/").pop() || "index.html";
+      localStorage.setItem("fce_last_page", p);
+    } catch {}
+  </script>
+</head>
+
+<body>
+  <header class="topbar">
+    <button id="menuBtn" aria-label="Menu" aria-controls="menu" aria-expanded="false">☰</button>
+    <a href="index.html?home=1" class="title" style="text-decoration:none; color:inherit;">FCE</a>
+    <span class="topbar-page is-hidden" id="topbarPage"></span>
+
+    <div class="topbar-right">
+      <div class="lang-select-wrapper">
+        <select id="langSelect" class="lang-select" aria-label="Language">
+          <option value="en">EN</option>
+          <option value="no">NO</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <nav id="menu" class="menu">
+    <div class="menu-header">
+      <button id="closeMenuBtn" class="menu-close-btn" aria-label="Close menu">×</button>
+    </div>
+
+    <a class="menu-item" href="index.html?home=1">
+      <span class="lang lang-en">Home</span>
+      <span class="lang lang-no hidden">Hjem</span>
+    </a>
+
+    <a class="menu-item" href="index.html?view=history">
+      <span class="lang lang-en">History</span>
+      <span class="lang lang-no hidden">Historikk</span>
+    </a>
+
+    <a class="menu-item" href="about.html">
+      <span class="lang lang-en">About</span>
+      <span class="lang lang-no hidden">Om</span>
+    </a>
+
+    <a class="menu-item" href="concept.html">
+      <span class="lang lang-en">Concept</span>
+      <span class="lang lang-no hidden">Konsept</span>
+    </a>
+
+    <a class="menu-item" href="scope.html" aria-current="page">
+      <span class="lang lang-en">Scope &amp; Limits</span>
+      <span class="lang lang-no hidden">Omfang &amp; begrensninger</span>
+    </a>
+
+    <a class="menu-item" href="norwegian-context.html">
+      <span class="lang lang-en">Norwegian Context</span>
+      <span class="lang lang-no hidden">Norsk kontekst</span>
+    </a>
+
+    <a class="menu-item" href="how-to-use.html">
+      <span class="lang lang-en">How to Use</span>
+      <span class="lang lang-no hidden">Hvordan bruke</span>
+    </a>
+
+    <a class="menu-item" href="faq.html">
+      <span class="lang lang-en">FAQ</span>
+      <span class="lang lang-no hidden">FAQ</span>
+    </a>
+  </nav>
+
+  <div id="menuOverlay" class="menu-overlay hidden"></div>
+
+  <main class="page">
+    <section class="container">
+
+      <!-- EN -->
+      <div class="lang lang-en">
+        <section class="hero">
+          <h2>Scope &amp; Limits</h2>
+          <p class="lead">
+            This page defines what FCE does and does not do. These boundaries are intentional.
+            They are designed to protect people, prevent over-interpretation, and preserve measurement integrity.
+          </p>
+
+          <blockquote class="quote">
+            “FCE measures functional performance. It does not explain causes, assign labels, or make decisions.”
+          </blockquote>
+
+          <div style="margin: 18px auto 0; text-align: center; max-width: 720px;">
+            <div class="chips" aria-label="FCE safeguards">
+              <span class="chip">Not diagnostic</span>
+              <span class="chip">Not legal judgment</span>
+              <span class="chip">Not substance detection</span>
+              <span class="chip">Not automated decisions</span>
+              <span class="chip">Refusal protects</span>
+            </div>
+          </div>
+        </section>
+
+        <div style="margin: 24px auto; text-align: center; max-width: 760px; padding: 0 16px;">
+          <a href="concept.html"
+             style="padding: 10px 20px; font-size: 14px; text-decoration: none;
+                    border: 1px solid rgba(255,255,255,0.15); border-radius: 8px;
+                    background: rgba(255,255,255,0.05); color: #eee;
+                    transition: all 0.2s ease; display: inline-block;">
+            Read Concept
+          </a>
+          <span style="display:inline-block; width:10px;"></span>
+          <a href="index.html#instrument"
+             style="padding: 10px 20px; font-size: 14px; text-decoration: none;
+                    border: 1px solid rgba(255,255,255,0.15); border-radius: 8px;
+                    background: rgba(255,255,255,0.05); color: #eee;
+                    transition: all 0.2s ease; display: inline-block;">
+            Open instrument
+          </a>
+        </div>
+
+        <section class="card">
+          <h3>What FCE does</h3>
+          <ul>
+            <li><strong>Measures functional execution</strong> using short standardized tasks (speed, control, stability)</li>
+            <li><strong>Compares performance to a personal baseline</strong> (baseline-relative, not population-normative)</li>
+            <li><strong>Supports repeatable self-checks and monitoring</strong> with transparent history</li>
+            <li><strong>Labels low-quality sessions</strong> and can refuse to score when comparison would be misleading</li>
+            <li><strong>Stores data locally by default</strong>, with optional user-initiated export</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h3>What FCE does not do (explicit non-goals)</h3>
+          <p>
+            FCE is intentionally limited. It must not be used to imply more than it measures.
+          </p>
+          <ul>
+            <li><strong>Not diagnostic</strong> — does not diagnose medical, psychiatric, or neurological conditions</li>
+            <li><strong>Not clinical triage</strong> — does not replace clinical evaluation or emergency assessment</li>
+            <li><strong>Not legal judgment</strong> — does not determine legal responsibility, guilt, innocence, or compliance</li>
+            <li><strong>Not substance detection</strong> — does not detect drugs/alcohol or infer biochemical states</li>
+            <li><strong>Not cause attribution</strong> — does not explain <em>why</em> performance changed</li>
+            <li><strong>Not automated decision-making</strong> — does not issue binding outcomes (e.g., “fit/unfit”)</li>
+            <li><strong>Not single-session determinism</strong> — one session should not be treated as a decisive verdict</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h3>Interpretation rules (required)</h3>
+          <ul>
+            <li><strong>History-first:</strong> interpret patterns over time, not one-off results</li>
+            <li><strong>Device consistency:</strong> baseline and checks should be on the same device/input method</li>
+            <li><strong>Context matters:</strong> sleep loss, stress, illness, distraction, medication effects can affect function</li>
+            <li><strong>No cause inference:</strong> similar deviations can arise from many different causes</li>
+            <li><strong>Human oversight:</strong> results are informational, not authoritative decisions</li>
+          </ul>
+          <p class="muted">
+            For practical workflow guidance, see <a href="how-to-use.html">How to Use</a>.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Refusal and integrity (harm-reduction by design)</h3>
+          <p>
+            FCE includes refusal logic. If data quality is insufficient for comparison, the system may mark a session as
+            <em>not usable</em> rather than producing a misleading score.
+          </p>
+          <ul>
+            <li>Protects against false certainty from incomplete or distorted input</li>
+            <li>Prevents “forcing” a number when the measurement is not reliable</li>
+            <li>Encourages retesting under cleaner conditions</li>
+          </ul>
+          <p class="muted">
+            Refusal is protection — not failure.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Institutional use (constraints)</h3>
+          <p>
+            If FCE is explored in institutional contexts, the following constraints should be treated as baseline requirements:
+          </p>
+          <ul>
+            <li><strong>Voluntary participation</strong> with clear consent and the ability to decline without penalty</li>
+            <li><strong>Transparency</strong> about what is measured, how it is interpreted, and what it cannot conclude</li>
+            <li><strong>Contestability</strong> — results must be reviewable and never treated as automatic enforcement</li>
+            <li><strong>Separation of layers</strong> — any data-sharing or reporting layer must be explicit and separate</li>
+            <li><strong>Independent validation</strong> — thresholds and claims should be tested and documented</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h3>Short disclaimer (copy-ready)</h3>
+
+          <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin: 8px 0 12px;">
+            <button class="btn" type="button" data-copy-target="#disclaimerEn" style="
+              padding: 8px 12px;
+              border: 1px solid rgba(255,255,255,0.15);
+              border-radius: 8px;
+              background: rgba(255,255,255,0.05);
+              color: #eee;
+              cursor: pointer;
+              display: inline-flex;
+              align-items: center;
+              gap: 8px;
+            ">
+              <span aria-hidden="true" style="font-size:16px; line-height:1;">📋</span>
+              Copy to clipboard
+            </button>
+            <span class="muted" data-copy-status="en" style="min-height: 1em;"></span>
+          </div>
+
+          <p class="note" id="disclaimerEn">
+            FCE is a baseline-relative functional performance instrument. It measures short-task execution and tracks changes
+            relative to a personal baseline. FCE does not diagnose conditions, detect substances, infer causes, or produce
+            automated or binding decisions. Results must be interpreted by a human and should be considered together with
+            context and history.
+          </p>
+        </section>
+      </div>
+
+      <!-- NO -->
+      <div class="lang lang-no hidden">
+        <section class="hero">
+          <h2>Omfang &amp; begrensninger</h2>
+          <p class="lead">
+            Denne siden definerer hva FCE gjør og ikke gjør. Disse grensene er bevisste.
+            De skal beskytte mennesker, hindre overtolkning og bevare måleintegritet.
+          </p>
+
+          <blockquote class="quote">
+            «FCE måler funksjonell prestasjon. Det forklarer ikke årsak, gir ikke merkelapper og tar ikke beslutninger.»
+          </blockquote>
+
+          <div style="margin: 18px auto 0; text-align: center; max-width: 720px;">
+            <div class="chips" aria-label="FCE sikringer">
+              <span class="chip">Ikke diagnostisk</span>
+              <span class="chip">Ikke juridisk dom</span>
+              <span class="chip">Ikke rus-/stoffdeteksjon</span>
+              <span class="chip">Ikke automatiske beslutninger</span>
+              <span class="chip">Avslag beskytter</span>
+            </div>
+          </div>
+        </section>
+
+        <div style="margin: 24px auto; text-align: center; max-width: 760px; padding: 0 16px;">
+          <a href="concept.html"
+             style="padding: 10px 20px; font-size: 14px; text-decoration: none;
+                    border: 1px solid rgba(255,255,255,0.15); border-radius: 8px;
+                    background: rgba(255,255,255,0.05); color: #eee;
+                    transition: all 0.2s ease; display: inline-block;">
+            Les Konsept
+          </a>
+          <span style="display:inline-block; width:10px;"></span>
+          <a href="index.html#instrument"
+             style="padding: 10px 20px; font-size: 14px; text-decoration: none;
+                    border: 1px solid rgba(255,255,255,0.15); border-radius: 8px;
+                    background: rgba(255,255,255,0.05); color: #eee;
+                    transition: all 0.2s ease; display: inline-block;">
+            Åpne instrument
+          </a>
+        </div>
+
+        <section class="card">
+          <h3>Hva FCE gjør</h3>
+          <ul>
+            <li><strong>Måler funksjonell utførelse</strong> med korte standardiserte oppgaver (hastighet, kontroll, stabilitet)</li>
+            <li><strong>Sammenligner mot personlig baseline</strong> (baseline-relativt, ikke befolkningsnormativt)</li>
+            <li><strong>Støtter repeterbare selv-sjekker og oppfølging</strong> med åpen historikk</li>
+            <li><strong>Merker lav datakvalitet</strong> og kan gi avslag når sammenligning ville være misvisende</li>
+            <li><strong>Lagrer data lokalt som standard</strong>, med valgfri brukerstyrt eksport</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h3>Hva FCE ikke gjør (eksplisitte ikke-mål)</h3>
+          <p>
+            FCE er bevisst avgrenset. Det skal ikke brukes til å antyde mer enn det faktisk måler.
+          </p>
+          <ul>
+            <li><strong>Ikke diagnostisk</strong> — stiller ikke medisinske, psykiatriske eller nevrologiske diagnoser</li>
+            <li><strong>Ikke klinisk triage</strong> — erstatter ikke klinisk vurdering eller akuttvurdering</li>
+            <li><strong>Ikke juridisk dom</strong> — avgjør ikke ansvar, skyld/uskyld eller etterlevelse</li>
+            <li><strong>Ikke rus-/stoffdeteksjon</strong> — påviser ikke alkohol/rusmidler eller biokjemisk tilstand</li>
+            <li><strong>Ikke årsaksforklaring</strong> — forklarer ikke <em>hvorfor</em> prestasjon endret seg</li>
+            <li><strong>Ikke automatisert beslutning</strong> — gir ikke bindende utfall (f.eks. “egnet/uegnet”)</li>
+            <li><strong>Ikke basert på én økt</strong> — én økt skal ikke behandles som en avgjørende dom</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h3>Tolkningsregler (påkrevd)</h3>
+          <ul>
+            <li><strong>Historikk først:</strong> tolk mønstre over tid, ikke enkeltøkt</li>
+            <li><strong>Enhetskonsistens:</strong> baseline og sjekk bør være på samme enhet/inndatametode</li>
+            <li><strong>Kontekst betyr noe:</strong> søvnmangel, stress, sykdom, distraksjon, medikamenteffekter kan påvirke funksjon</li>
+            <li><strong>Ikke anta årsak:</strong> like avvik kan komme av mange forskjellige forhold</li>
+            <li><strong>Menneskelig vurdering:</strong> resultater er informasjonsgrunnlag, ikke autoritativ beslutning</li>
+          </ul>
+          <p class="muted">
+            For praktisk arbeidsflyt, se <a href="how-to-use.html">Hvordan bruke</a>.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Avslag og integritet (skadereduksjon i design)</h3>
+          <p>
+            FCE har avslaglogikk. Hvis datakvaliteten er for lav til sammenligning, kan systemet markere en økt som
+            <em>ikke brukbar</em> i stedet for å gi et misvisende resultat.
+          </p>
+          <ul>
+            <li>Beskytter mot falsk sikkerhet basert på ufullstendig eller forstyrret input</li>
+            <li>Hindrer at man “tvinger frem” et tall når målingen ikke er pålitelig</li>
+            <li>Oppmuntrer retest under renere forhold</li>
+          </ul>
+          <p class="muted">
+            Avslag er beskyttelse — ikke feil.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Institusjonell bruk (rammer)</h3>
+          <p>
+            Hvis FCE utforskes i institusjonell sammenheng, bør følgende rammer behandles som minstekrav:
+          </p>
+          <ul>
+            <li><strong>Frivillighet</strong> med tydelig samtykke og mulighet til å avstå uten sanksjon</li>
+            <li><strong>Transparens</strong> om hva som måles, hvordan det tolkes og hva det ikke kan konkludere</li>
+            <li><strong>Etterprøvbarhet</strong> — resultater må kunne gjennomgås og aldri behandles som automatisk håndheving</li>
+            <li><strong>Lagdeling</strong> — eventuelle delings-/rapportlag må være eksplisitte og separate</li>
+            <li><strong>Uavhengig validering</strong> — terskler og påstander bør testes og dokumenteres</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h3>Kort ansvarsfraskrivelse (klar til å kopiere)</h3>
+
+          <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin: 8px 0 12px;">
+            <button class="btn" type="button" data-copy-target="#disclaimerNo" style="
+              padding: 8px 12px;
+              border: 1px solid rgba(255,255,255,0.15);
+              border-radius: 8px;
+              background: rgba(255,255,255,0.05);
+              color: #eee;
+              cursor: pointer;
+              display: inline-flex;
+              align-items: center;
+              gap: 8px;
+            ">
+              <span aria-hidden="true" style="font-size:16px; line-height:1;">📋</span>
+              Kopier
+            </button>
+            <span class="muted" data-copy-status="no" style="min-height: 1em;"></span>
+          </div>
+
+          <p class="note" id="disclaimerNo">
+            FCE er et baseline-relativt instrument for funksjonell prestasjon. Det måler utførelse i korte oppgaver og følger
+            endringer relativt til personlig baseline. FCE stiller ikke diagnose, påviser ikke rusmidler, trekker ikke slutninger
+            om årsak og gir ikke automatiserte eller bindende beslutninger. Resultater må tolkes av et menneske og bør sees i
+            sammenheng med kontekst og historikk.
+          </p>
+        </section>
+      </div>
+
+      <nav class="docs-nav">
+        <div class="docs-nav-left">
+          <a href="concept.html" class="docs-nav-btn">
+            <span class="lang lang-en">← Concept</span>
+            <span class="lang lang-no hidden">← Konsept</span>
+          </a>
+        </div>
+
+        <div class="docs-nav-center">
+          <a href="index.html#instrument" class="docs-nav-btn">
+            <span class="lang lang-en">Open instrument</span>
+            <span class="lang lang-no hidden">Åpne instrument</span>
+          </a>
+        </div>
+
+        <div class="docs-nav-right">
+          <a href="norwegian-context.html" class="docs-nav-btn">
+            <span class="lang lang-en">Next →</span>
+            <span class="lang lang-no hidden">Neste →</span>
+          </a>
+        </div>
+      </nav>
+
+      <footer class="footer muted">
+        <p>FCE — Functional Cognition &amp; Execution</p>
+      </footer>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      const menu = document.getElementById("menu");
+      const overlay = document.getElementById("menuOverlay");
+      const menuBtn = document.getElementById("menuBtn");
+      const closeMenuBtn = document.getElementById("closeMenuBtn");
+
+      function openMenu() {
+        menu.classList.add("open");
+        overlay.classList.remove("hidden");
+        document.body.classList.add("menu-open");
+        if (menuBtn) menuBtn.setAttribute("aria-expanded", "true");
+      }
+
+      function closeMenu() {
+        menu.classList.remove("open");
+        overlay.classList.add("hidden");
+        document.body.classList.remove("menu-open");
+        if (menuBtn) menuBtn.setAttribute("aria-expanded", "false");
+      }
+
+      menuBtn && menuBtn.addEventListener("click", () => {
+        if (menu.classList.contains("open")) closeMenu();
+        else openMenu();
+      });
+
+      closeMenuBtn && closeMenuBtn.addEventListener("click", closeMenu);
+      overlay && overlay.addEventListener("click", closeMenu);
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && menu.classList.contains("open")) closeMenu();
+      });
+
+      document.querySelectorAll(".menu-item").forEach(item => {
+        item.addEventListener("click", (e) => {
+          if (!item.classList.contains("is-disabled")) closeMenu();
+          else e.preventDefault();
+        });
+      });
+
+      const LANG_KEY = "fce_lang_v1";
+      let currentLang = localStorage.getItem(LANG_KEY);
+      if (!currentLang) {
+        const oldLang = localStorage.getItem("fce_lang");
+        if (oldLang) {
+          currentLang = oldLang;
+          localStorage.setItem(LANG_KEY, currentLang);
+        } else {
+          currentLang = "en";
+        }
+      }
+
+      const langSelect = document.getElementById("langSelect");
+      if (langSelect) langSelect.value = currentLang;
+
+      const I18N_PAGES = {
+        en: {
+          about: "About",
+          "how-to-use": "How to use",
+          faq: "FAQ",
+          "norwegian-context": "Norwegian Context",
+          concept: "Concept",
+          scope: "Scope & Limits"
+        },
+        no: {
+          about: "Om",
+          "how-to-use": "Hvordan bruke",
+          faq: "FAQ",
+          "norwegian-context": "Norsk kontekst",
+          concept: "Konsept",
+          scope: "Omfang & begrensninger"
+        }
+      };
+
+      function getPageTitle(lang) {
+        const pageName = (location.pathname.split("/").pop() || "scope.html").replace(".html", "");
+        return (I18N_PAGES[lang] && I18N_PAGES[lang][pageName])
+          ? I18N_PAGES[lang][pageName]
+          : (I18N_PAGES.en[pageName] || "Scope & Limits");
+      }
+
+      function updateTopbarPage() {
+        const topbarPage = document.getElementById("topbarPage");
+        if (topbarPage) topbarPage.textContent = getPageTitle(currentLang);
+      }
+
+      function applyLanguage(lang) {
+        currentLang = lang;
+        try { localStorage.setItem(LANG_KEY, lang); } catch {}
+
+        document.querySelectorAll(".lang-en").forEach(el => el.classList.toggle("hidden", lang !== "en"));
+        document.querySelectorAll(".lang-no").forEach(el => el.classList.toggle("hidden", lang !== "no"));
+
+        updateTopbarPage();
+        setupScrollObserver();
+      }
+
+      let scrollObserver = null;
+      function setupScrollObserver() {
+        if (scrollObserver) scrollObserver.disconnect();
+
+        const pageHeading = document.querySelector(".lang:not(.hidden) .hero h2") || document.querySelector(".hero h2");
+        const topbarPage = document.getElementById("topbarPage");
+        if (!topbarPage || !pageHeading) return;
+
+        function updateVisibility(isIntersecting) {
+          if (isIntersecting) topbarPage.classList.add("is-hidden");
+          else topbarPage.classList.remove("is-hidden");
+        }
+
+        scrollObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => updateVisibility(entry.isIntersecting));
+        }, { threshold: 0.25 });
+
+        scrollObserver.observe(pageHeading);
+      }
+
+      langSelect && langSelect.addEventListener("change", (e) => applyLanguage(e.target.value));
+
+      // Copy-to-clipboard buttons (Scope & Limits)
+      async function copyTextFromSelector(selector) {
+        const el = document.querySelector(selector);
+        if (!el) return false;
+        const text = (el.innerText || el.textContent || "").trim();
+        if (!text) return false;
+
+        // Prefer modern clipboard API
+        try {
+          await navigator.clipboard.writeText(text);
+          return true;
+        } catch {
+          // Fallback
+          try {
+            const ta = document.createElement("textarea");
+            ta.value = text;
+            ta.setAttribute("readonly", "");
+            ta.style.position = "fixed";
+            ta.style.top = "-1000px";
+            document.body.appendChild(ta);
+            ta.select();
+            const ok = document.execCommand("copy");
+            document.body.removeChild(ta);
+            return ok;
+          } catch {
+            return false;
+          }
+        }
+      }
+
+      function setCopyStatus(lang, msg) {
+        const status = document.querySelector(`[data-copy-status="${lang}"]`);
+        if (!status) return;
+        status.textContent = msg;
+        clearTimeout(status._t);
+        status._t = setTimeout(() => { status.textContent = ""; }, 1800);
+      }
+
+      document.querySelectorAll("[data-copy-target]").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const target = btn.getAttribute("data-copy-target");
+          const ok = await copyTextFromSelector(target);
+
+          // Detect which language button this is in (by nearest visible .lang block)
+          const inNo = !!btn.closest(".lang-no");
+          const lang = inNo ? "no" : "en";
+
+          if (ok) setCopyStatus(lang, lang === "no" ? "Kopiert." : "Copied.");
+          else setCopyStatus(lang, lang === "no" ? "Kunne ikke kopiere." : "Could not copy.");
+        });
+      });
+
+      // Init
+      applyLanguage(currentLang);
+    })();
+  </script>
+</body>
+</html>

@@ -14,11 +14,13 @@
     } catch {}
   </script>
 </head>
+
 <body>
   <header class="topbar">
     <button id="menuBtn" aria-label="Menu" aria-controls="menu" aria-expanded="false">☰</button>
     <a href="index.html?home=1" class="title" style="text-decoration:none; color:inherit;">FCE</a>
     <span class="topbar-page is-hidden" id="topbarPage"></span>
+
     <div class="topbar-right">
       <div class="lang-select-wrapper">
         <select id="langSelect" class="lang-select" aria-label="Language">
@@ -33,26 +35,42 @@
     <div class="menu-header">
       <button id="closeMenuBtn" class="menu-close-btn" aria-label="Close menu">×</button>
     </div>
+
     <a class="menu-item" href="index.html?home=1">
       <span class="lang lang-en">Home</span>
       <span class="lang lang-no hidden">Hjem</span>
     </a>
+
     <a class="menu-item" href="index.html?view=history">
       <span class="lang lang-en">History</span>
       <span class="lang lang-no hidden">Historikk</span>
     </a>
+
     <a class="menu-item" href="about.html">
       <span class="lang lang-en">About</span>
       <span class="lang lang-no hidden">Om</span>
     </a>
+
+    <a class="menu-item" href="concept.html">
+      <span class="lang lang-en">Concept</span>
+      <span class="lang lang-no hidden">Konsept</span>
+    </a>
+
+    <a class="menu-item" href="scope.html">
+      <span class="lang lang-en">Scope &amp; Limits</span>
+      <span class="lang lang-no hidden">Omfang &amp; begrensninger</span>
+    </a>
+
     <a class="menu-item" href="norwegian-context.html">
       <span class="lang lang-en">Norwegian Context</span>
       <span class="lang lang-no hidden">Norsk kontekst</span>
     </a>
+
     <a class="menu-item" href="how-to-use.html" aria-current="page">
       <span class="lang lang-en">How to Use</span>
       <span class="lang lang-no hidden">Hvordan bruke</span>
     </a>
+
     <a class="menu-item" href="faq.html">
       <span class="lang lang-en">FAQ</span>
       <span class="lang lang-no hidden">FAQ</span>
@@ -63,237 +81,276 @@
 
   <main class="page">
     <section class="container">
+
+      <!-- EN -->
       <div class="lang lang-en">
         <section class="hero">
-          <h2>How to Use FCE</h2>
+          <h2>How to Use</h2>
           <p class="lead">
-            FCE is a <strong>baseline-relative functional instrument</strong>.
-            It answers one question:
-            <em>How are you functioning today compared to yourself?</em>
+            FCE is baseline-relative: it compares you to <em>your own</em> normal performance.
+            This page explains a safe, repeatable workflow.
           </p>
+
+          <blockquote class="quote">
+            “Single sessions are signals. Trends and repeatability matter more.”
+          </blockquote>
+
+          <div style="margin: 18px auto 0; text-align: center; max-width: 720px;">
+            <div class="chips" aria-label="FCE workflow">
+              <span class="chip">Baseline</span>
+              <span class="chip">Check</span>
+              <span class="chip">Training</span>
+              <span class="chip">History-first</span>
+              <span class="chip">Refusal protects</span>
+            </div>
+          </div>
         </section>
 
-        <div style="margin: 24px auto; text-align: center; max-width: 600px; padding: 0 16px;">
-          <a href="index.html#instrument" style="padding: 10px 20px; font-size: 14px; text-decoration: none; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; background: rgba(255,255,255,0.05); color: #eee; display: inline-block;">
+        <div style="margin: 24px auto; text-align: center; max-width: 760px; padding: 0 16px;">
+          <a href="index.html#instrument"
+             style="padding: 10px 20px; font-size: 14px; text-decoration: none;
+                    border: 1px solid rgba(255,255,255,0.15);
+                    border-radius: 8px;
+                    background: rgba(255,255,255,0.05);
+                    color: #eee;
+                    transition: all 0.2s ease;
+                    display: inline-block;">
             Open instrument
           </a>
         </div>
 
         <section class="card">
-          <h3>1) Choose a test</h3>
+          <h3>Before you start</h3>
           <p>
-            Select one test:
-          </p>
-          <ul>
-            <li><strong>Reaction Time</strong> — speed and consistency</li>
-            <li><strong>Go / No-Go</strong> — inhibition and control</li>
-            <li><strong>Divided Attention</strong> — execution under split attention</li>
-          </ul>
-          <p class="muted">
-            Divided Attention combines a Go / No-Go task with a secondary visual counting task.
+            If you want the full explanation of what FCE is (and what it is not), read:
+            <a href="concept.html"><strong>Concept</strong></a> and
+            <a href="scope.html"><strong>Scope &amp; Limits</strong></a>.
           </p>
         </section>
 
         <section class="card">
-          <h3>2) Build your baseline (first time)</h3>
+          <h3>Step 1 — Choose one device and stay consistent</h3>
           <ul>
-            <li>Be rested and functioning normally</li>
-            <li>Use the same device and input method</li>
-            <li>Complete <strong>3–5 baseline sessions</strong></li>
+            <li>Use the same device and input method (touch vs mouse) for baseline and checks</li>
+            <li>Close other demanding apps/tabs if possible</li>
+            <li>Try to test in similar conditions (seated, stable posture, minimal distractions)</li>
           </ul>
-          <p>
-            Your baseline defines your <em>personal normal range</em>.
-          </p>
           <p class="muted">
-            Baselines are device- and input-specific.
+            Device changes can produce differences that look like performance changes.
           </p>
         </section>
 
         <section class="card">
-          <h3>3) Run a functional check</h3>
+          <h3>Step 2 — Build a baseline (3–5 sessions)</h3>
+          <p>
+            Baseline is your personal reference range. Build it under normal conditions.
+          </p>
           <ul>
-            <li>Run a short check session</li>
-            <li>Your results are compared to your baseline</li>
-            <li>Status reflects deviation from your normal range</li>
+            <li>Run <strong>Baseline</strong> sessions on days that feel typical</li>
+            <li>Aim for <strong>3–5</strong> usable baseline sessions per test type</li>
+            <li>If a session is marked “Not usable”, repeat later</li>
           </ul>
           <p class="muted">
-            Single sessions are signals, not verdicts.
+            Baseline is not a “best score”. It’s the distribution that represents your normal variability.
           </p>
         </section>
 
         <section class="card">
-          <h3>How Divided Attention works</h3>
+          <h3>Step 3 — Use “Check” for comparisons</h3>
           <p>
-            Divided Attention measures how well you execute actions while your attention is split.
+            “Check” compares today’s performance against your baseline.
           </p>
           <ul>
-            <li>You respond to Go / No-Go signals</li>
-            <li>You silently count brief blue flashes during the task</li>
+            <li>Use <strong>Check</strong> when you want a baseline-relative signal</li>
+            <li>Interpret the result together with <strong>History</strong> (trend &gt; one session)</li>
+            <li>Context fields (sleep/stress/note) are metadata only — they do not change scoring</li>
           </ul>
+        </section>
+
+        <section class="card">
+          <h3>Step 4 — Use “Training” to practice (no baseline updates)</h3>
           <p>
-            Performance is evaluated across:
+            Training mode is for learning the tasks and reducing practice effects.
           </p>
           <ul>
-            <li>Reaction speed</li>
-            <li>Inhibitory control</li>
-            <li>Attention accuracy</li>
+            <li>Training sessions never update baseline</li>
+            <li>Use training if you are new to a task, or returning after a long break</li>
+            <li>Once you feel stable, switch to Baseline again</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h3>How to interpret results safely</h3>
+          <ul>
+            <li><strong>Prefer history over one-offs:</strong> check patterns across multiple sessions</li>
+            <li><strong>Look at stability:</strong> mean (average) and SD (variability) together</li>
+            <li><strong>Respect refusal:</strong> “Not usable” protects you from misinterpretation</li>
+            <li><strong>Do not infer causes:</strong> deviation can come from many sources</li>
           </ul>
           <p class="muted">
-            The overall result reflects the <strong>worst deviation</strong> among these signals.
-            This prevents strong performance in one area from masking difficulty in another.
+            If you need definitions for Mean and SD, see the <a href="faq.html">FAQ</a>.
           </p>
         </section>
 
         <section class="card">
-          <h3>4) Review history and trends</h3>
+          <h3>When to retest</h3>
           <ul>
-            <li>Open <strong>History</strong> to see past sessions</li>
-            <li>The trend view shows baseline range and recent checks</li>
-            <li>Optional context tags help interpretation</li>
+            <li>If you were interrupted or distracted</li>
+            <li>If you clicked before the task was ready</li>
+            <li>If results look inconsistent with how you feel</li>
+            <li>If the session is marked “Not usable”</li>
           </ul>
           <p class="muted">
-            Patterns over time matter more than any single result.
+            Retesting is normal. The goal is a clean signal, not forcing a result.
           </p>
         </section>
 
         <section class="card">
-          <h3>5) Training mode (optional)</h3>
+          <h3>Institutional note (read carefully)</h3>
           <p>
-            Training mode lets you practice without affecting your baseline.
+            FCE is a functional measurement tool and is intentionally limited.
+            It does not diagnose, does not detect substances, and does not produce automated decisions.
           </p>
           <p class="muted">
-            Training sessions are never used for comparison.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>6) Export data (optional)</h3>
-          <ul>
-            <li>History can be exported as JSON</li>
-            <li>Export is manual and local-only</li>
-          </ul>
-          <p class="muted">
-            FCE does not upload or share data.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>When results are not usable</h3>
-          <p>
-            Sometimes a session is marked as <em>not usable</em>.
-          </p>
-          <p>
-            This is intentional. Refusal protects accuracy.
-          </p>
-          <p class="muted">
-            Retesting under calmer conditions is always allowed.
+            If explored in institutional settings, usage should remain voluntary, transparent, and human-interpreted.
           </p>
         </section>
       </div>
 
+      <!-- NO -->
       <div class="lang lang-no hidden">
         <section class="hero">
-          <h2>Hvordan bruke FCE</h2>
+          <h2>Hvordan bruke</h2>
           <p class="lead">
-            FCE er et <strong>baseline-relativt funksjonsverktøy</strong>.
-            Det svarer på ett spørsmål:
-            <em>Hvordan fungerer du i dag sammenlignet med deg selv?</em>
+            FCE er baseline-relativt: det sammenligner deg med <em>ditt eget</em> normalnivå.
+            Denne siden beskriver en trygg og repeterbar arbeidsflyt.
           </p>
+
+          <blockquote class="quote">
+            «Enkeltøkter er signaler. Trend og repeterbarhet betyr mer.»
+          </blockquote>
+
+          <div style="margin: 18px auto 0; text-align: center; max-width: 720px;">
+            <div class="chips" aria-label="FCE arbeidsflyt">
+              <span class="chip">Baseline</span>
+              <span class="chip">Sjekk</span>
+              <span class="chip">Trening</span>
+              <span class="chip">Historikk først</span>
+              <span class="chip">Avslag beskytter</span>
+            </div>
+          </div>
         </section>
 
-        <div style="margin: 24px auto; text-align: center; max-width: 600px; padding: 0 16px;">
-          <a href="index.html#instrument" style="padding: 10px 20px; font-size: 14px; text-decoration: none; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; background: rgba(255,255,255,0.05); color: #eee; display: inline-block;">
+        <div style="margin: 24px auto; text-align: center; max-width: 760px; padding: 0 16px;">
+          <a href="index.html#instrument"
+             style="padding: 10px 20px; font-size: 14px; text-decoration: none;
+                    border: 1px solid rgba(255,255,255,0.15);
+                    border-radius: 8px;
+                    background: rgba(255,255,255,0.05);
+                    color: #eee;
+                    transition: all 0.2s ease;
+                    display: inline-block;">
             Åpne instrument
           </a>
         </div>
 
         <section class="card">
-          <h3>1) Velg test</h3>
+          <h3>Før du starter</h3>
+          <p>
+            Hvis du vil ha forklaringen på hva FCE er (og hva det ikke er), les:
+            <a href="concept.html"><strong>Konsept</strong></a> og
+            <a href="scope.html"><strong>Omfang &amp; begrensninger</strong></a>.
+          </p>
+          <p class="muted">
+            Merk: Hvis <code>scope.html</code> ikke finnes ennå, vil lenken fungere når siden legges til.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Steg 1 — Velg én enhet og vær konsekvent</h3>
           <ul>
-            <li><strong>Reaksjonstid</strong> — hastighet og stabilitet</li>
-            <li><strong>Go / No-Go</strong> — kontroll og inhibisjon</li>
-            <li><strong>Delt oppmerksomhet</strong> — utførelse under delt fokus</li>
+            <li>Bruk samme enhet og inndatametode (touch vs mus) for baseline og sjekk</li>
+            <li>Lukk andre krevende apper/faner om mulig</li>
+            <li>Test i like forhold (sittende, stabil, minst mulig distraksjon)</li>
           </ul>
           <p class="muted">
-            Delt oppmerksomhet kombinerer Go / No-Go med en visuell telleoppgave.
+            Enhetsbytte kan skape forskjeller som ser ut som funksjonsendring.
           </p>
         </section>
 
         <section class="card">
-          <h3>2) Bygg baseline (første gang)</h3>
-          <ul>
-            <li>Vær uthvilt og funger normalt</li>
-            <li>Bruk samme enhet og input-metode</li>
-            <li>Fullfør <strong>3–5 baseline-økter</strong></li>
-          </ul>
+          <h3>Steg 2 — Bygg baseline (3–5 økter)</h3>
           <p>
-            Baseline definerer ditt <em>personlige normalområde</em>.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>3) Kjør en funksjonssjekk</h3>
-          <ul>
-            <li>Gjennomfør en kort sjekk</li>
-            <li>Resultater sammenlignes med din baseline</li>
-            <li>Status viser avvik fra ditt normale nivå</li>
-          </ul>
-        </section>
-
-        <section class="card">
-          <h3>Hvordan delt oppmerksomhet fungerer</h3>
-          <p>
-            Delt oppmerksomhet måler hvordan du utfører handlinger når fokuset er delt.
+            Baseline er referansen din. Bygg den under normale forhold.
           </p>
           <ul>
-            <li>Du responderer på Go / No-Go-signaler</li>
-            <li>Du teller korte blå blink underveis</li>
-          </ul>
-          <p>
-            Resultatet vurderes ut fra:
-          </p>
-          <ul>
-            <li>Reaksjonshastighet</li>
-            <li>Inhibisjonskontroll</li>
-            <li>Oppmerksomhetsnøyaktighet</li>
+            <li>Kjør <strong>Baseline</strong>-økter på dager som føles typiske</li>
+            <li>Sikt på <strong>3–5</strong> brukbare baseline-økter per testtype</li>
+            <li>Hvis en økt markeres “Ikke brukbar”, prøv igjen senere</li>
           </ul>
           <p class="muted">
-            Totalstatus følger <strong>største avvik</strong>.
-            God ytelse på ett område kan ikke skjule vansker på et annet.
+            Baseline er ikke en “best score”. Det er fordelingen som beskriver normal variasjon.
           </p>
         </section>
 
         <section class="card">
-          <h3>4) Se historikk og trender</h3>
+          <h3>Steg 3 — Bruk “Sjekk” for sammenligning</h3>
+          <p>
+            “Sjekk” sammenligner dagens prestasjon mot baseline.
+          </p>
           <ul>
-            <li>Åpne <strong>Historikk</strong> for tidligere økter</li>
-            <li>Trendvisning viser baseline og nylige sjekker</li>
-            <li>Kontekstfelt hjelper tolkning</li>
+            <li>Bruk <strong>Sjekk</strong> når du vil ha et baseline-relativt signal</li>
+            <li>Tolk sammen med <strong>Historikk</strong> (trend &gt; enkeltøkt)</li>
+            <li>Kontekstfelter (søvn/stress/notat) er kun metadata — de endrer ikke scoring</li>
           </ul>
         </section>
 
         <section class="card">
-          <h3>5) Treningsmodus (valgfritt)</h3>
+          <h3>Steg 4 — Bruk “Trening” for å øve (oppdaterer ikke baseline)</h3>
           <p>
-            Treningsmodus lar deg øve uten å påvirke baseline.
+            Trening er for å lære oppgavene og redusere øvings-effekt.
           </p>
-        </section>
-
-        <section class="card">
-          <h3>6) Eksporter data (valgfritt)</h3>
           <ul>
-            <li>Historikk kan eksporteres som JSON</li>
-            <li>Eksport er manuell og lokal</li>
+            <li>Treningsøkter oppdaterer aldri baseline</li>
+            <li>Bruk trening hvis du er ny, eller har hatt lang pause</li>
+            <li>Når du er stabil, gå tilbake til Baseline</li>
           </ul>
         </section>
 
         <section class="card">
-          <h3>Når resultater ikke kan brukes</h3>
-          <p>
-            Noen økter markeres som <em>ikke brukbare</em>.
+          <h3>Slik tolker du resultat trygt</h3>
+          <ul>
+            <li><strong>Se historikk:</strong> mønstre over flere økter</li>
+            <li><strong>Se stabilitet:</strong> mean (gjennomsnitt) og SD (variasjon) sammen</li>
+            <li><strong>Respekter avslag:</strong> “Ikke brukbar” beskytter mot feiltolkning</li>
+            <li><strong>Ikke anta årsak:</strong> avvik kan komme av mange ting</li>
+          </ul>
+          <p class="muted">
+            For definisjoner av Mean og SD, se <a href="faq.html">FAQ</a>.
           </p>
+        </section>
+
+        <section class="card">
+          <h3>Når bør du teste på nytt?</h3>
+          <ul>
+            <li>Hvis du ble avbrutt eller distrahert</li>
+            <li>Hvis du trykket før oppgaven var klar</li>
+            <li>Hvis resultatet virker ulogisk i forhold til hvordan du føler deg</li>
+            <li>Hvis økten er markert “Ikke brukbar”</li>
+          </ul>
+          <p class="muted">
+            Retest er normalt. Målet er et rent signal, ikke å “presse frem” et resultat.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Institusjonelt notat (les nøye)</h3>
           <p>
-            Dette er beskyttelse — ikke feil.
+            FCE er et funksjonsmåleverktøy og er bevisst avgrenset.
+            Det stiller ikke diagnose, det påviser ikke rusmidler, og det gir ikke automatiserte beslutninger.
+          </p>
+          <p class="muted">
+            Hvis det utforskes institusjonelt, bør bruk være frivillig, transparent og menneskelig tolket.
           </p>
         </section>
       </div>
@@ -305,12 +362,14 @@
             <span class="lang lang-no hidden">← Norsk kontekst</span>
           </a>
         </div>
+
         <div class="docs-nav-center">
           <a href="index.html#instrument" class="docs-nav-btn">
             <span class="lang lang-en">Open instrument</span>
             <span class="lang lang-no hidden">Åpne instrument</span>
           </a>
         </div>
+
         <div class="docs-nav-right">
           <a href="faq.html" class="docs-nav-btn">
             <span class="lang lang-en">Next →</span>
@@ -346,31 +405,22 @@
         if (menuBtn) menuBtn.setAttribute("aria-expanded", "false");
       }
 
-      menuBtn.addEventListener("click", () => {
+      menuBtn && menuBtn.addEventListener("click", () => {
         if (menu.classList.contains("open")) closeMenu();
         else openMenu();
       });
 
-      if (closeMenuBtn) {
-        closeMenuBtn.addEventListener("click", closeMenu);
-      }
-
+      closeMenuBtn && closeMenuBtn.addEventListener("click", closeMenu);
       overlay && overlay.addEventListener("click", closeMenu);
 
       document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && menu.classList.contains("open")) {
-          closeMenu();
-        }
+        if (e.key === "Escape" && menu.classList.contains("open")) closeMenu();
       });
 
-      // Close menu when clicking menu items (skip disabled items)
       document.querySelectorAll(".menu-item").forEach(item => {
         item.addEventListener("click", (e) => {
-          if (!item.classList.contains("is-disabled")) {
-            closeMenu();
-          } else {
-            e.preventDefault();
-          }
+          if (!item.classList.contains("is-disabled")) closeMenu();
+          else e.preventDefault();
         });
       });
 
@@ -386,151 +436,75 @@
         }
       }
 
-      // Translation keys for page titles
+      const langSelect = document.getElementById("langSelect");
+      if (langSelect) langSelect.value = currentLang;
+
       const I18N_PAGES = {
         en: {
           about: "About",
           "how-to-use": "How to use",
           faq: "FAQ",
-          "norwegian-context": "Norwegian Context"
+          "norwegian-context": "Norwegian Context",
+          concept: "Concept",
+          scope: "Scope & Limits"
         },
         no: {
           about: "Om",
           "how-to-use": "Hvordan bruke",
           faq: "FAQ",
-          "norwegian-context": "Norsk kontekst"
+          "norwegian-context": "Norsk kontekst",
+          concept: "Konsept",
+          scope: "Omfang & begrensninger"
         }
       };
 
       function getPageTitle(lang) {
-        const pageName = location.pathname.split("/").pop().replace(".html", "") || "how-to-use";
-        return I18N_PAGES[lang] && I18N_PAGES[lang][pageName] ? I18N_PAGES[lang][pageName] : I18N_PAGES.en[pageName] || "How to use";
+        const pageName = (location.pathname.split("/").pop() || "how-to-use.html").replace(".html", "");
+        return (I18N_PAGES[lang] && I18N_PAGES[lang][pageName])
+          ? I18N_PAGES[lang][pageName]
+          : (I18N_PAGES.en[pageName] || "How to use");
       }
 
       function updateTopbarPage() {
         const topbarPage = document.getElementById("topbarPage");
-        if (topbarPage) {
-          topbarPage.textContent = getPageTitle(currentLang);
-        }
+        if (topbarPage) topbarPage.textContent = getPageTitle(currentLang);
+      }
+
+      function applyLanguage(lang) {
+        currentLang = lang;
+        try { localStorage.setItem(LANG_KEY, lang); } catch {}
+
+        document.querySelectorAll(".lang-en").forEach(el => el.classList.toggle("hidden", lang !== "en"));
+        document.querySelectorAll(".lang-no").forEach(el => el.classList.toggle("hidden", lang !== "no"));
+
+        updateTopbarPage();
+        setupScrollObserver();
       }
 
       let scrollObserver = null;
       function setupScrollObserver() {
-        if (scrollObserver) {
-          scrollObserver.disconnect();
-        }
-        // Select the visible h2 (inside .lang that doesn't have .hidden)
+        if (scrollObserver) scrollObserver.disconnect();
+
         const pageHeading = document.querySelector(".lang:not(.hidden) .hero h2") || document.querySelector(".hero h2");
         const topbarPage = document.getElementById("topbarPage");
         if (!topbarPage || !pageHeading) return;
-        
-        // Helper function to update visibility based on intersection
+
         function updateVisibility(isIntersecting) {
-          if (isIntersecting) {
-            topbarPage.classList.add("is-hidden");
-          } else {
-            topbarPage.classList.remove("is-hidden");
-          }
+          if (isIntersecting) topbarPage.classList.add("is-hidden");
+          else topbarPage.classList.remove("is-hidden");
         }
-        
-        // Check initial state first (before observer is created)
-        const rect = pageHeading.getBoundingClientRect();
-        const headerHeight = 80;
-        const isCurrentlyVisible = rect.top >= 0 && rect.top < (window.innerHeight - headerHeight) && rect.bottom > headerHeight;
-        updateVisibility(isCurrentlyVisible);
-        
-        // Set up observer - it will fire immediately if element is already intersecting
+
         scrollObserver = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            updateVisibility(entry.isIntersecting);
-          });
-        }, { rootMargin: "-80px 0px 0px 0px" });
+          entries.forEach(entry => updateVisibility(entry.isIntersecting));
+        }, { threshold: 0.25 });
+
         scrollObserver.observe(pageHeading);
       }
 
-      function setLang(lang) {
-        try { localStorage.setItem(LANG_KEY, lang); } catch {}
-        currentLang = lang;
-        document.querySelectorAll(".lang-en").forEach(el => el.classList.toggle("hidden", lang !== "en"));
-        document.querySelectorAll(".lang-no").forEach(el => el.classList.toggle("hidden", lang !== "no"));
-        const langSelect = document.getElementById("langSelect");
-        if (langSelect) {
-          langSelect.value = lang;
-        }
-        updateTopbarPage();
-        // Small delay to ensure DOM is fully updated
-        setTimeout(() => {
-          setupScrollObserver();
-        }, 10);
-      }
+      langSelect && langSelect.addEventListener("change", (e) => applyLanguage(e.target.value));
 
-      setLang(currentLang === "no" ? "no" : "en");
-      // Initial setup after a brief delay to ensure DOM is ready
-      setTimeout(() => {
-        setupScrollObserver();
-      }, 10);
-
-      const langSelect = document.getElementById("langSelect");
-      if (langSelect) {
-        langSelect.addEventListener("change", (e) => {
-          setLang(e.target.value);
-        });
-      }
-
-      // History menu availability based on stored test type
-      function historyKeyFor(testType) {
-        return `fce_history_v1_${testType}`;
-      }
-
-      function baselineKeyFor(tt) {
-        if (tt === "gonogo") return "fce_baseline_gonogo_v1";
-        if (tt === "divided") return "fce_baseline_divided_v1";
-        return "fce_baseline_reaction_v1";
-      }
-
-      function hasHistoryForTestType(testTypeValue) {
-        const tt = testTypeValue || "reaction";
-        try {
-          const historyRaw = localStorage.getItem(historyKeyFor(tt));
-          if (historyRaw) {
-            const history = JSON.parse(historyRaw);
-            if (Array.isArray(history) && history.length > 0) {
-              return true;
-            }
-          }
-        } catch (_) {}
-        try {
-          const baselineRaw = localStorage.getItem(baselineKeyFor(tt));
-          if (baselineRaw) {
-            const baseline = JSON.parse(baselineRaw);
-            if (Array.isArray(baseline) && baseline.length > 0) {
-              return true;
-            }
-          }
-        } catch (_) {}
-        return false;
-      }
-
-      function updateHistoryMenuAvailability() {
-        const historyLink = document.querySelector('.menu-item[href*="history"]');
-        if (historyLink) {
-          try {
-            const TEST_TYPE_KEY = "fce_test_type_v1";
-            const savedTestType = localStorage.getItem(TEST_TYPE_KEY) || "reaction";
-            const hasHistory = hasHistoryForTestType(savedTestType);
-            
-            if (hasHistory) {
-              historyLink.classList.remove("is-disabled");
-              historyLink.removeAttribute("tabindex");
-            } else {
-              historyLink.classList.add("is-disabled");
-              historyLink.setAttribute("tabindex", "-1");
-            }
-          } catch (_) {}
-        }
-      }
-
-      updateHistoryMenuAvailability();
+      // Init
+      applyLanguage(currentLang);
     })();
   </script>
 </body>

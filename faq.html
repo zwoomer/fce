@@ -14,6 +14,7 @@
     } catch {}
   </script>
 </head>
+
 <body>
   <header class="topbar">
     <button id="menuBtn" aria-label="Menu" aria-controls="menu" aria-expanded="false">☰</button>
@@ -33,26 +34,42 @@
     <div class="menu-header">
       <button id="closeMenuBtn" class="menu-close-btn" aria-label="Close menu">×</button>
     </div>
+
     <a class="menu-item" href="index.html?home=1">
       <span class="lang lang-en">Home</span>
       <span class="lang lang-no hidden">Hjem</span>
     </a>
+
     <a class="menu-item" href="index.html?view=history">
       <span class="lang lang-en">History</span>
       <span class="lang lang-no hidden">Historikk</span>
     </a>
+
     <a class="menu-item" href="about.html">
       <span class="lang lang-en">About</span>
       <span class="lang lang-no hidden">Om</span>
     </a>
+
+    <a class="menu-item" href="concept.html">
+      <span class="lang lang-en">Concept</span>
+      <span class="lang lang-no hidden">Konsept</span>
+    </a>
+
+    <a class="menu-item" href="scope.html">
+      <span class="lang lang-en">Scope &amp; Limits</span>
+      <span class="lang lang-no hidden">Omfang &amp; begrensninger</span>
+    </a>
+
     <a class="menu-item" href="norwegian-context.html">
       <span class="lang lang-en">Norwegian Context</span>
       <span class="lang lang-no hidden">Norsk kontekst</span>
     </a>
+
     <a class="menu-item" href="how-to-use.html">
       <span class="lang lang-en">How to Use</span>
       <span class="lang lang-no hidden">Hvordan bruke</span>
     </a>
+
     <a class="menu-item" href="faq.html" aria-current="page">
       <span class="lang lang-en">FAQ</span>
       <span class="lang lang-no hidden">FAQ</span>
@@ -63,6 +80,7 @@
 
   <main class="page">
     <section class="container">
+
       <!-- EN -->
       <div class="lang lang-en">
         <section class="hero">
@@ -70,6 +88,16 @@
           <p class="lead">
             Short answers, clear boundaries, and practical definitions.
           </p>
+
+          <div style="margin: 18px auto 0; text-align: center; max-width: 720px;">
+            <div class="chips" aria-label="FCE principles">
+              <span class="chip">Baseline-relative</span>
+              <span class="chip">Function-first</span>
+              <span class="chip">Local-only by default</span>
+              <span class="chip">Refusal protects</span>
+              <span class="chip">Human interpretation</span>
+            </div>
+          </div>
         </section>
 
         <div style="margin: 24px auto; text-align: center; max-width: 600px; padding: 0 16px;">
@@ -87,22 +115,34 @@
         </div>
 
         <section class="card">
+          <h3>Where should I start?</h3>
+          <p>
+            If you want the full explanation in a readable, non-technical format:
+          </p>
+          <ul>
+            <li><a href="concept.html"><strong>Concept</strong></a> — what FCE is and why baseline-relative matters</li>
+            <li><a href="scope.html"><strong>Scope &amp; Limits</strong></a> — explicit non-goals and safeguards</li>
+            <li><a href="how-to-use.html"><strong>How to Use</strong></a> — baseline, checks, and safe interpretation</li>
+          </ul>
+        </section>
+
+        <section class="card">
           <h3>What is FCE?</h3>
           <p>
-            <strong>FCE (Functional Cognition &amp; Execution)</strong> is a baseline-relative instrument that measures
-            how you are functioning <em>today</em> compared to your own normal performance.
+            <strong>FCE (Functional Cognition &amp; Execution)</strong> is a baseline-relative functional instrument.
+            It measures how your performance <em>today</em> compares to <em>your own normal range</em> — not to population averages.
           </p>
           <p class="muted">
-            It measures function (speed, control, consistency) — not diagnoses, substances, or personal worth.
+            FCE measures function (speed, control, consistency). It does not measure diagnoses, substances, or “worthiness”.
           </p>
         </section>
 
         <section class="card">
           <h3>Is this a medical test?</h3>
-          <p><strong>No.</strong> FCE is not a medical or diagnostic tool.</p>
+          <p><strong>No.</strong></p>
           <p>
-            It does not diagnose conditions, determine fitness for specific activities, or replace professional assessment.
-            It is a <em>functional self-check</em> designed to support awareness, tracking, and careful pilot exploration.
+            FCE is not diagnostic and does not replace clinical evaluation.
+            It is a functional measurement tool designed to support tracking and careful interpretation.
           </p>
         </section>
 
@@ -115,24 +155,24 @@
           </ul>
           <p class="muted">
             Divided Attention evaluates multiple signals. The overall status follows the <strong>worst deviation</strong>,
-            so one strong signal can't hide another weak signal.
+            so one strong signal cannot hide another weak signal.
           </p>
         </section>
 
         <section class="card">
-          <h3>How is this different from "reaction time" websites?</h3>
+          <h3>How is this different from typical “reaction time” websites?</h3>
           <ul>
             <li>FCE builds a <strong>personal baseline</strong> instead of comparing you to others</li>
             <li>Results are interpreted relative to <em>your own normal</em></li>
             <li>Multiple execution domains are measured (not one number)</li>
-            <li>Sessions are stored locally and shown transparently</li>
+            <li>Sessions are stored locally and shown transparently in History</li>
           </ul>
         </section>
 
         <section class="card">
-          <h3>What do "Baseline", "Check", and "Training" mean?</h3>
+          <h3>What do “Baseline”, “Check”, and “Training” mean?</h3>
           <ul>
-            <li><strong>Baseline</strong> — builds your normal range</li>
+            <li><strong>Baseline</strong> — builds your normal range (your reference)</li>
             <li><strong>Check</strong> — compares today to your baseline</li>
             <li><strong>Training</strong> — practice only (never updates baseline)</li>
           </ul>
@@ -144,8 +184,8 @@
         <section class="card">
           <h3>Why do I need multiple baseline sessions?</h3>
           <p>
-            Your performance naturally varies day to day.
-            A baseline is not one "best" score — it's a stable reference built from multiple sessions.
+            Performance naturally varies day to day.
+            A baseline is not one “best” score — it’s a stable reference built from multiple sessions.
           </p>
           <p class="muted">
             Most people should collect <strong>3–5</strong> baseline sessions under normal conditions.
@@ -155,37 +195,34 @@
         <section class="card">
           <h3>Can I compare results across devices?</h3>
           <p>
-            Not reliably.
-            Different devices and input methods (mouse vs touch) can change timing and error patterns.
+            Not reliably. Different devices and input methods (mouse vs touch) can change timing and error patterns.
           </p>
           <p class="muted">
-            For clean comparisons, build and check on the same device and input method.
+            For clean comparisons, build baseline and run checks on the same device and input method.
           </p>
         </section>
 
         <section class="card">
-          <h3>What do "Mean" and "SD" mean?</h3>
+          <h3>What do “Mean” and “SD” mean?</h3>
           <p>
-            FCE often summarizes performance using two simple statistics:
+            FCE summarizes performance using two simple statistics:
           </p>
           <ul>
             <li>
-              <strong>Mean</strong> — the average value.
-              Example: average reaction time across trials.
+              <strong>Mean</strong> — the average value (example: average reaction time across trials).
             </li>
             <li>
               <strong>SD (Standard Deviation)</strong> — how variable the results are.
-              Low SD = stable/consistent. High SD = more "spread" and less stable performance.
+              Low SD = more stable/consistent. High SD = more spread and less stable performance.
             </li>
           </ul>
           <p class="muted">
-            In practice: two sessions can have the same mean but different SD.
-            One can be steady, the other can be uneven.
+            In practice: two sessions can have the same mean but different SD. One can be steady, the other uneven.
           </p>
         </section>
 
         <section class="card">
-          <h3>What does "Not usable" mean?</h3>
+          <h3>What does “Not usable” mean?</h3>
           <p>
             Sometimes a session is marked as <em>not usable</em>. This is intentional.
           </p>
@@ -210,21 +247,22 @@
         </section>
 
         <section class="card">
-          <h3>Can FCE tell whether I'm impaired by a specific substance?</h3>
+          <h3>Can FCE tell whether I’m impaired by a specific substance?</h3>
           <p><strong>No.</strong></p>
           <p>
             FCE measures function — not cause.
-            Sleep loss, stress, illness, medication, alcohol, cannabis, distraction: different causes can produce similar functional deviation.
+            Different causes can produce similar functional deviation (sleep loss, stress, illness, medication, alcohol, cannabis, distraction).
           </p>
         </section>
 
         <section class="card">
           <h3>Is FCE meant to be used for legal enforcement?</h3>
+          <p><strong>No.</strong></p>
           <p>
-            No. FCE is not a legal verdict engine and should not be used for automatic enforcement decisions.
+            FCE is not a legal verdict engine and should not be used for automatic enforcement or binding decisions.
           </p>
           <p class="muted">
-            If FCE is ever explored institutionally, it must remain voluntary, transparent, and contestable.
+            If explored institutionally, safeguards must keep it voluntary, transparent, and contestable.
           </p>
         </section>
 
@@ -233,10 +271,20 @@
           <p>
             Locally in your browser on this device. FCE does not require an account and does not upload data by default.
           </p>
-          <ul>
-            <li>Clearing browser data clears FCE data on that device</li>
-            <li>Export is manual (JSON) if you choose to export</li>
-          </ul>
+          <p class="muted">
+            Clearing site data in your browser will remove local history and baseline from that device.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Can I export my results?</h3>
+          <p>
+            Yes. Export is optional and user-initiated.
+            The default instrument is designed around local storage and transparency-first history.
+          </p>
+          <p class="muted">
+            Any institutional data flow should be explicit and separate from the core instrument.
+          </p>
         </section>
       </div>
 
@@ -245,8 +293,18 @@
         <section class="hero">
           <h2>FAQ</h2>
           <p class="lead">
-            Korte svar, tydelige grenser og enkle definisjoner.
+            Korte svar, tydelige grenser og praktiske definisjoner.
           </p>
+
+          <div style="margin: 18px auto 0; text-align: center; max-width: 720px;">
+            <div class="chips" aria-label="FCE prinsipper">
+              <span class="chip">Baseline-relativ</span>
+              <span class="chip">Funksjon først</span>
+              <span class="chip">Lokalt som standard</span>
+              <span class="chip">Avslag beskytter</span>
+              <span class="chip">Menneskelig tolkning</span>
+            </div>
+          </div>
         </section>
 
         <div style="margin: 24px auto; text-align: center; max-width: 600px; padding: 0 16px;">
@@ -264,57 +322,72 @@
         </div>
 
         <section class="card">
+          <h3>Hvor bør jeg starte?</h3>
+          <p>
+            Hvis du vil ha forklaringen i et lesbart, ikke-teknisk format:
+          </p>
+          <ul>
+            <li><a href="concept.html"><strong>Konsept</strong></a> — hva FCE er og hvorfor baseline-relativt er viktig</li>
+            <li><a href="scope.html"><strong>Omfang &amp; begrensninger</strong></a> — eksplisitte ikke-mål og sikringer</li>
+            <li><a href="how-to-use.html"><strong>Hvordan bruke</strong></a> — baseline, sjekk og trygg tolkning</li>
+          </ul>
+          <p class="muted">
+            Merk: Hvis <code>scope.html</code> ikke finnes ennå, vil lenken fungere når siden legges til.
+          </p>
+        </section>
+
+        <section class="card">
           <h3>Hva er FCE?</h3>
           <p>
-            <strong>FCE (Functional Cognition &amp; Execution)</strong> er et baseline-relativt instrument som måler
-            hvordan du fungerer <em>i dag</em> sammenlignet med ditt normale nivå.
+            <strong>FCE (Functional Cognition &amp; Execution)</strong> er et baseline-relativt, funksjonelt instrument.
+            Det måler hvordan prestasjon <em>i dag</em> sammenlignes med <em>ditt eget normalområde</em> — ikke med befolkningsgjennomsnitt.
           </p>
           <p class="muted">
-            Det måler funksjon (hastighet, kontroll, stabilitet) — ikke diagnoser, stoffer eller verdi som menneske.
+            FCE måler funksjon (hastighet, kontroll, stabilitet). Det måler ikke diagnoser, rusmidler eller «verdi som person».
           </p>
         </section>
 
         <section class="card">
           <h3>Er dette en medisinsk test?</h3>
-          <p><strong>Nei.</strong> FCE er ikke et medisinsk eller diagnostisk verktøy.</p>
+          <p><strong>Nei.</strong></p>
           <p>
-            Det stiller ikke diagnose, avgjør ikke egnethet for spesifikke aktiviteter og erstatter ikke faglig vurdering.
-            Det er en <em>funksjonssjekk</em> for bevissthet, sporing og forsiktig pilotutforskning.
+            FCE er ikke diagnostisk og erstatter ikke klinisk vurdering.
+            Det er et funksjonelt måleverktøy ment for sporing og varsom tolkning.
           </p>
         </section>
 
         <section class="card">
-          <h3>Hvilke tester finnes?</h3>
+          <h3>Hvilke tester er inkludert?</h3>
           <ul>
             <li><strong>Reaksjonstid</strong> — responshastighet og stabilitet</li>
-            <li><strong>Go / No-Go</strong> — kontroll og inhibisjon under tidspress</li>
+            <li><strong>Go / No-Go</strong> — inhibisjon og kontroll under tidspress</li>
             <li><strong>Delt oppmerksomhet</strong> — Go / No-Go mens du teller korte visuelle blink</li>
           </ul>
           <p class="muted">
             Delt oppmerksomhet vurderer flere signaler. Totalstatus følger <strong>største avvik</strong>,
-            slik at ett sterkt signal ikke kan skjule et annet svakt signal.
+            slik at et sterkt signal ikke kan skjule et svakt signal.
           </p>
         </section>
 
         <section class="card">
-          <h3>Hvordan skiller dette seg fra "reaksjonstid"-sider?</h3>
+          <h3>Hvordan er dette forskjellig fra vanlige “reaction time”-sider?</h3>
           <ul>
-            <li>FCE bygger en <strong>personlig baseline</strong> i stedet for å sammenligne med andre</li>
-            <li>Resultater tolkes mot <em>ditt eget normale nivå</em></li>
-            <li>Flere domener måles (ikke bare ett tall)</li>
-            <li>Økter lagres lokalt og vises åpent</li>
+            <li>FCE bygger en <strong>personlig baseline</strong> i stedet for å sammenligne deg med andre</li>
+            <li>Resultater tolkes relativt til <em>din egen normal</em></li>
+            <li>Flere utførelsesdomener måles (ikke bare ett tall)</li>
+            <li>Økter lagres lokalt og vises åpent i historikk</li>
           </ul>
         </section>
 
         <section class="card">
-          <h3>Hva betyr "Baseline", "Sjekk" og "Trening"?</h3>
+          <h3>Hva betyr “Baseline”, “Sjekk” og “Trening”?</h3>
           <ul>
-            <li><strong>Baseline</strong> — bygger normalområdet ditt</li>
+            <li><strong>Baseline</strong> — bygger normalområdet (referansen din)</li>
             <li><strong>Sjekk</strong> — sammenligner i dag med baseline</li>
             <li><strong>Trening</strong> — kun øving (oppdaterer aldri baseline)</li>
           </ul>
           <p class="muted">
-            Modus bestemmes av knappen/handlingen du velger.
+            Modus bestemmes av hvilken knapp du trykker.
           </p>
         </section>
 
@@ -322,7 +395,7 @@
           <h3>Hvorfor trenger jeg flere baseline-økter?</h3>
           <p>
             Prestasjon varierer naturlig fra dag til dag.
-            Baseline er ikke én "beste" økt — den bygges av flere økter og blir et stabilt referansepunkt.
+            Baseline er ikke én “beste” score — det er en stabil referanse bygget av flere økter.
           </p>
           <p class="muted">
             De fleste bør samle <strong>3–5</strong> baseline-økter under normale forhold.
@@ -330,94 +403,105 @@
         </section>
 
         <section class="card">
-          <h3>Kan jeg sammenligne mellom ulike enheter?</h3>
+          <h3>Kan jeg sammenligne på tvers av enheter?</h3>
           <p>
-            Ikke pålitelig.
-            Ulike enheter og input (mus vs touch) påvirker timing og feilbilde.
+            Ikke pålitelig. Ulike enheter og inndatametoder (mus vs touch) kan endre timing og feilmønstre.
           </p>
           <p class="muted">
-            For ryddig sammenligning: bygg baseline og kjør sjekk på samme enhet og input.
+            For rene sammenligninger: bygg baseline og kjør sjekk på samme enhet og inndatametode.
           </p>
         </section>
 
         <section class="card">
-          <h3>Hva betyr "Mean" og "SD"?</h3>
+          <h3>Hva betyr “Mean” og “SD”?</h3>
           <p>
-            FCE oppsummerer ofte prestasjon med to enkle mål:
+            FCE oppsummerer ofte prestasjon med to enkle statistikker:
           </p>
           <ul>
             <li>
-              <strong>Mean (gjennomsnitt)</strong> — gjennomsnittsverdien.
-              Eksempel: gjennomsnittlig reaksjonstid.
+              <strong>Mean</strong> — gjennomsnittet (for eksempel gjennomsnittlig reaksjonstid).
             </li>
             <li>
-              <strong>SD (standardavvik)</strong> — hvor mye resultatene varierer.
-              Lav SD = stabilt/jevnt. Høy SD = mer spredning og mindre stabilitet.
+              <strong>SD (standardavvik)</strong> — hvor variabelt resultatet er.
+              Lav SD = mer stabilt/konsistent. Høy SD = mer spredning og mindre stabil prestasjon.
             </li>
           </ul>
           <p class="muted">
-            To økter kan ha samme gjennomsnitt, men ulik SD.
-            Den ene kan være jevn, den andre ujevn.
+            I praksis: to økter kan ha samme gjennomsnitt, men ulik SD. Én kan være jevn, den andre ujevn.
           </p>
         </section>
 
         <section class="card">
-          <h3>Hva betyr "Ikke brukbar"?</h3>
+          <h3>Hva betyr “Ikke brukbar”?</h3>
           <p>
-            Noen ganger markeres en økt som <em>ikke brukbar</em>. Dette er bevisst.
+            Noen ganger markeres en økt som <em>ikke brukbar</em>. Dette er med vilje.
           </p>
           <ul>
             <li>Det beskytter nøyaktighet når datakvaliteten er for lav</li>
-            <li>Det hindrer falsk sikkerhet basert på dårlig eller ufullstendig data</li>
+            <li>Det hindrer falsk sikkerhet fra ufullstendig eller forstyrret input</li>
           </ul>
           <p class="muted">
-            Avslag er beskyttelse — ikke feil. Du kan alltid teste på nytt.
+            Avslag er beskyttelse, ikke feil. Du kan alltid teste på nytt.
           </p>
         </section>
 
         <section class="card">
           <h3>Endrer kontekstfeltene resultatet?</h3>
           <p>
-            Nei. Kontekst (søvn, stress, notat) lagres kun som metadata.
-            Det påvirker ikke scoring eller sammenligning.
+            Nei. Kontekstfeltene (søvn, stress, notat) lagres kun som metadata.
+            De påvirker ikke scoring eller sammenligning.
+          </p>
+          <p class="muted">
+            Først måling. Deretter tolkning.
           </p>
         </section>
 
         <section class="card">
-          <h3>Kan FCE si om jeg er påvirket av et spesifikt stoff?</h3>
+          <h3>Kan FCE si om jeg er påvirket av et bestemt stoff?</h3>
           <p><strong>Nei.</strong></p>
           <p>
             FCE måler funksjon — ikke årsak.
-            Søvnmangel, stress, sykdom, medisin, alkohol, cannabis, distraksjon: ulike årsaker kan gi likt funksjonsavvik.
+            Ulike årsaker kan gi lignende funksjonsavvik (søvnmangel, stress, sykdom, medisiner, alkohol, cannabis, distraksjon).
           </p>
         </section>
 
         <section class="card">
           <h3>Er FCE ment for juridisk håndheving?</h3>
+          <p><strong>Nei.</strong></p>
           <p>
-            Nei. FCE er ikke en juridisk "domsmotor" og skal ikke brukes til automatisk håndheving.
+            FCE er ikke en juridisk domsmotor og skal ikke brukes for automatisk håndheving eller bindende beslutninger.
           </p>
           <p class="muted">
-            Hvis FCE noen gang utforskes institusjonelt, må det være frivillig, transparent og mulig å bestride.
+            Hvis det utforskes institusjonelt, må sikringer holde det frivillig, transparent og etterprøvbart.
           </p>
         </section>
 
         <section class="card">
           <h3>Hvor lagres dataene mine?</h3>
           <p>
-            Lokalt i nettleseren på denne enheten. FCE krever ikke konto og laster ikke opp data som standard.
+            Lokalt i nettleseren på denne enheten. FCE krever ingen konto og laster ikke opp data som standard.
           </p>
-          <ul>
-            <li>Hvis du sletter nettleserdata, forsvinner FCE-data på enheten</li>
-            <li>Eksport er manuell (JSON) hvis du velger å eksportere</li>
-          </ul>
+          <p class="muted">
+            Hvis du sletter nettsteddata i nettleseren, fjernes lokal historikk og baseline fra den enheten.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Kan jeg eksportere resultater?</h3>
+          <p>
+            Ja. Eksport er valgfritt og brukerstyrt.
+            Standardinstrumentet er designet rundt lokal lagring og “historikk først”.
+          </p>
+          <p class="muted">
+            Eventuelle institusjonelle dataflyter bør være eksplisitte og separate fra kjernen.
+          </p>
         </section>
       </div>
 
       <nav class="docs-nav">
         <div class="docs-nav-left">
           <a href="how-to-use.html" class="docs-nav-btn">
-            <span class="lang lang-en">← How to use</span>
+            <span class="lang lang-en">← How to Use</span>
             <span class="lang lang-no hidden">← Hvordan bruke</span>
           </a>
         </div>
@@ -427,7 +511,13 @@
             <span class="lang lang-no hidden">Åpne instrument</span>
           </a>
         </div>
-        <div class="docs-nav-right"></div>
+
+        <div class="docs-nav-right">
+          <a href="about.html" class="docs-nav-btn">
+            <span class="lang lang-en">About →</span>
+            <span class="lang lang-no hidden">Om →</span>
+          </a>
+        </div>
       </nav>
 
       <footer class="footer muted">
@@ -457,31 +547,22 @@
         if (menuBtn) menuBtn.setAttribute("aria-expanded", "false");
       }
 
-      menuBtn.addEventListener("click", () => {
+      menuBtn && menuBtn.addEventListener("click", () => {
         if (menu.classList.contains("open")) closeMenu();
         else openMenu();
       });
 
-      if (closeMenuBtn) {
-        closeMenuBtn.addEventListener("click", closeMenu);
-      }
-
+      closeMenuBtn && closeMenuBtn.addEventListener("click", closeMenu);
       overlay && overlay.addEventListener("click", closeMenu);
 
       document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && menu.classList.contains("open")) {
-          closeMenu();
-        }
+        if (e.key === "Escape" && menu.classList.contains("open")) closeMenu();
       });
 
-      // Close menu when clicking menu items (skip disabled items)
       document.querySelectorAll(".menu-item").forEach(item => {
         item.addEventListener("click", (e) => {
-          if (!item.classList.contains("is-disabled")) {
-            closeMenu();
-          } else {
-            e.preventDefault();
-          }
+          if (!item.classList.contains("is-disabled")) closeMenu();
+          else e.preventDefault();
         });
       });
 
@@ -497,151 +578,75 @@
         }
       }
 
-      // Translation keys for page titles
+      const langSelect = document.getElementById("langSelect");
+      if (langSelect) langSelect.value = currentLang;
+
       const I18N_PAGES = {
         en: {
           about: "About",
           "how-to-use": "How to use",
           faq: "FAQ",
-          "norwegian-context": "Norwegian Context"
+          "norwegian-context": "Norwegian Context",
+          concept: "Concept",
+          scope: "Scope & Limits"
         },
         no: {
           about: "Om",
           "how-to-use": "Hvordan bruke",
           faq: "FAQ",
-          "norwegian-context": "Norsk kontekst"
+          "norwegian-context": "Norsk kontekst",
+          concept: "Konsept",
+          scope: "Omfang & begrensninger"
         }
       };
 
       function getPageTitle(lang) {
-        const pageName = location.pathname.split("/").pop().replace(".html", "") || "faq";
-        return I18N_PAGES[lang] && I18N_PAGES[lang][pageName] ? I18N_PAGES[lang][pageName] : I18N_PAGES.en[pageName] || "FAQ";
+        const pageName = (location.pathname.split("/").pop() || "faq.html").replace(".html", "");
+        return (I18N_PAGES[lang] && I18N_PAGES[lang][pageName])
+          ? I18N_PAGES[lang][pageName]
+          : (I18N_PAGES.en[pageName] || "FAQ");
       }
 
       function updateTopbarPage() {
         const topbarPage = document.getElementById("topbarPage");
-        if (topbarPage) {
-          topbarPage.textContent = getPageTitle(currentLang);
-        }
+        if (topbarPage) topbarPage.textContent = getPageTitle(currentLang);
+      }
+
+      function applyLanguage(lang) {
+        currentLang = lang;
+        try { localStorage.setItem(LANG_KEY, lang); } catch {}
+
+        document.querySelectorAll(".lang-en").forEach(el => el.classList.toggle("hidden", lang !== "en"));
+        document.querySelectorAll(".lang-no").forEach(el => el.classList.toggle("hidden", lang !== "no"));
+
+        updateTopbarPage();
+        setupScrollObserver();
       }
 
       let scrollObserver = null;
       function setupScrollObserver() {
-        if (scrollObserver) {
-          scrollObserver.disconnect();
-        }
-        // Select the visible h2 (inside .lang that doesn't have .hidden)
+        if (scrollObserver) scrollObserver.disconnect();
+
         const pageHeading = document.querySelector(".lang:not(.hidden) .hero h2") || document.querySelector(".hero h2");
         const topbarPage = document.getElementById("topbarPage");
         if (!topbarPage || !pageHeading) return;
-        
-        // Helper function to update visibility based on intersection
+
         function updateVisibility(isIntersecting) {
-          if (isIntersecting) {
-            topbarPage.classList.add("is-hidden");
-          } else {
-            topbarPage.classList.remove("is-hidden");
-          }
+          if (isIntersecting) topbarPage.classList.add("is-hidden");
+          else topbarPage.classList.remove("is-hidden");
         }
-        
-        // Check initial state first (before observer is created)
-        const rect = pageHeading.getBoundingClientRect();
-        const headerHeight = 80;
-        const isCurrentlyVisible = rect.top >= 0 && rect.top < (window.innerHeight - headerHeight) && rect.bottom > headerHeight;
-        updateVisibility(isCurrentlyVisible);
-        
-        // Set up observer - it will fire immediately if element is already intersecting
+
         scrollObserver = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            updateVisibility(entry.isIntersecting);
-          });
-        }, { rootMargin: "-80px 0px 0px 0px" });
+          entries.forEach(entry => updateVisibility(entry.isIntersecting));
+        }, { threshold: 0.25 });
+
         scrollObserver.observe(pageHeading);
       }
 
-      function setLang(lang) {
-        try { localStorage.setItem(LANG_KEY, lang); } catch {}
-        currentLang = lang;
-        document.querySelectorAll(".lang-en").forEach(el => el.classList.toggle("hidden", lang !== "en"));
-        document.querySelectorAll(".lang-no").forEach(el => el.classList.toggle("hidden", lang !== "no"));
-        const langSelect = document.getElementById("langSelect");
-        if (langSelect) {
-          langSelect.value = lang;
-        }
-        updateTopbarPage();
-        // Small delay to ensure DOM is fully updated
-        setTimeout(() => {
-          setupScrollObserver();
-        }, 10);
-      }
+      langSelect && langSelect.addEventListener("change", (e) => applyLanguage(e.target.value));
 
-      setLang(currentLang === "no" ? "no" : "en");
-      // Initial setup after a brief delay to ensure DOM is ready
-      setTimeout(() => {
-        setupScrollObserver();
-      }, 10);
-
-      const langSelect = document.getElementById("langSelect");
-      if (langSelect) {
-        langSelect.addEventListener("change", (e) => {
-          setLang(e.target.value);
-        });
-      }
-
-      // History menu availability based on stored test type
-      function historyKeyFor(testType) {
-        return `fce_history_v1_${testType}`;
-      }
-
-      function baselineKeyFor(tt) {
-        if (tt === "gonogo") return "fce_baseline_gonogo_v1";
-        if (tt === "divided") return "fce_baseline_divided_v1";
-        return "fce_baseline_reaction_v1";
-      }
-
-      function hasHistoryForTestType(testTypeValue) {
-        const tt = testTypeValue || "reaction";
-        try {
-          const historyRaw = localStorage.getItem(historyKeyFor(tt));
-          if (historyRaw) {
-            const history = JSON.parse(historyRaw);
-            if (Array.isArray(history) && history.length > 0) {
-              return true;
-            }
-          }
-        } catch (_) {}
-        try {
-          const baselineRaw = localStorage.getItem(baselineKeyFor(tt));
-          if (baselineRaw) {
-            const baseline = JSON.parse(baselineRaw);
-            if (Array.isArray(baseline) && baseline.length > 0) {
-              return true;
-            }
-          }
-        } catch (_) {}
-        return false;
-      }
-
-      function updateHistoryMenuAvailability() {
-        const historyLink = document.querySelector('.menu-item[href*="history"]');
-        if (historyLink) {
-          try {
-            const TEST_TYPE_KEY = "fce_test_type_v1";
-            const savedTestType = localStorage.getItem(TEST_TYPE_KEY) || "reaction";
-            const hasHistory = hasHistoryForTestType(savedTestType);
-            
-            if (hasHistory) {
-              historyLink.classList.remove("is-disabled");
-              historyLink.removeAttribute("tabindex");
-            } else {
-              historyLink.classList.add("is-disabled");
-              historyLink.setAttribute("tabindex", "-1");
-            }
-          } catch (_) {}
-        }
-      }
-
-      updateHistoryMenuAvailability();
+      // Init
+      applyLanguage(currentLang);
     })();
   </script>
 </body>

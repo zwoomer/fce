@@ -69,6 +69,15 @@ Status: ✅ Shipped
 
 ---
 
+## v0.2.5 — Critical bug fixes (completed)
+- Fix race condition in session completion (prevent duplicate sessions from rapid clicks)
+- Fix extra trial registration (11 instead of 10 when clicking rapidly)
+- Fix training mode button state update (ensure 'Run Functional Check' button correctly disabled after training)
+
+Status: ✅ Shipped
+
+---
+
 ## v0.3 — Research expansion (exploratory)
 - Additional paradigms
 - Deeper trend analysis

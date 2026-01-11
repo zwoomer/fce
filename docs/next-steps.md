@@ -36,6 +36,17 @@ No test logic changes. This version line is frozen and tagged up to **v0.2.4**.
 
 ---
 
+## v0.2.5 — Critical bug fixes (completed)
+
+Shipped bug fixes:
+- Fix race condition in session completion (prevent duplicate sessions from rapid clicks)
+- Fix extra trial registration (11 instead of 10 when clicking rapidly)
+- Fix training mode button state update (ensure 'Run Functional Check' button correctly disabled after training)
+
+These fixes address critical data integrity issues and UI state consistency problems. Tagged as **v0.2.5**.
+
+---
+
 ## v0.3 — Exploratory (future)
 
 Potential directions (not commitments):

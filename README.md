@@ -10,7 +10,7 @@ FCE is designed to support **human interpretation**, not automated judgment.
 
 ## Current status
 
-**Latest release:** v0.2.4  
+**Latest release:** v0.2.5  
 **Status:** Stable (frozen)
 
 ---
@@ -128,6 +128,14 @@ No changes to scoring philosophy.
 - Internal cleanup: consistent language handling, CSS organization, accessibility attributes
 
 No test logic changes.
+
+---
+
+## Critical bug fixes (v0.2.5)
+
+- Fix race condition in session completion (prevent duplicate sessions from rapid clicks)
+- Fix extra trial registration (11 instead of 10 when clicking rapidly)
+- Fix training mode button state update (ensure 'Run Functional Check' button correctly disabled after training)
 
 ---
 

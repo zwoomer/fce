@@ -215,6 +215,37 @@
           <p id="summary"></p>
         </div>
 
+        <!-- History panel -->
+        <div class="panel" id="homeHistoryPanel" style="display: none;">
+          <h2>
+            <span class="lang lang-en">History</span>
+            <span class="lang lang-no hidden">Historikk</span>
+            <span class="lang lang-lt hidden">Istorija</span>
+          </h2>
+
+          <p class="muted home-history-note" id="homeHistoryNote">
+            <span class="lang lang-en">Recent sessions (this test)</span>
+            <span class="lang lang-no hidden">Siste økter (denne testen)</span>
+            <span class="lang lang-lt hidden">Naujausios sesijos (šis testas)</span>
+          </p>
+
+          <ul class="home-history-list" id="homeHistoryList"></ul>
+
+          <p class="muted" id="homeHistoryEmpty" style="display:none;">
+            <span class="lang lang-en">No sessions yet for this test.</span>
+            <span class="lang lang-no hidden">Ingen økter ennå for denne testen.</span>
+            <span class="lang lang-lt hidden">Šiam testui dar nėra sesijų.</span>
+          </p>
+
+          <div class="action-row">
+            <button id="homeHistoryBtn" data-view="history">
+              <span class="lang lang-en">View History</span>
+              <span class="lang lang-no hidden">Se historikk</span>
+              <span class="lang lang-lt hidden">Peržiūrėti istoriją</span>
+            </button>
+          </div>
+        </div>
+
         <!-- Baseline panel -->
         <div class="panel">
           <h2>
@@ -254,37 +285,6 @@
           </div>
         
           <ul id="baselineList"></ul>
-        </div>
-
-        <!-- History panel -->
-        <div class="panel" id="homeHistoryPanel" style="display: none;">
-          <h2>
-            <span class="lang lang-en">History</span>
-            <span class="lang lang-no hidden">Historikk</span>
-            <span class="lang lang-lt hidden">Istorija</span>
-          </h2>
-
-          <p class="muted home-history-note" id="homeHistoryNote">
-            <span class="lang lang-en">Recent sessions (this test)</span>
-            <span class="lang lang-no hidden">Siste økter (denne testen)</span>
-            <span class="lang lang-lt hidden">Naujausios sesijos (šis testas)</span>
-          </p>
-
-          <ul class="home-history-list" id="homeHistoryList"></ul>
-
-          <p class="muted" id="homeHistoryEmpty" style="display:none;">
-            <span class="lang lang-en">No sessions yet for this test.</span>
-            <span class="lang lang-no hidden">Ingen økter ennå for denne testen.</span>
-            <span class="lang lang-lt hidden">Šiam testui dar nėra sesijų.</span>
-          </p>
-
-          <div class="action-row">
-            <button id="homeHistoryBtn" data-view="history">
-              <span class="lang lang-en">View History</span>
-              <span class="lang lang-no hidden">Se historikk</span>
-              <span class="lang lang-lt hidden">Peržiūrėti istoriją</span>
-            </button>
-          </div>
         </div>
 
         <footer class="footer muted">

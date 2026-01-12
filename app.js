@@ -1025,7 +1025,15 @@ function updateHistoryMenuState() {
   
   // Show/hide History panel on Home view
   if (homeHistoryPanel) {
+    const wasHidden = homeHistoryPanel.style.display === "none" || homeHistoryPanel.style.display === "";
     homeHistoryPanel.style.display = hasHistoryData ? "block" : "none";
+    
+    // Smooth scroll into view on narrow screens when panel becomes visible
+    if (wasHidden && hasHistoryData && window.matchMedia("(max-width: 640px)").matches) {
+      requestAnimationFrame(() => {
+        homeHistoryPanel?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
   }
 
   // Keep Home preview in sync
@@ -1356,6 +1364,15 @@ testType.addEventListener("change", () => {
     
     hardReset();
     updateTrialCountMax();
+    
+    // Set default trial count based on test type
+    if (testType.value === "gonogo") {
+      trialCountInput.value = 20;
+    } else {
+      // Reaction Time and Divided Attention default to 10
+      trialCountInput.value = 10;
+    }
+    
     updateBaselineInfo();
     updateDividedLegend();
     updateHistoryMenuState();
@@ -2464,26 +2481,7 @@ function pushHistoryRecord(record) {
       return;
     }
 
-    // ---- Training mode (or any other mode): show summary if divided attention ----
-    if (isDivided && mode && mode !== "baseline" && mode !== "check") {
-      // For training mode or any other mode, show a summary with flash info
-      setSummary("training_divided", {
-        mean: sessionPayload.mean,
-        sd: sessionPayload.sd,
-        flashTargetCount: sessionPayload.flashTargetCount,
-        flashUserCount: sessionPayload.flashUserCount,
-        flashAbsError: sessionPayload.flashAbsError,
-        quality: sessionRecord.quality || "good"
-      }, tt, mode);
-      mode = null;
-      dividedPlan = null;
-      dividedFlashAnswer = null;
-      // Update baseline info to ensure button states are correct (training doesn't update baseline, so button should be disabled if no baseline exists)
-      updateBaselineInfo();
-      return;
-    }
-  
-    // ---- Training mode (non-divided): ensure baseline info is updated ----
+    // ---- Training mode: no summary shown (consistent across all test types) ----
     if (mode === "training") {
       // Training mode doesn't update baseline, so ensure button states are correct
       updateBaselineInfo();

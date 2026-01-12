@@ -108,6 +108,7 @@ Status: ✅ Shipped
 - Navigation enhancements: floating History back button with responsive positioning
 - Test type defaults: Go/No-Go defaults to 20 trials, others remain at 10
 - Bug fixes: extra trial recording, button state after invalid sessions, Training mode summary consistency
+- Language selector consistency: LT option in HTML across all pages, selector sync after fallback, unified localStorage key (`fce_lang`) for proper persistence between index.html and docs pages
 
 Status: ✅ Shipped
 

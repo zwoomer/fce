@@ -25,7 +25,7 @@ Complete translation coverage across the entire application:
 - **Error messages:** All refusal codes and validation messages
 - **Session feedback:** Trial text, progress indicators, and quality labels
 
-Language selector updated to include LT option alongside EN and NO.
+Language selector updated to include LT option alongside EN and NO. The selector now appears consistently across all pages (index.html and all documentation pages), with proper synchronization between pages via shared localStorage key.
 
 ---
 
@@ -104,6 +104,16 @@ This aligns with the baseline guidance that recommends ≥20 trials per session 
 - Fixed inconsistency where Divided Attention Training showed a summary
 - Training mode now consistently shows **no summary** across all test types (Reaction Time, Go/No-Go, Divided Attention)
 - Aligns with instruction text: "Training runs the same tasks without comparison"
+
+### Language selector consistency
+
+- **Language selector parity:** LT option now appears consistently in HTML across all pages (index.html and all docs pages)
+- **Selector sync:** Language selector dropdown now correctly reflects the applied language, including after fallback scenarios
+- **localStorage synchronization:** Fixed mismatch where index.html used `fce_lang_v1` while docs pages used `fce_lang`
+  - All pages now use `fce_lang` as the primary key
+  - Language selection now persists correctly between index.html and docs pages
+  - Backward compatibility maintained with migration from `fce_lang_v1` to `fce_lang`
+- **Safety checks:** Added non-conditional safety checks to ensure LT option exists even if markup drifts
 
 ---
 

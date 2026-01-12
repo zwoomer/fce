@@ -131,6 +131,7 @@ Shipped improvements:
 - Fix extra trial bug: prevent recording more than totalTrials trials (was recording 11 instead of 10 on rapid clicks)
 - Fix button state after invalid sessions: ensure 'Run Functional Check' button correctly disabled
 - Fix Training mode summary display: Divided Attention Training no longer shows summary (consistent with other test types)
+- Fix language selector consistency: LT option now appears in HTML across all pages, selector syncs correctly after fallback, localStorage key unified (`fce_lang`) between index.html and docs pages
 
 Tagged as **v0.2.8**.
 

@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
 // Language system
-const LANG_KEY = "fce_lang_v1";
+const LANG_KEY = "fce_lang";
 // Check for new key first, then migrate from old key if present
 let currentLang = localStorage.getItem(LANG_KEY);
 if (!currentLang) {
   // Migrate from old key for backward compatibility
-  const oldLang = localStorage.getItem("fce_lang");
+  const oldLang = localStorage.getItem("fce_lang_v1");
   if (oldLang) {
     currentLang = oldLang;
     localStorage.setItem(LANG_KEY, currentLang);
@@ -820,10 +820,10 @@ function applyLangUI() {
     el.textContent = t(key);
   });
 
-  // 3) Toggle active state on buttons and add LT option if needed
+  // 3) Toggle active state on buttons and ensure LT option exists (selector parity across pages)
   const langSelect = document.getElementById("langSelect");
   if (langSelect) {
-    // Dynamically add LT option if it doesn't exist (for index.html)
+    // Ensure LT option exists (safety check in case markup drifts)
     const hasLtOption = Array.from(langSelect.options).some(opt => opt.value === "lt");
     if (!hasLtOption) {
       const ltOption = document.createElement("option");

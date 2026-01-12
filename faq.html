@@ -29,6 +29,7 @@
         <select id="langSelect" class="lang-select" aria-label="Language">
           <option value="en">EN</option>
           <option value="no">NO</option>
+          <option value="lt">LT</option>
         </select>
       </div>
     </div>
@@ -814,8 +815,8 @@
 
       const langSelect = document.getElementById("langSelect");
       
-      // Dynamically add LT option if LT content exists
-      if (langSelect && hasLtContent) {
+      // Ensure LT option exists (selector parity across pages)
+      if (langSelect) {
         const hasLtOption = Array.from(langSelect.options).some(opt => opt.value === "lt");
         if (!hasLtOption) {
           const ltOption = document.createElement("option");
@@ -880,6 +881,7 @@
         
         currentLang = contentLang;
         try { localStorage.setItem(LANG_KEY, contentLang); } catch {}
+        if (langSelect) langSelect.value = currentLang;
 
         // Apply content visibility
         document.querySelectorAll(".lang-en").forEach(el => el.classList.toggle("hidden", contentLang !== "en"));

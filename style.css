@@ -1,5 +1,8 @@
 :root {
     --topbar-h: 64px;
+    --container-max: 760px;      /* matches .container width: min(760px, 100%) */
+    --back-btn-w: 92px;          /* approx width of the back pill */
+    --back-gap: 16px;            /* spacing between button and container */
   }
 
   html, body {
@@ -25,6 +28,7 @@
     display: flex;
     justify-content: center;
     padding-top: calc(var(--topbar-h) + 18px);
+    overflow: visible; /* Allow sticky children to work */
   }
   
   .content,
@@ -34,6 +38,7 @@
   
   .view {
     width: 100%;
+    overflow: visible; /* Allow sticky positioning to work */
   }
   
   .container {
@@ -290,9 +295,162 @@
   .hidden {
     display: none;
   }
+
+  /* Session panel sticky header */
+  .sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: rgba(18, 18, 20, 0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 10px 12px;
+    margin: -10px -12px 10px;
+    border-radius: 12px 12px 0 0;
+    flex-shrink: 0;
+  }
+
+  .sticky-header p {
+    margin: 0;
+  }
+  
+  .sticky-header h2 {
+    margin: 0 0 8px 0;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    color: #eee;
+    opacity: 0.95;
+  }
+  
+  
+  /* Session trials scrollable container */
+  .session-trials {
+    /* Keep it scrollable and fixed-height */
+    overflow-y: auto;
+    flex: 1 1 auto;
+    min-height: 0;
+
+    /* Ensure at least 5 trials visible before scrolling starts */
+    /* Each trial: ~1.45em line-height + 4px margin-bottom + 4px padding = ~2em total */
+    /* 5 trials * 2em + padding (6px top + 6px bottom = 12px) = ~10em + 12px */
+    line-height: 1.45;
+    max-height: calc(5 * 2em + 16px); /* 5 full trials visible before scroll */
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 20px;
+    padding-right: 4px;
+    margin: 0;
+
+    /* Prevent scroll chaining to the page */
+    overscroll-behavior: contain;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    
+    font-size: 14px;
+    color: #ddd;
+    /* Ensure scrolling is always enabled */
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+  }
+  
+  /* Subtle top fade overlay - graceful fade for older items as they scroll upward */
+  .session-trials::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 24px;
+    background: linear-gradient(to bottom, 
+      rgba(26, 26, 26, 0.95) 0%,
+      rgba(26, 26, 26, 0.75) 40%,
+      rgba(26, 26, 26, 0.35) 75%,
+      rgba(26, 26, 26, 0) 100%
+    );
+    pointer-events: none;
+    z-index: 2;
+  }
+  
+  /* Ensure trial list items don't cause overflow */
+  .session-trials li {
+    flex-shrink: 0;
+    margin-bottom: 4px;
+    padding: 2px 0;
+    transition: opacity 120ms ease, transform 120ms ease;
+  }
+  
+  /* Trial emphasis: opacity-based, never hide (no display:none) */
+  .session-trials li.is-latest {
+    opacity: 1;
+    font-weight: 650;
+  }
+
+  .session-trials li.is-2nd {
+    opacity: 0.95;
+  }
+
+  .session-trials li.is-3rd {
+    opacity: 0.78;
+  }
+
+  .session-trials li.is-4th {
+    opacity: 0.60;
+  }
+
+  .session-trials li.is-5th {
+    opacity: 0.42;
+  }
+
+  .session-trials li.is-older {
+    opacity: 0.25; /* still visible when you scroll up */
+    font-weight: 400;
+  }
+  
+  /* Scrollbar styling for trial list */
+  .session-trials::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .session-trials::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 3px;
+  }
+  
+  .session-trials::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 3px;
+  }
+  
+  .session-trials::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+  
+  /* Trial list base spacing (do NOT control scrolling here; .session-trials does) */
+  #trialList {
+    margin: 0;
+    padding-left: 20px;
+    padding-right: 4px;
+  }
+  
+  #trialList li {
+    margin-bottom: 4px;
+    padding: 2px 0;
+  }
+  
+  /* Hide empty elements when no session is active */
+  .sticky-header:empty,
+  .sticky-header p:empty {
+    display: none;
+  }
+  
+  #summary:empty {
+    display: none;
+  }
   
   /* Card/Panel styling with improved spacing and visual hierarchy */
   .panel {
+    overflow: hidden;
     width: 100%;
     margin: 16px auto;
     text-align: left;
@@ -302,11 +460,45 @@
     padding: 20px 18px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - var(--topbar-h) - 120px);
   }
   
   .panel:hover {
     border-color: rgba(255, 255, 255, 0.1);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Session panel: fixed-height card that doesn't push page down */
+  .panel.session-panel {
+    display: flex !important;
+    flex-direction: column !important;
+    /* Keep the card within the viewport so it won't grow and push the page */
+    max-height: calc(100vh - var(--topbar-h) - 140px) !important;
+    height: auto;
+    overflow: hidden !important;
+    overflow-anchor: none; /* reduce browser scroll-jumps on append */
+    /* Prevent any content from expanding the panel */
+    box-sizing: border-box;
+  }
+  
+  /* Session trials must remain scrollable even after session ends */
+  .panel.session-panel .session-trials {
+    flex: 1 1 auto;
+    min-height: 0;
+    /* max-height is set in base .session-trials rule (fixed 5-line window) */
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    overscroll-behavior: contain; /* Prevent scroll chaining to the page */
+    box-sizing: border-box;
+  }
+  
+  /* Ensure summary doesn't interfere with flex layout */
+  .panel.session-panel #summary {
+    flex-shrink: 0;
+    margin-top: 12px;
+    overflow: visible;
   }
   
   .panel h2 {
@@ -432,6 +624,91 @@
   font-size: 12px;
 }
 
+/* View back button container */
+.view-back {
+  margin-bottom: 12px;
+}
+
+/* History view: floating Back button (no overlap across breakpoints) */
+#view-history .view-back {
+  position: fixed;
+  z-index: 200;
+  top: calc(var(--topbar-h) + 18px);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+#view-history .view-back > * {
+  pointer-events: auto;
+}
+
+/* Desktop: place it in the left gutter beside the centered container */
+@media (min-width: 980px) {
+  #view-history .view-back {
+    left: calc((100vw - var(--container-max)) / 2 - var(--back-btn-w) - var(--back-gap));
+  }
+  #view-history .container {
+    padding-left: var(--container-pad);
+  }
+}
+
+/* Tablet/mid widths: pin to left edge and reserve space so it never overlaps content */
+@media (min-width: 641px) and (max-width: 979px) {
+  #view-history .view-back {
+    left: 16px;
+  }
+  /* Reserve horizontal space for the fixed button so headings/content don't sit beneath it */
+  #view-history .container {
+    padding-left: calc(var(--container-pad) + var(--back-btn-w) + 12px);
+  }
+}
+
+/* Mobile: keep it inline/in-flow (your existing behavior) */
+@media (max-width: 640px) {
+  #view-history .view-back {
+    position: static;
+    left: auto;
+    top: auto;
+    margin: 0 0 12px 0;
+    pointer-events: auto;
+  }
+  #view-history .container {
+    padding-left: var(--container-pad);
+  }
+}
+
+/* Ghost button style (secondary, minimal) */
+.btn.btn-ghost {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #eee;
+  padding: 8px 10px;
+  border-radius: 10px;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+}
+
+.btn.btn-ghost:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.18);
+  opacity: 1;
+}
+
+.btn.btn-ghost:active {
+  background: rgba(255,255,255,0.06);
+}
+
+.btn.btn-ghost:focus-visible {
+  outline: 2px solid rgba(255,255,255,0.3);
+  outline-offset: 2px;
+}
+
 /* Baseline-relative diagram */
 .baseline-diagram {
   position: relative;
@@ -537,40 +814,6 @@
     border-color: rgba(255, 255, 255, 0.05);
   }
   
-  /* Enhanced trial list styling */
-  #trialList {
-    margin: 0;
-    padding-left: 20px;
-    max-height: 320px;
-    overflow-y: auto;
-    padding-right: 10px;
-    line-height: 1.6;
-    font-size: 14px;
-    color: #ddd;
-  }
-  
-  #trialList li {
-    margin-bottom: 4px;
-    padding: 2px 0;
-  }
-  
-  #trialList::-webkit-scrollbar {
-    width: 6px;
-  }
-  
-  #trialList::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 3px;
-  }
-  
-  #trialList::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 3px;
-  }
-  
-  #trialList::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.25);
-  }
   
   /* Typography improvements for summary and content */
   #summary {

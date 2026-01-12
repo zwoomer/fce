@@ -105,6 +105,16 @@ const I18N = {
       misses: "misses",
       falseAlarms: "false alarms",
       baseline: "baseline",
+      noTrialData: "No trial data available",
+    },
+    trialOutcome: {
+      hit: "Hit",
+      go: "GO",
+      miss: "Miss",
+      false_alarm: "False alarm",
+      correct_reject: "Correct",
+      false_start: "False start",
+      unknown: "Unknown",
     },
     quality: {
       good: "Good",
@@ -199,6 +209,16 @@ const I18N = {
       misses: "bom",
       falseAlarms: "inhibisjonsfeil",
       baseline: "baseline",
+      noTrialData: "Ingen forsøksdata tilgjengelig",
+    },
+    trialOutcome: {
+      hit: "Treff",
+      go: "GO",
+      miss: "Bom",
+      false_alarm: "Inhibisjonsfeil",
+      correct_reject: "Korrekt",
+      false_start: "Feilstart",
+      unknown: "Ukjent",
     },
     quality: {
       good: "God",
@@ -292,6 +312,16 @@ const I18N = {
       misses: "praleistai",
       falseAlarms: "slopinimo klaidos",
       baseline: "bazinis lygis",
+      noTrialData: "Nėra bandymų duomenų",
+    },
+    trialOutcome: {
+      hit: "Pataikymas",
+      go: "GO",
+      miss: "Praleistas",
+      false_alarm: "Slopinimo klaida",
+      correct_reject: "Teisingai",
+      false_start: "Klaidingas startas",
+      unknown: "Nežinoma",
     },
     quality: {
       good: "Gera",
@@ -2904,8 +2934,10 @@ function loadBaseline() {
       // Update both language spans in baselineInfo
       const infoEn = baselineInfo.querySelector(".lang-en");
       const infoNo = baselineInfo.querySelector(".lang-no");
+      const infoLt = baselineInfo.querySelector(".lang-lt");
       if (infoEn) infoEn.textContent = "No baseline sessions recorded.";
       if (infoNo) infoNo.textContent = "Ingen baseline-økter er registrert.";
+      if (infoLt) infoLt.textContent = "Nėra užregistruotų bazinio lygio sesijų.";
       clearBaselineBtn.style.display = "none";
       return;
     }
@@ -3057,10 +3089,10 @@ function checkSessionQuality(sessionPayload, totalTrials, isReaction) {
   
   const issues = [];
   if (falseStartRate > 0.2) {
-    issues.push(currentLang === "no" ? "mange feilstarter" : "many false starts");
+    issues.push(currentLang === "no" ? "mange feilstarter" : currentLang === "lt" ? "daug klaidingų startų" : "many false starts");
   }
   if (validHitRate < 0.5) {
-    issues.push(currentLang === "no" ? "få gyldige treff" : "few valid hits");
+    issues.push(currentLang === "no" ? "få gyldige treff" : currentLang === "lt" ? "mažai galiojančių atsakų" : "few valid hits");
   }
   
   if (issues.length > 0) {
@@ -3187,10 +3219,8 @@ function statusLabelFromCompare(meanMs, baselineMean, baselineSD) {
 // Small helper: human-friendly mode label (EN/NO via current language)
 function modeLabel(mode) {
   const m = String(mode).toLowerCase();
-  if (m === "baseline") return currentLang === "no" ? "Baseline" : "Baseline";
-  if (m === "check") return currentLang === "no" ? "Sjekk" : "Check";
-  if (m === "training") return currentLang === "no" ? "Trening" : "Training";
-  return mode;
+  // Use translation system for consistency
+  return t(`ui.mode.${m}`) || mode;
 }
 
 function renderHomeHistoryPreview() {
@@ -3444,7 +3474,7 @@ function renderHistory() {
   historyListEl.innerHTML = "";
 
   if (!sessions.length) {
-    historyEmpty.textContent = currentLang === "no" ? "Ingen historikk ennå." : "No history yet.";
+    historyEmpty.textContent = currentLang === "no" ? "Ingen historikk ennå." : currentLang === "lt" ? "Dar nėra istorijos." : "No history yet.";
     return;
   }
 
@@ -3520,13 +3550,60 @@ function renderHistory() {
       }
     }
 
+    // Mode-aware badge logic
     const badge = document.createElement("span");
     const isInvalid = !!(s.flags && s.flags.invalid);
-    const badgeClass = isInvalid ? "na" : clampBadgeClass(statusText);
+    let badgeClass;
+    let badgeText;
+
+    if (isInvalid) {
+      // Invalid sessions: always bad class
+      badgeClass = "bad";
+      badgeText = t("trend.invalid");
+    } else if (s.mode === "check") {
+      // Check sessions: use status-based coloring
+      if (statusText) {
+        // Prefer existing statusText
+        badgeClass = clampBadgeClass(statusText);
+        badgeText = statusText; // Use statusText directly (it's already localized)
+      } else if (baselineSessions.length && Number.isFinite(avg) && Number.isFinite(baselineMean) && baselineMean > 0) {
+        // Compute from delta percentage if statusText missing
+        const deltaPct = Math.abs((avg - baselineMean) / baselineMean * 100);
+        if (deltaPct <= 10) {
+          badgeClass = "ok";
+          badgeText = t("status.within");
+        } else if (deltaPct <= 25) {
+          badgeClass = "warn";
+          badgeText = t("status.slightly");
+        } else {
+          badgeClass = "bad";
+          badgeText = t("status.significantly");
+        }
+      } else {
+        // No baseline available
+        badgeClass = "na";
+        badgeText = currentLang === "no" ? "Ingen baseline" : currentLang === "lt" ? "Nėra bazinio lygio" : "No baseline";
+      }
+      
+      // Fallback: if badgeClass is still "na" and we have statusText, try again
+      if (badgeClass === "na" && statusText) {
+        badgeClass = clampBadgeClass(statusText);
+        badgeText = statusText;
+      }
+    } else {
+      // Baseline or Training sessions: neutral badge
+      badgeClass = "na";
+      if (s.mode === "baseline") {
+        badgeText = t("ui.mode.baseline");
+      } else if (s.mode === "training") {
+        badgeText = t("ui.mode.training");
+      } else {
+        // Fallback for unknown modes
+        badgeText = s.mode || "—";
+      }
+    }
+
     badge.className = `badge ${badgeClass}`;
-    const badgeText = isInvalid
-      ? t("trend.invalid")
-      : (badgeClass === "ok" ? t("trend.ok") : (statusText || t("trend.ok")));
     badge.textContent = badgeText;
     right.appendChild(badge);
 
@@ -3571,20 +3648,25 @@ function renderHistory() {
       if (typeof m.falseAlarms === "number") {
         const chip = document.createElement("span");
         chip.className = "chip";
-        chip.textContent = `FA ${m.falseAlarms}`;
+        // Use abbreviated form: FA in EN, but full translation for NO/LT if preferred
+        const faLabel = currentLang === "no" ? "IF" : currentLang === "lt" ? "SK" : "FA"; // IF = inhibisjonsfeil, SK = slopinimo klaidos
+        chip.textContent = `${faLabel} ${m.falseAlarms}`;
         chips.appendChild(chip);
       }
     } else if (tt === "divided") {
       if (typeof m.falseAlarms === "number") {
         const chip = document.createElement("span");
         chip.className = "chip";
-        chip.textContent = `FA ${m.falseAlarms}`;
+        const faLabel = currentLang === "no" ? "IF" : currentLang === "lt" ? "SK" : "FA";
+        chip.textContent = `${faLabel} ${m.falseAlarms}`;
         chips.appendChild(chip);
       }
       if (typeof m.flashAbsError === "number" && Number.isFinite(m.flashAbsError)) {
         const chip = document.createElement("span");
         chip.className = "chip";
-        chip.textContent = `Flash err ${m.flashAbsError}ms`;
+        // Use localized flash error label (flashAbsError is a count, not milliseconds)
+        const flashLabel = currentLang === "no" ? "Flash-feil" : currentLang === "lt" ? "Blyksn. klaida" : "Flash err";
+        chip.textContent = `${flashLabel} ${m.flashAbsError}`;
         chips.appendChild(chip);
       }
     }
@@ -3640,8 +3722,24 @@ function renderHistory() {
       if (typeof m.flashTargetCount === "number" && typeof m.flashUserCount === "number" && typeof m.flashAbsError === "number") {
         const flashLine = document.createElement("div");
         flashLine.className = "history-line muted";
-        const flashLabel = currentLang === "no" ? "Flashes" : "Flashes";
-        flashLine.textContent = `${flashLabel}: ${currentLang === "no" ? "mål" : "target"} ${m.flashTargetCount} · ${currentLang === "no" ? "svar" : "answer"} ${m.flashUserCount} · ${currentLang === "no" ? "feil" : "error"} ${m.flashAbsError}`;
+        let flashLabel, targetLabel, answerLabel, errorLabel;
+        if (currentLang === "no") {
+          flashLabel = "Flashes";
+          targetLabel = "mål";
+          answerLabel = "svar";
+          errorLabel = "feil";
+        } else if (currentLang === "lt") {
+          flashLabel = "Blyksniai";
+          targetLabel = "tikslas";
+          answerLabel = "atsakymas";
+          errorLabel = "klaida";
+        } else {
+          flashLabel = "Flashes";
+          targetLabel = "target";
+          answerLabel = "answer";
+          errorLabel = "error";
+        }
+        flashLine.textContent = `${flashLabel}: ${targetLabel} ${m.flashTargetCount} · ${answerLabel} ${m.flashUserCount} · ${errorLabel} ${m.flashAbsError}`;
         details.appendChild(flashLine);
       }
     } else {
@@ -3677,7 +3775,7 @@ function renderHistory() {
     } else if (s.mode === "check" && !baselineSessions.length) {
       const cmp = document.createElement("div");
       cmp.className = "history-compare muted";
-      cmp.textContent = currentLang === "no" ? "Ingen baseline for sammenligning." : "No baseline available for comparison.";
+      cmp.textContent = currentLang === "no" ? "Ingen baseline for sammenligning." : currentLang === "lt" ? "Nėra bazinio lygio palyginimui." : "No baseline available for comparison.";
       details.appendChild(cmp);
     }
 
@@ -3688,8 +3786,14 @@ function renderHistory() {
       const tagLine = document.createElement("div");
       tagLine.className = "history-tags";
       const parts = [];
-      if (tags.sleep) parts.push(`${currentLang === "no" ? "søvn" : "sleep"} ${tags.sleep}/5`);
-      if (tags.stress) parts.push(`${currentLang === "no" ? "stress" : "stress"} ${tags.stress}/5`);
+      if (tags.sleep) {
+        const sleepLabel = currentLang === "no" ? "søvn" : currentLang === "lt" ? "miegas" : "sleep";
+        parts.push(`${sleepLabel} ${tags.sleep}/5`);
+      }
+      if (tags.stress) {
+        const stressLabel = currentLang === "no" ? "stress" : currentLang === "lt" ? "stresas" : "stress";
+        parts.push(`${stressLabel} ${tags.stress}/5`);
+      }
       if (tags.note && String(tags.note).trim()) parts.push(`"${String(tags.note).trim()}"`);
       tagLine.textContent = parts.join(" · ");
       details.appendChild(tagLine);
@@ -3715,7 +3819,8 @@ function renderHistory() {
         reasonText = t(`refusal.${s.flags.refusalCode}`);
       } else if (s.flags.reason) {
         // Fallback to old reason format (for backward compatibility)
-        reasonText = (currentLang === "no" ? "Årsak: " : "Reason: ") + String(s.flags.reason);
+        const reasonLabel = currentLang === "no" ? "Årsak: " : currentLang === "lt" ? "Priežastis: " : "Reason: ";
+        reasonText = reasonLabel + String(s.flags.reason);
       }
       if (reasonText) {
         why.textContent = reasonText;
@@ -3749,10 +3854,13 @@ function renderHistory() {
       if (log.length > 0) {
         list.innerHTML = log.map(row => {
           const rt = row.rt == null ? "—" : `${row.rt} ms`;
-          return `<div class="trial-row"><span class="trial-i">#${row.i}</span><span class="trial-outcome">${row.outcome}</span><span class="trial-rt">${rt}</span></div>`;
+          // Translate outcome labels
+          const outcomeText = t(`trialOutcome.${row.outcome}`) || row.outcome;
+          return `<div class="trial-row"><span class="trial-i">#${row.i}</span><span class="trial-outcome">${outcomeText}</span><span class="trial-rt">${rt}</span></div>`;
         }).join("");
       } else {
-        list.innerHTML = `<div class="trial-row"><span class="trial-i">—</span><span class="trial-outcome">No trial data available</span><span class="trial-rt">—</span></div>`;
+        const noDataText = t("history.noTrialData");
+        list.innerHTML = `<div class="trial-row"><span class="trial-i">—</span><span class="trial-outcome">${noDataText}</span><span class="trial-rt">—</span></div>`;
       }
 
       // Attach button listener with capture phase to prevent card toggle

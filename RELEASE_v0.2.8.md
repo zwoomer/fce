@@ -1,4 +1,4 @@
-**Release date:** 2026-01-14  
+**Release date:** 2026-01-12  
 **Status:** Stable
 
 ---

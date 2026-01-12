@@ -200,14 +200,18 @@
         <div id="testArea" class="test-area hidden"></div>
 
         <!-- Session panel -->
-        <div class="panel">
-          <h2>
-            <span class="lang lang-en">Session</span>
-            <span class="lang lang-no hidden">Økt</span>
-            <span class="lang lang-lt hidden">Sesija</span>
-          </h2>
-          <p id="progress"></p>
-          <ul id="trialList"></ul>
+        <div class="panel session-panel" id="sessionPanel">
+          <div class="sticky-header">
+            <h2>
+              <span class="lang lang-en">Session</span>
+              <span class="lang lang-no hidden">Økt</span>
+              <span class="lang lang-lt hidden">Sesija</span>
+            </h2>
+            <p id="progress"></p>
+          </div>
+
+          <ul id="trialList" class="session-trials" aria-live="polite"></ul>
+
           <p id="summary"></p>
         </div>
 
@@ -299,6 +303,14 @@
 
     <section id="view-history" class="view hidden">
       <div class="container">
+        <div class="view-back">
+          <button id="backBtnHistory" class="btn btn-ghost" type="button" aria-label="Back">
+            <span aria-hidden="true">←</span>
+            <span class="lang lang-en">Back</span>
+            <span class="lang lang-no hidden">Tilbake</span>
+            <span class="lang lang-lt hidden">Atgal</span>
+          </button>
+        </div>
         <div class="lang lang-en">
           <section class="hero">
             <h2>History</h2>

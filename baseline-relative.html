@@ -93,6 +93,14 @@
 
   <main class="page">
     <section class="container">
+      <div class="view-back">
+        <button id="backBtnBaselineRelative" class="btn btn-ghost" type="button" aria-label="Back">
+          <span aria-hidden="true">←</span>
+          <span class="lang lang-en">Back</span>
+          <span class="lang lang-no hidden">Tilbake</span>
+          <span class="lang lang-lt hidden">Atgal</span>
+        </button>
+      </div>
 
       <!-- EN -->
       <div class="lang lang-en">
@@ -571,5 +579,50 @@
     })();
   </script>
   <script src="docs.js"></script>
+  <script>
+    (function () {
+      function safeBack(fallbackUrl) {
+        try {
+          // Prefer history.back() if we have a same-origin referrer (should restore scroll automatically)
+          const ref = document.referrer || "";
+          const sameOrigin = ref.startsWith(window.location.origin);
+          if (sameOrigin) {
+            window.history.back();
+            return;
+          }
+
+          // Check sessionStorage for stored source page
+          const storedSource = sessionStorage.getItem("fce_baseline_relative_source");
+          const storedScroll = sessionStorage.getItem("fce_baseline_relative_scroll");
+          
+          if (storedSource) {
+            // Clear stored values before navigation
+            sessionStorage.removeItem("fce_baseline_relative_source");
+            
+            // Store scroll position for restoration on target page
+            if (storedScroll) {
+              sessionStorage.setItem("fce_restore_scroll", storedScroll);
+            } else {
+              sessionStorage.removeItem("fce_restore_scroll");
+            }
+            
+            // Navigate to stored source
+            window.location.href = storedSource;
+            return;
+          }
+        } catch (e) {
+          // Fall through to default fallback
+        }
+        
+        // Default fallback
+        window.location.href = fallbackUrl;
+      }
+
+      const btn = document.getElementById("backBtnBaselineRelative");
+      if (btn) {
+        btn.addEventListener("click", () => safeBack("concept.html"));
+      }
+    })();
+  </script>
 </body>
 </html>

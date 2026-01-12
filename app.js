@@ -621,6 +621,26 @@ function getCheckDividedAttention(mean, baselineMean, baselineSD, status, falseA
   return `Today GO mean: ${mean.toFixed(0)} ms | Baseline mean: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status} | False alarm rate: ${(falseAlarmsRate * 100).toFixed(1)}% (baseline ${(baselineFARate * 100).toFixed(1)}%) | Flash error: ${flashAbsError} (baseline avg ${baselineFlashError.toFixed(1)})${falseStartsText}${qualityText}${qualityNote}${warningText}`;
 }
 
+function applyTrialEmphasis(trialListEl) {
+  if (!trialListEl) return;
+  const items = Array.from(trialListEl.children);
+  const n = items.length;
+
+  items.forEach((li) => {
+    li.classList.remove("is-latest", "is-2nd", "is-3rd", "is-4th", "is-5th", "is-older");
+  });
+
+  items.forEach((li, idx) => {
+    const fromEnd = (n - 1) - idx; // 0 = newest
+    if (fromEnd === 0) li.classList.add("is-latest");
+    else if (fromEnd === 1) li.classList.add("is-2nd");
+    else if (fromEnd === 2) li.classList.add("is-3rd");
+    else if (fromEnd === 3) li.classList.add("is-4th");
+    else if (fromEnd === 4) li.classList.add("is-5th");
+    else li.classList.add("is-older");
+  });
+}
+
 function reRenderTrialList() {
   // Re-render all trials with current language
   if (results.length === 0) return;
@@ -633,6 +653,14 @@ function reRenderTrialList() {
     li.textContent = getTrialText(n, entry, testType.value);
     trialList.appendChild(li);
   });
+  
+  // Auto-scroll only during active run (important after language re-render)
+  if (isRunActive) {
+    try {
+      trialList.scrollTop = trialList.scrollHeight;
+    } catch (e) {}
+  }
+  applyTrialEmphasis(trialList);
 }
 
 // Helper function to generate flash info string for summaries
@@ -764,6 +792,11 @@ function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
       // Unknown type, just set text directly
       break;
   }
+  
+  // After summary is set, scroll to status on mobile (with delay to ensure DOM is updated)
+  setTimeout(() => {
+    scrollToSessionStatusIfMobile();
+  }, 100);
 }
 
 // Regenerate summary text based on stored data and current language
@@ -927,6 +960,11 @@ const trialCountInput = document.getElementById("trialCount");
 const progress = document.getElementById("progress");
 const trialList = document.getElementById("trialList");
 const summary = document.getElementById("summary");
+const sessionPanel = document.getElementById("sessionPanel");
+
+// Ensure session panel classes exist even if markup drifts
+if (sessionPanel) sessionPanel.classList.add("session-panel");
+if (trialList) trialList.classList.add("session-trials");
 
 // Store last summary generation data for language switching
 let lastSummaryData = null;
@@ -1087,11 +1125,38 @@ let currentStim = null; // "go" | "nogo"
 let responded = false;
 
 let inSession = false;
+let isRunActive = false; // Track if run is actively executing (for auto-scroll)
 let totalTrials = 5;
 let trialIndex = 0;
 let results = []; // stores reaction times (ms); null for false start
 let trialToken = 0;
 let windowTimeoutId = null;
+
+// Live trial log trimming and auto-scroll
+const LIVE_TRIAL_MAX_ROWS = 50;
+
+function autoScrollLiveTrials(trialsContainer) {
+  if (!trialsContainer) return;
+  trialsContainer.scrollTop = trialsContainer.scrollHeight;
+}
+
+function trimLiveTrials(trialsContainer) {
+  if (!trialsContainer) return;
+  const children = trialsContainer.children;
+  const extra = children.length - LIVE_TRIAL_MAX_ROWS;
+  if (extra > 0) {
+    for (let i = 0; i < extra; i++) {
+      trialsContainer.removeChild(children[0]);
+    }
+  }
+}
+
+// Scroll to session status after session ends (center on all screen sizes)
+function scrollToSessionStatusIfMobile() {
+  const statusEl = document.getElementById("summary");
+  if (!statusEl) return;
+  statusEl.scrollIntoView({ behavior: "smooth", block: "center" });
+}
 
 // Divided Attention state
 let dividedPlan = null; // { trialTypes, flashTrialIndices, flashTargetCount }
@@ -1163,6 +1228,7 @@ startBaselineBtn.addEventListener("click", () => {
     trialCountInput.value = totalTrials;
   
     inSession = true;
+    isRunActive = true; // Set run active flag for auto-scroll
     trialIndex = 0;
     results = [];
     
@@ -1178,7 +1244,16 @@ startBaselineBtn.addEventListener("click", () => {
   
     trialList.innerHTML = "";
     summary.textContent = "";
+    // Remove session-ended class when starting new session
+    if (trialList) {
+      trialList.classList.remove("session-ended");
+    }
     testArea.classList.remove("hidden");
+  
+    // Scroll test area into view (center it)
+    setTimeout(() => {
+      testArea.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 50);
   
     trialCountInput.disabled = true;
     startBaselineBtn.disabled = true;
@@ -1840,6 +1915,17 @@ clearBaselineBtn.addEventListener("click", () => {
     li.textContent = getTrialText(n, entry, testType.value);
   
     trialList.appendChild(li);
+    
+    // Auto-scroll only during active run
+    if (isRunActive) {
+      requestAnimationFrame(() => {
+        if (!trialList) return;
+        trialList.scrollTop = trialList.scrollHeight;
+      });
+    }
+    
+    // Apply visual emphasis to recent trials
+    applyTrialEmphasis(trialList);
   }  
 
 // ----------------------------
@@ -1933,6 +2019,7 @@ function pushHistoryRecord(record) {
     if (!inSession) return;
     
     inSession = false;
+    isRunActive = false; // Stop auto-scroll
   
     // Hide test area
     testArea.classList.add("hidden");
@@ -1950,6 +2037,14 @@ function pushHistoryRecord(record) {
     if (contextPanel) {
       contextPanel.classList.remove("is-hidden");
     }
+    
+    // Mark session as ended to enable scrolling while keeping panel size fixed
+    if (trialList) {
+      trialList.classList.add("session-ended");
+    }
+    
+    // Re-apply trial emphasis
+    applyTrialEmphasis(trialList);
   
     updateProgress(true);
   
@@ -2550,6 +2645,10 @@ function updateProgress(isDone = false) {
 }
 
 function hardReset() {
+  // Remove session-ended class when resetting
+  if (trialList) {
+    trialList.classList.remove("session-ended");
+  }
   // Clear divided attention state on reset
   dividedPlan = null;
   dividedFlashAnswer = null;
@@ -2560,6 +2659,7 @@ function hardReset() {
   clearTimeout(timeoutId);
 
   inSession = false;
+  isRunActive = false; // Stop auto-scroll
   startTime = null;
   results = [];
   trialIndex = 0;
@@ -3388,6 +3488,33 @@ const langSelect = document.getElementById("langSelect");
 if (langSelect) {
   langSelect.addEventListener("change", (e) => {
     setLang(e.target.value);
+  });
+}
+
+// Back button handler for History view
+function safeBack(fallbackUrl) {
+  try {
+    const ref = document.referrer || "";
+    const sameOrigin = ref.startsWith(window.location.origin);
+    // If referrer is same-origin and history exists, go back
+    if (sameOrigin && window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+  } catch (e) {
+    // Fall through to fallback
+  }
+  // Always use fallback if no valid history or referrer
+  window.location.href = fallbackUrl;
+}
+
+const backBtnHistory = document.getElementById("backBtnHistory");
+if (backBtnHistory) {
+  backBtnHistory.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    // Use switchView to go back to home - this always works regardless of history state
+    switchView("home", true);
   });
 }
 

@@ -769,8 +769,39 @@
 
       langSelect && langSelect.addEventListener("change", (e) => applyLanguage(e.target.value));
 
+      // Track navigation to baseline-relative.html
+      document.querySelectorAll('a[href="baseline-relative.html"]').forEach(link => {
+        link.addEventListener("click", () => {
+          try {
+            const sourceUrl = window.location.href.split('#')[0]; // Remove hash for consistent URLs
+            const scrollPos = window.scrollY || window.pageYOffset || 0;
+            sessionStorage.setItem("fce_baseline_relative_source", sourceUrl);
+            sessionStorage.setItem("fce_baseline_relative_scroll", String(scrollPos));
+          } catch (e) {
+            // Ignore storage errors
+          }
+        });
+      });
+
       // Init
       applyLanguage(currentLang);
+      
+      // Restore scroll position if returning from baseline-relative.html
+      try {
+        const restoreScroll = sessionStorage.getItem("fce_restore_scroll");
+        if (restoreScroll) {
+          sessionStorage.removeItem("fce_restore_scroll");
+          const scrollPos = parseInt(restoreScroll, 10);
+          if (!isNaN(scrollPos) && scrollPos > 0) {
+            // Use requestAnimationFrame to ensure page has rendered
+            requestAnimationFrame(() => {
+              window.scrollTo(0, scrollPos);
+            });
+          }
+        }
+      } catch (e) {
+        // Ignore storage errors
+      }
     })();
   </script>
   <script src="docs.js"></script>

@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>FCE — How the tests work</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Remember last visited page -->
+  <script>
+    try {
+      const p = location.pathname.split("/").pop() || "index.html";
+      localStorage.setItem("fce_last_page", p);
+      // Also track last docs page (exclude index.html)
+      if (p && p.endsWith(".html") && !p.includes("index.html")) {
+        localStorage.setItem("fce_last_docs_page", p);
+      }
+    } catch {}
+  </script>
+</head>
+
+<body>
+  <header class="topbar">
+    <button id="menuBtn" aria-label="Menu" aria-controls="menu" aria-expanded="false">☰</button>
+    <a href="index.html?home=1" class="title" style="text-decoration:none; color:inherit;">FCE</a>
+    <span class="topbar-page is-hidden" id="topbarPage"></span>
+
+    <div class="topbar-right">
+      <div class="lang-select-wrapper">
+        <select id="langSelect" class="lang-select" aria-label="Language">
+          <option value="en">EN</option>
+          <option value="no">NO</option>
+          <option value="lt">LT</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <nav id="menu" class="menu">
+    <div class="menu-header">
+      <button id="closeMenuBtn" class="menu-close-btn" aria-label="Close menu">×</button>
+    </div>
+
+    <a class="menu-item" href="index.html?home=1">
+      <span class="lang lang-en">Home</span>
+      <span class="lang lang-no hidden">Hjem</span>
+      <span class="lang lang-lt hidden">Pradžia</span>
+    </a>
+
+    <a class="menu-item" href="index.html?view=history">
+      <span class="lang lang-en">History</span>
+      <span class="lang lang-no hidden">Historikk</span>
+      <span class="lang lang-lt hidden">Istorija</span>
+    </a>
+
+    <a class="menu-item" href="about.html">
+      <span class="lang lang-en">About</span>
+      <span class="lang lang-no hidden">Om</span>
+      <span class="lang lang-lt hidden">Apie</span>
+    </a>
+
+    <a class="menu-item" href="concept.html">
+      <span class="lang lang-en">Concept</span>
+      <span class="lang lang-no hidden">Konsept</span>
+      <span class="lang lang-lt hidden">Koncepcija</span>
+    </a>
+
+    <a class="menu-item" href="scope.html">
+      <span class="lang lang-en">Scope &amp; Limits</span>
+      <span class="lang lang-no hidden">Omfang &amp; begrensninger</span>
+      <span class="lang lang-lt hidden">Apimtis ir ribos</span>
+    </a>
+
+    <a class="menu-item" href="norwegian-context.html">
+      <span class="lang lang-en">Norwegian Context</span>
+      <span class="lang lang-no hidden">Norsk kontekst</span>
+      <span class="lang lang-lt hidden">Norvegiškas kontekstas</span>
+    </a>
+
+    <a class="menu-item" href="how-to-use.html">
+      <span class="lang lang-en">How to Use</span>
+      <span class="lang lang-no hidden">Hvordan bruke</span>
+      <span class="lang lang-lt hidden">Kaip naudoti</span>
+    </a>
+
+    <a class="menu-item" href="how-tests-work.html" aria-current="page">
+      <span class="lang lang-en">How the tests work</span>
+      <span class="lang lang-no hidden">Hvordan testene fungerer</span>
+      <span class="lang lang-lt hidden">Kaip veikia testai</span>
+    </a>
+
+    <a class="menu-item" href="faq.html">
+      <span class="lang lang-en">FAQ</span>
+      <span class="lang lang-no hidden">FAQ</span>
+      <span class="lang lang-lt hidden">DUK</span>
+    </a>
+  </nav>
+
+  <div id="menuOverlay" class="menu-overlay hidden"></div>
+
+  <main class="page">
+    <section class="container">
+
+      <!-- EN -->
+      <div class="lang lang-en">
+        <section class="hero">
+          <h2>How the tests work</h2>
+          <p class="lead">
+            Simple procedural instructions for each test type. What to do, what counts as an error, and how to practice.
+          </p>
+        </section>
+
+        <div style="margin: 24px auto; text-align: center; max-width: 760px; padding: 0 16px;">
+          <a href="index.html#instrument"
+             style="padding: 10px 20px; font-size: 14px; text-decoration: none;
+                    border: 1px solid rgba(255,255,255,0.15);
+                    border-radius: 8px;
+                    background: rgba(255,255,255,0.05);
+                    color: #eee;
+                    transition: all 0.2s ease;
+                    display: inline-block;">
+            <span class="lang lang-en">Open instrument</span>
+            <span class="lang lang-no hidden">Åpne instrument</span>
+            <span class="lang lang-lt hidden">Atidaryti instrumentą</span>
+          </a>
+        </div>
+
+        <section class="card">
+          <h3>What to do</h3>
+          <p>
+            Each test measures different aspects of functional execution. Follow the on-screen instructions,
+            respond as quickly and accurately as you can, and avoid clicking before the signal appears.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Reaction Time</h3>
+          <ul>
+            <li>Wait for the green signal to appear</li>
+            <li>Click or tap as quickly as possible when you see it</li>
+            <li>Repeat for each trial</li>
+          </ul>
+          <p class="muted">
+            <strong>What counts as a false start:</strong> Clicking before the signal appears. False starts are recorded but don't affect your reaction time average.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Go / No-Go</h3>
+          <ul>
+            <li>When you see <strong>GO</strong> (green), click or tap immediately</li>
+            <li>When you see <strong>NO-GO</strong> (red), do nothing — wait for the next trial</li>
+            <li>Most trials will be GO, but some will be NO-GO</li>
+          </ul>
+          <p class="muted">
+            <strong>What counts as an error:</strong> Clicking on NO-GO (false alarm) or missing a GO signal (miss). Both are recorded and affect your results.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Divided Attention</h3>
+          <ul>
+            <li>Do the Go / No-Go task (respond to GO, ignore NO-GO)</li>
+            <li>At the same time, count brief blue flashes that appear during trials</li>
+            <li>After the session, enter the number of flashes you counted</li>
+          </ul>
+          <p class="muted">
+            <strong>What counts as an error:</strong> Missing GO signals, clicking on NO-GO, or miscounting flashes. All are recorded.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Practice first</h3>
+          <p>
+            If you're new to FCE or returning after a break, use <strong>Training</strong> mode first.
+            Training runs the same tasks but doesn't update your baseline. Use it to get familiar with the tasks
+            before building a baseline or running checks.
+          </p>
+        </section>
+      </div>
+
+      <!-- NO -->
+      <div class="lang lang-no hidden">
+        <section class="hero">
+          <h2>Hvordan testene fungerer</h2>
+          <p class="lead">
+            Enkle prosedyreinstruksjoner for hver testtype. Hva du skal gjøre, hva som teller som feil, og hvordan du øver.
+          </p>
+        </section>
+
+        <div style="margin: 24px auto; text-align: center; max-width: 760px; padding: 0 16px;">
+          <a href="index.html#instrument"
+             style="padding: 10px 20px; font-size: 14px; text-decoration: none;
+                    border: 1px solid rgba(255,255,255,0.15);
+                    border-radius: 8px;
+                    background: rgba(255,255,255,0.05);
+                    color: #eee;
+                    transition: all 0.2s ease;
+                    display: inline-block;">
+            <span class="lang lang-en">Open instrument</span>
+            <span class="lang lang-no hidden">Åpne instrument</span>
+            <span class="lang lang-lt hidden">Atidaryti instrumentą</span>
+          </a>
+        </div>
+
+        <section class="card">
+          <h3>Hva du skal gjøre</h3>
+          <p>
+            Hver test måler ulike aspekter av funksjonell utførelse. Følg instruksjonene på skjermen,
+            responder så raskt og nøyaktig som mulig, og unngå å klikke før signalet vises.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Reaksjonstid</h3>
+          <ul>
+            <li>Vent på at det grønne signalet vises</li>
+            <li>Klikk eller trykk så raskt som mulig når du ser det</li>
+            <li>Gjenta for hvert forsøk</li>
+          </ul>
+          <p class="muted">
+            <strong>Hva som teller som feilstart:</strong> Å klikke før signalet vises. Feilstarter registreres, men påvirker ikke gjennomsnittlig reaksjonstid.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Go / No-Go</h3>
+          <ul>
+            <li>Når du ser <strong>GO</strong> (grønn), klikk eller trykk umiddelbart</li>
+            <li>Når du ser <strong>NO-GO</strong> (rød), gjør ingenting — vent på neste forsøk</li>
+            <li>De fleste forsøk vil være GO, men noen vil være NO-GO</li>
+          </ul>
+          <p class="muted">
+            <strong>Hva som teller som feil:</strong> Å klikke på NO-GO (falsk alarm) eller å bomme på et GO-signal (bom). Begge registreres og påvirker resultatene.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Delt oppmerksomhet</h3>
+          <ul>
+            <li>Gjør Go / No-Go-oppgaven (responder på GO, ignorer NO-GO)</li>
+            <li>Samtidig teller du korte blå blink som vises under forsøkene</li>
+            <li>Etter økten, skriv inn antall blink du telte</li>
+          </ul>
+          <p class="muted">
+            <strong>Hva som teller som feil:</strong> Å bomme på GO-signaler, klikke på NO-GO, eller å telle feil antall blink. Alt registreres.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Øv først</h3>
+          <p>
+            Hvis du er ny til FCE eller kommer tilbake etter en pause, bruk <strong>Trening</strong>-modus først.
+            Trening kjører samme oppgaver, men oppdaterer ikke baseline. Bruk den for å bli kjent med oppgavene
+            før du bygger baseline eller kjører sjekker.
+          </p>
+        </section>
+      </div>
+
+      <!-- LT -->
+      <div class="lang lang-lt hidden">
+        <section class="hero">
+          <h2>Kaip veikia testai</h2>
+          <p class="lead">
+            Paprastos procedūrinės instrukcijos kiekvienam testo tipui. Ką daryti, kas laikoma klaida ir kaip praktikuotis.
+          </p>
+        </section>
+
+        <div style="margin: 24px auto; text-align: center; max-width: 760px; padding: 0 16px;">
+          <a href="index.html#instrument"
+             style="padding: 10px 20px; font-size: 14px; text-decoration: none;
+                    border: 1px solid rgba(255,255,255,0.15);
+                    border-radius: 8px;
+                    background: rgba(255,255,255,0.05);
+                    color: #eee;
+                    transition: all 0.2s ease;
+                    display: inline-block;">
+            <span class="lang lang-en">Open instrument</span>
+            <span class="lang lang-no hidden">Åpne instrument</span>
+            <span class="lang lang-lt hidden">Atidaryti instrumentą</span>
+          </a>
+        </div>
+
+        <section class="card">
+          <h3>Ką daryti</h3>
+          <p>
+            Kiekvienas testas matuoja skirtingus funkcinio vykdymo aspektus. Laikykitės ekrane rodomų instrukcijų,
+            reaguokite kuo greičiau ir tiksliau, ir venkite spustelėti prieš pasirodant signalui.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Reakcijos laikas</h3>
+          <ul>
+            <li>Laukite, kol pasirodys žalias signalas</li>
+            <li>Spustelėkite arba bakstelėkite kuo greičiau, kai jį pamatysite</li>
+            <li>Kartokite kiekvienam bandymui</li>
+          </ul>
+          <p class="muted">
+            <strong>Kas laikoma klaidingu startu:</strong> Spustelėjimas prieš pasirodant signalui. Klaidingi startai registruojami, bet neturi įtakos vidutiniam reakcijos laikui.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Go / No-Go</h3>
+          <ul>
+            <li>Kai pamatysite <strong>GO</strong> (žalias), spustelėkite arba bakstelėkite nedelsiant</li>
+            <li>Kai pamatysite <strong>NO-GO</strong> (raudonas), nieko nedarykite — laukite kito bandymo</li>
+            <li>Dauguma bandymų bus GO, bet kai kurie bus NO-GO</li>
+          </ul>
+          <p class="muted">
+            <strong>Kas laikoma klaida:</strong> Spustelėjimas ant NO-GO (klaidingas atsakas) arba praleistas GO signalas (praleistas). Abu registruojami ir turi įtakos rezultatams.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Dalyta dėmesio užduotis</h3>
+          <ul>
+            <li>Atlikite Go / No-Go užduotį (reaguokite į GO, ignoruokite NO-GO)</li>
+            <li>Tuo pačiu metu skaičiuokite trumpus mėlynus blyksnius, kurie pasirodo bandymų metu</li>
+            <li>Po sesijos įveskite suskaičiuotų blyksnių skaičių</li>
+          </ul>
+          <p class="muted">
+            <strong>Kas laikoma klaida:</strong> Praleisti GO signalai, spustelėjimas ant NO-GO arba neteisingai suskaičiuoti blyksniai. Viskas registruojama.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Pirmiausia praktikuokitės</h3>
+          <p>
+            Jei esate naujas FCE naudotojas arba grįžęs po pertraukos, pirmiausia naudokite <strong>Treniruotės</strong> režimą.
+            Treniruotė vykdo tas pačias užduotis, bet neatnaujina bazinio lygio. Naudokite ją, kad susipažintumėte su užduotimis
+            prieš kuriant bazinį lygį arba atliekant patikras.
+          </p>
+        </section>
+      </div>
+
+      <nav class="docs-nav">
+        <div class="docs-nav-left">
+          <a href="how-to-use.html" class="docs-nav-btn">
+            <span class="lang lang-en">← How to Use</span>
+            <span class="lang lang-no hidden">← Hvordan bruke</span>
+            <span class="lang lang-lt hidden">← Kaip naudoti</span>
+          </a>
+        </div>
+
+        <div class="docs-nav-center">
+          <a href="index.html#instrument" class="docs-nav-btn">
+            <span class="lang lang-en">Open instrument</span>
+            <span class="lang lang-no hidden">Åpne instrument</span>
+            <span class="lang lang-lt hidden">Atidaryti instrumentą</span>
+          </a>
+        </div>
+
+        <div class="docs-nav-right">
+          <a href="faq.html" class="docs-nav-btn">
+            <span class="lang lang-en">FAQ →</span>
+            <span class="lang lang-no hidden">FAQ →</span>
+            <span class="lang lang-lt hidden">DUK →</span>
+          </a>
+        </div>
+      </nav>
+
+      <footer class="footer muted">
+        <p>FCE — Functional Cognition &amp; Execution</p>
+      </footer>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      const menu = document.getElementById("menu");
+      const overlay = document.getElementById("menuOverlay");
+      const menuBtn = document.getElementById("menuBtn");
+      const closeMenuBtn = document.getElementById("closeMenuBtn");
+
+      function openMenu() {
+        menu.classList.add("open");
+        overlay.classList.remove("hidden");
+        document.body.classList.add("menu-open");
+        if (menuBtn) menuBtn.setAttribute("aria-expanded", "true");
+      }
+
+      function closeMenu() {
+        menu.classList.remove("open");
+        overlay.classList.add("hidden");
+        document.body.classList.remove("menu-open");
+        if (menuBtn) menuBtn.setAttribute("aria-expanded", "false");
+      }
+
+      menuBtn && menuBtn.addEventListener("click", () => {
+        if (menu.classList.contains("open")) closeMenu();
+        else openMenu();
+      });
+
+      closeMenuBtn && closeMenuBtn.addEventListener("click", closeMenu);
+      overlay && overlay.addEventListener("click", closeMenu);
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && menu.classList.contains("open")) closeMenu();
+      });
+
+      document.querySelectorAll(".menu-item").forEach(item => {
+        item.addEventListener("click", (e) => {
+          if (!item.classList.contains("is-disabled")) closeMenu();
+          else e.preventDefault();
+        });
+      });
+
+      const LANG_KEY = "fce_lang";
+      const hasLtContent = !!document.querySelector(".lang-lt");
+      
+      let currentLang = localStorage.getItem(LANG_KEY);
+      if (!currentLang) {
+        const oldLang = localStorage.getItem("fce_lang_v1");
+        if (oldLang) {
+          currentLang = oldLang;
+          try { localStorage.setItem(LANG_KEY, currentLang); } catch {}
+        } else {
+          currentLang = "en";
+        }
+      }
+
+      if (currentLang === "lt" && !hasLtContent) {
+        currentLang = "en";
+        try { localStorage.setItem(LANG_KEY, currentLang); } catch {}
+      }
+
+      const langSelect = document.getElementById("langSelect");
+      
+      if (langSelect) {
+        const hasLtOption = Array.from(langSelect.options).some(opt => opt.value === "lt");
+        if (!hasLtOption) {
+          const ltOption = document.createElement("option");
+          ltOption.value = "lt";
+          ltOption.textContent = "LT";
+          langSelect.appendChild(ltOption);
+        }
+      }
+      
+      if (langSelect) langSelect.value = currentLang;
+
+      const I18N_PAGES = {
+        en: {
+          about: "About",
+          concept: "Concept",
+          scope: "Scope & Limits",
+          "norwegian-context": "Norwegian Context",
+          "how-to-use": "How to use",
+          "how-tests-work": "How the tests work",
+          faq: "FAQ"
+        },
+        no: {
+          about: "Om",
+          concept: "Konsept",
+          scope: "Omfang & begrensninger",
+          "norwegian-context": "Norsk kontekst",
+          "how-to-use": "Hvordan bruke",
+          "how-tests-work": "Hvordan testene fungerer",
+          faq: "FAQ"
+        },
+        lt: {
+          about: "Apie",
+          concept: "Koncepcija",
+          scope: "Apimtis ir ribos",
+          "norwegian-context": "Norvegiškas kontekstas",
+          "how-to-use": "Kaip naudoti",
+          "how-tests-work": "Kaip veikia testai",
+          faq: "DUK"
+        }
+      };
+
+      function getPageTitle(lang) {
+        const pageName = (location.pathname.split("/").pop() || "how-tests-work.html").replace(".html", "");
+        return (I18N_PAGES[lang] && I18N_PAGES[lang][pageName])
+          ? I18N_PAGES[lang][pageName]
+          : (I18N_PAGES.en[pageName] || "How the tests work");
+      }
+
+      function updateTopbarPage() {
+        const topbarPage = document.getElementById("topbarPage");
+        if (topbarPage) {
+          topbarPage.textContent = getPageTitle(currentLang);
+        }
+      }
+
+      function applyLanguage(lang) {
+        let contentLang = lang;
+        if (contentLang === "lt" && !hasLtContent) {
+          contentLang = "en";
+        }
+        
+        const uiLang = contentLang;
+        
+        currentLang = contentLang;
+        try { localStorage.setItem(LANG_KEY, contentLang); } catch {}
+        if (langSelect) langSelect.value = currentLang;
+
+        document.querySelectorAll(".lang-en").forEach(el => el.classList.toggle("hidden", contentLang !== "en"));
+        document.querySelectorAll(".lang-no").forEach(el => el.classList.toggle("hidden", contentLang !== "no"));
+        document.querySelectorAll(".lang-lt").forEach(el => el.classList.toggle("hidden", contentLang !== "lt"));
+
+        document.querySelectorAll(".menu .lang-en, .docs-nav .lang-en").forEach(el => {
+          el.classList.toggle("hidden", uiLang !== "en");
+        });
+        document.querySelectorAll(".menu .lang-no, .docs-nav .lang-no").forEach(el => {
+          el.classList.toggle("hidden", uiLang !== "no");
+        });
+        document.querySelectorAll(".menu .lang-lt, .docs-nav .lang-lt").forEach(el => {
+          el.classList.toggle("hidden", uiLang !== "lt");
+        });
+
+        updateTopbarPage();
+        setupScrollObserver();
+      }
+
+      let scrollObserver = null;
+      function setupScrollObserver() {
+        if (scrollObserver) scrollObserver.disconnect();
+
+        const pageHeading = document.querySelector(".lang:not(.hidden) .hero h2") || document.querySelector(".hero h2");
+        const topbarPage = document.getElementById("topbarPage");
+        if (!topbarPage || !pageHeading) return;
+
+        function updateVisibility(isIntersecting) {
+          if (isIntersecting) topbarPage.classList.add("is-hidden");
+          else topbarPage.classList.remove("is-hidden");
+        }
+
+        scrollObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => updateVisibility(entry.isIntersecting));
+        }, { threshold: 0.25 });
+
+        scrollObserver.observe(pageHeading);
+      }
+
+      langSelect && langSelect.addEventListener("change", (e) => applyLanguage(e.target.value));
+
+      applyLanguage(currentLang);
+    })();
+  </script>
+  <script src="docs.js"></script>
+</body>
+</html>

@@ -1876,3 +1876,33 @@ select option:disabled {
 .context-panel.is-hidden {
   display: none !important;
 }
+
+/* Onboarding overlay */
+.onboarding-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  background: rgba(0,0,0,0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+}
+
+.onboarding-overlay.hidden {
+  display: none !important;
+}
+
+.onboarding-card {
+  width: min(520px, 100%);
+  background: #1a1a1a;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 16px;
+  padding: 22px 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+  text-align: left;
+}
+
+body.onboarding-open {
+  overflow: hidden;
+}

@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 // Language system
 const LANG_KEY = "fce_lang";
+const ONBOARDING_KEY = "fce_onboarding_done";
 // Check for new key first, then migrate from old key if present
 let currentLang = localStorage.getItem(LANG_KEY);
 if (!currentLang) {
@@ -837,6 +838,9 @@ function applyLangUI() {
   // 4) Update History menu item text (it has dynamic text based on state)
   updateHistoryMenuState();
 
+  // 5) Update task hints when language changes
+  updateTaskHint();
+
   // 5) Update topbar page label based on current view
   const topbarPage = document.getElementById("topbarPage");
   if (topbarPage) {
@@ -925,6 +929,117 @@ function setLang(lang) {
   currentLang = lang;
   localStorage.setItem(LANG_KEY, currentLang);
   applyLangUI();
+  updateTaskHint();
+}
+
+// Task hint mapping
+function getTaskHint(lang, testType) {
+  const H = {
+    en: {
+      reaction: "Reaction Time: Wait for the signal, then respond as quickly as possible. Early inputs count as false starts.",
+      gonogo: "Go / No-Go: Respond only to the GO signal. Do nothing on NO-GO. Wrong responses count as errors.",
+      divided: "Divided Attention: Track the main task while responding to brief flashes. Misses and false alarms are recorded."
+    },
+    no: {
+      reaction: "Reaksjonstid: Vent på signalet, og responder så raskt som mulig. Tidlige trykk teller som feilstart.",
+      gonogo: "Go / No-Go: Responder kun på GO-signalet. Ikke gjør noe på NO-GO. Feil respons teller som feil.",
+      divided: "Delt oppmerksomhet: Følg hovedoppgaven samtidig som du reagerer på korte flash. Bom og feil registreres."
+    },
+    lt: {
+      reaction: "Reakcijos laikas: Laukite signalo ir reaguokite kuo greičiau. Per ankstyvi paspaudimai laikomi klaidingu startu.",
+      gonogo: "Go / No-Go: Reaguokite tik į GO signalą. Į NO-GO nereaguokite. Neteisingi veiksmai laikomi klaidomis.",
+      divided: "Dalyta dėmesio užduotis: Atlikite pagrindinę užduotį ir reaguokite į trumpus blyksnius. Praleidimai ir klaidingi atsakai registruojami."
+    }
+  };
+
+  const L = H[lang] ? lang : "en";
+  return (H[L][testType] || H.en.reaction);
+}
+
+function updateTaskHint() {
+  const panel = document.getElementById("taskHintPanel");
+  const text = document.getElementById("taskHintText");
+  const sel = document.getElementById("testType");
+  if (!panel || !text || !sel) return;
+
+  let lang = (typeof currentLang !== "undefined" && currentLang) ? currentLang : (localStorage.getItem("fce_lang") || "en");
+  const testType = sel.value;
+
+  panel.style.display = "block";
+  text.textContent = getTaskHint(lang, testType);
+}
+
+// Expose to window for inline scripts (e.g., index.html scrollToInstrument)
+window.updateTaskHint = updateTaskHint;
+
+// Onboarding gate initialization
+function initOnboardingGate() {
+  const overlay = document.getElementById("onboardingOverlay");
+  const yesBtn = document.getElementById("onboardingYesBtn");
+  const noBtn = document.getElementById("onboardingNoBtn");
+  const resetBtn = document.getElementById("resetOnboardingBtn");
+  if (!overlay || !yesBtn || !noBtn) return;
+
+  function show() {
+    overlay.classList.remove("hidden");
+    document.body.classList.add("onboarding-open");
+  }
+
+  function hide() {
+    overlay.classList.add("hidden");
+    document.body.classList.remove("onboarding-open");
+  }
+
+  const done = localStorage.getItem(ONBOARDING_KEY) === "1";
+  if (!done) show();
+
+  noBtn.addEventListener("click", () => {
+    try { localStorage.setItem(ONBOARDING_KEY, "1"); } catch {}
+    window.location.href = "how-tests-work.html";
+  });
+
+  yesBtn.addEventListener("click", () => {
+    try { localStorage.setItem(ONBOARDING_KEY, "1"); } catch {}
+    hide();
+    // Small delay to ensure overlay is hidden before scrolling
+    setTimeout(() => {
+      // Ensure task hint panel is visible
+      updateTaskHint();
+      // Scroll to "What to do" panel, positioned right below topbar (same as docs pages)
+      const taskHintPanel = document.getElementById("taskHintPanel");
+      if (taskHintPanel) {
+        // Get actual topbar height (use CSS variable or fallback to 64)
+        const topbar = document.querySelector('.topbar');
+        const topbarHeight = topbar ? topbar.offsetHeight : 64;
+        const targetY = taskHintPanel.getBoundingClientRect().top + window.pageYOffset - topbarHeight - 20;
+        window.scrollTo({ top: targetY, behavior: "smooth" });
+        setTimeout(() => {
+          const firstActionBtn = document.querySelector(".action-row button");
+          if (firstActionBtn) firstActionBtn.focus();
+        }, 300);
+        } else {
+        // Fallback to action-row if panel not found
+        const actionRow = document.querySelector(".action-row");
+        if (actionRow) {
+          const topbar = document.querySelector('.topbar');
+          const topbarHeight = topbar ? topbar.offsetHeight : 64;
+          const targetY = actionRow.getBoundingClientRect().top + window.pageYOffset - topbarHeight - 20;
+          window.scrollTo({ top: targetY, behavior: "smooth" });
+          setTimeout(() => {
+            const firstActionBtn = document.querySelector(".action-row button");
+            if (firstActionBtn) firstActionBtn.focus();
+          }, 300);
+        }
+      }
+    }, 100);
+  });
+
+  if (resetBtn) {
+    resetBtn.addEventListener("click", () => {
+      try { localStorage.removeItem(ONBOARDING_KEY); } catch {}
+      show();
+    });
+  }
 }
 
 const startBaselineBtn = document.getElementById("startBaselineBtn");
@@ -1357,6 +1472,7 @@ function updateTrialCountMax() {
 }
 
 testType.addEventListener("change", () => {
+  updateTaskHint();
     // Store selected test type in localStorage
     try {
       localStorage.setItem(TEST_TYPE_KEY, testType.value);
@@ -2988,9 +3104,9 @@ function clampBadgeClass(statusText) {
   // Map your existing status strings to badges.
   // Adjust if your exact labels differ.
   const s = (statusText || "").toLowerCase();
-  if (s.includes("within") || s.includes("innenfor")) return "ok";
-  if (s.includes("slightly") || s.includes("litt")) return "warn";
-  if (s.includes("significantly") || s.includes("betydelig")) return "bad";
+  if (s.includes("within") || s.includes("innenfor") || s.includes("įprastame")) return "ok";
+  if (s.includes("slightly") || s.includes("litt") || s.includes("šiek")) return "warn";
+  if (s.includes("significantly") || s.includes("betydelig") || s.includes("reikšmingai")) return "bad";
   return "na";
 }
 
@@ -3304,10 +3420,34 @@ function renderHistory() {
     const right = document.createElement("div");
     right.className = "history-right";
 
+    // Get metrics early for status text computation
+    const m = s.metrics || {};
+    const avg = Number(m.avgMs);
+
+    // Compute status text for badge color (for check sessions with baseline)
+    let statusText = s?.statusText || "";
+    if (!statusText && s.mode === "check" && baselineSessions.length && Number.isFinite(avg)) {
+      // For divided attention, use multi-metric comparison if available; otherwise use avgMs only
+      if (tt === "divided" && m.nogoCount !== undefined && m.flashAbsError !== undefined) {
+        const sessionPayloadMock = {
+          mean: avg,
+          falseAlarms: m.falseAlarms || 0,
+          trials: m.trials || 0,
+          nogoCount: m.nogoCount || 0,
+          flashAbsError: m.flashAbsError || 0
+        };
+        statusText = getDividedAttentionStatus(sessionPayloadMock, baselineSessions);
+      } else {
+        // For reaction and gonogo, use avgMs only
+        statusText = statusLabelFromCompare(avg, baselineMean, baselineSD);
+      }
+    }
+
     const badge = document.createElement("span");
     const isInvalid = !!(s.flags && s.flags.invalid);
-    badge.className = `badge ${isInvalid ? "badge-bad" : "badge-ok"}`;
-    badge.textContent = isInvalid ? (currentLang === "no" ? "UGYLDIG" : "INVALID") : (currentLang === "no" ? "OK" : "OK");
+    const badgeClass = isInvalid ? "na" : clampBadgeClass(statusText);
+    badge.className = `badge ${badgeClass}`;
+    badge.textContent = isInvalid ? t("trend.invalid") : t("trend.ok");
     right.appendChild(badge);
 
     header.appendChild(left);
@@ -3316,9 +3456,6 @@ function renderHistory() {
 
     const body = document.createElement("div");
     body.className = "history-body";
-
-    const m = s.metrics || {};
-    const avg = Number(m.avgMs);
     const sd = Number(m.sdMs);
     const best = Number(m.bestMs);
     const worst = Number(m.worstMs);
@@ -3364,22 +3501,21 @@ function renderHistory() {
 
     // Compare-to-baseline hint for check sessions
     if (s.mode === "check" && baselineSessions.length) {
-      let status;
-      // For divided attention, use multi-metric comparison if available; otherwise use avgMs only
-      if (tt === "divided" && m.nogoCount !== undefined && m.flashAbsError !== undefined) {
-        // Use multi-metric status comparison for divided attention
-        const sessionPayloadMock = {
-          mean: avg,
-          falseAlarms: m.falseAlarms || 0,
-          trials: m.trials || 0,
-          nogoCount: m.nogoCount || 0,
-          flashAbsError: m.flashAbsError || 0
-        };
-        status = getDividedAttentionStatus(sessionPayloadMock, baselineSessions);
-      } else {
-        // For reaction and gonogo, use avgMs only (existing behavior)
-        status = statusLabelFromCompare(avg, baselineMean, baselineSD);
-      }
+      // Reuse statusText computed earlier for badge (or compute if not already computed)
+      const status = statusText || (() => {
+        if (tt === "divided" && m.nogoCount !== undefined && m.flashAbsError !== undefined) {
+          const sessionPayloadMock = {
+            mean: avg,
+            falseAlarms: m.falseAlarms || 0,
+            trials: m.trials || 0,
+            nogoCount: m.nogoCount || 0,
+            flashAbsError: m.flashAbsError || 0
+          };
+          return getDividedAttentionStatus(sessionPayloadMock, baselineSessions);
+        } else {
+          return statusLabelFromCompare(avg, baselineMean, baselineSD);
+        }
+      })();
       const delta = Number.isFinite(avg) && Number.isFinite(baselineMean) ? (avg - baselineMean) : NaN;
       const cmp = document.createElement("div");
       cmp.className = "history-compare";
@@ -3446,6 +3582,12 @@ resetBtn.style.display = "none";
 
 // Apply language on startup
 applyLangUI();
+
+// Initialize onboarding gate
+initOnboardingGate();
+
+// Initialize task hints
+updateTaskHint();
 
 // Load and restore test type from localStorage
 if (testType) {

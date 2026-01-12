@@ -84,6 +84,12 @@
       <span class="lang lang-lt hidden">Kaip naudoti</span>
     </a>
 
+    <a href="how-tests-work.html" class="menu-item">
+      <span class="lang lang-en">How the tests work</span>
+      <span class="lang lang-no hidden">Hvordan testene fungerer</span>
+      <span class="lang lang-lt hidden">Kaip veikia testai</span>
+    </a>
+
     <a href="faq.html" class="menu-item">
       <span class="lang lang-en">FAQ</span>
       <span class="lang lang-no hidden">FAQ</span>
@@ -119,6 +125,52 @@
               be palyginimo. Per ankstyvi paspaudimai laikomi klaidingu startu.
             </p>
           </div>
+        </div>
+
+        <!-- First-time onboarding gate -->
+        <div id="onboardingOverlay" class="onboarding-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="onboardingTitle">
+          <div class="onboarding-card">
+            <h2 id="onboardingTitle">
+              <span class="lang lang-en">First time here?</span>
+              <span class="lang lang-no hidden">Første gang her?</span>
+              <span class="lang lang-lt hidden">Pirmas kartas čia?</span>
+            </h2>
+
+            <p class="muted" style="margin-top: 8px;">
+              <span class="lang lang-en">Have you used FCE before?</span>
+              <span class="lang lang-no hidden">Har du brukt FCE før?</span>
+              <span class="lang lang-lt hidden">Ar anksčiau naudojote FCE?</span>
+            </p>
+
+            <div class="action-row" style="margin-top: 14px;">
+              <button id="onboardingNoBtn" type="button">
+                <span class="lang lang-en">No — show me how the tests work</span>
+                <span class="lang lang-no hidden">Nei — vis meg hvordan testene fungerer</span>
+                <span class="lang lang-lt hidden">Ne — parodykite, kaip veikia testai</span>
+              </button>
+              <button id="onboardingYesBtn" type="button" class="secondary">
+                <span class="lang lang-en">Yes — take me to the instrument</span>
+                <span class="lang lang-no hidden">Ja — ta meg til instrumentet</span>
+                <span class="lang lang-lt hidden">Taip — nukreipkite į instrumentą</span>
+              </button>
+            </div>
+
+            <p class="note" style="margin-top: 12px;">
+              <span class="lang lang-en">Local-only. This choice is stored on this device.</span>
+              <span class="lang lang-no hidden">Kun lokalt. Valget lagres på denne enheten.</span>
+              <span class="lang lang-lt hidden">Tik lokaliai. Pasirinkimas išsaugomas šiame įrenginyje.</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Inline per-test hints -->
+        <div class="panel" id="taskHintPanel" style="display:none;">
+          <h2>
+            <span class="lang lang-en">What to do</span>
+            <span class="lang lang-no hidden">Hva du skal gjøre</span>
+            <span class="lang lang-lt hidden">Ką daryti</span>
+          </h2>
+          <p id="taskHintText" class="muted" style="margin:0;"></p>
         </div>
 
         <!-- Controls -->
@@ -298,6 +350,13 @@
               <span class="lang lang-lt hidden">Tęsti nuo paskutinio puslapio</span>
             </label>
           </div>
+          <div style="margin-top: 10px; font-size: 13px; opacity: 0.85;">
+            <button id="resetOnboardingBtn" class="secondary" type="button" style="padding: 8px 12px;">
+              <span class="lang lang-en">Reset onboarding</span>
+              <span class="lang lang-no hidden">Tilbakestill onboarding</span>
+              <span class="lang lang-lt hidden">Atstatyti įvadą</span>
+            </button>
+          </div>
         </footer>
       </div>
     </section>
@@ -434,11 +493,18 @@
   <script>
     (function () {
       function scrollToInstrument() {
-        const actionRow = document.querySelector(".action-row");
-        if (actionRow) {
-          // Scroll to action buttons (which are now above Context)
-          const topbarHeight = 64; // Match --topbar-h
-          const targetY = actionRow.getBoundingClientRect().top + window.pageYOffset - topbarHeight - 20;
+        // Try to update task hint if function is available (from app.js)
+        if (typeof window.updateTaskHint === 'function') {
+          window.updateTaskHint();
+        }
+        
+        // Ensure task hint panel is visible
+        const taskHintPanel = document.getElementById("taskHintPanel");
+        if (taskHintPanel && taskHintPanel.offsetParent !== null) {
+          // Scroll to "What to do" panel, positioned right below topbar
+          const topbar = document.querySelector('.topbar');
+          const topbarHeight = topbar ? topbar.offsetHeight : 64;
+          const targetY = taskHintPanel.getBoundingClientRect().top + window.pageYOffset - topbarHeight - 20;
           window.scrollTo({ top: targetY, behavior: 'smooth' });
           // Focus first action button after scroll
           setTimeout(function() {
@@ -447,13 +513,28 @@
               firstActionBtn.focus();
             }
           }, 300);
+        } else {
+          // Fallback to action-row if panel not found or not visible
+          const actionRow = document.querySelector(".action-row");
+          if (actionRow) {
+            const topbar = document.querySelector('.topbar');
+            const topbarHeight = topbar ? topbar.offsetHeight : 64;
+            const targetY = actionRow.getBoundingClientRect().top + window.pageYOffset - topbarHeight - 20;
+            window.scrollTo({ top: targetY, behavior: 'smooth' });
+            setTimeout(function() {
+              const firstActionBtn = document.querySelector(".action-row button");
+              if (firstActionBtn) {
+                firstActionBtn.focus();
+              }
+            }, 300);
+          }
         }
       }
 
       // Handle #instrument hash when arriving from external links (e.g., docs pages)
       if (window.location.hash === '#instrument') {
-        // Small delay to ensure DOM is ready
-        setTimeout(scrollToInstrument, 100);
+        // Small delay to ensure DOM is ready and app.js has loaded
+        setTimeout(scrollToInstrument, 150);
       }
     })();
   </script>

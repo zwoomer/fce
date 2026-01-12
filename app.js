@@ -1307,10 +1307,18 @@ testArea.addEventListener("click", (e) => {
     }
   
     const rt = Math.round(performance.now() - startTime);
-  
+
     if (tt === "reaction") {
+      // Check if we've already completed all trials before recording
+      if (results.length >= totalTrials) return;
       recordResult({ type: "rt", rt });
-      setTimeout(nextTrial, 250);
+      // Only queue nextTrial if we haven't completed all trials
+      if (results.length < totalTrials) {
+        setTimeout(nextTrial, 250);
+      } else {
+        // All trials complete - end session immediately
+        endSession();
+      }
       return;
     }
   
@@ -1908,12 +1916,15 @@ clearBaselineBtn.addEventListener("click", () => {
   }
 
   function recordResult(entry) {
+    // Prevent recording if we've already completed all trials
+    if (results.length >= totalTrials) return;
+    
     results.push(entry);
-  
+
     const li = document.createElement("li");
     const n = results.length;
     li.textContent = getTrialText(n, entry, testType.value);
-  
+
     trialList.appendChild(li);
     
     // Auto-scroll only during active run
@@ -1926,7 +1937,7 @@ clearBaselineBtn.addEventListener("click", () => {
     
     // Apply visual emphasis to recent trials
     applyTrialEmphasis(trialList);
-  }  
+  }
 
 // ----------------------------
 // History model (local-first)
@@ -2086,6 +2097,7 @@ function pushHistoryRecord(record) {
           quality: invalidRecord.quality
         }, "reaction", mode);
         mode = null;
+        updateBaselineInfo(); // Ensure button state is correct
         return;
       }
   
@@ -2135,6 +2147,7 @@ function pushHistoryRecord(record) {
           quality: invalidRecord.quality
         }, "gonogo", mode);
         mode = null;
+        updateBaselineInfo(); // Ensure button state is correct
         return;
       }
   
@@ -2192,6 +2205,7 @@ function pushHistoryRecord(record) {
         mode = null;
         dividedPlan = null;
         dividedFlashAnswer = null;
+        updateBaselineInfo(); // Ensure button state is correct
         return;
       }
       
@@ -2231,6 +2245,7 @@ function pushHistoryRecord(record) {
         mode = null;
         dividedPlan = null;
         dividedFlashAnswer = null;
+        updateBaselineInfo(); // Ensure button state is correct
         return;
       }
       

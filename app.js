@@ -288,8 +288,8 @@ const I18N = {
         go: "SPAUSKITE!",
       },
       gonogo: {
-        go: "SPAUSKITE (spauskite)",
-        nogo: "NESPĮKITE (nespauskite)",
+        go: "GO (spauskite)",
+        nogo: "NO-GO (nespauskite)",
       },
       divided: {
         go: "SPAUSKITE",

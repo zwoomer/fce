@@ -1448,7 +1448,7 @@ img, video, iframe, canvas {
     justify-content: space-between;
     align-items: flex-start;
     gap: 12px;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
   }
   
   .history-ts {
@@ -1543,12 +1543,73 @@ img, video, iframe, canvas {
     border-radius: 999px;
   }
 
+  /* Semantic chip variants matching badge palette */
+  .chip.ok {
+    border-color: rgba(58, 221, 58, 0.45);
+    background: rgba(58, 221, 58, 0.10);
+    color: #7f7;
+  }
+
+  .chip.warn {
+    border-color: rgba(204, 204, 51, 0.45);
+    background: rgba(204, 204, 51, 0.10);
+    color: #ffd;
+  }
+
+  .chip.bad {
+    border-color: rgba(255, 107, 107, 0.55);
+    background: rgba(255, 107, 107, 0.12);
+    color: #ff8b8b;
+  }
+
+  .chip.na {
+    opacity: 0.75;
+  }
+
   /* Improved history body spacing */
   .history-body {
     display: flex;
     flex-direction: column;
     gap: 8px;
     padding-top: 4px;
+  }
+
+  /* History summary section with chips */
+  .history-summary {
+    margin-top: 2px;
+  }
+
+  .history-summary .chips {
+    justify-content: flex-start;
+    margin: 0;
+    max-width: none;
+  }
+
+  .history-affordance {
+    margin-top: 8px;
+    font-size: 13px;
+    opacity: 0.7;
+  }
+
+  /* History details section (collapsed by default) */
+  .history-details {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    display: none;
+  }
+
+  .history-card.is-open .history-details {
+    display: block;
+  }
+
+  .history-card:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.3);
+    outline-offset: 2px;
+  }
+
+  .history-card {
+    cursor: pointer;
   }
 
   /* Typography improvements for history lines */
@@ -1589,6 +1650,51 @@ img, video, iframe, canvas {
     opacity: 0.8;
     font-size: 13px;
     color: #ff6b6b;
+  }
+
+  /* Trial list styling */
+  .trial-toggle {
+    margin-top: 10px;
+  }
+
+  .trial-list {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.04);
+  }
+
+  .trial-list.hidden {
+    display: none;
+  }
+
+  .trial-row {
+    display: grid;
+    grid-template-columns: 70px 1fr 90px;
+    gap: 10px;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    font-size: 13px;
+    color: #ddd;
+  }
+
+  .trial-row:last-child {
+    border-bottom: none;
+  }
+
+  .trial-i {
+    opacity: 0.75;
+  }
+
+  .trial-outcome {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    opacity: 0.95;
+  }
+
+  .trial-rt {
+    text-align: right;
+    opacity: 0.85;
   }
 
   /* Home — History preview */

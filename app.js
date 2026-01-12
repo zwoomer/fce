@@ -18,6 +18,27 @@ if (!currentLang) {
 // Test type persistence
 const TEST_TYPE_KEY = "fce_test_type_v1";
 
+// Build lightweight trial log for display
+function buildTrialLog(tt, results) {
+  if (!Array.isArray(results)) return [];
+  // Store minimal info per trial for UI display only
+  return results.map((e, idx) => {
+    const type = e?.type || "unknown";
+    const rt = Number.isFinite(e?.rt) ? Math.round(e.rt) : null;
+
+    // Normalize outcome labels for display
+    let outcome = type;
+    if (tt === "reaction") {
+      outcome = (type === "rt") ? "hit" : (type === "false_start" ? "false_start" : type);
+    } else if (tt === "gonogo" || tt === "divided") {
+      // Possible: go, miss, false_alarm, correct_reject, false_start
+      outcome = type;
+    }
+
+    return { i: idx + 1, outcome, rt };
+  });
+}
+
 const I18N = {
   en: {
     ui: {
@@ -2220,7 +2241,8 @@ function pushHistoryRecord(record) {
           metrics: { avgMs: 0, sdMs: 0, bestMs: 0, worstMs: 0, trials: 0, falseStarts },
           flags,
           tags,
-          device
+          device,
+          trialLog: buildTrialLog(tt, results)
         };
         invalidRecord.quality = computeSessionQuality(invalidRecord);
         pushHistoryRecord(invalidRecord);
@@ -2270,7 +2292,8 @@ function pushHistoryRecord(record) {
           },
           flags,
           tags,
-          device
+          device,
+          trialLog: buildTrialLog(tt, results)
         };
         invalidRecord.quality = computeSessionQuality(invalidRecord);
         pushHistoryRecord(invalidRecord);
@@ -2326,7 +2349,8 @@ function pushHistoryRecord(record) {
           },
           flags,
           tags,
-          device
+          device,
+          trialLog: buildTrialLog(tt, results)
         };
         invalidRecord.quality = computeSessionQuality(invalidRecord);
         pushHistoryRecord(invalidRecord);
@@ -2366,7 +2390,8 @@ function pushHistoryRecord(record) {
           },
           flags,
           tags,
-          device
+          device,
+          trialLog: buildTrialLog(tt, results)
         };
         invalidRecord.quality = computeSessionQuality(invalidRecord);
         pushHistoryRecord(invalidRecord);
@@ -2470,7 +2495,8 @@ function pushHistoryRecord(record) {
           },
       flags,
       tags,
-      device
+      device,
+      trialLog: buildTrialLog(tt, results)
     };
     
     // Compute and store quality
@@ -3110,6 +3136,28 @@ function clampBadgeClass(statusText) {
   return "na";
 }
 
+function qualityToBadgeClass(q) {
+  // q is already something like "good" / "mixed" / "poor" etc
+  if (!q) return "na";
+  const v = String(q).toLowerCase();
+  if (v.includes("good")) return "ok";
+  if (v.includes("mix")) return "warn";
+  if (v.includes("poor") || v.includes("bad")) return "bad";
+  return "na";
+}
+
+function expectedTrialsFor(tt) {
+  if (tt === "gonogo") return 20;
+  return 10;
+}
+
+function sdChipClass(sd, baselineSD) {
+  if (!Number.isFinite(sd) || !Number.isFinite(baselineSD) || baselineSD <= 0) return "na";
+  if (sd <= baselineSD * 1.25) return "ok";
+  if (sd <= baselineSD * 1.75) return "warn";
+  return "bad";
+}
+
 // Compute baseline mean/sd from baseline sessions (excluding invalid)
 function computeBaselineFromHistory(sessions) {
   const base = sessions
@@ -3364,6 +3412,28 @@ function renderHistory() {
   let sessions = loadHistory(tt);
   sessions = sessions.sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
 
+  // Collect expanded card states before clearing (to preserve on language change)
+  // Match by timestamp against ALL sessions (before filtering)
+  const expandedSessions = new Set();
+  if (historyListEl) {
+    const existingCards = historyListEl.querySelectorAll(".history-card.is-open");
+    existingCards.forEach(card => {
+      const tsEl = card.querySelector(".history-ts");
+      if (tsEl) {
+        const tsText = tsEl.textContent.trim();
+        // Find matching session in all loaded sessions (before filtering)
+        const matchingSession = sessions.find(s => {
+          const sessionTs = formatTs(s.createdAt || s.id);
+          return sessionTs === tsText;
+        });
+        if (matchingSession) {
+          // Use session ID (createdAt or id) as unique identifier
+          expandedSessions.add(matchingSession.createdAt || matchingSession.id);
+        }
+      }
+    });
+  }
+
   // Render trend panel (needs all sessions, not filtered)
   renderTrendFor(tt);
 
@@ -3401,6 +3471,9 @@ function renderHistory() {
   for (const s of sessions) {
     const card = document.createElement("div");
     card.className = "history-card";
+    card.tabIndex = 0;
+    card.setAttribute("role", "button");
+    card.setAttribute("aria-expanded", "false");
 
     const header = document.createElement("div");
     header.className = "history-header";
@@ -3423,6 +3496,10 @@ function renderHistory() {
     // Get metrics early for status text computation
     const m = s.metrics || {};
     const avg = Number(m.avgMs);
+    const sd = Number(m.sdMs);
+    const best = Number(m.bestMs);
+    const worst = Number(m.worstMs);
+    const trials = Number(m.trials);
 
     // Compute status text for badge color (for check sessions with baseline)
     let statusText = s?.statusText || "";
@@ -3447,41 +3524,117 @@ function renderHistory() {
     const isInvalid = !!(s.flags && s.flags.invalid);
     const badgeClass = isInvalid ? "na" : clampBadgeClass(statusText);
     badge.className = `badge ${badgeClass}`;
-    badge.textContent = isInvalid ? t("trend.invalid") : t("trend.ok");
+    const badgeText = isInvalid
+      ? t("trend.invalid")
+      : (badgeClass === "ok" ? t("trend.ok") : (statusText || t("trend.ok")));
+    badge.textContent = badgeText;
     right.appendChild(badge);
 
     header.appendChild(left);
     header.appendChild(right);
     card.appendChild(header);
 
-    const body = document.createElement("div");
-    body.className = "history-body";
-    const sd = Number(m.sdMs);
-    const best = Number(m.bestMs);
-    const worst = Number(m.worstMs);
-    const trials = Number(m.trials);
+    // Summary section with chips
+    const summary = document.createElement("div");
+    summary.className = "history-summary";
+    const chips = document.createElement("div");
+    chips.className = "chips";
+    
+    // Determine chip classes semantically
+    const avgClass = isInvalid ? "bad" : (s.mode === "check" && baselineSessions.length && statusText ? clampBadgeClass(statusText) : "na");
+    const sdClass = s.mode === "check" && baselineSessions.length && Number.isFinite(sd) ? sdChipClass(sd, baselineSD) : "na";
+    const expectedTrials = expectedTrialsFor(tt);
+    const trialsClass = Number.isFinite(trials) ? (trials < expectedTrials ? "warn" : "ok") : "na";
 
+    // Always show: Avg, SD, Trials
+    if (Number.isFinite(avg)) {
+      const chip = document.createElement("span");
+      chip.className = `chip ${avgClass}`;
+      chip.textContent = `${t("history.avg")} ${avg.toFixed(0)}ms`;
+      chips.appendChild(chip);
+    }
+    if (Number.isFinite(sd)) {
+      const chip = document.createElement("span");
+      chip.className = `chip ${sdClass}`;
+      chip.textContent = `${t("history.sd")} ${sd.toFixed(0)}ms`;
+      chips.appendChild(chip);
+    }
+    if (Number.isFinite(trials)) {
+      const chip = document.createElement("span");
+      chip.className = `chip ${trialsClass}`;
+      chip.textContent = `${t("history.trials")} ${trials}`;
+      chips.appendChild(chip);
+    }
+    
+    // Test-specific metrics
+    if (tt === "gonogo") {
+      if (typeof m.falseAlarms === "number") {
+        const chip = document.createElement("span");
+        chip.className = "chip";
+        chip.textContent = `FA ${m.falseAlarms}`;
+        chips.appendChild(chip);
+      }
+    } else if (tt === "divided") {
+      if (typeof m.falseAlarms === "number") {
+        const chip = document.createElement("span");
+        chip.className = "chip";
+        chip.textContent = `FA ${m.falseAlarms}`;
+        chips.appendChild(chip);
+      }
+      if (typeof m.flashAbsError === "number" && Number.isFinite(m.flashAbsError)) {
+        const chip = document.createElement("span");
+        chip.className = "chip";
+        chip.textContent = `Flash err ${m.flashAbsError}ms`;
+        chips.appendChild(chip);
+      }
+    }
+    
+    summary.appendChild(chips);
+    
+    // Affordance text
+    const affordance = document.createElement("div");
+    affordance.className = "history-affordance";
+    const langEn = document.createElement("span");
+    langEn.className = `lang lang-en${currentLang !== "en" ? " hidden" : ""}`;
+    langEn.textContent = "Click to view details";
+    const langNo = document.createElement("span");
+    langNo.className = `lang lang-no${currentLang !== "no" ? " hidden" : ""}`;
+    langNo.textContent = "Trykk for detaljer";
+    const langLt = document.createElement("span");
+    langLt.className = `lang lang-lt${currentLang !== "lt" ? " hidden" : ""}`;
+    langLt.textContent = "Spustelėkite dėl detalių";
+    affordance.appendChild(langEn);
+    affordance.appendChild(langNo);
+    affordance.appendChild(langLt);
+    summary.appendChild(affordance);
+    card.appendChild(summary);
+
+    // Details section (collapsed by default)
+    const details = document.createElement("div");
+    details.className = "history-details";
+
+    // Detailed lines in details section
     const line1 = document.createElement("div");
     line1.className = "history-line";
     line1.textContent = `${t("history.avg")} ${Number.isFinite(avg) ? avg.toFixed(0) : "—"} ms · ${t("history.sd")} ${Number.isFinite(sd) ? sd.toFixed(0) : "—"} · ${t("history.trials")} ${Number.isFinite(trials) ? trials : "—"}`;
-    body.appendChild(line1);
+    details.appendChild(line1);
 
     const line2 = document.createElement("div");
     line2.className = "history-line muted";
     line2.textContent = `${t("history.best")} ${Number.isFinite(best) ? best.toFixed(0) : "—"} · ${t("history.worst")} ${Number.isFinite(worst) ? worst.toFixed(0) : "—"}`;
-    body.appendChild(line2);
+    details.appendChild(line2);
 
     if (tt === "gonogo") {
       const errs = document.createElement("div");
       errs.className = "history-line";
       errs.textContent = `${t("history.misses")} ${m.misses ?? 0} · ${t("history.falseAlarms")} ${m.falseAlarms ?? 0} · ${t("history.falseStarts")} ${m.falseStarts ?? 0}`;
-      body.appendChild(errs);
+      details.appendChild(errs);
     } else if (tt === "divided") {
       // Show errors for divided attention
       const errs = document.createElement("div");
       errs.className = "history-line";
       errs.textContent = `${t("history.misses")} ${m.misses ?? 0} · ${t("history.falseAlarms")} ${m.falseAlarms ?? 0} · ${t("history.falseStarts")} ${m.falseStarts ?? 0}`;
-      body.appendChild(errs);
+      details.appendChild(errs);
       
       // Show flash metrics for divided attention
       if (typeof m.flashTargetCount === "number" && typeof m.flashUserCount === "number" && typeof m.flashAbsError === "number") {
@@ -3489,14 +3642,14 @@ function renderHistory() {
         flashLine.className = "history-line muted";
         const flashLabel = currentLang === "no" ? "Flashes" : "Flashes";
         flashLine.textContent = `${flashLabel}: ${currentLang === "no" ? "mål" : "target"} ${m.flashTargetCount} · ${currentLang === "no" ? "svar" : "answer"} ${m.flashUserCount} · ${currentLang === "no" ? "feil" : "error"} ${m.flashAbsError}`;
-        body.appendChild(flashLine);
+        details.appendChild(flashLine);
       }
     } else {
       // Reaction Time: only false starts
       const fs = document.createElement("div");
       fs.className = "history-line";
       fs.textContent = `${t("history.falseStarts")} ${m.falseStarts ?? 0}`;
-      body.appendChild(fs);
+      details.appendChild(fs);
     }
 
     // Compare-to-baseline hint for check sessions
@@ -3520,12 +3673,12 @@ function renderHistory() {
       const cmp = document.createElement("div");
       cmp.className = "history-compare";
       cmp.textContent = `${status} · Δ ${Number.isFinite(delta) ? (delta >= 0 ? "+" : "") + delta.toFixed(0) : "—"} ms (${t("history.baseline")} ${baselineMean.toFixed(0)} ± ${baselineSD.toFixed(0)} (±2 SD))`;
-      body.appendChild(cmp);
+      details.appendChild(cmp);
     } else if (s.mode === "check" && !baselineSessions.length) {
       const cmp = document.createElement("div");
       cmp.className = "history-compare muted";
       cmp.textContent = currentLang === "no" ? "Ingen baseline for sammenligning." : "No baseline available for comparison.";
-      body.appendChild(cmp);
+      details.appendChild(cmp);
     }
 
     // Tags
@@ -3537,18 +3690,19 @@ function renderHistory() {
       const parts = [];
       if (tags.sleep) parts.push(`${currentLang === "no" ? "søvn" : "sleep"} ${tags.sleep}/5`);
       if (tags.stress) parts.push(`${currentLang === "no" ? "stress" : "stress"} ${tags.stress}/5`);
-      if (tags.note && String(tags.note).trim()) parts.push(`“${String(tags.note).trim()}”`);
+      if (tags.note && String(tags.note).trim()) parts.push(`"${String(tags.note).trim()}"`);
       tagLine.textContent = parts.join(" · ");
-      body.appendChild(tagLine);
+      details.appendChild(tagLine);
     }
 
-    // Quality label (always show)
+    // Quality label (always show) - display as colored badge
     const sessionQuality = s.quality || computeSessionQuality(s);
     if (sessionQuality) {
       const qualityLine = document.createElement("div");
       qualityLine.className = "history-line muted";
-      qualityLine.textContent = `${t("quality.label")}: ${t(`quality.${sessionQuality}`)}`;
-      body.appendChild(qualityLine);
+      const qc = qualityToBadgeClass(sessionQuality);
+      qualityLine.innerHTML = `${t("quality.label")}: <span class="badge ${qc}">${t(`quality.${sessionQuality}`)}</span>`;
+      details.appendChild(qualityLine);
     }
     
     // Invalid reason / refusal code (if present)
@@ -3565,11 +3719,105 @@ function renderHistory() {
       }
       if (reasonText) {
         why.textContent = reasonText;
-        body.appendChild(why);
+        details.appendChild(why);
       }
     }
 
-    card.appendChild(body);
+    // Per-trial breakdown (collapsed by default)
+    // Show button even if log is empty (for old sessions without trialLog)
+    const log = Array.isArray(s.trialLog) ? s.trialLog : [];
+    if (true) { // Always show button, even for old sessions
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "btn btn-small trial-toggle";
+      const btnEn = document.createElement("span");
+      btnEn.className = `lang lang-en${currentLang !== "en" ? " hidden" : ""}`;
+      btnEn.textContent = "Show trials";
+      const btnNo = document.createElement("span");
+      btnNo.className = `lang lang-no${currentLang !== "no" ? " hidden" : ""}`;
+      btnNo.textContent = "Vis forsøk";
+      const btnLt = document.createElement("span");
+      btnLt.className = `lang lang-lt${currentLang !== "lt" ? " hidden" : ""}`;
+      btnLt.textContent = "Rodyti bandymus";
+      btn.appendChild(btnEn);
+      btn.appendChild(btnNo);
+      btn.appendChild(btnLt);
+
+      const list = document.createElement("div");
+      list.className = "trial-list hidden";
+
+      if (log.length > 0) {
+        list.innerHTML = log.map(row => {
+          const rt = row.rt == null ? "—" : `${row.rt} ms`;
+          return `<div class="trial-row"><span class="trial-i">#${row.i}</span><span class="trial-outcome">${row.outcome}</span><span class="trial-rt">${rt}</span></div>`;
+        }).join("");
+      } else {
+        list.innerHTML = `<div class="trial-row"><span class="trial-i">—</span><span class="trial-outcome">No trial data available</span><span class="trial-rt">—</span></div>`;
+      }
+
+      // Attach button listener with capture phase to prevent card toggle
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        const isHidden = list.classList.contains("hidden");
+        if (isHidden) {
+          // Show the list
+          list.classList.remove("hidden");
+          btnEn.textContent = "Hide trials";
+          btnNo.textContent = "Skjul forsøk";
+          btnLt.textContent = "Slėpti bandymus";
+        } else {
+          // Hide the list
+          list.classList.add("hidden");
+          btnEn.textContent = "Show trials";
+          btnNo.textContent = "Vis forsøk";
+          btnLt.textContent = "Rodyti bandymus";
+        }
+        // Manually toggle language visibility without calling applyLangUI (which re-renders)
+        const currentLangValue = currentLang || (localStorage.getItem("fce_lang") || "en");
+        btn.querySelectorAll(".lang").forEach(span => {
+          span.classList.toggle("hidden", !span.classList.contains(`lang-${currentLangValue}`));
+        });
+        return false;
+      }, true); // Use capture phase
+
+      details.appendChild(btn);
+      details.appendChild(list);
+    }
+
+    card.appendChild(details);
+    
+    // Restore expanded state if this session was expanded before re-render
+    const sessionId = s.createdAt || s.id;
+    if (expandedSessions.has(sessionId)) {
+      card.classList.add("is-open");
+      card.setAttribute("aria-expanded", "true");
+    }
+    
+    // Toggle functionality
+    const toggleCard = (e) => {
+      // Don't toggle if clicking on buttons or links
+      if (e.target.closest('button') || e.target.closest('a')) return;
+      
+      const isOpen = card.classList.contains("is-open");
+      if (isOpen) {
+        card.classList.remove("is-open");
+        card.setAttribute("aria-expanded", "false");
+      } else {
+        card.classList.add("is-open");
+        card.setAttribute("aria-expanded", "true");
+      }
+    };
+    
+    card.addEventListener("click", toggleCard);
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        toggleCard(e);
+      }
+    });
+    
     historyListEl.appendChild(card);
   }
 }

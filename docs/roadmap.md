@@ -101,6 +101,18 @@ Status: ✅ Shipped
 
 ---
 
+## v0.2.8 — Language support, UX improvements & bug fixes (completed)
+- Lithuanian (LT) language support: complete translation coverage across UI and documentation
+- Session panel improvements: fixed-height scrolling, visual emphasis on recent trials, fade overlay
+- Home panel reordering: History preview between Session and Baseline
+- Navigation enhancements: floating History back button with responsive positioning
+- Test type defaults: Go/No-Go defaults to 20 trials, others remain at 10
+- Bug fixes: extra trial recording, button state after invalid sessions, Training mode summary consistency
+
+Status: ✅ Shipped
+
+---
+
 ## v0.3 — Research expansion (exploratory)
 - Additional paradigms
 - Deeper trend analysis

@@ -98,6 +98,44 @@ Tagged as **v0.2.7**.
 
 ---
 
+## v0.2.8 — Language support, UX improvements & bug fixes (completed)
+
+Shipped improvements:
+
+**Language support:**
+- Added Lithuanian (LT) language support across core UI and all documentation pages
+- Complete translation coverage: Home, History, all documentation pages, error messages, and session summaries
+- Language selector updated to include LT option
+
+**Session panel improvements:**
+- Session panel now maintains fixed height and never expands as trials increase
+- Trial list uses internal scrolling with visual emphasis on last 5 trials
+- Fade overlay effect for older trials (still visible when scrolling)
+- Auto-scroll only when user is near bottom (prevents interrupting manual scrolling)
+- Home panel reordering: History preview now appears between Session and Baseline panels
+- Smooth scroll for History panel on narrow screens when it becomes visible
+
+**Navigation enhancements:**
+- History back button: floating position with responsive breakpoints
+- Button positioned in left gutter beside container on desktop/tablet
+- Falls back to inline position on mobile (≤640px)
+- Button remains visible and accessible while scrolling
+- Robust back navigation even when history is cleared
+
+**Test type defaults:**
+- Go/No-Go test type now defaults to 20 trials when selected (recommended for stable results)
+- Reaction Time and Divided Attention remain at 10 trials
+- Users can still manually adjust trial count
+
+**Bug fixes:**
+- Fix extra trial bug: prevent recording more than totalTrials trials (was recording 11 instead of 10 on rapid clicks)
+- Fix button state after invalid sessions: ensure 'Run Functional Check' button correctly disabled
+- Fix Training mode summary display: Divided Attention Training no longer shows summary (consistent with other test types)
+
+Tagged as **v0.2.8**.
+
+---
+
 ## v0.3 — Exploratory (future)
 
 Potential directions (not commitments):

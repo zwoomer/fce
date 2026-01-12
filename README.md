@@ -10,7 +10,7 @@ FCE is designed to support **human interpretation**, not automated judgment.
 
 ## Current status
 
-**Latest release:** v0.2.7  
+**Latest release:** v0.2.8  
 **Status:** Stable (documentation & explanation complete)
 
 ---
@@ -139,6 +139,17 @@ No test logic changes.
 
 ---
 
+## Language support, UX improvements & bug fixes (v0.2.8)
+
+- **Lithuanian language support:** Complete translation coverage across core UI and all documentation pages
+- **Session panel improvements:** Fixed-height scrolling, visual emphasis on recent trials, fade overlay for older trials
+- **Home panel reordering:** History preview now appears between Session and Baseline panels
+- **Navigation enhancements:** Floating History back button with responsive positioning (desktop/tablet/mobile)
+- **Test type defaults:** Go/No-Go defaults to 20 trials when selected (recommended for stable results)
+- **Bug fixes:** Extra trial recording prevention, button state consistency after invalid sessions, Training mode summary display consistency
+
+---
+
 ## Explanatory clarity & visual documentation (v0.2.7)
 
 - Baseline-relative visual explanation page (`baseline-relative.html`) with diagram
@@ -237,5 +248,6 @@ FCE is suitable for:
 - v0.2.5 — Critical bug fixes
 - v0.2.6 — Documentation expansion & utilities
 - v0.2.7 — Explanatory clarity & visual documentation
+- v0.2.8 — Language support, UX improvements & bug fixes
 
 Future work will continue under v0.2.x and v0.3 planning.

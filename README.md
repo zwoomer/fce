@@ -10,12 +10,12 @@ FCE is designed to support **human interpretation**, not automated judgment.
 
 ## Current status
 
-**Latest release:** v0.2.9  
+**Latest release:** v0.3.0  
 **Status:** Stable (documentation & explanation complete)
 
 ---
 
-## What FCE measures (v0.2.x)
+## What FCE measures (v0.3.x)
 
 ### 1) Reaction Time
 Measures simple response speed and consistency.
@@ -53,6 +53,17 @@ Evaluation combines:
 - Attention accuracy
 
 The overall status reflects the **worst deviation** among these signals.
+
+---
+
+### 4) Precision (Target Pointing)
+Measures fine motor control and spatial accuracy.
+
+- Error distance (normalized)
+- Mean error and standard deviation
+- Reaction time
+- Hit/miss/timeout rates
+- Baseline-relative evaluation
 
 ---
 
@@ -274,5 +285,6 @@ FCE is suitable for:
 - v0.2.7 — Explanatory clarity & visual documentation
 - v0.2.8 — Language support, UX improvements & bug fixes
 - v0.2.9 — UX improvements, History enhancements, and onboarding
+- v0.3.0 — Precision (Target Pointing) test with fullscreen UX
 
-Future work will continue under v0.2.x and v0.3 planning.
+Future work will continue under v0.3.x for refinements and v0.4 planning.

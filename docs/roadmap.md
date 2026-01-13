@@ -130,7 +130,28 @@ Status: ✅ Shipped
 
 ---
 
-## v0.3 — Research expansion (exploratory)
+## v0.3.0 — Precision (Target Pointing) test (completed)
+- Precision test implementation with fullscreen UX
+- Consensual fullscreen with prep overlay
+- Trial-by-trial feedback (hit/miss/timeout)
+- Baseline and check mode support
+- Comprehensive i18n (EN/NO/LT)
+- History integration with per-trial breakdown
+- Event handling fixes and memory leak prevention
+
+Status: ✅ Shipped
+
+---
+
+## v0.3.x — Refinements (in progress)
+- Precision test refinements and optimizations
+- Additional UX improvements
+
+Status: 🔄 In progress
+
+---
+
+## v0.4 — Research expansion (exploratory)
 - Additional paradigms
 - Deeper trend analysis
 - Export and documentation enhancements

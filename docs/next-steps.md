@@ -190,7 +190,56 @@ Tagged as **v0.2.9**.
 
 ---
 
-## v0.3 — Exploratory (future)
+## v0.3.0 — Precision (Target Pointing) test (completed)
+
+Shipped improvements:
+
+**New test type:**
+- Precision (Target Pointing) test implementation
+- Fullscreen test environment with consensual fullscreen request
+- Prep overlay with language selector
+- Random target placement with variable sizes
+- Trial-by-trial feedback (hit/miss/timeout)
+- HUD with trial counter, feedback messages, exit button
+- Baseline and check mode support
+- Training mode support
+- Full History integration with per-trial breakdown
+
+**Fullscreen UX:**
+- Consensual fullscreen with prep overlay
+- Graceful fallback to windowed mode
+- Clear fullscreen notices (unavailable, exited)
+- Single Esc key press exits fullscreen and resets test
+- Cross-browser fullscreen API support
+
+**Event handling:**
+- Fixed pointer handler attachment after reset (event delegation on document)
+- Fixed handler not working after language changes
+- Fixed Esc key race condition (single press now works)
+- Proper event listener cleanup to prevent memory leaks
+- Fixed target visibility issues after reset
+
+**Internationalization:**
+- Complete Precision test translations (EN/NO/LT)
+- Fullscreen notices, feedback messages, invalid session messages
+- Comprehensive History section translations
+- Quality badge language-safety (key-based mapping)
+- Lithuanian translations for baseline quality warnings
+
+Tagged as **v0.3.0**.
+
+---
+
+## v0.3.x — Refinements (in progress)
+
+Potential improvements:
+- Precision test refinements and optimizations
+- Additional UX improvements
+- Performance optimizations
+
+---
+
+## v0.4 — Exploratory (future)
 
 Potential directions (not commitments):
 - Additional attention or switching paradigms

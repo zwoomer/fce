@@ -1215,16 +1215,43 @@ function switchView(target) {
     return;
   }
 
+  // Store previous view and scroll position BEFORE switching views (only when going to History)
+  if (target === "history") {
+    try {
+      let previousView = "home";
+      const activeViewEl = document.querySelector(".view.active");
+      if (activeViewEl && activeViewEl.id) {
+        const viewId = activeViewEl.id.replace("view-", "");
+        if (viewId && viewId !== "history") {
+          previousView = viewId;
+        }
+      }
+      const scrollPosition = window.pageYOffset || window.scrollY || 0;
+      sessionStorage.setItem("fce_prev_view", previousView);
+      sessionStorage.setItem("fce_prev_scroll", String(scrollPosition));
+    } catch {}
+  }
+
+  // Hide all views first
   views.forEach(v => {
     v.classList.add("hidden");
     v.classList.remove("active");
   });
 
+  // Show the target view
   const activeView = document.getElementById(`view-${target}`);
-  if (activeView) {
-    activeView.classList.remove("hidden");
-    activeView.classList.add("active");
+  if (!activeView) {
+    console.warn(`switchView: View "view-${target}" not found, defaulting to home`);
+    // Fallback to home if target view not found
+    const homeView = document.getElementById("view-home");
+    if (homeView) {
+      homeView.classList.remove("hidden");
+      homeView.classList.add("active");
+    }
+    return;
   }
+  activeView.classList.remove("hidden");
+  activeView.classList.add("active");
 
   // Update aria-current on menu items
   document.querySelectorAll('.menu-item[data-view]').forEach(item => {
@@ -1244,12 +1271,21 @@ function switchView(target) {
   }
 
   if (target === "history") {
+    
     // Keep history default test aligned with current selection
     if (historyTest) historyTest.value = testType.value;
     renderHistory();
+    
+    // Reset scroll to top when entering History view
+    window.scrollTo({ top: 0, behavior: "instant" });
+  } else {
+    // For non-history views, check if we're restoring scroll position
+    // (scroll restoration happens in back button handler, so only scroll to top if not restoring)
+    const isRestoringScroll = sessionStorage.getItem("fce_restoring_scroll") === "true";
+    if (!isRestoringScroll) {
+      window.scrollTo(0, 0);
+    }
   }
-
-  window.scrollTo(0, 0);
 }
 
 menuBtn.addEventListener("click", () => {
@@ -3330,6 +3366,13 @@ function renderHomeHistoryPreview() {
     const open = () => {
       if (historyTest) historyTest.value = tt;
       if (historyMode) historyMode.value = "all";
+      // Store session ID to expand after navigation
+      const sessionId = s.createdAt || s.id;
+      if (sessionId) {
+        try {
+          localStorage.setItem("fce_expand_session", String(sessionId));
+        } catch {}
+      }
       switchView("history");
     };
 
@@ -3463,6 +3506,25 @@ function renderHistory() {
       }
     });
   }
+  
+  // Check if a session was requested to be expanded from home preview
+  let sessionToExpand = null;
+  try {
+    const storedId = localStorage.getItem("fce_expand_session");
+    if (storedId) {
+      // Find matching session
+      const matching = sessions.find(s => String(s.createdAt || s.id) === storedId);
+      if (matching) {
+        sessionToExpand = String(matching.createdAt || matching.id);
+        expandedSessions.add(sessionToExpand);
+        // Clear the stored ID after using it
+        localStorage.removeItem("fce_expand_session");
+      } else {
+        // Session not found, clear anyway
+        localStorage.removeItem("fce_expand_session");
+      }
+    }
+  } catch {}
 
   // Render trend panel (needs all sessions, not filtered)
   renderTrendFor(tt);
@@ -3504,6 +3566,9 @@ function renderHistory() {
     card.tabIndex = 0;
     card.setAttribute("role", "button");
     card.setAttribute("aria-expanded", "false");
+    // Store session ID as data attribute for easier matching
+    const cardSessionId = String(s.createdAt || s.id);
+    card.setAttribute("data-session-id", cardSessionId);
 
     const header = document.createElement("div");
     header.className = "history-header";
@@ -3928,6 +3993,37 @@ function renderHistory() {
     
     historyListEl.appendChild(card);
   }
+  
+  // If a session was requested to be expanded from home preview, scroll to it
+  if (sessionToExpand) {
+    // Use requestAnimationFrame to ensure DOM is fully rendered
+    requestAnimationFrame(() => {
+      // Find the card by data-session-id attribute
+      const targetCard = historyListEl.querySelector(`[data-session-id="${sessionToExpand}"]`);
+      
+      if (targetCard && targetCard.classList.contains("is-open")) {
+        // Calculate topbar height dynamically
+        const topbar = document.querySelector(".topbar");
+        const topbarHeight = topbar ? topbar.offsetHeight : 64;
+        const offset = topbarHeight + 20;
+        
+        // Small delay to ensure expanded content is rendered
+        setTimeout(() => {
+          // Scroll to card with offset
+          const cardTop = targetCard.getBoundingClientRect().top + window.pageYOffset;
+          window.scrollTo({
+            top: cardTop - offset,
+            behavior: "smooth"
+          });
+          
+          // Focus the card for accessibility (after scroll completes)
+          setTimeout(() => {
+            targetCard.focus();
+          }, 300);
+        }, 50);
+      }
+    });
+  }
 }
 
 updateBaselineInfo();
@@ -4024,8 +4120,61 @@ if (backBtnHistory) {
   backBtnHistory.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
-    // Use switchView to go back to home - this always works regardless of history state
-    switchView("home", true);
+    
+    // Restore previous view (default to "home")
+    let prevView = "home";
+    try {
+      const stored = sessionStorage.getItem("fce_prev_view");
+      if (stored && stored.trim()) {
+        prevView = stored.trim();
+      }
+    } catch {}
+    
+    // Ensure prevView is valid (fallback to "home")
+    if (prevView !== "home" && prevView !== "history") {
+      prevView = "home";
+    }
+    
+    // Store scroll position before switching
+    let scrollPos = null;
+    try {
+      const stored = sessionStorage.getItem("fce_prev_scroll");
+      if (stored) {
+        const pos = parseInt(stored, 10);
+        if (!isNaN(pos) && pos >= 0) {
+          scrollPos = pos;
+          // Set a flag so switchView knows not to scroll to top
+          sessionStorage.setItem("fce_restoring_scroll", "true");
+        }
+      }
+    } catch {}
+    
+    // Clear navigation state (but keep restoring flag)
+    try {
+      sessionStorage.removeItem("fce_prev_view");
+      sessionStorage.removeItem("fce_prev_scroll");
+    } catch {}
+    
+    // Switch to previous view (always go back to home from history)
+    // Even if stored view was something else, we should go to home since history back button means "go home"
+    if (prevView === "history") {
+      prevView = "home";
+    }
+    switchView(prevView);
+    
+    // Restore scroll position after view is rendered
+    if (scrollPos !== null) {
+      // Use requestAnimationFrame to ensure DOM is ready
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          window.scrollTo({ top: scrollPos, behavior: "instant" });
+          // Clear the restoring flag
+          try {
+            sessionStorage.removeItem("fce_restoring_scroll");
+          } catch {}
+        });
+      });
+    }
   });
 }
 

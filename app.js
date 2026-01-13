@@ -33,6 +33,15 @@ function buildTrialLog(tt, results) {
     } else if (tt === "gonogo" || tt === "divided") {
       // Possible: go, miss, false_alarm, correct_reject, false_start
       outcome = type;
+    } else if (tt === "precision") {
+      // Precision: hit, miss, timeout
+      outcome = type;
+    }
+
+    // For precision, include errN
+    if (tt === "precision") {
+      const errN = Number.isFinite(e?.errN) ? e.errN : null;
+      return { i: idx + 1, outcome, rt, errN };
     }
 
     return { i: idx + 1, outcome, rt };
@@ -60,6 +69,7 @@ const I18N = {
         reaction: "Reaction Time",
         gonogo: "Go / No-Go",
         divided: "Divided Attention",
+        precision: "Precision (Target Pointing)",
       },
       mode: {
         baseline: "Baseline",
@@ -106,6 +116,32 @@ const I18N = {
       falseAlarms: "false alarms",
       baseline: "baseline",
       noTrialData: "No trial data available",
+      empty: "No history yet.",
+      noBaseline: "No baseline",
+      noBaselineForComparison: "No baseline available for comparison.",
+      clickToViewDetails: "Click to view details",
+      showTrials: "Show trials",
+      hideTrials: "Hide trials",
+      precision: {
+        hit: "hit",
+        rt: "rt",
+        err: "err",
+        responded: "responded",
+        misses: "misses",
+        timeouts: "timeouts",
+      },
+      divided: {
+        flashes: "Flashes",
+        target: "target",
+        answer: "answer",
+        error: "error",
+      },
+      tags: {
+        sleep: "sleep",
+        stress: "stress",
+      },
+      reason: "Reason: ",
+      falseAlarmsAbbr: "FA",
     },
     trialOutcome: {
       hit: "Hit",
@@ -114,6 +150,7 @@ const I18N = {
       false_alarm: "False alarm",
       correct_reject: "Correct",
       false_start: "False start",
+      timeout: "Timeout",
       unknown: "Unknown",
     },
     quality: {
@@ -121,6 +158,12 @@ const I18N = {
       mixed: "Mixed",
       not_usable: "Not usable",
       label: "Quality",
+      warning: {
+        manyFalseStarts: "many false starts",
+        fewValidHits: "few valid hits",
+        note: "Note: This session had {issues} — consider retaking for better baseline quality.",
+        joiner: "and",
+      },
     },
     refusal: {
       R1_INVALID_EXECUTION: "Session not usable: execution failure (no valid responses recorded).",
@@ -141,6 +184,18 @@ const I18N = {
         nogo: "NO TAP",
         legend: "TAP = respond · NO TAP = wait · Count blue flashes",
       },
+    },
+    precision: {
+      feedback: {
+        hit: "Hit",
+        miss: "Miss",
+        timeout: "Timeout",
+      },
+      fullscreen: {
+        unavailable: "Fullscreen unavailable — running windowed.",
+        exited: "Fullscreen exited — continuing windowed.",
+      },
+      invalid: "Precision test invalid.",
     },
   },
   no: {
@@ -163,6 +218,7 @@ const I18N = {
         reaction: "Reaksjonstid",
         gonogo: "Go / No-Go",
         divided: "Delt oppmerksomhet",
+        precision: "Presisjon (målpunkt)",
       },
       mode: {
         baseline: "Baseline",
@@ -210,6 +266,32 @@ const I18N = {
       falseAlarms: "inhibisjonsfeil",
       baseline: "baseline",
       noTrialData: "Ingen forsøksdata tilgjengelig",
+      empty: "Ingen historikk ennå.",
+      noBaseline: "Ingen baseline",
+      noBaselineForComparison: "Ingen baseline for sammenligning.",
+      clickToViewDetails: "Trykk for detaljer",
+      showTrials: "Vis forsøk",
+      hideTrials: "Skjul forsøk",
+      precision: {
+        hit: "treff",
+        rt: "rt",
+        err: "feil",
+        responded: "svarte",
+        misses: "bom",
+        timeouts: "tidsavbrudd",
+      },
+      divided: {
+        flashes: "Flashes",
+        target: "mål",
+        answer: "svar",
+        error: "feil",
+      },
+      tags: {
+        sleep: "søvn",
+        stress: "stress",
+      },
+      reason: "Årsak: ",
+      falseAlarmsAbbr: "IF",
     },
     trialOutcome: {
       hit: "Treff",
@@ -218,6 +300,7 @@ const I18N = {
       false_alarm: "Inhibisjonsfeil",
       correct_reject: "Korrekt",
       false_start: "Feilstart",
+      timeout: "Tidsavbrudd",
       unknown: "Ukjent",
     },
     quality: {
@@ -225,6 +308,12 @@ const I18N = {
       mixed: "Blandet",
       not_usable: "Ikke brukbar",
       label: "Kvalitet",
+      warning: {
+        manyFalseStarts: "mange feilstarter",
+        fewValidHits: "få gyldige treff",
+        note: " Merknad: Denne økten hadde {issues} — vurder å gjennomføre på nytt for bedre baseline-kvalitet.",
+        joiner: "og",
+      },
     },
     refusal: {
       R1_INVALID_EXECUTION: "Økt ikke brukbar: utførelsesfeil (ingen gyldige responser registrert).",
@@ -245,6 +334,18 @@ const I18N = {
         nogo: "IKKE",
         legend: "TRYKK = svar · IKKE = vent · Tell blå blink",
       },
+    },
+    precision: {
+      feedback: {
+        hit: "Treff",
+        miss: "Bom",
+        timeout: "Tidsavbrudd",
+      },
+      fullscreen: {
+        unavailable: "Fullskjerm utilgjengelig — kjører i vindu.",
+        exited: "Fullskjerm avsluttet — fortsetter i vindu.",
+      },
+      invalid: "Presisjonstest ugyldig.",
     },
   },
   lt: {
@@ -267,6 +368,7 @@ const I18N = {
         reaction: "Reakcijos laikas",
         gonogo: "Spausk / Nespausk",
         divided: "Padalinta dėmesys",
+        precision: "Tikslumas (taikinio nukreipimas)",
       },
       mode: {
         baseline: "Bazinis lygis",
@@ -313,6 +415,32 @@ const I18N = {
       falseAlarms: "slopinimo klaidos",
       baseline: "bazinis lygis",
       noTrialData: "Nėra bandymų duomenų",
+      empty: "Dar nėra istorijos.",
+      noBaseline: "Nėra bazinio lygio",
+      noBaselineForComparison: "Nėra bazinio lygio palyginimui.",
+      clickToViewDetails: "Spustelėkite dėl detalių",
+      showTrials: "Rodyti bandymus",
+      hideTrials: "Slėpti bandymus",
+      precision: {
+        hit: "pataikymas",
+        rt: "rt",
+        err: "klaida",
+        responded: "atsakė",
+        misses: "praleistai",
+        timeouts: "laiko baigtys",
+      },
+      divided: {
+        flashes: "Blyksniai",
+        target: "tikslas",
+        answer: "atsakymas",
+        error: "klaida",
+      },
+      tags: {
+        sleep: "miegas",
+        stress: "stresas",
+      },
+      reason: "Priežastis: ",
+      falseAlarmsAbbr: "SK",
     },
     trialOutcome: {
       hit: "Pataikymas",
@@ -321,6 +449,7 @@ const I18N = {
       false_alarm: "Slopinimo klaida",
       correct_reject: "Teisingai",
       false_start: "Klaidingas startas",
+      timeout: "Laiko baigtis",
       unknown: "Nežinoma",
     },
     quality: {
@@ -328,6 +457,12 @@ const I18N = {
       mixed: "Mišri",
       not_usable: "Netinkama",
       label: "Kokybė",
+      warning: {
+        manyFalseStarts: "daug klaidingų startų",
+        fewValidHits: "mažai galiojančių atsakų",
+        note: " Pastaba: ši sesija turėjo {issues} — apsvarstykite pakartojimą dėl geresnės bazinės kokybės.",
+        joiner: "ir",
+      },
     },
     refusal: {
       R1_INVALID_EXECUTION: "Sesija netinkama: vykdymo klaida (nėra užregistruotų galiojančių atsakų).",
@@ -348,6 +483,18 @@ const I18N = {
         nogo: "NESPĮKITE",
         legend: "SPAUSKITE = atsakyti · NESPĮKITE = laukti · Suskaičiuokite mėlynus blyksnius",
       },
+    },
+    precision: {
+      feedback: {
+        hit: "Pataikymas",
+        miss: "Praleistas",
+        timeout: "Laiko baigtis",
+      },
+      fullscreen: {
+        unavailable: "Visas ekranas neprieinamas — veikia lange.",
+        exited: "Visas ekranas uždarytas — tęsiame lange.",
+      },
+      invalid: "Tikslumo testas netinkamas.",
     },
   },
 };
@@ -392,6 +539,21 @@ function getTrialText(n, entry, testType) {
         return `Forsøk ${n}: ${entry.rt} ms`;
       }
     }
+    if (testType === "precision") {
+      if (entry.type === "hit") {
+        const errN = Number.isFinite(entry.errN) ? entry.errN.toFixed(2) : "—";
+        const rt = Number.isFinite(entry.rt) ? `${entry.rt} ms` : "—";
+        return `Forsøk ${n}: treff — feil ${errN}, RT ${rt}`;
+      } else if (entry.type === "miss") {
+        const errN = Number.isFinite(entry.errN) ? entry.errN.toFixed(2) : "—";
+        const rt = Number.isFinite(entry.rt) ? `${entry.rt} ms` : "—";
+        return `Forsøk ${n}: bom — feil ${errN}, RT ${rt}`;
+      } else if (entry.type === "timeout") {
+        return `Forsøk ${n}: timeout (ingen respons)`;
+      } else {
+        return `Forsøk ${n}: ukjent`;
+      }
+    }
     // Go/No-Go and Divided Attention (same trial types)
     switch (entry.type) {
       case "go":
@@ -413,6 +575,21 @@ function getTrialText(n, entry, testType) {
         return `Bandymas ${n}: klaidingas startas (per anksti)`;
       } else {
         return `Bandymas ${n}: ${entry.rt} ms`;
+      }
+    }
+    if (testType === "precision") {
+      if (entry.type === "hit") {
+        const errN = Number.isFinite(entry.errN) ? entry.errN.toFixed(2) : "—";
+        const rt = Number.isFinite(entry.rt) ? `${entry.rt} ms` : "—";
+        return `Bandymas ${n}: pataikymas — klaida ${errN}, RT ${rt}`;
+      } else if (entry.type === "miss") {
+        const errN = Number.isFinite(entry.errN) ? entry.errN.toFixed(2) : "—";
+        const rt = Number.isFinite(entry.rt) ? `${entry.rt} ms` : "—";
+        return `Bandymas ${n}: praleistas — klaida ${errN}, RT ${rt}`;
+      } else if (entry.type === "timeout") {
+        return `Bandymas ${n}: laikas baigėsi (nėra atsako)`;
+      } else {
+        return `Bandymas ${n}: nežinomas`;
       }
     }
     // Go/No-Go and Divided Attention (same trial types)
@@ -437,6 +614,21 @@ function getTrialText(n, entry, testType) {
         return `Trial ${n}: false start (too early)`;
       } else {
         return `Trial ${n}: ${entry.rt} ms`;
+      }
+    }
+    if (testType === "precision") {
+      if (entry.type === "hit") {
+        const errN = Number.isFinite(entry.errN) ? entry.errN.toFixed(2) : "—";
+        const rt = Number.isFinite(entry.rt) ? `${entry.rt} ms` : "—";
+        return `Trial ${n}: hit — error ${errN}, RT ${rt}`;
+      } else if (entry.type === "miss") {
+        const errN = Number.isFinite(entry.errN) ? entry.errN.toFixed(2) : "—";
+        const rt = Number.isFinite(entry.rt) ? `${entry.rt} ms` : "—";
+        return `Trial ${n}: miss — error ${errN}, RT ${rt}`;
+      } else if (entry.type === "timeout") {
+        return `Trial ${n}: timeout (no response)`;
+      } else {
+        return `Trial ${n}: unknown`;
       }
     }
     // Go/No-Go and Divided Attention (same trial types)
@@ -560,6 +752,19 @@ function getBaselineSavedDivided(mean, sd, misses, falseAlarms, falseStarts, fla
   return `Baseline session saved. GO mean: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms | Misses: ${misses} | Inhibitory errors: ${falseAlarms}${flashText}${falseStartsText}${qualityText}${qualityNote}${warningText}`;
 }
 
+function getBaselineSavedPrecision(meanErrN, sdErrN, meanRtMs, qualityNote, quality, deviceWarning) {
+  const rtText = meanRtMs > 0 ? (currentLang === "no" ? ` | RT: ${meanRtMs.toFixed(0)} ms` : currentLang === "lt" ? ` | RT: ${meanRtMs.toFixed(0)} ms` : ` | RT: ${meanRtMs.toFixed(0)} ms`) : "";
+  const qualityText = quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${quality}`)}` : ` | Quality: ${t(`quality.${quality}`)}`) : "";
+  const warningText = deviceWarning || "";
+  if (currentLang === "no") {
+    return `Baseline-økt lagret. Feil: ${meanErrN.toFixed(2)} | SD: ${sdErrN.toFixed(2)}${rtText}${qualityText}${qualityNote}${warningText}`;
+  }
+  if (currentLang === "lt") {
+    return `Bazinio lygio sesija išsaugota. Klaida: ${meanErrN.toFixed(2)} | SD: ${sdErrN.toFixed(2)}${rtText}${qualityText}${qualityNote}${warningText}`;
+  }
+  return `Baseline session saved. Error: ${meanErrN.toFixed(2)} | SD: ${sdErrN.toFixed(2)}${rtText}${qualityText}${qualityNote}${warningText}`;
+}
+
 function getCheckReaction(mean, baselineMean, baselineSD, status, falseStarts, qualityNote, quality, deviceWarning) {
   const falseStartsText = falseStarts
     ? (currentLang === "no" ? ` | Feilstarter: ${falseStarts}` : currentLang === "lt" ? ` | Klaidingi startai: ${falseStarts}` : ` | False starts: ${falseStarts}`)
@@ -673,6 +878,19 @@ function getCheckDividedAttention(mean, baselineMean, baselineSD, status, falseA
   return `Today GO mean: ${mean.toFixed(0)} ms | Baseline mean: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status} | False alarm rate: ${(falseAlarmsRate * 100).toFixed(1)}% (baseline ${(baselineFARate * 100).toFixed(1)}%) | Flash error: ${flashAbsError} (baseline avg ${baselineFlashError.toFixed(1)})${falseStartsText}${qualityText}${qualityNote}${warningText}`;
 }
 
+function getCheckPrecision(meanErrN, baselineMeanErrN, baselineSDErrN, status, meanRtMs, quality, deviceWarning) {
+  const qualityText = quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${quality}`)}` : ` | Quality: ${t(`quality.${quality}`)}`) : "";
+  const warningText = deviceWarning || "";
+  const rtText = meanRtMs > 0 ? (currentLang === "no" ? ` | RT: ${meanRtMs.toFixed(0)} ms` : currentLang === "lt" ? ` | RT: ${meanRtMs.toFixed(0)} ms` : ` | RT: ${meanRtMs.toFixed(0)} ms`) : "";
+  if (currentLang === "no") {
+    return `Dagens feil: ${meanErrN.toFixed(2)} | Baseline-feil: ${baselineMeanErrN.toFixed(2)} | Baseline SD: ${baselineSDErrN.toFixed(2)} | Status: ${status}${rtText}${qualityText}${warningText}`;
+  }
+  if (currentLang === "lt") {
+    return `Šiandienos klaida: ${meanErrN.toFixed(2)} | Bazinio lygio klaida: ${baselineMeanErrN.toFixed(2)} | Bazinio lygio SD: ${baselineSDErrN.toFixed(2)} | Būsena: ${status}${rtText}${qualityText}${warningText}`;
+  }
+  return `Today error: ${meanErrN.toFixed(2)} | Baseline error: ${baselineMeanErrN.toFixed(2)} | Baseline SD: ${baselineSDErrN.toFixed(2)} | Status: ${status}${rtText}${qualityText}${warningText}`;
+}
+
 function applyTrialEmphasis(trialListEl) {
   if (!trialListEl) return;
   const items = Array.from(trialListEl.children);
@@ -767,6 +985,10 @@ function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
       summary.textContent = getBaselineSavedDivided(dataObj.mean, dataObj.sd, dataObj.misses, dataObj.falseAlarms, dataObj.falseStarts, dataObj.flashTargetCount || 0, dataObj.flashAbsError || 0, dataObj.qualityNote || "", dataObj.quality, dataObj.deviceWarning || "");
       break;
       
+    case "baseline_saved_precision":
+      summary.textContent = getBaselineSavedPrecision(dataObj.meanErrN, dataObj.sdErrN, dataObj.meanRtMs, dataObj.qualityNote || "", dataObj.quality, dataObj.deviceWarning || "");
+      break;
+      
     case "check_reaction":
       summary.textContent = getCheckReaction(dataObj.mean, dataObj.baselineMean, dataObj.baselineSD, dataObj.status, dataObj.falseStarts, dataObj.qualityNote || "", dataObj.quality, dataObj.deviceWarning || "");
       break;
@@ -777,6 +999,10 @@ function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
       
     case "check_divided":
       summary.textContent = getCheckDividedAttention(dataObj.mean, dataObj.baselineMean, dataObj.baselineSD, dataObj.status, dataObj.falseAlarmsRate, dataObj.baselineFARate, dataObj.flashAbsError, dataObj.baselineFlashError, dataObj.falseStarts, dataObj.qualityNote || "", dataObj.quality, dataObj.deviceWarning || "");
+      break;
+      
+    case "check_precision":
+      summary.textContent = getCheckPrecision(dataObj.meanErrN, dataObj.baselineMeanErrN, dataObj.baselineSDErrN, dataObj.status, dataObj.meanRtMs || 0, dataObj.quality, dataObj.deviceWarning || "");
       break;
       
     case "invalid_no_reaction":
@@ -838,6 +1064,20 @@ function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
       }
       const qualityText7 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
       summary.textContent = refusalMsg7 + qualityText7;
+      break;
+      
+    case "invalid_precision_no_responses":
+    case "invalid_precision_insufficient":
+    case "invalid_precision_excess_noise":
+    case "invalid_precision_exit":
+      let refusalMsg8 = "";
+      if (dataObj.refusalCode) {
+        refusalMsg8 = t(`refusal.${dataObj.refusalCode}`);
+      } else {
+        refusalMsg8 = t("precision.invalid");
+      }
+      const qualityText8 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
+      summary.textContent = refusalMsg8 + qualityText8;
       break;
       
     default:
@@ -956,7 +1196,8 @@ function updateSelectOptions() {
     populateSelectOptions(testTypeSelect, [
       { value: "reaction", text: t("ui.testType.reaction") },
       { value: "gonogo", text: t("ui.testType.gonogo") },
-      { value: "divided", text: t("ui.testType.divided") }
+      { value: "divided", text: t("ui.testType.divided") },
+      { value: "precision", text: t("ui.testType.precision") }
     ], "reaction");
   }
 
@@ -966,7 +1207,8 @@ function updateSelectOptions() {
     populateSelectOptions(historyTestSelect, [
       { value: "reaction", text: t("ui.testType.reaction") },
       { value: "gonogo", text: t("ui.testType.gonogo") },
-      { value: "divided", text: t("ui.testType.divided") }
+      { value: "divided", text: t("ui.testType.divided") },
+      { value: "precision", text: t("ui.testType.precision") }
     ], "reaction");
   }
 
@@ -995,17 +1237,20 @@ function getTaskHint(lang, testType) {
     en: {
       reaction: "Reaction Time: Wait for the signal, then respond as quickly as possible. Early inputs count as false starts.",
       gonogo: "Go / No-Go: Respond only to the GO signal. Do nothing on NO-GO. Wrong responses count as errors.",
-      divided: "Divided Attention: Track the main task while responding to brief flashes. Misses and false alarms are recorded."
+      divided: "Divided Attention: Track the main task while responding to brief flashes. Misses and false alarms are recorded.",
+      precision: "Precision: Tap the center of each target as accurately as you can. Accuracy matters more than speed."
     },
     no: {
       reaction: "Reaksjonstid: Vent på signalet, og responder så raskt som mulig. Tidlige trykk teller som feilstart.",
       gonogo: "Go / No-Go: Responder kun på GO-signalet. Ikke gjør noe på NO-GO. Feil respons teller som feil.",
-      divided: "Delt oppmerksomhet: Følg hovedoppgaven samtidig som du reagerer på korte flash. Bom og feil registreres."
+      divided: "Delt oppmerksomhet: Følg hovedoppgaven samtidig som du reagerer på korte flash. Bom og feil registreres.",
+      precision: "Presisjon: Trykk på sentrum av hvert mål så nøyaktig som mulig. Nøyaktighet teller mer enn hastighet."
     },
     lt: {
       reaction: "Reakcijos laikas: Laukite signalo ir reaguokite kuo greičiau. Per ankstyvi paspaudimai laikomi klaidingu startu.",
       gonogo: "Go / No-Go: Reaguokite tik į GO signalą. Į NO-GO nereaguokite. Neteisingi veiksmai laikomi klaidomis.",
-      divided: "Dalyta dėmesio užduotis: Atlikite pagrindinę užduotį ir reaguokite į trumpus blyksnius. Praleidimai ir klaidingi atsakai registruojami."
+      divided: "Dalyta dėmesio užduotis: Atlikite pagrindinę užduotį ir reaguokite į trumpus blyksnius. Praleidimai ir klaidingi atsakai registruojami.",
+      precision: "Tikslumas: Bakstelėkite kiekvieno taikinio centrą kuo tiksliau. Tikslumas svarbesnis nei greitis."
     }
   };
 
@@ -1149,6 +1394,17 @@ const homeHistoryEmptyEl = document.getElementById("homeHistoryEmpty");
 
 const resetBtn = document.getElementById("resetBtn");
 const testArea = document.getElementById("testArea");
+
+// Precision test elements
+const precisionPrepOverlay = document.getElementById("precisionPrepOverlay");
+const precisionPrepStartBtn = document.getElementById("precisionPrepStartBtn");
+const precisionPrepCancelBtn = document.getElementById("precisionPrepCancelBtn");
+const precisionStage = document.getElementById("precisionStage");
+const precisionTarget = document.getElementById("precisionTarget");
+const precisionCounter = document.getElementById("precisionTrialCounter");
+const precisionFeedback = document.getElementById("precisionFeedback");
+const precisionNotice = document.getElementById("precisionFullscreenNotice");
+const precisionExitBtn = document.getElementById("exitPrecisionTestBtn");
 
 const trialCountInput = document.getElementById("trialCount");
 const progress = document.getElementById("progress");
@@ -1401,6 +1657,25 @@ let dividedPlan = null; // { trialTypes, flashTrialIndices, flashTargetCount }
 let dividedFlashAnswer = null; // User's answer to flash count question
 let flashOverlayTimeoutId = null; // For flash overlay timing
 
+// Precision test state
+let precisionTargetRadius = 0;
+let precisionTargetX = 0;
+let precisionTargetY = 0;
+let precisionTrialStartTime = null;
+let precisionTrialActive = false;
+let precisionResizeHandler = null;
+let precisionKeyHandler = null;
+let precisionShouldResetOnFullscreenExit = false;
+let precisionEscPressTime = 0; // Timestamp of last Esc press
+let precisionResetIntent = false; // Flag indicating Esc was pressed with intent to reset
+let precisionResetRan = false; // Guard to prevent double-reset
+let precisionGlobalEscDetected = false; // Global Esc detection (set before fullscreen change)
+let precisionGlobalEscDetector = null; // Reference to global Esc detector handler
+let precisionPointerHandler = null; // Reference to pointerdown handler for cleanup
+let precisionTrialTimeoutId = null;
+let precisionFullscreenElement = null;
+let precisionIsFullscreen = false;
+
 // Test configuration constants
 const TEST_CONFIG = {
   reaction: {
@@ -1429,20 +1704,32 @@ const TEST_CONFIG = {
     },
     // Note: Flash scheduling done by trial indices, not ms spacing
   },
+  precision: {
+    maxTrials: 40,
+    windowMs: 3000,
+  },
 };
 
 startBaselineBtn.addEventListener("click", () => {
     if (inSession) return;
     // Mode is determined by the action button clicked - this is the source of truth
     mode = "baseline";
-    beginSession();
+    if (testType.value === "precision") {
+      showPrecisionPrep();
+    } else {
+      beginSession();
+    }
   });
   
   startCheckBtn.addEventListener("click", () => {
     if (inSession) return;
     // Mode is determined by the action button clicked - this is the source of truth
     mode = "check";
-    beginSession();
+    if (testType.value === "precision") {
+      showPrecisionPrep();
+    } else {
+      beginSession();
+    }
   });
 
   if (startTrainingBtn) {
@@ -1450,12 +1737,613 @@ startBaselineBtn.addEventListener("click", () => {
       if (inSession) return;
       // Mode is determined by the action button clicked - this is the source of truth
       mode = "training";
-      beginSession();
+      if (testType.value === "precision") {
+        showPrecisionPrep();
+      } else {
+        beginSession();
+      }
     });
   }
 
   function baselineKey() {
     return baselineKeyFor(testType.value);
+  }
+
+  // Precision prep overlay handlers
+  function showPrecisionPrep() {
+    if (!precisionPrepOverlay) return;
+    precisionPrepOverlay.classList.remove("hidden");
+    document.body.classList.add("precision-prep-open");
+    document.documentElement.classList.add("precision-prep-open");
+    if (precisionPrepStartBtn) precisionPrepStartBtn.focus();
+  }
+
+  function hidePrecisionPrep() {
+    if (!precisionPrepOverlay) return;
+    precisionPrepOverlay.classList.add("hidden");
+    document.body.classList.remove("precision-prep-open");
+    document.documentElement.classList.remove("precision-prep-open");
+  }
+
+  if (precisionPrepStartBtn) {
+    precisionPrepStartBtn.addEventListener("click", () => {
+      hidePrecisionPrep();
+      startPrecisionSession(mode);
+    });
+  }
+
+  if (precisionPrepCancelBtn) {
+    precisionPrepCancelBtn.addEventListener("click", () => {
+      hidePrecisionPrep();
+      mode = null;
+    });
+  }
+
+  // Precision test session management
+  function startPrecisionSession(sessionMode) {
+    const config = TEST_CONFIG.precision;
+    const maxTrials = config.maxTrials || 40;
+    totalTrials = clampInt(parseInt(trialCountInput.value, 10), 10, 40);
+    trialCountInput.value = totalTrials;
+
+    // Reset precision-specific state
+    precisionTrialActive = false;
+    precisionTrialStartTime = null;
+    precisionTargetRadius = 0;
+    precisionTargetX = 0;
+    precisionTargetY = 0;
+    precisionShouldResetOnFullscreenExit = false; // Reset flag
+    precisionEscPressTime = 0; // Reset Esc timestamp
+    precisionResetIntent = false; // Reset intent flag
+    precisionResetRan = false; // Reset guard flag
+    precisionGlobalEscDetected = false; // Reset global Esc flag
+    if (precisionTrialTimeoutId) {
+      clearTimeout(precisionTrialTimeoutId);
+      precisionTrialTimeoutId = null;
+    }
+    // Clear target state - remove class and reset dimensions
+    if (precisionTarget) {
+      precisionTarget.classList.remove("show");
+      precisionTarget.style.width = "";
+      precisionTarget.style.height = "";
+      precisionTarget.style.left = "";
+      precisionTarget.style.top = "";
+    }
+
+    inSession = true;
+    isRunActive = true;
+    trialIndex = 0;
+    results = [];
+
+    trialList.innerHTML = "";
+    summary.textContent = "";
+    if (trialList) {
+      trialList.classList.remove("session-ended");
+    }
+
+    trialCountInput.disabled = true;
+    startBaselineBtn.disabled = true;
+    startCheckBtn.disabled = true;
+    if (startTrainingBtn) startTrainingBtn.disabled = true;
+    resetBtn.style.display = "";
+
+    const contextPanel = document.getElementById("contextPanel");
+    if (contextPanel) {
+      contextPanel.classList.add("is-hidden");
+    }
+
+    // Show precision stage
+    if (precisionStage) {
+      precisionStage.classList.remove("hidden");
+      document.body.classList.add("precision-open");
+    }
+
+    // Try fullscreen
+    if (precisionStage) {
+      const fullscreenPromise = precisionStage.requestFullscreen 
+        ? precisionStage.requestFullscreen()
+        : precisionStage.webkitRequestFullscreen
+        ? precisionStage.webkitRequestFullscreen()
+        : precisionStage.mozRequestFullScreen
+        ? precisionStage.mozRequestFullScreen()
+        : precisionStage.msRequestFullscreen
+        ? precisionStage.msRequestFullscreen()
+        : Promise.reject(new Error("Fullscreen not supported"));
+      
+      fullscreenPromise.then(() => {
+        precisionIsFullscreen = true;
+        precisionFullscreenElement = precisionStage;
+        updatePrecisionNotice("");
+      }).catch(() => {
+        precisionIsFullscreen = false;
+        updatePrecisionNotice(t("precision.fullscreen.unavailable"));
+      });
+    } else {
+      precisionIsFullscreen = false;
+      updatePrecisionNotice(t("precision.fullscreen.unavailable"));
+    }
+
+    // Listen for fullscreen changes
+    document.addEventListener("fullscreenchange", handlePrecisionFullscreenChange);
+    document.addEventListener("webkitfullscreenchange", handlePrecisionFullscreenChange);
+    document.addEventListener("mozfullscreenchange", handlePrecisionFullscreenChange);
+    document.addEventListener("MSFullscreenChange", handlePrecisionFullscreenChange);
+
+    // Listen for resize/orientation changes
+    precisionResizeHandler = () => handlePrecisionResize();
+    window.addEventListener("resize", precisionResizeHandler);
+    window.addEventListener("orientationchange", precisionResizeHandler);
+
+    // Global Esc detector - runs before precision-specific handler
+    // This catches Esc even if fullscreen change fires before our handler
+    precisionGlobalEscDetector = (e) => {
+      if (e.key === "Escape" && inSession && testType.value === "precision") {
+        // Set global flag immediately - this happens before fullscreen change event
+        precisionGlobalEscDetected = true;
+        precisionEscPressTime = performance.now();
+      }
+    };
+    document.addEventListener("keydown", precisionGlobalEscDetector, true); // Capture phase - runs first
+    
+    // Listen for Esc key to reset (like reset button in other tests)
+    // Use capture phase and set flags IMMEDIATELY before browser processes Esc
+    precisionKeyHandler = (e) => {
+      if (e.key === "Escape" && inSession && testType.value === "precision") {
+        // Set flags immediately - before preventDefault, before anything else
+        // This ensures fullscreen change handler sees them
+        precisionResetIntent = true;
+        precisionResetRan = false;
+        precisionEscPressTime = performance.now();
+        precisionShouldResetOnFullscreenExit = true;
+        precisionGlobalEscDetected = true;
+        
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        
+        // Check if fullscreen is active using reliable detection
+        const wasFullscreen = isAnyFullscreenActive();
+        
+        if (wasFullscreen) {
+          // Browser will exit fullscreen automatically on Esc - we can't prevent it
+          // The fullscreen change handler will detect our flags and reset
+          // Set backup timers in case fullscreen change handler doesn't fire
+          setTimeout(() => {
+            if (precisionResetIntent && !precisionResetRan && testType.value === "precision") {
+              runPrecisionResetOnce();
+            }
+          }, 10);
+          
+          setTimeout(() => {
+            if (precisionResetIntent && !precisionResetRan && testType.value === "precision") {
+              runPrecisionResetOnce();
+            }
+          }, 100);
+          
+          setTimeout(() => {
+            if (precisionResetIntent && !precisionResetRan && testType.value === "precision") {
+              runPrecisionResetOnce();
+            }
+          }, 300);
+        } else {
+          // Not in fullscreen, reset immediately
+          runPrecisionResetOnce();
+        }
+      }
+    };
+    document.addEventListener("keydown", precisionKeyHandler, true); // Capture phase - runs before other handlers
+
+    // Exit button handler - reset like Esc, don't save as invalid
+    if (precisionExitBtn) {
+      precisionExitBtn.onclick = () => {
+        // Just reset - hardReset will clean up fullscreen
+        hardReset();
+      };
+    }
+
+    // Precision stage pointerdown handler (more responsive than click)
+    // Use event delegation on document to avoid issues with DOM changes (e.g., language changes)
+    // Remove any existing handler first to prevent duplicates
+    if (precisionPointerHandler) {
+      document.removeEventListener("pointerdown", precisionPointerHandler, { passive: false, capture: true });
+      precisionPointerHandler = null;
+    }
+    
+    // Precision stage pointerdown handler (stored for cleanup)
+    precisionPointerHandler = (e) => {
+      // Only handle events on the precision stage
+      const stage = document.getElementById("precisionStage");
+      if (!stage || (!stage.contains(e.target) && e.target !== stage)) return;
+      
+      if (!inSession || testType.value !== "precision") return;
+      if (trialIndex > totalTrials) return;
+      if (!precisionTrialStartTime) return;
+      if (!precisionTrialActive) return; // Guard against double submissions
+
+      // Prevent default to avoid any browser behaviors
+      e.preventDefault();
+      e.stopPropagation();
+
+      // Get fresh stage reference
+      const currentStage = document.getElementById("precisionStage");
+      if (!currentStage) return;
+
+      // Get pointer position relative to stage
+      const rect = currentStage.getBoundingClientRect();
+      const pointerX = e.clientX - rect.left;
+      const pointerY = e.clientY - rect.top;
+
+      // Calculate distance from target center
+      const distPx = Math.hypot(pointerX - precisionTargetX, pointerY - precisionTargetY);
+      const errN = distPx / precisionTargetRadius;
+      const errNClamped = Math.min(errN, 3);
+      const outcome = errN <= 1.0 ? "hit" : "miss";
+      const rt = Math.round(performance.now() - precisionTrialStartTime);
+
+      // Mark trial as inactive immediately to prevent double submissions
+      precisionTrialActive = false;
+
+      // Clear timeout safely
+      if (precisionTrialTimeoutId) {
+        clearTimeout(precisionTrialTimeoutId);
+        precisionTrialTimeoutId = null;
+      }
+
+      // Record result
+      recordResult({ type: outcome, rt, errN: errNClamped });
+
+      // Show feedback
+      showPrecisionFeedback(outcome);
+
+      // Hide target with smooth fade
+      if (precisionTarget) {
+        precisionTarget.classList.remove("show");
+      }
+
+      precisionTrialStartTime = null;
+
+      // Next trial after delay
+      setTimeout(() => {
+        if (inSession && testType.value === "precision") {
+          nextPrecisionTrial();
+        }
+      }, 200);
+    };
+    
+    // Attach handler to document using event delegation - this survives DOM changes
+    document.addEventListener("pointerdown", precisionPointerHandler, { passive: false, capture: true });
+
+    // Start first trial
+    setTimeout(() => {
+      nextPrecisionTrial();
+    }, 500);
+  }
+
+  // Helper to detect fullscreen reliably
+  function isAnyFullscreenActive() {
+    return !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement);
+  }
+
+  // Helper to run reset once (prevents double-reset)
+  function runPrecisionResetOnce() {
+    if (precisionResetRan) return;
+    precisionResetRan = true;
+    precisionResetIntent = false;
+    precisionShouldResetOnFullscreenExit = false;
+    precisionEscPressTime = 0;
+    hardReset();
+  }
+
+  function handlePrecisionFullscreenChange() {
+    const isFullscreen = isAnyFullscreenActive();
+    if (!isFullscreen && precisionIsFullscreen) {
+      precisionIsFullscreen = false;
+      
+      // Check if Esc was pressed - use global flag OR recent timestamp
+      const escWasRecent = precisionEscPressTime > 0 && (performance.now() - precisionEscPressTime) < 500;
+      
+      // If Esc was pressed (any indicator), reset immediately
+      if (precisionResetIntent || precisionShouldResetOnFullscreenExit || precisionGlobalEscDetected || escWasRecent) {
+        precisionGlobalEscDetected = false;
+        runPrecisionResetOnce();
+        return;
+      }
+      
+      // If session is no longer active, something else already reset - do nothing
+      if (!inSession || testType.value !== "precision") {
+        return;
+      }
+      
+      // If fullscreen exits during active precision session, it's likely Esc was pressed
+      // Use a short delay to let Esc handler set flags if it's running
+      setTimeout(() => {
+        // Re-check flags after a brief delay (Esc handler should have set them by now)
+        const escWasRecentNow = precisionEscPressTime > 0 && (performance.now() - precisionEscPressTime) < 1000;
+        if (precisionResetIntent || precisionShouldResetOnFullscreenExit || precisionGlobalEscDetected || escWasRecentNow) {
+          precisionGlobalEscDetected = false;
+          runPrecisionResetOnce();
+          return;
+        }
+        // If still in session after delay, assume it was Esc and reset
+        if (inSession && testType.value === "precision") {
+          runPrecisionResetOnce();
+        }
+      }, 50);
+    }
+  }
+
+  function updatePrecisionNotice(text) {
+    if (precisionNotice) {
+      precisionNotice.textContent = text || "";
+      // Only use class, don't set inline display (CSS handles it)
+      if (text) {
+        precisionNotice.classList.remove("hidden");
+      } else {
+        precisionNotice.classList.add("hidden");
+      }
+    }
+  }
+
+  function nextPrecisionTrial() {
+    if (!inSession || testType.value !== "precision") return;
+
+    trialIndex++;
+    updatePrecisionCounter();
+
+    if (trialIndex > totalTrials) {
+      endPrecisionSession(false);
+      return;
+    }
+
+    updateProgress();
+
+    // Calculate target radius and position
+    const stage = precisionStage;
+    if (!stage) {
+      endPrecisionSession(false);
+      return;
+    }
+
+    const w = stage.clientWidth || window.innerWidth;
+    const h = stage.clientHeight || window.innerHeight;
+    const shortSide = Math.min(w, h);
+    const r = clampInt(Math.round(shortSide * 0.055), 18, 44);
+    const padding = Math.round(r * 1.5);
+
+    precisionTargetRadius = r;
+    precisionTargetX = padding + Math.random() * (w - 2 * padding);
+    precisionTargetY = padding + Math.random() * (h - 2 * padding);
+
+    // Render target
+    if (precisionTarget) {
+      // Remove show class first to reset animation state
+      precisionTarget.classList.remove("show");
+      // Set dimensions - use regular assignment since CSS no longer has width/height
+      precisionTarget.style.width = `${r * 2}px`;
+      precisionTarget.style.height = `${r * 2}px`;
+      precisionTarget.style.left = `${precisionTargetX - r}px`;
+      precisionTarget.style.top = `${precisionTargetY - r}px`;
+      // Force reflow to ensure dimensions are applied
+      void precisionTarget.offsetWidth;
+      // Use setTimeout to ensure browser has fully applied styles before animation
+      setTimeout(() => {
+        if (precisionTarget && inSession && testType.value === "precision") {
+          precisionTarget.classList.add("show");
+        }
+      }, 10);
+    }
+
+    precisionTrialStartTime = performance.now();
+    precisionTrialActive = true;
+
+    // Set timeout for trial
+    const config = TEST_CONFIG.precision;
+    if (precisionTrialTimeoutId) {
+      clearTimeout(precisionTrialTimeoutId);
+    }
+    precisionTrialTimeoutId = setTimeout(() => {
+      if (!inSession || testType.value !== "precision") return;
+      // Timeout - no response
+      precisionTrialActive = false;
+      recordResult({ type: "timeout", rt: null, errN: null });
+      showPrecisionFeedback("timeout");
+      if (precisionTarget) {
+        precisionTarget.classList.remove("show");
+      }
+      setTimeout(() => {
+        if (inSession && testType.value === "precision") {
+          nextPrecisionTrial();
+        }
+      }, 200);
+    }, config.windowMs || 3000);
+  }
+
+  function updatePrecisionCounter() {
+    if (precisionCounter) {
+      precisionCounter.textContent = `${trialIndex} / ${totalTrials}`;
+    }
+  }
+
+  function showPrecisionFeedback(outcome) {
+    if (!precisionFeedback) return;
+    const text = t(`precision.feedback.${outcome}`);
+    precisionFeedback.textContent = text;
+    precisionFeedback.classList.add("show");
+    
+    // Optional: subtle vibration on miss/timeout (guarded)
+    if ((outcome === "miss" || outcome === "timeout") && navigator.vibrate) {
+      try {
+        navigator.vibrate(10);
+      } catch (_) {
+        // Ignore vibration errors
+      }
+    }
+    
+    // Auto-clear after ~350ms
+    setTimeout(() => {
+      if (precisionFeedback) {
+        precisionFeedback.classList.remove("show");
+        precisionFeedback.textContent = "";
+      }
+    }, 350);
+  }
+
+  function handlePrecisionResize() {
+    if (!inSession || testType.value !== "precision" || !precisionStage) return;
+    if (!precisionTrialActive || precisionTargetRadius === 0) return; // Only adjust if target is visible
+    
+    const w = precisionStage.clientWidth || window.innerWidth;
+    const h = precisionStage.clientHeight || window.innerHeight;
+    const shortSide = Math.min(w, h);
+    const r = clampInt(Math.round(shortSide * 0.055), 18, 44);
+    const padding = Math.round(r * 1.5);
+    
+    // Update radius
+    precisionTargetRadius = r;
+    
+    // Clamp current target position within new bounds
+    const maxX = w - padding;
+    const maxY = h - padding;
+    precisionTargetX = Math.max(padding, Math.min(precisionTargetX, maxX));
+    precisionTargetY = Math.max(padding, Math.min(precisionTargetY, maxY));
+    
+    // Update target size and position
+    if (precisionTarget) {
+      precisionTarget.style.width = `${r * 2}px`;
+      precisionTarget.style.height = `${r * 2}px`;
+      precisionTarget.style.left = `${precisionTargetX - r}px`;
+      precisionTarget.style.top = `${precisionTargetY - r}px`;
+    }
+  }
+
+  function endPrecisionSession(userExitedEarly) {
+    if (!inSession || testType.value !== "precision") return;
+
+    // Clean up fullscreen listeners
+    document.removeEventListener("fullscreenchange", handlePrecisionFullscreenChange);
+    document.removeEventListener("webkitfullscreenchange", handlePrecisionFullscreenChange);
+    document.removeEventListener("mozfullscreenchange", handlePrecisionFullscreenChange);
+    document.removeEventListener("MSFullscreenChange", handlePrecisionFullscreenChange);
+
+    // Clean up resize/orientation listeners
+    if (precisionResizeHandler) {
+      window.removeEventListener("resize", precisionResizeHandler);
+      window.removeEventListener("orientationchange", precisionResizeHandler);
+      precisionResizeHandler = null;
+    }
+
+    // Clean up Esc key listeners
+    if (precisionKeyHandler) {
+      document.removeEventListener("keydown", precisionKeyHandler, true);
+      precisionKeyHandler = null;
+    }
+    if (precisionGlobalEscDetector) {
+      document.removeEventListener("keydown", precisionGlobalEscDetector, true);
+      precisionGlobalEscDetector = null;
+    }
+
+    // Clean up pointerdown listener (attached to document)
+    if (precisionPointerHandler) {
+      document.removeEventListener("pointerdown", precisionPointerHandler, { passive: false, capture: true });
+      precisionPointerHandler = null;
+    }
+
+    // Exit fullscreen if active
+    if (precisionIsFullscreen) {
+      if (document.exitFullscreen) {
+        document.exitFullscreen().catch(() => {});
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen().catch(() => {});
+      } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen().catch(() => {});
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen().catch(() => {});
+      }
+      precisionIsFullscreen = false;
+    }
+
+    // Hide precision stage
+    if (precisionStage) {
+      precisionStage.classList.add("hidden");
+      document.body.classList.remove("precision-open");
+    }
+
+    if (precisionTarget) {
+      precisionTarget.classList.remove("show");
+    }
+
+    if (precisionTrialTimeoutId) {
+      clearTimeout(precisionTrialTimeoutId);
+      precisionTrialTimeoutId = null;
+    }
+
+    // If user exited early, mark as invalid and set inSession = false before returning
+    if (userExitedEarly) {
+      inSession = false;
+      isRunActive = false;
+      
+      // Re-enable controls
+      trialCountInput.disabled = false;
+      startBaselineBtn.disabled = false;
+      startCheckBtn.disabled = false;
+      if (startTrainingBtn) startTrainingBtn.disabled = false;
+      resetBtn.style.display = "none";
+
+      const contextPanel = document.getElementById("contextPanel");
+      if (contextPanel) {
+        contextPanel.classList.remove("is-hidden");
+      }
+
+      if (trialList) {
+        trialList.classList.add("session-ended");
+      }
+
+      applyTrialEmphasis(trialList);
+      updateProgress(true);
+
+      const createdAt = new Date().toISOString();
+      const tags = getContextTags();
+      const device = getDeviceHints();
+      const flags = { invalid: true, reason: "user_exited_early", refusalCode: "R1_INVALID_EXECUTION" };
+      const invalidRecord = {
+        id: createdAt,
+        createdAt,
+        testType: "precision",
+        mode: mode || "",
+        metrics: {
+          avgErrN: 0,
+          sdErrN: 0,
+          bestErrN: 0,
+          worstErrN: 0,
+          meanRtMs: 0,
+          sdRtMs: 0,
+          trials: totalTrials,
+          respondedTrials: 0,
+          hits: 0,
+          misses: 0,
+          timeouts: 0
+        },
+        flags,
+        tags,
+        device,
+        trialLog: buildTrialLog("precision", results)
+      };
+      invalidRecord.quality = computeSessionQuality(invalidRecord);
+      pushHistoryRecord(invalidRecord);
+      renderHistory();
+      setSummary("invalid_precision_exit", {
+        refusalCode: flags.refusalCode,
+        quality: invalidRecord.quality
+      }, "precision", mode);
+      mode = null;
+      updateBaselineInfo();
+      return;
+    }
+
+    // Process results and compute metrics
+    // NOTE: Do NOT set inSession = false here - let endSession() handle it
+    // endSession() has a guard that checks inSession, so it must still be true
+    endSession();
   }
 
   function beginSession() {
@@ -1599,9 +2487,17 @@ testType.addEventListener("change", () => {
     // Set default trial count based on test type
     if (testType.value === "gonogo") {
       trialCountInput.value = 20;
+    } else if (testType.value === "precision") {
+      // Default to 15 (Check mode default), but will be overridden when button is clicked
+      trialCountInput.value = 15;
+      // Clamp min to 10, max to 40 for precision
+      trialCountInput.setAttribute("min", "10");
+      trialCountInput.setAttribute("max", "40");
     } else {
       // Reaction Time and Divided Attention default to 10
       trialCountInput.value = 10;
+      // Reset min to default (3) for non-precision tests
+      trialCountInput.setAttribute("min", "3");
     }
     
     updateBaselineInfo();
@@ -2311,6 +3207,7 @@ function pushHistoryRecord(record) {
     const isReaction = tt === "reaction";
     const isGoNoGo = tt === "gonogo";
     const isDivided = tt === "divided";
+    const isPrecision = tt === "precision";
   
     const createdAt = new Date().toISOString();
     const tags = getContextTags();
@@ -2526,21 +3423,164 @@ function pushHistoryRecord(record) {
         flashUserCount,
         flashAbsError
       };
+    } else if (isPrecision) {
+      // Precision metrics
+      const respondedTrials = results.filter(e => e && (e.type === "hit" || e.type === "miss"));
+      const timeouts = results.filter(e => e && e.type === "timeout").length;
+      const hits = results.filter(e => e && e.type === "hit").length;
+      const misses = results.filter(e => e && e.type === "miss").length;
+
+      // Refusal logic
+      if (respondedTrials.length === 0) {
+        flags = { invalid: true, reason: "no_valid_responses", refusalCode: "R1_INVALID_EXECUTION" };
+        const invalidRecord = {
+          id: createdAt,
+          createdAt,
+          testType: "precision",
+          mode: mode || "",
+          metrics: {
+            avgErrN: 0,
+            sdErrN: 0,
+            bestErrN: 0,
+            worstErrN: 0,
+            meanRtMs: 0,
+            sdRtMs: 0,
+            trials: totalTrials,
+            respondedTrials: 0,
+            hits: 0,
+            misses: 0,
+            timeouts
+          },
+          flags,
+          tags,
+          device,
+          trialLog: buildTrialLog(tt, results)
+        };
+        invalidRecord.quality = computeSessionQuality(invalidRecord);
+        pushHistoryRecord(invalidRecord);
+        renderHistory();
+        setSummary("invalid_precision_no_responses", {
+          refusalCode: flags.refusalCode,
+          quality: invalidRecord.quality
+        }, "precision", mode);
+        mode = null;
+        updateBaselineInfo();
+        return;
+      }
+
+      const minRespondedTrials = Math.max(10, Math.ceil(totalTrials * 0.80));
+      if (respondedTrials.length < minRespondedTrials) {
+        flags = { invalid: true, reason: "insufficient_data", refusalCode: "R2_INSUFFICIENT_DATA" };
+        const invalidRecord = {
+          id: createdAt,
+          createdAt,
+          testType: "precision",
+          mode: mode || "",
+          metrics: {
+            avgErrN: 0,
+            sdErrN: 0,
+            bestErrN: 0,
+            worstErrN: 0,
+            meanRtMs: 0,
+            sdRtMs: 0,
+            trials: totalTrials,
+            respondedTrials: respondedTrials.length,
+            hits,
+            misses,
+            timeouts
+          },
+          flags,
+          tags,
+          device,
+          trialLog: buildTrialLog(tt, results)
+        };
+        invalidRecord.quality = computeSessionQuality(invalidRecord);
+        pushHistoryRecord(invalidRecord);
+        renderHistory();
+        setSummary("invalid_precision_insufficient", {
+          refusalCode: flags.refusalCode,
+          quality: invalidRecord.quality
+        }, "precision", mode);
+        mode = null;
+        updateBaselineInfo();
+        return;
+      }
+
+      // Check R3: excessive timeouts or misses
+      const timeoutRate = totalTrials > 0 ? timeouts / totalTrials : 0;
+      const missRate = respondedTrials.length > 0 ? misses / respondedTrials.length : 0;
+      if (timeoutRate > 0.20 || missRate > 0.35) {
+        flags = { invalid: true, reason: "excess_noise", refusalCode: "R3_EXCESS_NOISE" };
+        const invalidRecord = {
+          id: createdAt,
+          createdAt,
+          testType: "precision",
+          mode: mode || "",
+          metrics: {
+            avgErrN: 0,
+            sdErrN: 0,
+            bestErrN: 0,
+            worstErrN: 0,
+            meanRtMs: 0,
+            sdRtMs: 0,
+            trials: totalTrials,
+            respondedTrials: respondedTrials.length,
+            hits,
+            misses,
+            timeouts
+          },
+          flags,
+          tags,
+          device,
+          trialLog: buildTrialLog(tt, results)
+        };
+        invalidRecord.quality = computeSessionQuality(invalidRecord);
+        pushHistoryRecord(invalidRecord);
+        renderHistory();
+        setSummary("invalid_precision_excess_noise", {
+          refusalCode: flags.refusalCode,
+          quality: invalidRecord.quality
+        }, "precision", mode);
+        mode = null;
+        updateBaselineInfo();
+        return;
+      }
+
+      // Compute metrics from responded trials only
+      const errNValues = respondedTrials.filter(e => e.errN !== null && e.errN !== undefined).map(e => e.errN);
+      const rtValues = respondedTrials.filter(e => e.rt !== null && e.rt !== undefined).map(e => e.rt);
+
+      sessionPayload = {
+        meanErrN: errNValues.length > 0 ? mean(errNValues) : 0,
+        sdErrN: errNValues.length > 1 ? stddev(errNValues) : 0,
+        bestErrN: errNValues.length > 0 ? Math.min(...errNValues) : 0,
+        worstErrN: errNValues.length > 0 ? Math.max(...errNValues) : 0,
+        meanRtMs: rtValues.length > 0 ? mean(rtValues) : 0,
+        sdRtMs: rtValues.length > 1 ? stddev(rtValues) : 0,
+        trials: totalTrials,
+        respondedTrials: respondedTrials.length,
+        hits,
+        misses,
+        timeouts
+      };
     }
 
     // Check for R3_EXCESS_NOISE (high error rates) - but only mark invalid if extreme
+    // Note: Precision R3 is handled above, this is for other test types
     // This is a quality issue, but we still allow baseline updates if thresholds are met
     // We'll mark as "mixed" quality rather than invalid unless error rates are extreme
-    const falseStartRate = totalTrials > 0 ? (sessionPayload.falseStarts || 0) / totalTrials : 0;
-    const missRate = totalTrials > 0 ? (sessionPayload.misses || 0) / totalTrials : 0;
-    const falseAlarmRate = totalTrials > 0 && sessionPayload.nogoCount > 0 
-      ? (sessionPayload.falseAlarms || 0) / sessionPayload.nogoCount 
-      : 0;
-    
-    // Only mark as R3_INVALID if error rates are extremely high (>50% false starts or >60% miss/false alarm rate)
-    // Otherwise, quality will be "mixed" but session is still valid
-    if (!flags.invalid && (falseStartRate > 0.5 || missRate > 0.6 || falseAlarmRate > 0.6)) {
-      flags = { invalid: true, reason: "excess_noise", refusalCode: "R3_EXCESS_NOISE" };
+    if (!isPrecision) {
+      const falseStartRate = totalTrials > 0 ? (sessionPayload.falseStarts || 0) / totalTrials : 0;
+      const missRate = totalTrials > 0 ? (sessionPayload.misses || 0) / totalTrials : 0;
+      const falseAlarmRate = totalTrials > 0 && sessionPayload.nogoCount > 0 
+        ? (sessionPayload.falseAlarms || 0) / sessionPayload.nogoCount 
+        : 0;
+      
+      // Only mark as R3_INVALID if error rates are extremely high (>50% false starts or >60% miss/false alarm rate)
+      // Otherwise, quality will be "mixed" but session is still valid
+      if (!flags.invalid && (falseStartRate > 0.5 || missRate > 0.6 || falseAlarmRate > 0.6)) {
+        flags = { invalid: true, reason: "excess_noise", refusalCode: "R3_EXCESS_NOISE" };
+      }
     }
     
     // Always write session record (even if baseline refuses saving later)
@@ -2574,6 +3614,20 @@ function pushHistoryRecord(record) {
             flashTargetCount: sessionPayload.flashTargetCount,
             flashUserCount: sessionPayload.flashUserCount,
             flashAbsError: sessionPayload.flashAbsError
+          }
+        : isPrecision
+        ? {
+            avgErrN: sessionPayload.meanErrN,
+            sdErrN: sessionPayload.sdErrN,
+            bestErrN: sessionPayload.bestErrN,
+            worstErrN: sessionPayload.worstErrN,
+            meanRtMs: sessionPayload.meanRtMs,
+            sdRtMs: sessionPayload.sdRtMs,
+            trials: sessionPayload.trials,
+            respondedTrials: sessionPayload.respondedTrials,
+            hits: sessionPayload.hits,
+            misses: sessionPayload.misses,
+            timeouts: sessionPayload.timeouts
           }
         : {
             avgMs: sessionPayload.mean,
@@ -2662,11 +3716,23 @@ function pushHistoryRecord(record) {
       const sessions = loadBaseline();
 
       // Store device info with baseline session for consistency (used for device comparison warnings)
-      sessions.push({
-        ...sessionPayload,
-        timestamp: new Date().toISOString(),
-        device: device // Store device info with baseline for device consistency checking
-      });
+      // For precision, store meanErrN, sdErrN, meanRtMs, sdRtMs, trials
+      const baselinePayload = isPrecision
+        ? {
+            meanErrN: sessionPayload.meanErrN,
+            sdErrN: sessionPayload.sdErrN,
+            meanRtMs: sessionPayload.meanRtMs,
+            sdRtMs: sessionPayload.sdRtMs,
+            trials: sessionPayload.trials,
+            timestamp: new Date().toISOString(),
+            device: device
+          }
+        : {
+            ...sessionPayload,
+            timestamp: new Date().toISOString(),
+            device: device
+          };
+      sessions.push(baselinePayload);
   
       saveBaseline(sessions);
       updateBaselineInfo();
@@ -2703,6 +3769,15 @@ function pushHistoryRecord(record) {
           misses: sessionPayload.misses,
           falseAlarms: sessionPayload.falseAlarms,
           falseStarts: sessionPayload.falseStarts,
+          qualityNote,
+          quality: sessionRecord.quality || "good",
+          deviceWarning: ""
+        }, tt, mode);
+      } else if (isPrecision) {
+        setSummary("baseline_saved_precision", {
+          meanErrN: sessionPayload.meanErrN,
+          sdErrN: sessionPayload.sdErrN,
+          meanRtMs: sessionPayload.meanRtMs,
           qualityNote,
           quality: sessionRecord.quality || "good",
           deviceWarning: ""
@@ -2784,10 +3859,37 @@ function pushHistoryRecord(record) {
       }
       
       // Calculate baseline stats once (used for status and summary)
+      let status;
+      
+      if (isPrecision) {
+        // Precision: compare meanErrN
+        const baselineMeanErrN = mean(sessions.map(s => s.meanErrN || 0));
+        const baselineSDErrN = mean(sessions.map(s => s.sdErrN || 0));
+        if (sessionPayload.meanErrN <= baselineMeanErrN + baselineSDErrN) {
+          status = t("status.within");
+        } else if (sessionPayload.meanErrN <= baselineMeanErrN + 2 * baselineSDErrN) {
+          status = t("status.slightly");
+        } else {
+          status = t("status.significantly");
+        }
+        const baselineMean = baselineMeanErrN;
+        const baselineSD = baselineSDErrN;
+        const qualityNote = ""; // Precision doesn't use checkSessionQuality
+        setSummary("check_precision", {
+          meanErrN: sessionPayload.meanErrN,
+          baselineMeanErrN: baselineMean,
+          baselineSDErrN: baselineSD,
+          status,
+          meanRtMs: sessionPayload.meanRtMs,
+          quality: sessionRecord.quality || "good",
+          deviceWarning: deviceWarning || ""
+        }, tt, mode);
+        mode = null;
+        return;
+      }
+      
       const baselineMean = mean(sessions.map(s => s.mean));
       const baselineSD = mean(sessions.map(s => s.sd));
-      
-      let status;
       
       if (isDivided) {
         // Divided Attention: compare avgMs, falseAlarmsRate, and flashAbsError
@@ -2894,6 +3996,13 @@ function updateProgress(isDone = false) {
 }
 
 function hardReset() {
+  // Clear precision reset flags at the beginning (so future sessions are clean)
+  precisionResetIntent = false;
+  precisionResetRan = false;
+  precisionShouldResetOnFullscreenExit = false;
+  precisionEscPressTime = 0;
+  precisionGlobalEscDetected = false;
+  
   // Remove session-ended class when resetting
   if (trialList) {
     trialList.classList.remove("session-ended");
@@ -2905,6 +4014,65 @@ function hardReset() {
     clearTimeout(flashOverlayTimeoutId);
     flashOverlayTimeoutId = null;
   }
+  
+  // Clear precision state on reset
+  if (precisionTrialTimeoutId) {
+    clearTimeout(precisionTrialTimeoutId);
+    precisionTrialTimeoutId = null;
+  }
+  precisionTargetRadius = 0;
+  precisionTargetX = 0;
+  precisionTargetY = 0;
+  precisionTrialStartTime = null;
+  precisionTrialActive = false;
+  if (precisionResizeHandler) {
+    window.removeEventListener("resize", precisionResizeHandler);
+    window.removeEventListener("orientationchange", precisionResizeHandler);
+    precisionResizeHandler = null;
+  }
+  if (precisionKeyHandler) {
+    document.removeEventListener("keydown", precisionKeyHandler, true);
+    precisionKeyHandler = null;
+  }
+  if (precisionGlobalEscDetector) {
+    document.removeEventListener("keydown", precisionGlobalEscDetector, true);
+    precisionGlobalEscDetector = null;
+  }
+  // Clean up pointerdown listener (attached to document)
+  if (precisionPointerHandler) {
+    document.removeEventListener("pointerdown", precisionPointerHandler, { passive: false, capture: true });
+    precisionPointerHandler = null;
+  }
+  // Exit fullscreen if active (for precision)
+  if (precisionIsFullscreen) {
+    if (document.exitFullscreen) {
+      document.exitFullscreen().catch(() => {
+        precisionShouldResetOnFullscreenExit = false;
+      });
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen().catch(() => {
+        precisionShouldResetOnFullscreenExit = false;
+      });
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen().catch(() => {
+        precisionShouldResetOnFullscreenExit = false;
+      });
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen().catch(() => {
+        precisionShouldResetOnFullscreenExit = false;
+      });
+    }
+    precisionIsFullscreen = false;
+  } else {
+    precisionShouldResetOnFullscreenExit = false;
+  }
+  if (precisionStage) {
+    precisionStage.classList.add("hidden");
+    document.body.classList.remove("precision-open");
+  }
+  if (precisionTarget) {
+      precisionTarget.classList.remove("show");
+  }
   clearTimeout(timeoutId);
 
   inSession = false;
@@ -2915,7 +4083,7 @@ function hardReset() {
 
   testArea.classList.add("hidden");
   testArea.textContent = "";
-  testArea.style.background = "red";
+  testArea.style.background = "";
   testArea.innerHTML = ""; // Clear any flash overlay or question UI
 
   trialList.innerHTML = "";
@@ -2960,15 +4128,19 @@ function loadBaseline() {
     const tt = testType.value;
     const isGoNoGo = tt === "gonogo";
     const isDivided = tt === "divided";
+    const isPrecision = tt === "precision";
 
-    // Guidance text (always shown) - update both language spans
+    // Guidance text (always shown) - update all language spans
     const guidanceEn = baselineGuidance.querySelector(".lang-en");
     const guidanceNo = baselineGuidance.querySelector(".lang-no");
+    const guidanceLt = baselineGuidance.querySelector(".lang-lt");
     if (guidanceEn) {
       if (isGoNoGo) {
         guidanceEn.textContent = `Recommended: ≥${minSessions} baseline sessions, ≥${recTrials} trials per session (Go/No-Go needs more trials for stable results).`;
       } else if (isDivided) {
         guidanceEn.textContent = `Recommended: ≥${minSessions} baseline sessions, ≥${recTrials} trials per session (Divided Attention needs more trials for flash counting).`;
+      } else if (isPrecision) {
+        guidanceEn.textContent = `Recommended: ≥${minSessions} baseline sessions, ≥${recTrials} trials per session (Precision needs more trials for stable accuracy measurement).`;
       } else {
         guidanceEn.textContent = `Recommended: ≥${minSessions} baseline sessions, ≥${recTrials} trials per session.`;
       }
@@ -2978,8 +4150,21 @@ function loadBaseline() {
         guidanceNo.textContent = `Anbefalt: ≥${minSessions} baseline-økter, ≥${recTrials} forsøk per økt (Go/No-Go trenger flere forsøk for stabile resultater).`;
       } else if (isDivided) {
         guidanceNo.textContent = `Anbefalt: ≥${minSessions} baseline-økter, ≥${recTrials} forsøk per økt (Delt oppmerksomhet trenger flere forsøk for flash-telling).`;
+      } else if (isPrecision) {
+        guidanceNo.textContent = `Anbefalt: ≥${minSessions} baseline-økter, ≥${recTrials} forsøk per økt (Presisjon trenger flere forsøk for stabil nøyaktighetsmåling).`;
       } else {
         guidanceNo.textContent = `Anbefalt: ≥${minSessions} baseline-økter, ≥${recTrials} forsøk per økt.`;
+      }
+    }
+    if (guidanceLt) {
+      if (isGoNoGo) {
+        guidanceLt.textContent = `Rekomenduojama: ≥${minSessions} bazinio lygio sesijos, ≥${recTrials} bandymai per sesiją (Spausk/Nespausk reikalauja daugiau bandymų dėl stabilaus rezultato).`;
+      } else if (isDivided) {
+        guidanceLt.textContent = `Rekomenduojama: ≥${minSessions} bazinio lygio sesijos, ≥${recTrials} bandymai per sesiją (Padalinta dėmesys reikalauja daugiau bandymų dėl blyksnių skaičiavimo).`;
+      } else if (isPrecision) {
+        guidanceLt.textContent = `Rekomenduojama: ≥${minSessions} bazinio lygio sesijos, ≥${recTrials} bandymai per sesiją (Tikslumas reikalauja daugiau bandymų dėl stabilaus tikslumo matavimo).`;
+      } else {
+        guidanceLt.textContent = `Rekomenduojama: ≥${minSessions} bazinio lygio sesijos, ≥${recTrials} bandymai per sesiją.`;
       }
     }
 
@@ -3008,27 +4193,64 @@ function loadBaseline() {
 
     clearBaselineBtn.style.display = "";
 
-    const means = sessions.map(s => s.mean);
-    const sds = sessions.map(s => s.sd);
-
-    const meanAvg = mean(means);
-    const sdAvg = mean(sds);
+    // For precision, use meanErrN/sdErrN; for others, use mean/sd
+    const isPrecisionType = tt === "precision";
+    let meanAvg, sdAvg;
+    if (isPrecisionType) {
+      const meanErrNs = sessions.map(s => s.meanErrN || 0).filter(v => Number.isFinite(v));
+      const sdErrNs = sessions.map(s => s.sdErrN || 0).filter(v => Number.isFinite(v));
+      meanAvg = meanErrNs.length > 0 ? mean(meanErrNs) : 0;
+      sdAvg = sdErrNs.length > 0 ? mean(sdErrNs) : 0;
+    } else {
+      const means = sessions.map(s => s.mean || 0).filter(v => Number.isFinite(v));
+      const sds = sessions.map(s => s.sd || 0).filter(v => Number.isFinite(v));
+      meanAvg = means.length > 0 ? mean(means) : 0;
+      sdAvg = sds.length > 0 ? mean(sds) : 0;
+    }
 
     // Update both language spans in baselineInfo
     const infoEn = baselineInfo.querySelector(".lang-en");
     const infoNo = baselineInfo.querySelector(".lang-no");
+    const infoLt = baselineInfo.querySelector(".lang-lt");
     const prefix = (isGoNoGo || isDivided) ? "GO " : "";
     if (infoEn) {
-      infoEn.textContent =
-        `${sessions.length} sessions | ` +
-        `${prefix}Baseline mean: ${meanAvg.toFixed(0)} ms | ` +
-        `${prefix}Baseline SD: ${sdAvg.toFixed(0)} ms`;
+      if (isPrecisionType) {
+        infoEn.textContent =
+          `${sessions.length} sessions | ` +
+          `Baseline error: ${meanAvg.toFixed(2)} | ` +
+          `Baseline SD: ${sdAvg.toFixed(2)}`;
+      } else {
+        infoEn.textContent =
+          `${sessions.length} sessions | ` +
+          `${prefix}Baseline mean: ${meanAvg.toFixed(0)} ms | ` +
+          `${prefix}Baseline SD: ${sdAvg.toFixed(0)} ms`;
+      }
     }
     if (infoNo) {
-      infoNo.textContent =
-        `${sessions.length} økter | ` +
-        `${prefix}Baseline-gjennomsnitt: ${meanAvg.toFixed(0)} ms | ` +
-        `${prefix}Baseline SD: ${sdAvg.toFixed(0)} ms`;
+      if (isPrecisionType) {
+        infoNo.textContent =
+          `${sessions.length} økter | ` +
+          `Baseline-feil: ${meanAvg.toFixed(2)} | ` +
+          `Baseline SD: ${sdAvg.toFixed(2)}`;
+      } else {
+        infoNo.textContent =
+          `${sessions.length} økter | ` +
+          `${prefix}Baseline-gjennomsnitt: ${meanAvg.toFixed(0)} ms | ` +
+          `${prefix}Baseline SD: ${sdAvg.toFixed(0)} ms`;
+      }
+    }
+    if (infoLt) {
+      if (isPrecisionType) {
+        infoLt.textContent =
+          `${sessions.length} sesijos | ` +
+          `Bazinio lygio klaida: ${meanAvg.toFixed(2)} | ` +
+          `Bazinio lygio SD: ${sdAvg.toFixed(2)}`;
+      } else {
+        infoLt.textContent =
+          `${sessions.length} sesijos | ` +
+          `${prefix}Bazinio lygio vidurkis: ${meanAvg.toFixed(0)} ms | ` +
+          `${prefix}Bazinio lygio SD: ${sdAvg.toFixed(0)} ms`;
+      }
     }
   
     // Render newest first
@@ -3036,8 +4258,17 @@ function loadBaseline() {
   
     for (const s of newestFirst) {
       const li = document.createElement("li");
-      li.textContent =
-        `${formatTime(s.timestamp)} — ${t("history.mean")} ${s.mean.toFixed(0)} ms, ${t("history.sd")} ${s.sd.toFixed(0)} ms (${s.trials} ${t("history.trials")})`;
+      const tt = testType.value;
+      if (tt === "precision" && typeof s.meanErrN === "number" && typeof s.sdErrN === "number") {
+        li.textContent =
+          `${formatTime(s.timestamp)} — err ${s.meanErrN.toFixed(2)}, SD ${s.sdErrN.toFixed(2)} (${s.trials} ${t("history.trials")})`;
+      } else if (typeof s.mean === "number" && typeof s.sd === "number") {
+        li.textContent =
+          `${formatTime(s.timestamp)} — ${t("history.mean")} ${s.mean.toFixed(0)} ms, ${t("history.sd")} ${s.sd.toFixed(0)} ms (${s.trials} ${t("history.trials")})`;
+      } else {
+        // Fallback for malformed entries
+        li.textContent = `${formatTime(s.timestamp)} — ${t("history.trials")} ${s.trials || 0}`;
+      }
       baselineList.appendChild(li);
     }
   }
@@ -3057,6 +4288,7 @@ function loadBaseline() {
 function baselineKeyFor(tt) {
   if (tt === "gonogo") return "fce_baseline_gonogo_v1";
   if (tt === "divided") return "fce_baseline_divided_v1";
+  if (tt === "precision") return "fce_baseline_precision_v1";
   return "fce_baseline_reaction_v1";
 }
 
@@ -3069,9 +4301,19 @@ function filterValidBaselineSessions(sessions) {
   if (!Array.isArray(sessions)) return [];
   return sessions.filter(s => {
     if (!s) return false;
-    // Check if it has required fields (mean, sd) and they are valid numbers
-    if (typeof s.mean !== "number" || typeof s.sd !== "number") return false;
-    if (Number.isNaN(s.mean) || Number.isNaN(s.sd) || !Number.isFinite(s.mean) || !Number.isFinite(s.sd)) return false;
+    // For precision, check meanErrN/sdErrN; for others, check mean/sd
+    const hasPrecisionMetrics = typeof s.meanErrN === "number" && typeof s.sdErrN === "number";
+    const hasStandardMetrics = typeof s.mean === "number" && typeof s.sd === "number";
+    
+    if (!hasPrecisionMetrics && !hasStandardMetrics) return false;
+    
+    if (hasPrecisionMetrics) {
+      if (Number.isNaN(s.meanErrN) || Number.isNaN(s.sdErrN) || !Number.isFinite(s.meanErrN) || !Number.isFinite(s.sdErrN)) return false;
+    }
+    if (hasStandardMetrics) {
+      if (Number.isNaN(s.mean) || Number.isNaN(s.sd) || !Number.isFinite(s.mean) || !Number.isFinite(s.sd)) return false;
+    }
+    
     // Check if it's not marked as invalid (safety check)
     if (s.flags && s.flags.invalid === true) return false;
     return true;
@@ -3082,6 +4324,7 @@ function recommendedTrialsPerSession() {
   const tt = testType.value;
   if (tt === "gonogo") return 20;
   if (tt === "divided") return 10; // Divided attention needs enough trials for flashes
+  if (tt === "precision") return 25; // Precision baseline default
   return 5; // Reaction Time
 }
 
@@ -3115,10 +4358,37 @@ function computeSessionQuality(session) {
   
   const metrics = session.metrics || {};
   const totalTrials = metrics.trials || 0;
+  const tt = session.testType || testType?.value || "reaction";
+  const isPrecision = tt === "precision";
   
   if (totalTrials === 0) return "not_usable";
   
-  // Calculate error rates
+  // Precision-specific quality calculation
+  if (isPrecision) {
+    const respondedTrials = metrics.respondedTrials || 0;
+    const timeouts = metrics.timeouts || 0;
+    const misses = metrics.misses || 0;
+    const hits = metrics.hits || 0;
+    
+    if (respondedTrials === 0) return "not_usable";
+    
+    const timeoutRate = totalTrials > 0 ? timeouts / totalTrials : 0;
+    const missRate = respondedTrials > 0 ? misses / respondedTrials : 0;
+    const hitRate = respondedTrials > 0 ? hits / respondedTrials : 0;
+    
+    // Thresholds for "mixed" quality for precision
+    const hasHighTimeoutRate = timeoutRate > 0.20;
+    const hasHighMissRate = missRate > 0.35;
+    const hasLowHitRate = hitRate < 0.50;
+    
+    if (hasHighTimeoutRate || hasHighMissRate || hasLowHitRate) {
+      return "mixed";
+    }
+    
+    return "good";
+  }
+  
+  // Calculate error rates for other test types
   const falseStarts = metrics.falseStarts || 0;
   const misses = metrics.misses || 0;
   const falseAlarms = metrics.falseAlarms || 0;
@@ -3153,17 +4423,16 @@ function checkSessionQuality(sessionPayload, totalTrials, isReaction) {
   
   const issues = [];
   if (falseStartRate > 0.2) {
-    issues.push(currentLang === "no" ? "mange feilstarter" : currentLang === "lt" ? "daug klaidingų startų" : "many false starts");
+    issues.push(t("quality.warning.manyFalseStarts"));
   }
   if (validHitRate < 0.5) {
-    issues.push(currentLang === "no" ? "få gyldige treff" : currentLang === "lt" ? "mažai galiojančių atsakų" : "few valid hits");
+    issues.push(t("quality.warning.fewValidHits"));
   }
   
   if (issues.length > 0) {
-    if (currentLang === "no") {
-      return ` Merknad: Denne økten hadde ${issues.join(" og ")} — vurder å gjennomføre på nytt for bedre baseline-kvalitet.`;
-    }
-    return ` Note: This session had ${issues.join(" and ")} — consider retaking for better baseline quality.`;
+    const joiner = t("quality.warning.joiner");
+    const issuesText = issues.join(` ${joiner} `);
+    return t("quality.warning.note").replace("{issues}", issuesText);
   }
   return "";
 }
@@ -3233,17 +4502,21 @@ function clampBadgeClass(statusText) {
 }
 
 function qualityToBadgeClass(q) {
-  // q is already something like "good" / "mixed" / "poor" etc
+  // q is a quality key: "good", "mixed", "poor", "not_usable", "na", or undefined
+  // Check the key directly (language-safe) rather than translated text
   if (!q) return "na";
-  const v = String(q).toLowerCase();
-  if (v.includes("good")) return "ok";
-  if (v.includes("mix")) return "warn";
-  if (v.includes("poor") || v.includes("bad")) return "bad";
+  const key = String(q).toLowerCase().trim();
+  // Exact key matching (language-safe)
+  if (key === "good") return "ok";
+  if (key === "mixed") return "warn";
+  if (key === "poor" || key === "bad" || key === "not_usable") return "bad";
+  if (key === "na") return "na";
   return "na";
 }
 
 function expectedTrialsFor(tt) {
   if (tt === "gonogo") return 20;
+  if (tt === "precision") return 25; // Baseline default
   return 10;
 }
 
@@ -3256,9 +4529,20 @@ function sdChipClass(sd, baselineSD) {
 
 // Compute baseline mean/sd from baseline sessions (excluding invalid)
 function computeBaselineFromHistory(sessions) {
+  // Determine test type from first session or current selection
+  const firstSession = sessions.find(s => s && s.mode === "baseline");
+  const tt = firstSession?.testType || testType?.value || "reaction";
+  const isPrecision = tt === "precision";
+  
   const base = sessions
     .filter(s => s && s.mode === "baseline" && s.flags && s.flags.invalid === false)
-    .map(s => s.metrics && typeof s.metrics.avgMs === "number" ? s.metrics.avgMs : null)
+    .map(s => {
+      if (isPrecision) {
+        return s.metrics && typeof s.metrics.avgErrN === "number" ? s.metrics.avgErrN : null;
+      } else {
+        return s.metrics && typeof s.metrics.avgMs === "number" ? s.metrics.avgMs : null;
+      }
+    })
     .filter(v => typeof v === "number" && !Number.isNaN(v));
 
   if (base.length < 1) return null;
@@ -3270,7 +4554,7 @@ function computeBaselineFromHistory(sessions) {
     : 0;
 
   const sd = Math.sqrt(variance);
-  return { mean: m, sd, n: base.length };
+  return { mean: m, sd, n: base.length, isPrecision };
 }
 
 function statusLabelFromCompare(meanMs, baselineMean, baselineSD) {
@@ -3312,7 +4596,8 @@ function renderHomeHistoryPreview() {
     const when = formatDateTime(s?.createdAt || s?.id);
 
     // Metrics (kept calm + minimal)
-    const avg = s?.metrics?.avgMs;
+    const isPrecision = tt === "precision";
+    const avg = isPrecision ? s?.metrics?.avgErrN : s?.metrics?.avgMs;
     const trials = s?.metrics?.trials ?? s?.trials;
     const mode = s?.mode || "";
 
@@ -3331,8 +4616,14 @@ function renderHomeHistoryPreview() {
       })();
       const baselineSessions = filterValidBaselineSessions(baselineSessionsRaw);
       if (baselineSessions.length > 0) {
-        const baselineMean = mean(baselineSessions.map(s => s.mean));
-        const baselineSD = mean(baselineSessions.map(s => s.sd));
+        let baselineMean, baselineSD;
+        if (isPrecision) {
+          baselineMean = mean(baselineSessions.map(bs => bs.meanErrN || 0));
+          baselineSD = mean(baselineSessions.map(bs => bs.sdErrN || 0));
+        } else {
+          baselineMean = mean(baselineSessions.map(bs => bs.mean || 0));
+          baselineSD = mean(baselineSessions.map(bs => bs.sd || 0));
+        }
         if (Number.isFinite(baselineMean) && Number.isFinite(baselineSD)) {
           statusText = statusLabelFromCompare(avg, baselineMean, baselineSD);
         }
@@ -3372,7 +4663,12 @@ function renderHomeHistoryPreview() {
     const metrics = document.createElement("div");
     metrics.className = "home-history-metrics muted";
 
-    const avgStr = (typeof avg === "number") ? `${fmt(avg, 0)} ms` : "—";
+    let avgStr;
+    if (isPrecision) {
+      avgStr = (typeof avg === "number") ? `${fmt(avg, 2)}` : "—";
+    } else {
+      avgStr = (typeof avg === "number") ? `${fmt(avg, 0)} ms` : "—";
+    }
     const trialsStr = (typeof trials === "number") ? `${trials}` : "—";
 
     metrics.innerHTML = `
@@ -3434,13 +4730,26 @@ function renderTrendFor(testType) {
   if (!baseline) {
     baselineLine.textContent = t("trend.noBaseline");
   } else {
+    const isPrecision = baseline.isPrecision || testType === "precision";
     const lo = baseline.mean - baseline.sd;
     const hi = baseline.mean + baseline.sd;
-    baselineLine.textContent = t("trend.baselineLine")
-      .replace("{mean}", fmt(baseline.mean, 0))
-      .replace("{sd}", fmt(baseline.sd, 0))
-      .replace("{lo}", fmt(lo, 0))
-      .replace("{hi}", fmt(hi, 0));
+    if (isPrecision) {
+      baselineLine.textContent = t("trend.baselineLine")
+        .replace("{mean}", fmt(baseline.mean, 2))
+        .replace("{sd}", fmt(baseline.sd, 2))
+        .replace("{lo}", fmt(lo, 2))
+        .replace("{hi}", fmt(hi, 2))
+        .replace(" ms", "")
+        .replace(" ms", "")
+        .replace(" ms", "")
+        .replace(" ms", "");
+    } else {
+      baselineLine.textContent = t("trend.baselineLine")
+        .replace("{mean}", fmt(baseline.mean, 0))
+        .replace("{sd}", fmt(baseline.sd, 0))
+        .replace("{lo}", fmt(lo, 0))
+        .replace("{hi}", fmt(hi, 0));
+    }
   }
 
   // Recent CHECK sessions (exclude invalid if you prefer; I recommend *including* but marking)
@@ -3455,7 +4764,8 @@ function renderTrendFor(testType) {
   }
 
   checks.forEach(s => {
-    const avg = s?.metrics?.avgMs;
+    const isPrecision = testType === "precision" || s?.testType === "precision";
+    const avg = isPrecision ? s?.metrics?.avgErrN : s?.metrics?.avgMs;
     const isInvalid = !!(s?.flags?.invalid);
     const when = formatDateTime(s?.createdAt || s?.id);
     const delta = (baseline && typeof avg === "number") ? (avg - baseline.mean) : null;
@@ -3490,12 +4800,20 @@ function renderTrendFor(testType) {
     right.className = "trend-right";
 
     const avgLine = document.createElement("div");
-    avgLine.innerHTML = `<strong>${fmt(avg, 0)}</strong> ms`;
+    if (isPrecision) {
+      avgLine.innerHTML = `<strong>${fmt(avg, 2)}</strong>`;
+    } else {
+      avgLine.innerHTML = `<strong>${fmt(avg, 0)}</strong> ms`;
+    }
     right.appendChild(avgLine);
 
     const deltaLine = document.createElement("div");
     deltaLine.className = "muted";
-    deltaLine.textContent = (delta === null) ? "" : t("trend.delta").replace("{delta}", fmt(delta, 0));
+    if (isPrecision) {
+      deltaLine.textContent = (delta === null) ? "" : t("trend.delta").replace("{delta}", fmt(delta, 2));
+    } else {
+      deltaLine.textContent = (delta === null) ? "" : t("trend.delta").replace("{delta}", fmt(delta, 0));
+    }
     right.appendChild(deltaLine);
 
     li.appendChild(left);
@@ -3557,7 +4875,7 @@ function renderHistory() {
   historyListEl.innerHTML = "";
 
   if (!sessions.length) {
-    historyEmpty.textContent = currentLang === "no" ? "Ingen historikk ennå." : currentLang === "lt" ? "Dar nėra istorijos." : "No history yet.";
+    historyEmpty.textContent = t("history.empty");
     return;
   }
 
@@ -3578,8 +4896,17 @@ function renderHistory() {
   // Filter out invalid baseline sessions before using them
   const baselineSessions = filterValidBaselineSessions(baselineSessionsRaw);
 
-  const baselineMean = baselineSessions.length ? mean(baselineSessions.map(s => s.mean)) : NaN;
-  const baselineSD = baselineSessions.length ? mean(baselineSessions.map(s => s.sd)) : NaN;
+  // For precision, use meanErrN/sdErrN; for others, use mean/sd
+  const baselineMean = baselineSessions.length 
+    ? (tt === "precision" 
+        ? mean(baselineSessions.map(s => s.meanErrN || 0))
+        : mean(baselineSessions.map(s => s.mean || 0)))
+    : NaN;
+  const baselineSD = baselineSessions.length 
+    ? (tt === "precision"
+        ? mean(baselineSessions.map(s => s.sdErrN || 0))
+        : mean(baselineSessions.map(s => s.sd || 0)))
+    : NaN;
 
   for (const s of sessions) {
     const card = document.createElement("div");
@@ -3611,10 +4938,11 @@ function renderHistory() {
 
     // Get metrics early for status text computation
     const m = s.metrics || {};
-    const avg = Number(m.avgMs);
-    const sd = Number(m.sdMs);
-    const best = Number(m.bestMs);
-    const worst = Number(m.worstMs);
+    // Precision uses different metric names
+    const avg = tt === "precision" ? Number(m.avgErrN) : Number(m.avgMs);
+    const sd = tt === "precision" ? Number(m.sdErrN) : Number(m.sdMs);
+    const best = tt === "precision" ? Number(m.bestErrN) : Number(m.bestMs);
+    const worst = tt === "precision" ? Number(m.worstErrN) : Number(m.worstMs);
     const trials = Number(m.trials);
 
     // Compute status text for badge color (for check sessions with baseline)
@@ -3630,6 +4958,11 @@ function renderHistory() {
           flashAbsError: m.flashAbsError || 0
         };
         statusText = getDividedAttentionStatus(sessionPayloadMock, baselineSessions);
+      } else if (tt === "precision") {
+        // Precision: compare meanErrN
+        const baselineMeanErrN = mean(baselineSessions.map(bs => bs.meanErrN || 0));
+        const baselineSDErrN = mean(baselineSessions.map(bs => bs.sdErrN || 0));
+        statusText = statusLabelFromCompare(avg, baselineMeanErrN, baselineSDErrN);
       } else {
         // For reaction and gonogo, use avgMs only
         statusText = statusLabelFromCompare(avg, baselineMean, baselineSD);
@@ -3668,7 +5001,7 @@ function renderHistory() {
       } else {
         // No baseline available
         badgeClass = "na";
-        badgeText = currentLang === "no" ? "Ingen baseline" : currentLang === "lt" ? "Nėra bazinio lygio" : "No baseline";
+        badgeText = t("history.noBaseline");
       }
       
       // Fallback: if badgeClass is still "na" and we have statusText, try again
@@ -3713,13 +5046,21 @@ function renderHistory() {
     if (Number.isFinite(avg)) {
       const chip = document.createElement("span");
       chip.className = `chip ${avgClass}`;
-      chip.textContent = `${t("history.avg")} ${avg.toFixed(0)}ms`;
+      if (tt === "precision") {
+        chip.textContent = `${t("history.precision.err")} ${avg.toFixed(2)}`;
+      } else {
+        chip.textContent = `${t("history.avg")} ${avg.toFixed(0)}ms`;
+      }
       chips.appendChild(chip);
     }
     if (Number.isFinite(sd)) {
       const chip = document.createElement("span");
       chip.className = `chip ${sdClass}`;
-      chip.textContent = `${t("history.sd")} ${sd.toFixed(0)}ms`;
+      if (tt === "precision") {
+        chip.textContent = `${t("history.sd")} ${sd.toFixed(2)}`;
+      } else {
+        chip.textContent = `${t("history.sd")} ${sd.toFixed(0)}ms`;
+      }
       chips.appendChild(chip);
     }
     if (Number.isFinite(trials)) {
@@ -3730,12 +5071,29 @@ function renderHistory() {
     }
     
     // Test-specific metrics
-    if (tt === "gonogo") {
+    if (tt === "precision") {
+      // Precision: show hit rate and RT if available
+      const hits = m.hits || 0;
+      const respondedTrials = m.respondedTrials || 0;
+      if (respondedTrials > 0) {
+        const hitRate = ((hits / respondedTrials) * 100).toFixed(0);
+        const chip = document.createElement("span");
+        chip.className = "chip";
+        chip.textContent = `${t("history.precision.hit")} ${hitRate}%`;
+        chips.appendChild(chip);
+      }
+      if (Number.isFinite(m.meanRtMs) && m.meanRtMs > 0) {
+        const chip = document.createElement("span");
+        chip.className = "chip";
+        chip.textContent = `${t("history.precision.rt")} ${Math.round(m.meanRtMs)} ms`;
+        chips.appendChild(chip);
+      }
+    } else if (tt === "gonogo") {
       if (typeof m.falseAlarms === "number") {
         const chip = document.createElement("span");
         chip.className = "chip";
         // Use abbreviated form: FA in EN, but full translation for NO/LT if preferred
-        const faLabel = currentLang === "no" ? "IF" : currentLang === "lt" ? "SK" : "FA"; // IF = inhibisjonsfeil, SK = slopinimo klaidos
+        const faLabel = t("history.falseAlarmsAbbr");
         chip.textContent = `${faLabel} ${m.falseAlarms}`;
         chips.appendChild(chip);
       }
@@ -3743,7 +5101,7 @@ function renderHistory() {
       if (typeof m.falseAlarms === "number") {
         const chip = document.createElement("span");
         chip.className = "chip";
-        const faLabel = currentLang === "no" ? "IF" : currentLang === "lt" ? "SK" : "FA";
+        const faLabel = t("history.falseAlarmsAbbr");
         chip.textContent = `${faLabel} ${m.falseAlarms}`;
         chips.appendChild(chip);
       }
@@ -3751,7 +5109,7 @@ function renderHistory() {
         const chip = document.createElement("span");
         chip.className = "chip";
         // Use localized flash error label (flashAbsError is a count, not milliseconds)
-        const flashLabel = currentLang === "no" ? "Flash-feil" : currentLang === "lt" ? "Blyksn. klaida" : "Flash err";
+        const flashLabel = t("history.divided.error");
         chip.textContent = `${flashLabel} ${m.flashAbsError}`;
         chips.appendChild(chip);
       }
@@ -3762,18 +5120,7 @@ function renderHistory() {
     // Affordance text
     const affordance = document.createElement("div");
     affordance.className = "history-affordance";
-    const langEn = document.createElement("span");
-    langEn.className = `lang lang-en${currentLang !== "en" ? " hidden" : ""}`;
-    langEn.textContent = "Click to view details";
-    const langNo = document.createElement("span");
-    langNo.className = `lang lang-no${currentLang !== "no" ? " hidden" : ""}`;
-    langNo.textContent = "Trykk for detaljer";
-    const langLt = document.createElement("span");
-    langLt.className = `lang lang-lt${currentLang !== "lt" ? " hidden" : ""}`;
-    langLt.textContent = "Spustelėkite dėl detalių";
-    affordance.appendChild(langEn);
-    affordance.appendChild(langNo);
-    affordance.appendChild(langLt);
+    affordance.textContent = t("history.clickToViewDetails");
     summary.appendChild(affordance);
     card.appendChild(summary);
 
@@ -3784,15 +5131,31 @@ function renderHistory() {
     // Detailed lines in details section
     const line1 = document.createElement("div");
     line1.className = "history-line";
-    line1.textContent = `${t("history.avg")} ${Number.isFinite(avg) ? avg.toFixed(0) : "—"} ms · ${t("history.sd")} ${Number.isFinite(sd) ? sd.toFixed(0) : "—"} · ${t("history.trials")} ${Number.isFinite(trials) ? trials : "—"}`;
+    if (tt === "precision") {
+      const respondedTrials = m.respondedTrials || 0;
+      line1.textContent = `${t("history.precision.err")} ${Number.isFinite(avg) ? avg.toFixed(2) : "—"} · ${t("history.sd")} ${Number.isFinite(sd) ? sd.toFixed(2) : "—"} · ${t("history.trials")} ${Number.isFinite(trials) ? trials : "—"} (${t("history.precision.responded")} ${respondedTrials})`;
+    } else {
+      line1.textContent = `${t("history.avg")} ${Number.isFinite(avg) ? avg.toFixed(0) : "—"} ms · ${t("history.sd")} ${Number.isFinite(sd) ? sd.toFixed(0) : "—"} · ${t("history.trials")} ${Number.isFinite(trials) ? trials : "—"}`;
+    }
     details.appendChild(line1);
 
     const line2 = document.createElement("div");
     line2.className = "history-line muted";
-    line2.textContent = `${t("history.best")} ${Number.isFinite(best) ? best.toFixed(0) : "—"} · ${t("history.worst")} ${Number.isFinite(worst) ? worst.toFixed(0) : "—"}`;
+    if (tt === "precision") {
+      line2.textContent = `${t("history.best")} ${Number.isFinite(best) ? best.toFixed(2) : "—"} · ${t("history.worst")} ${Number.isFinite(worst) ? worst.toFixed(2) : "—"}`;
+    } else {
+      line2.textContent = `${t("history.best")} ${Number.isFinite(best) ? best.toFixed(0) : "—"} · ${t("history.worst")} ${Number.isFinite(worst) ? worst.toFixed(0) : "—"}`;
+    }
     details.appendChild(line2);
 
-    if (tt === "gonogo") {
+    if (tt === "precision") {
+      const errs = document.createElement("div");
+      errs.className = "history-line";
+      const misses = m.misses || 0;
+      const timeouts = m.timeouts || 0;
+      errs.textContent = `${t("history.precision.misses")} ${misses} · ${t("history.precision.timeouts")} ${timeouts}`;
+      details.appendChild(errs);
+    } else if (tt === "gonogo") {
       const errs = document.createElement("div");
       errs.className = "history-line";
       errs.textContent = `${t("history.misses")} ${m.misses ?? 0} · ${t("history.falseAlarms")} ${m.falseAlarms ?? 0} · ${t("history.falseStarts")} ${m.falseStarts ?? 0}`;
@@ -3808,23 +5171,10 @@ function renderHistory() {
       if (typeof m.flashTargetCount === "number" && typeof m.flashUserCount === "number" && typeof m.flashAbsError === "number") {
         const flashLine = document.createElement("div");
         flashLine.className = "history-line muted";
-        let flashLabel, targetLabel, answerLabel, errorLabel;
-        if (currentLang === "no") {
-          flashLabel = "Flashes";
-          targetLabel = "mål";
-          answerLabel = "svar";
-          errorLabel = "feil";
-        } else if (currentLang === "lt") {
-          flashLabel = "Blyksniai";
-          targetLabel = "tikslas";
-          answerLabel = "atsakymas";
-          errorLabel = "klaida";
-        } else {
-          flashLabel = "Flashes";
-          targetLabel = "target";
-          answerLabel = "answer";
-          errorLabel = "error";
-        }
+        const flashLabel = t("history.divided.flashes");
+        const targetLabel = t("history.divided.target");
+        const answerLabel = t("history.divided.answer");
+        const errorLabel = t("history.divided.error");
         flashLine.textContent = `${flashLabel}: ${targetLabel} ${m.flashTargetCount} · ${answerLabel} ${m.flashUserCount} · ${errorLabel} ${m.flashAbsError}`;
         details.appendChild(flashLine);
       }
@@ -3849,19 +5199,38 @@ function renderHistory() {
             flashAbsError: m.flashAbsError || 0
           };
           return getDividedAttentionStatus(sessionPayloadMock, baselineSessions);
+        } else if (tt === "precision") {
+          const baselineMeanErrN = mean(baselineSessions.map(bs => bs.meanErrN || 0));
+          const baselineSDErrN = mean(baselineSessions.map(bs => bs.sdErrN || 0));
+          return statusLabelFromCompare(avg, baselineMeanErrN, baselineSDErrN);
         } else {
           return statusLabelFromCompare(avg, baselineMean, baselineSD);
         }
       })();
-      const delta = Number.isFinite(avg) && Number.isFinite(baselineMean) ? (avg - baselineMean) : NaN;
+      let delta, baselineValue, baselineSDValue;
+      if (tt === "precision") {
+        const baselineMeanErrN = mean(baselineSessions.map(bs => bs.meanErrN || 0));
+        const baselineSDErrN = mean(baselineSessions.map(bs => bs.sdErrN || 0));
+        delta = Number.isFinite(avg) && Number.isFinite(baselineMeanErrN) ? (avg - baselineMeanErrN) : NaN;
+        baselineValue = baselineMeanErrN;
+        baselineSDValue = baselineSDErrN;
+      } else {
+        delta = Number.isFinite(avg) && Number.isFinite(baselineMean) ? (avg - baselineMean) : NaN;
+        baselineValue = baselineMean;
+        baselineSDValue = baselineSD;
+      }
       const cmp = document.createElement("div");
       cmp.className = "history-compare";
-      cmp.textContent = `${status} · Δ ${Number.isFinite(delta) ? (delta >= 0 ? "+" : "") + delta.toFixed(0) : "—"} ms (${t("history.baseline")} ${baselineMean.toFixed(0)} ± ${baselineSD.toFixed(0)} (±2 SD))`;
+      if (tt === "precision") {
+        cmp.textContent = `${status} · Δ ${Number.isFinite(delta) ? (delta >= 0 ? "+" : "") + delta.toFixed(2) : "—"} (${t("history.baseline")} ${baselineValue.toFixed(2)} ± ${baselineSDValue.toFixed(2)} (±2 SD))`;
+      } else {
+        cmp.textContent = `${status} · Δ ${Number.isFinite(delta) ? (delta >= 0 ? "+" : "") + delta.toFixed(0) : "—"} ms (${t("history.baseline")} ${baselineValue.toFixed(0)} ± ${baselineSDValue.toFixed(0)} (±2 SD))`;
+      }
       details.appendChild(cmp);
     } else if (s.mode === "check" && !baselineSessions.length) {
       const cmp = document.createElement("div");
       cmp.className = "history-compare muted";
-      cmp.textContent = currentLang === "no" ? "Ingen baseline for sammenligning." : currentLang === "lt" ? "Nėra bazinio lygio palyginimui." : "No baseline available for comparison.";
+      cmp.textContent = t("history.noBaselineForComparison");
       details.appendChild(cmp);
     }
 
@@ -3873,11 +5242,11 @@ function renderHistory() {
       tagLine.className = "history-tags";
       const parts = [];
       if (tags.sleep) {
-        const sleepLabel = currentLang === "no" ? "søvn" : currentLang === "lt" ? "miegas" : "sleep";
+        const sleepLabel = t("history.tags.sleep");
         parts.push(`${sleepLabel} ${tags.sleep}/5`);
       }
       if (tags.stress) {
-        const stressLabel = currentLang === "no" ? "stress" : currentLang === "lt" ? "stresas" : "stress";
+        const stressLabel = t("history.tags.stress");
         parts.push(`${stressLabel} ${tags.stress}/5`);
       }
       if (tags.note && String(tags.note).trim()) parts.push(`"${String(tags.note).trim()}"`);
@@ -3905,7 +5274,7 @@ function renderHistory() {
         reasonText = t(`refusal.${s.flags.refusalCode}`);
       } else if (s.flags.reason) {
         // Fallback to old reason format (for backward compatibility)
-        const reasonLabel = currentLang === "no" ? "Årsak: " : currentLang === "lt" ? "Priežastis: " : "Reason: ";
+        const reasonLabel = t("history.reason");
         reasonText = reasonLabel + String(s.flags.reason);
       }
       if (reasonText) {
@@ -3921,24 +5290,20 @@ function renderHistory() {
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = "btn btn-small trial-toggle";
-      const btnEn = document.createElement("span");
-      btnEn.className = `lang lang-en${currentLang !== "en" ? " hidden" : ""}`;
-      btnEn.textContent = "Show trials";
-      const btnNo = document.createElement("span");
-      btnNo.className = `lang lang-no${currentLang !== "no" ? " hidden" : ""}`;
-      btnNo.textContent = "Vis forsøk";
-      const btnLt = document.createElement("span");
-      btnLt.className = `lang lang-lt${currentLang !== "lt" ? " hidden" : ""}`;
-      btnLt.textContent = "Rodyti bandymus";
-      btn.appendChild(btnEn);
-      btn.appendChild(btnNo);
-      btn.appendChild(btnLt);
+      btn.textContent = t("history.showTrials");
 
       const list = document.createElement("div");
       list.className = "trial-list hidden";
 
       if (log.length > 0) {
         list.innerHTML = log.map(row => {
+          if (tt === "precision") {
+            const rt = row.rt == null ? "—" : `${row.rt} ms`;
+            const errN = row.errN == null ? "—" : row.errN.toFixed(2);
+            // Translate outcome labels
+            const outcomeText = t(`trialOutcome.${row.outcome}`) || row.outcome;
+            return `<div class="trial-row"><span class="trial-i">#${row.i}</span><span class="trial-outcome">${outcomeText}</span><span class="trial-err">${t("history.precision.err")} ${errN}</span><span class="trial-rt">${rt}</span></div>`;
+          }
           const rt = row.rt == null ? "—" : `${row.rt} ms`;
           // Translate outcome labels
           const outcomeText = t(`trialOutcome.${row.outcome}`) || row.outcome;
@@ -3958,21 +5323,12 @@ function renderHistory() {
         if (isHidden) {
           // Show the list
           list.classList.remove("hidden");
-          btnEn.textContent = "Hide trials";
-          btnNo.textContent = "Skjul forsøk";
-          btnLt.textContent = "Slėpti bandymus";
+          btn.textContent = t("history.hideTrials");
         } else {
           // Hide the list
           list.classList.add("hidden");
-          btnEn.textContent = "Show trials";
-          btnNo.textContent = "Vis forsøk";
-          btnLt.textContent = "Rodyti bandymus";
+          btn.textContent = t("history.showTrials");
         }
-        // Manually toggle language visibility without calling applyLangUI (which re-renders)
-        const currentLangValue = currentLang || (localStorage.getItem("fce_lang") || "en");
-        btn.querySelectorAll(".lang").forEach(span => {
-          span.classList.toggle("hidden", !span.classList.contains(`lang-${currentLangValue}`));
-        });
         return false;
       }, true); // Use capture phase
 
@@ -4067,12 +5423,26 @@ updateTaskHint();
 if (testType) {
   try {
     const savedTestType = localStorage.getItem(TEST_TYPE_KEY);
-    if (savedTestType && (savedTestType === "reaction" || savedTestType === "gonogo" || savedTestType === "divided")) {
+    if (savedTestType && (savedTestType === "reaction" || savedTestType === "gonogo" || savedTestType === "divided" || savedTestType === "precision")) {
       testType.value = savedTestType;
-      // Trigger change handlers to update UI
+      // Set default trial count and min/max based on test type (same logic as change handler)
+      // Do this BEFORE updateTrialCountMax() to ensure values are set correctly
+      if (savedTestType === "gonogo") {
+        trialCountInput.value = 20;
+        trialCountInput.setAttribute("min", "3");
+      } else if (savedTestType === "precision") {
+        trialCountInput.value = 15;
+        trialCountInput.setAttribute("min", "10");
+        trialCountInput.setAttribute("max", "40");
+      } else {
+        trialCountInput.value = 10;
+        trialCountInput.setAttribute("min", "3");
+      }
+      // Trigger change handlers to update UI (after setting trial count)
       updateTrialCountMax();
       updateBaselineInfo();
       updateDividedLegend();
+      updateTaskHint();
     }
   } catch (_) {}
 }

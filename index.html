@@ -173,6 +173,42 @@
           </div>
         </div>
 
+        <!-- Precision prep overlay -->
+        <div id="precisionPrepOverlay" class="onboarding-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="precisionPrepTitle">
+          <div class="onboarding-card">
+            <h2 id="precisionPrepTitle">
+              <span class="lang lang-en">Precision test</span>
+              <span class="lang lang-no hidden">Presisjonstest</span>
+              <span class="lang lang-lt hidden">Tikslumo testas</span>
+            </h2>
+
+            <p class="muted" style="margin-top: 8px;">
+              <span class="lang lang-en">This test uses fullscreen to reduce layout shifts and improve consistency.</span>
+              <span class="lang lang-no hidden">Denne testen bruker fullskjerm for å redusere layoutendringer og forbedre konsistens.</span>
+              <span class="lang lang-lt hidden">Šis testas naudoja visą ekraną, kad sumažintų išdėstymo poslinkius ir pagerintų nuoseklumą.</span>
+            </p>
+
+            <div class="action-row" style="margin-top: 16px;">
+              <button id="precisionPrepStartBtn" type="button">
+                <span class="lang lang-en">Start in fullscreen</span>
+                <span class="lang lang-no hidden">Start i fullskjerm</span>
+                <span class="lang lang-lt hidden">Pradėti visame ekrane</span>
+              </button>
+              <button id="precisionPrepCancelBtn" type="button" class="secondary">
+                <span class="lang lang-en">Cancel</span>
+                <span class="lang lang-no hidden">Avbryt</span>
+                <span class="lang lang-lt hidden">Atšaukti</span>
+              </button>
+            </div>
+
+            <p class="note" style="margin-top: 12px;">
+              <span class="lang lang-en">If fullscreen is unavailable or denied, we'll continue in maximized windowed mode.</span>
+              <span class="lang lang-no hidden">Hvis fullskjerm ikke er tilgjengelig eller avvist, fortsetter vi i maksimert vindu-modus.</span>
+              <span class="lang lang-lt hidden">Jei visas ekranas nėra prieinamas arba atmestas, tęsime maksimalaus lango režimu.</span>
+            </p>
+          </div>
+        </div>
+
         <!-- Inline per-test hints -->
         <div class="panel" id="taskHintPanel" style="display:none;">
           <h2>
@@ -191,6 +227,7 @@
               <option value="reaction">Reaction Time</option>
               <option value="gonogo">Go / No-Go</option>
               <option value="divided">Divided Attention</option>
+              <option value="precision">Precision (Target Pointing)</option>
             </select>
 
             <label for="trialCount" data-i18n="ui.trials">Trials</label>
@@ -261,6 +298,25 @@
         </div>
 
         <div id="testArea" class="test-area hidden"></div>
+
+        <!-- Precision stage (fullscreen overlay) -->
+        <div id="precisionStage" class="precision-stage hidden">
+          <div class="precision-hud">
+            <div class="precision-hud-left">
+              <span id="precisionTrialCounter" class="precision-trial-counter"></span>
+              <span id="precisionFeedback" class="precision-feedback"></span>
+            </div>
+            <div class="precision-hud-right">
+              <span id="precisionFullscreenNotice" class="precision-fullscreen-notice hidden"></span>
+              <button id="exitPrecisionTestBtn" class="btn btn-ghost exit-button">
+                <span class="lang lang-en">Exit test</span>
+                <span class="lang lang-no hidden">Avslutt test</span>
+                <span class="lang lang-lt hidden">Išeiti iš testo</span>
+              </button>
+            </div>
+          </div>
+          <div id="precisionTarget" class="precision-target"></div>
+        </div>
 
         <!-- Session panel -->
         <div class="panel session-panel" id="sessionPanel">
@@ -411,6 +467,7 @@
               <option value="reaction">Reaction Time</option>
               <option value="gonogo">Go / No-Go</option>
               <option value="divided">Divided Attention</option>
+              <option value="precision">Precision (Target Pointing)</option>
             </select>
 
             <label for="historyMode">

@@ -2012,3 +2012,127 @@ select option:disabled {
 body.onboarding-open {
   overflow: hidden;
 }
+
+/* Precision stage (fullscreen overlay) */
+.precision-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 4000;
+  background: #0a0a0a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+  overflow: hidden;
+}
+
+.precision-stage.hidden {
+  display: none !important;
+}
+
+body.precision-open {
+  overflow: hidden;
+}
+
+body.precision-prep-open,
+html.precision-prep-open {
+  overflow: hidden;
+}
+
+.precision-target {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  border: 2px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3), 0 0 40px rgba(255, 255, 255, 0.15);
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.12s ease-out, transform 0.12s ease-out;
+  z-index: 5; /* Above stage background, below HUD */
+  /* Width and height are set via inline styles in JS */
+}
+
+.precision-target.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.precision-hud {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.precision-hud-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+}
+
+.precision-hud-right {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.precision-trial-counter {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+.precision-feedback {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 500;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+}
+
+.precision-feedback.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.precision-fullscreen-notice {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  background: rgba(0, 0, 0, 0.3);
+  padding: 4px 8px;
+  border-radius: 6px;
+  pointer-events: none; /* Don't block interactions */
+  white-space: nowrap;
+}
+
+.precision-fullscreen-notice.hidden {
+  display: none;
+}
+
+.exit-button {
+  pointer-events: auto;
+  padding: 8px 16px;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.exit-button:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+}

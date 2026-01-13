@@ -885,6 +885,12 @@ function applyLangUI() {
     }
     langSelect.value = currentLang;
   }
+  
+  // 3b) Sync onboarding language selector if it exists (when overlay is open)
+  const onboardingLangSelect = document.getElementById("onboardingLangSelect");
+  if (onboardingLangSelect) {
+    onboardingLangSelect.value = currentLang;
+  }
 
   // 4) Update History menu item text (it has dynamic text based on state)
   updateHistoryMenuState();
@@ -1029,16 +1035,38 @@ function initOnboardingGate() {
   const yesBtn = document.getElementById("onboardingYesBtn");
   const noBtn = document.getElementById("onboardingNoBtn");
   const resetBtn = document.getElementById("resetOnboardingBtn");
+  const onboardingLangSelect = document.getElementById("onboardingLangSelect");
   if (!overlay || !yesBtn || !noBtn) return;
 
   function show() {
     overlay.classList.remove("hidden");
     document.body.classList.add("onboarding-open");
+    // Sync onboarding language selector with current language when shown
+    if (onboardingLangSelect) {
+      onboardingLangSelect.value = currentLang;
+    }
   }
 
   function hide() {
     overlay.classList.add("hidden");
     document.body.classList.remove("onboarding-open");
+  }
+
+  // Wire up onboarding language selector to sync with main language system
+  if (onboardingLangSelect) {
+    // Sync with current language on load
+    onboardingLangSelect.value = currentLang;
+    
+    // When onboarding selector changes, update language system (which will update overlay text via applyLangUI)
+    onboardingLangSelect.addEventListener("change", (e) => {
+      const newLang = e.target.value;
+      setLang(newLang);
+      // Also sync main language selector if it exists
+      const mainLangSelect = document.getElementById("langSelect");
+      if (mainLangSelect && mainLangSelect.value !== newLang) {
+        mainLangSelect.value = newLang;
+      }
+    });
   }
 
   const done = localStorage.getItem(ONBOARDING_KEY) === "1";

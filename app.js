@@ -3514,23 +3514,16 @@ function renderHistory() {
   sessions = sessions.sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
 
   // Collect expanded card states before clearing (to preserve on language change)
-  // Match by timestamp against ALL sessions (before filtering)
+  // Match by data-session-id attribute (language-independent)
   const expandedSessions = new Set();
   if (historyListEl) {
     const existingCards = historyListEl.querySelectorAll(".history-card.is-open");
     existingCards.forEach(card => {
-      const tsEl = card.querySelector(".history-ts");
-      if (tsEl) {
-        const tsText = tsEl.textContent.trim();
-        // Find matching session in all loaded sessions (before filtering)
-        const matchingSession = sessions.find(s => {
-          const sessionTs = formatTs(s.createdAt || s.id);
-          return sessionTs === tsText;
-        });
-        if (matchingSession) {
-          // Use session ID (createdAt or id) as unique identifier
-          expandedSessions.add(matchingSession.createdAt || matchingSession.id);
-        }
+      // Use data-session-id attribute instead of formatted timestamp
+      // This is language-independent and won't break when language changes
+      const sessionId = card.getAttribute("data-session-id");
+      if (sessionId) {
+        expandedSessions.add(sessionId);
       }
     });
   }
@@ -3990,7 +3983,8 @@ function renderHistory() {
     card.appendChild(details);
     
     // Restore expanded state if this session was expanded before re-render
-    const sessionId = s.createdAt || s.id;
+    // Convert to string to match the format in data-session-id attribute
+    const sessionId = String(s.createdAt || s.id);
     if (expandedSessions.has(sessionId)) {
       card.classList.add("is-open");
       card.setAttribute("aria-expanded", "true");

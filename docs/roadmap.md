@@ -144,16 +144,31 @@ Status: ✅ Shipped
 ---
 
 ## v0.3.x — Refinements (in progress)
-- Precision test refinements and optimizations
-- Additional UX improvements
+
+Focus: stabilization and tightening of existing functionality.
+
+- Precision test calibration and edge-case handling
+- Pointer/touch robustness in fullscreen mode
+- Clearer quality and invalid-session messaging
+- Minor UX consistency improvements
+- Optional CSV export (schema unchanged)
+
+No new tests or paradigms are introduced in v0.3.x.
 
 Status: 🔄 In progress
 
 ---
 
-## v0.4 — Research expansion (exploratory)
-- Additional paradigms
-- Deeper trend analysis
-- Export and documentation enhancements
+## v0.4 — Synthesis & trends (planned)
+
+Focus: interpretation, readability, and longitudinal insight.
+
+- Multi-task session overview (summary-level interpretation)
+- Visual trend graphs for baseline stability and check comparisons
+- Session metadata filtering (sleep, stress, notes)
+- Export and reporting improvements
+- Documentation updates aligned with new views
+
+v0.4 remains local-only, baseline-relative, and human-interpreted.
 
 Status: 🧭 Exploratory

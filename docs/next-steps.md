@@ -232,19 +232,47 @@ Tagged as **v0.3.0**.
 
 ## v0.3.x — Refinements (in progress)
 
-Potential improvements:
-- Precision test refinements and optimizations
-- Additional UX improvements
-- Performance optimizations
+Scope: stabilization, clarity, and robustness of existing functionality.
+No new paradigms are introduced in this version line.
+
+Planned focus areas:
+- Precision test refinements:
+  - Target placement safety margins near edges
+  - Consistent hit-radius and timeout handling
+  - Minor HUD clarity improvements
+- UX refinements:
+  - Clearer invalid-session explanations
+  - Small wording improvements in summaries and quality labels
+- Performance and reliability:
+  - Event handling cleanup
+  - Minor performance optimizations
+- Export improvements:
+  - Optional CSV export (same schema as JSON)
+  - Clearer timestamp labeling
+
+v0.3.x is considered complete when Precision behavior is stable across devices
+and no usability regressions remain.
 
 ---
 
-## v0.4 — Exploratory (future)
+## v0.4 — Synthesis & interpretation layer (planned)
 
-Potential directions (not commitments):
-- Additional attention or switching paradigms
-- Expanded trend visualizations
-- Export schema stabilization
-- Research-oriented documentation
+Purpose: improve readability, interpretation, and usefulness of existing data,
+without changing the underlying measurement philosophy.
 
-All future work remains baseline-relative and human-interpreted.
+Planned directions (non-binding):
+- Multi-task overview:
+  - At-a-glance summary of all tests in a session
+  - Optional composite indicator (explicitly non-diagnostic)
+- Trend visualization:
+  - Baseline stability over time
+  - Check vs baseline comparison across sessions
+- Context-aware review:
+  - Filtering and grouping by sleep, stress, or other metadata
+  - Metadata remains descriptive only (no scoring impact)
+- Export & sharing:
+  - Structured CSV export
+  - Printable single-session report (HTML-first)
+
+v0.4 does not introduce accounts, cloud storage, diagnostics,
+or automated decision-making.

@@ -287,4 +287,21 @@ FCE is suitable for:
 - v0.2.9 — UX improvements, History enhancements, and onboarding
 - v0.3.0 — Precision (Target Pointing) test with fullscreen UX
 
-Future work will continue under v0.3.x for refinements and v0.4 planning.
+---
+
+## Planned development
+
+Future development will proceed in two stages:
+
+### v0.3.x — Refinement
+Short-term focus on stabilizing the Precision test, improving clarity,
+and polishing UX without adding new paradigms.
+
+### v0.4 — Interpretation & trends
+Medium-term focus on synthesis, trend visualization, and improved export/reporting,
+while preserving FCE's baseline-relative and privacy-first design.
+
+No future version will introduce:
+- Accounts or cloud storage
+- Medical or legal claims
+- Automated judgments or decisions

@@ -137,6 +137,54 @@ Tagged as **v0.2.8**.
 
 ---
 
+## v0.2.9 — UX improvements, History enhancements, and onboarding (completed)
+
+Shipped improvements:
+
+**First-time onboarding:**
+- Onboarding overlay dialog asking "Have you used FCE before?"
+- No → navigate to how-tests-work.html, Yes → hide overlay and scroll to instrument
+- Reset onboarding button in footer
+- State persistence using localStorage
+
+**Per-test hints:**
+- "What to do" panel above controls with dynamic test-specific instructions
+- Updates automatically when test type or language changes
+- Complete EN/NO/LT translation support
+
+**New documentation page:**
+- how-tests-work.html with procedural instructions for each test type
+- Includes error definitions, practice recommendations
+- Menu item added to all pages
+
+**History card enhancements:**
+- Expandable summary + details pattern with click/keyboard toggle
+- Semantic chip coloring (avg, SD, trials) based on status
+- Mode-aware badges: Check sessions show status colors, Baseline/Training show neutral
+- Quality displayed as colored badge
+- Per-trial breakdown with Show/Hide trials button
+- Lightweight trialLog stored in session records
+- Preserve expanded state across language changes
+
+**Navigation improvements:**
+- Home history preview: clicking item navigates to History with card expanded
+- History back button: restores previous view and exact scroll position
+
+**Translation completeness:**
+- Complete Lithuanian translation coverage for all UI elements
+- Add missing translations: baseline info, history messages, trial outcomes
+- Fix modeLabel() to use translation system
+- Fix badge text to use translation system
+
+**Styling:**
+- Semantic chip variants (.chip.ok, .chip.warn, .chip.bad, .chip.na)
+- Trial list styling with monospace outcome display
+- Improved badge.na opacity
+
+Tagged as **v0.2.9**.
+
+---
+
 ## v0.3 — Exploratory (future)
 
 Potential directions (not commitments):

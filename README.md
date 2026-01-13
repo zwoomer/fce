@@ -10,7 +10,7 @@ FCE is designed to support **human interpretation**, not automated judgment.
 
 ## Current status
 
-**Latest release:** v0.2.8  
+**Latest release:** v0.2.9  
 **Status:** Stable (documentation & explanation complete)
 
 ---
@@ -151,6 +151,25 @@ No test logic changes.
 
 ---
 
+## UX improvements, History enhancements, and onboarding (v0.2.9)
+
+- **First-time onboarding:** Overlay dialog asking "Have you used FCE before?" with Yes/No options and reset button
+- **Per-test hints:** Dynamic "What to do" panel above controls with test-specific instructions (EN/NO/LT)
+- **New documentation page:** how-tests-work.html with comprehensive procedural instructions for each test type
+- **History card enhancements:**
+  - Expandable summary + details pattern with click/keyboard toggle
+  - Semantic chip coloring based on status (avg, SD, trials)
+  - Mode-aware badges: Check sessions show status colors, Baseline/Training show neutral
+  - Quality displayed as colored badge
+  - Per-trial breakdown with Show/Hide trials button
+- **Navigation improvements:**
+  - Home history preview: clicking item navigates to History with card expanded and scrolled into view
+  - History back button: restores previous view and exact scroll position
+- **Translation completeness:** Complete Lithuanian translation coverage, fix modeLabel() and badge text to use translation system
+- **Styling:** Semantic chip variants, trial list styling with monospace outcomes, improved badge visibility
+
+---
+
 ## Explanatory clarity & visual documentation (v0.2.7)
 
 - Baseline-relative visual explanation page (`baseline-relative.html`) with diagram
@@ -250,5 +269,6 @@ FCE is suitable for:
 - v0.2.6 — Documentation expansion & utilities
 - v0.2.7 — Explanatory clarity & visual documentation
 - v0.2.8 — Language support, UX improvements & bug fixes
+- v0.2.9 — UX improvements, History enhancements, and onboarding
 
 Future work will continue under v0.2.x and v0.3 planning.

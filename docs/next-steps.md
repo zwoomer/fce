@@ -181,6 +181,11 @@ Shipped improvements:
 - Trial list styling with monospace outcome display
 - Improved badge.na opacity
 
+**Post-release fixes:**
+- Onboarding: Added language selector to overlay for language change before committing
+- Documentation: Fixed canonical navigation order (How to Use → How the tests work → FAQ)
+- History: Fixed expanded state preservation across language changes for all test types (Go/No-Go and Divided Attention now work correctly)
+
 Tagged as **v0.2.9**.
 
 ---

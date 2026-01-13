@@ -115,7 +115,7 @@ Status: ✅ Shipped
 ---
 
 ## v0.2.9 — UX improvements, History enhancements, and onboarding (completed)
-- First-time onboarding: overlay dialog with Yes/No options, reset button
+- First-time onboarding: overlay dialog with Yes/No options, reset button, language selector
 - Per-test hints: dynamic "What to do" panel with test-specific instructions
 - New documentation page: how-tests-work.html with procedural instructions
 - History card enhancements: expandable summary/details, semantic chip coloring, mode-aware badges
@@ -123,6 +123,8 @@ Status: ✅ Shipped
 - Navigation: Home history preview → History with auto-expand, back button scroll restoration
 - Translation completeness: complete Lithuanian coverage, fix modeLabel() and badge text
 - Styling: semantic chip variants, trial list styling, badge improvements
+- Post-release: Fixed expanded state preservation across language changes for all test types
+- Post-release: Fixed canonical documentation navigation order (How to Use → How the tests work → FAQ)
 
 Status: ✅ Shipped
 

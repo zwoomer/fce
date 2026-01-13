@@ -154,6 +154,7 @@ No test logic changes.
 ## UX improvements, History enhancements, and onboarding (v0.2.9)
 
 - **First-time onboarding:** Overlay dialog asking "Have you used FCE before?" with Yes/No options and reset button
+  - Language selector added to overlay so users can change language before committing
 - **Per-test hints:** Dynamic "What to do" panel above controls with test-specific instructions (EN/NO/LT)
 - **New documentation page:** how-tests-work.html with comprehensive procedural instructions for each test type
 - **History card enhancements:**
@@ -162,9 +163,12 @@ No test logic changes.
   - Mode-aware badges: Check sessions show status colors, Baseline/Training show neutral
   - Quality displayed as colored badge
   - Per-trial breakdown with Show/Hide trials button
+  - **Fixed expanded state preservation across language changes for all test types**
 - **Navigation improvements:**
   - Home history preview: clicking item navigates to History with card expanded and scrolled into view
   - History back button: restores previous view and exact scroll position
+  - **Fixed canonical documentation navigation order:** How to Use → How the tests work → FAQ
+  - Added "How the tests work" links to About page in all language versions
 - **Translation completeness:** Complete Lithuanian translation coverage, fix modeLabel() and badge text to use translation system
 - **Styling:** Semantic chip variants, trial list styling with monospace outcomes, improved badge visibility
 

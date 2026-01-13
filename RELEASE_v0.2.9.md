@@ -214,11 +214,25 @@ Chips now reflect status with color coding:
 
 - Fixed history affordance text ("Click to view details") to update on language change
 - Fixed trial toggle button text to update correctly without re-rendering entire history
+- **Fixed expanded state preservation**: Changed from language-dependent timestamp matching to language-independent `data-session-id` attribute matching
+  - Go/No-Go and Divided Attention cards now correctly preserve expanded state when language changes
+  - All test types (Reaction Time, Go/No-Go, Divided Attention) now consistently preserve expanded state
 
 ### Event handling
 
 - Fixed trial toggle button to prevent card re-rendering when toggling trial list
 - Proper event propagation control (stopImmediatePropagation) to prevent unintended card toggles
+
+### Onboarding
+
+- Added language selector to onboarding overlay so users can change language before committing to Yes/No
+- Language selector syncs with main language system and updates overlay text immediately
+
+### Documentation navigation
+
+- Fixed canonical navigation order: How to Use → How the tests work → FAQ
+- Updated navigation links to follow correct sequential order across all pages
+- Added "How the tests work" links to About page in all language versions
 
 ---
 
@@ -256,5 +270,9 @@ This release focuses on **UX improvements, History enhancements, and onboarding*
 - Builds on:
   - v0.2.8 — Language support, UX improvements & bug fixes
 - Adds first-time onboarding, per-test hints, History card enhancements, complete translation coverage, and navigation improvements
+- **Post-release fixes:**
+  - Onboarding language selector for language change before committing
+  - Fixed documentation navigation order (How to Use → How the tests work → FAQ)
+  - Fixed expanded state preservation across language changes for all test types
 
 Future work continues under **v0.2.x** and **v0.3 planning**.

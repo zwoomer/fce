@@ -125,6 +125,7 @@ v0.3.2 maintains full backward compatibility. All existing sessions and baseline
 - **Readability:** 3-chip summary makes key metrics immediately visible
 - **Grouped details:** Organized sections improve information hierarchy
 - **Explicit comparisons:** Baseline comparison text is clearer and more actionable
+- **Trial count default:** Fixed Precision defaulting to 10 trials when switching test types; now defaults to 25 (Baseline default) when switching from HTML default
 
 ---
 

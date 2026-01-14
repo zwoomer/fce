@@ -2595,9 +2595,16 @@ testType.addEventListener("change", () => {
       trialCountInput.value = 20;
     } else if (testType.value === "precision") {
       // Clamp min to 10, max to 40 for precision
-      // Default values are set per-mode when action buttons are clicked
       trialCountInput.setAttribute("min", "10");
       trialCountInput.setAttribute("max", "40");
+      // Set default to 25 (Baseline default) if currently at HTML default of 10
+      const currentValue = parseInt(trialCountInput.value, 10);
+      if (currentValue === 10) {
+        trialCountInput.value = 25;
+      }
+      // Ensure value respects precision clamp
+      const clamped = clampInt(parseInt(trialCountInput.value, 10), 10, 40);
+      trialCountInput.value = clamped;
     } else {
       // Reaction Time and Divided Attention default to 10
       trialCountInput.value = 10;

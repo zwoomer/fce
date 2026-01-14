@@ -638,6 +638,23 @@
       ];
 
       try {
+        // Check if this is the first time user clicks Learn More
+        const hasClickedLearnMore = localStorage.getItem("fce_learn_more_clicked");
+        
+        // On first visit, always redirect to about.html
+        if (!hasClickedLearnMore) {
+          link.setAttribute("href", "about.html");
+          // Track that Learn More has been clicked (set on click, not on page load)
+          link.addEventListener("click", function() {
+            try {
+              localStorage.setItem("fce_learn_more_clicked", "true");
+            } catch (e) {
+              // Ignore storage errors
+            }
+          }, { once: true });
+          return;
+        }
+
         // Use dedicated docs page tracker, fallback to general tracker
         const lastDocs = localStorage.getItem("fce_last_docs_page");
         const last = localStorage.getItem("fce_last_page");

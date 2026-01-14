@@ -254,6 +254,10 @@ Shipped improvements:
 - **Tightened hover condition:** Brand link text swap only on true hover devices (desktop), completely hidden on touch devices
 - **"Why this exists" page:** New documentation page explaining FCE's philosophy
 - **Learn More restriction:** Only redirects to canonical doc pages (excludes why.html)
+- **Learn More first-time redirect:** First-time visitors always directed to About page for proper onboarding
+- **Precision documentation:** Added Precision test documentation to how-tests-work.html, faq.html, and about.html
+- **Small screen optimization:** Learn More button hidden on screens ≤480px to prevent topbar crowding
+- **Precision trial count fix:** Fixed default trial count (now 25 instead of 10 when switching test types)
 - **GitHub Pages optimization:** Added `.nojekyll` file for faster deployment
 
 Tagged as **v0.3.2**.

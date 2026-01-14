@@ -162,6 +162,10 @@ Status: ✅ Shipped
 - Hamburger menu enhancements
 - Tightened hover condition: brand link swap only on true hover devices
 - "Why this exists" documentation page
+- Learn More first-time visitor redirect (always About page on first visit)
+- Precision test documentation updates (how-tests-work, faq, about pages)
+- Small screen optimization (Learn More hidden on ≤480px)
+- Precision trial count default fix (25 instead of 10)
 - GitHub Pages deployment optimization (.nojekyll)
 
 Status: ✅ Shipped

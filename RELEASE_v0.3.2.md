@@ -88,11 +88,20 @@ v0.3.2 maintains full backward compatibility. All existing sessions and baseline
 - **Standalone access:** Accessible via footer, not part of canonical doc flow
 - **Fully translated:** Complete EN/NO/LT support
 
+### Precision test documentation
+
+- **how-tests-work.html:** Added new Precision (Target Pointing) section explaining task mechanics, error metrics, and best practices
+- **faq.html:** Added Precision to the "What tests are included?" list
+- **about.html:** Added motor accuracy to execution domains description
+- **Complete translations:** All documentation updates include EN/NO/LT translations
+
 ### Learn More button
 
 - **Canonical docs only:** "Learn More" button now only redirects to canonical doc pages
 - **Excludes why.html:** why.html accessible only via footer link
 - **Smart redirect:** Returns to last visited canonical doc page with scroll restoration
+- **First-time visitor:** First-time visitors are always directed to About page for proper onboarding
+- **Returning visitors:** Subsequent visits use last visited canonical doc page with scroll restoration
 
 ---
 

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>FCE — Why this exists</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Remember last visited page (works across all pages) -->
+  <script>
+    try {
+      const p = location.pathname.split("/").pop() || "index.html";
+      localStorage.setItem("fce_last_page", p);
+      if (p && p.endsWith(".html") && !p.includes("index.html")) {
+        localStorage.setItem("fce_last_docs_page", p);
+      }
+    } catch {}
+  </script>
+</head>
+
+<body>
+  <header class="topbar">
+    <button id="menuBtn" aria-label="Menu" aria-controls="menu" aria-expanded="false">☰</button>
+    <span class="title">FCE</span>
+    <span class="topbar-page" aria-hidden="true">Why</span>
+
+    <div class="topbar-right">
+      <a href="index.html#instrument" class="topbar-link topbar-cta">
+        <span class="lang lang-en">Open instrument</span>
+        <span class="lang lang-no hidden">Åpne instrument</span>
+        <span class="lang lang-lt hidden">Atidaryti instrumentą</span>
+      </a>
+
+      <div class="lang-select-wrapper">
+        <select id="langSelect" class="lang-select" aria-label="Language">
+          <option value="en">EN</option>
+          <option value="no">NO</option>
+          <option value="lt">LT</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <nav id="menu" class="menu">
+    <div class="menu-header">
+      <button id="closeMenuBtn" class="menu-close-btn" aria-label="Close menu">×</button>
+    </div>
+
+    <a href="index.html?home=1" class="menu-item">
+      <span class="lang lang-en">Home</span>
+      <span class="lang lang-no hidden">Hjem</span>
+      <span class="lang lang-lt hidden">Pradžia</span>
+    </a>
+
+    <a href="index.html?view=history" class="menu-item">
+      <span class="lang lang-en">History</span>
+      <span class="lang lang-no hidden">Historikk</span>
+      <span class="lang lang-lt hidden">Istorija</span>
+    </a>
+
+    <a href="about.html" class="menu-item">
+      <span class="lang lang-en">About</span>
+      <span class="lang lang-no hidden">Om</span>
+      <span class="lang lang-lt hidden">Apie</span>
+    </a>
+
+    <a href="concept.html" class="menu-item">
+      <span class="lang lang-en">Concept</span>
+      <span class="lang lang-no hidden">Konsept</span>
+      <span class="lang lang-lt hidden">Koncepcija</span>
+    </a>
+
+    <a href="scope.html" class="menu-item">
+      <span class="lang lang-en">Scope &amp; limits</span>
+      <span class="lang lang-no hidden">Omfang og grenser</span>
+      <span class="lang lang-lt hidden">Apimtis ir ribos</span>
+    </a>
+
+    <a href="norwegian-context.html" class="menu-item">
+      <span class="lang lang-en">Norwegian context</span>
+      <span class="lang lang-no hidden">Norsk kontekst</span>
+      <span class="lang lang-lt hidden">Norvegijos kontekstas</span>
+    </a>
+
+    <a href="how-to-use.html" class="menu-item">
+      <span class="lang lang-en">How to use</span>
+      <span class="lang lang-no hidden">Hvordan bruke</span>
+      <span class="lang lang-lt hidden">Kaip naudoti</span>
+    </a>
+
+    <a href="how-tests-work.html" class="menu-item">
+      <span class="lang lang-en">How tests work</span>
+      <span class="lang lang-no hidden">Hvordan testene fungerer</span>
+      <span class="lang lang-lt hidden">Kaip veikia testai</span>
+    </a>
+
+    <a href="faq.html" class="menu-item">
+      <span class="lang lang-en">FAQ</span>
+      <span class="lang lang-no hidden">FAQ</span>
+      <span class="lang lang-lt hidden">DUK</span>
+    </a>
+
+    <a href="why.html" class="menu-item" aria-current="page">
+      <span class="lang lang-en">Why this exists</span>
+      <span class="lang lang-no hidden">Hvorfor dette finnes</span>
+      <span class="lang lang-lt hidden">Kodėl tai egzistuoja</span>
+    </a>
+  </nav>
+
+  <div id="menuOverlay" class="menu-overlay hidden" aria-hidden="true"></div>
+
+  <main class="page">
+    <section class="container">
+
+      <header class="hero">
+        <h1>Why this exists</h1>
+        <p class="lead">
+          I didn't build FCE to monitor people. I built it to help people notice themselves —
+          clearly, voluntarily, and without judgment.
+        </p>
+
+        <blockquote class="quote">
+          "A measurement is only ethical when the person being measured remains the primary decision-maker."
+        </blockquote>
+      </header>
+
+      <section class="card">
+        <h3>What problem I'm responding to</h3>
+        <p>
+          Many systems that measure human performance are designed for institutions: to decide, to classify,
+          to protect liability, or to enforce compliance. Even when well-intended, that structure can pull
+          power away from the person whose body and mind are being measured.
+        </p>
+        <p>
+          At the same time, everyday life contains moments where a person genuinely needs to know:
+          <em>"Am I functioning like myself today?"</em> Not as a legal status, not as a diagnosis —
+          as a practical check-in before a demanding task.
+        </p>
+        <p class="muted">
+          FCE exists for that moment: to support awareness and responsibility without turning the person into a case file.
+        </p>
+      </section>
+
+      <section class="card">
+        <h3>Awareness before judgment</h3>
+        <p>
+          There's a common experience most people recognize:
+        </p>
+        <ul>
+          <li>"I'm probably fine… but something feels off."</li>
+          <li>"I can push through, or I can pause."</li>
+          <li>"I don't want to guess. I want a clean signal."</li>
+        </ul>
+        <p>
+          FCE doesn't tell you what you are. It doesn't tell you why you feel the way you do.
+          It offers a mirror: <strong>how you function today compared to your own baseline.</strong>
+        </p>
+        <p>
+          That's the difference between a tool that supports self-regulation and a tool that tries to control outcomes.
+        </p>
+      </section>
+
+      <section class="card">
+        <h3>Why baseline-relative matters</h3>
+        <p>
+          People differ widely in reaction time, attention style, and motor precision. Absolute thresholds flatten that
+          diversity. They also create false confidence ("I'm above the cutoff, therefore I'm safe") and false alarm
+          ("I'm below the cutoff, therefore I'm unfit"), even when the person is simply different.
+        </p>
+        <p>
+          Baseline-relative measurement respects individuality by asking a simpler and more honest question:
+        </p>
+        <blockquote class="quote">
+          "How are you performing today compared to your normal range?"
+        </blockquote>
+        <p class="muted">
+          FCE is not built to prove you are "good" or "bad." It is built to reveal drift — and to invite better decisions.
+        </p>
+      </section>
+
+      <section class="card">
+        <h3>Why I refuse surveillance</h3>
+        <p>
+          I deliberately chose not to build features that turn a self-check into a monitoring system.
+          This is a design boundary — not a technical limitation.
+        </p>
+
+        <p><strong>I refuse:</strong></p>
+        <ul>
+          <li>Background tracking that runs without deliberate user action</li>
+          <li>Default cloud accounts, automatic uploads, or hidden telemetry</li>
+          <li>Third-party reporting as a built-in outcome</li>
+          <li>"Safe/unsafe" or "fit/unfit" verdicts generated by the system</li>
+          <li>Anything that is easily repurposed for enforcement</li>
+        </ul>
+
+        <p>
+          Measurement without participation becomes surveillance. Surveillance shifts power away from the person being measured.
+          And once that power shifts, it tends to stay shifted — even if the original intent was wellbeing.
+        </p>
+
+        <p class="muted">
+          Refusal is protection. If FCE ever becomes a leash, it has failed its purpose.
+        </p>
+      </section>
+
+      <section class="card">
+        <h3>What FCE is (and is not)</h3>
+        <p><strong>FCE is:</strong></p>
+        <ul>
+          <li>A voluntary functional self-check</li>
+          <li>Baseline-relative (you vs you)</li>
+          <li>Privacy-first and local by default</li>
+          <li>Designed to support human interpretation</li>
+        </ul>
+
+        <p style="margin-top: 18px;"><strong>FCE is not:</strong></p>
+        <ul>
+          <li>A medical diagnosis</li>
+          <li>A substance detection system</li>
+          <li>A legal fitness verdict</li>
+          <li>An enforcement mechanism</li>
+          <li>A replacement for professional care</li>
+        </ul>
+
+        <p class="muted">
+          FCE measures function. It does not claim to identify causes.
+        </p>
+      </section>
+
+      <section class="card">
+        <h3>The awareness loop</h3>
+        <p>
+          FCE supports a simple loop that stays human-led:
+        </p>
+        <ol>
+          <li><strong>Baseline:</strong> Build your normal range under typical conditions</li>
+          <li><strong>Check:</strong> Compare today to your baseline</li>
+          <li><strong>Interpret:</strong> Combine the result with context (sleep, stress, illness, training load)</li>
+          <li><strong>Act:</strong> Adjust — rest, reduce load, postpone, or retest later</li>
+        </ol>
+        <p>
+          The system doesn't decide for you. It gives you a cleaner mirror than "gut feeling" alone —
+          while still treating your judgment as primary.
+        </p>
+      </section>
+
+      <section class="card">
+        <h3>Where this fits: rehab, burnout prevention, athlete recovery</h3>
+
+        <h4 style="margin: 0 0 8px 0;">Rehab &amp; return-to-function</h4>
+        <p>
+          Recovery is often uneven. Motivation can be high while function is still unstable.
+          FCE can help detect "today is not a stable day" without moralizing it.
+        </p>
+        <p class="muted">
+          Use: short checks before demanding tasks; repeatability matters more than one-off scores.
+        </p>
+
+        <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 18px 0;">
+
+        <h4 style="margin: 0 0 8px 0;">Burnout prevention &amp; load management</h4>
+        <p>
+          Burnout rarely arrives suddenly — it accumulates. When execution begins to drift (slower response, noisier precision,
+          reduced stability under split attention), FCE can surface that drift earlier, when small adjustments still work.
+        </p>
+        <p class="muted">
+          Use: periodic checks during demanding periods; treat results as prompts for pacing, not proof of failure.
+        </p>
+
+        <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 18px 0;">
+
+        <h4 style="margin: 0 0 8px 0;">Athlete readiness &amp; recovery</h4>
+        <p>
+          Athletes already track readiness through sleep, HRV, and subjective fatigue. FCE complements those with something direct:
+          functional execution signals. It can help decide whether today should be high-intensity, technical, or recovery-focused.
+        </p>
+        <p class="muted">
+          Use: quick checks pre-session; make your own action rules (reduce intensity, shift focus, or rest).
+        </p>
+      </section>
+
+      <section class="card">
+        <h3>A note on future sensing</h3>
+        <p>
+          In the future, passive sensing (sleep signals, HRV, movement patterns) could offer early hints that "something is off."
+          But passive sensing alone should never become a decision engine. It can only be an invitation.
+        </p>
+        <p>
+          If anything like that ever exists in the FCE ecosystem, it should remain:
+          <strong>opt-in</strong>, <strong>local-first</strong>, and <strong>non-enforcing</strong> —
+          and it should point back to a voluntary functional check, not replace it.
+        </p>
+        <p class="muted">
+          Awareness is the goal. Not classification.
+        </p>
+      </section>
+
+      <section class="card">
+        <h3>Final principle</h3>
+        <p>
+          Technology shapes behavior. Every product quietly teaches people what matters.
+          FCE is built to teach one thing:
+        </p>
+        <blockquote class="quote">
+          "Notice yourself clearly — then decide with care."
+        </blockquote>
+        <p>
+          If FCE ever stops supporting dignity, consent, and human judgment, it should not exist.
+        </p>
+      </section>
+
+      <nav class="docs-nav">
+        <div class="docs-nav-left">
+          <a href="faq.html" class="docs-nav-btn">
+            <span class="lang lang-en">← FAQ</span>
+            <span class="lang lang-no hidden">← FAQ</span>
+            <span class="lang lang-lt hidden">← DUK</span>
+          </a>
+        </div>
+
+        <div class="docs-nav-center">
+          <a href="index.html#instrument" class="docs-nav-btn">
+            <span class="lang lang-en">Open instrument</span>
+            <span class="lang lang-no hidden">Åpne instrument</span>
+            <span class="lang lang-lt hidden">Atidaryti instrumentą</span>
+          </a>
+        </div>
+
+        <div class="docs-nav-right">
+          <a href="about.html" class="docs-nav-btn">
+            <span class="lang lang-en">About →</span>
+            <span class="lang lang-no hidden">Om →</span>
+            <span class="lang lang-lt hidden">Apie →</span>
+          </a>
+        </div>
+      </nav>
+
+      <footer class="footer muted">
+        <p>
+          FCE — Functional Cognition &amp; Execution ·
+          <a href="why.html">Why this exists</a>
+        </p>
+      </footer>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      const menu = document.getElementById("menu");
+      const overlay = document.getElementById("menuOverlay");
+      const menuBtn = document.getElementById("menuBtn");
+      const closeMenuBtn = document.getElementById("closeMenuBtn");
+
+      function openMenu() {
+        menu.classList.add("open");
+        overlay.classList.remove("hidden");
+        document.body.classList.add("menu-open");
+        if (menuBtn) menuBtn.setAttribute("aria-expanded", "true");
+      }
+
+      function closeMenu() {
+        menu.classList.remove("open");
+        overlay.classList.add("hidden");
+        document.body.classList.remove("menu-open");
+        if (menuBtn) menuBtn.setAttribute("aria-expanded", "false");
+      }
+
+      menuBtn && menuBtn.addEventListener("click", () => {
+        if (menu.classList.contains("open")) closeMenu();
+        else openMenu();
+      });
+
+      closeMenuBtn && closeMenuBtn.addEventListener("click", closeMenu);
+      overlay && overlay.addEventListener("click", closeMenu);
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && menu.classList.contains("open")) closeMenu();
+      });
+
+      document.querySelectorAll(".menu-item").forEach(item => {
+        item.addEventListener("click", (e) => {
+          if (!item.classList.contains("is-disabled")) closeMenu();
+          else e.preventDefault();
+        });
+      });
+
+      const LANG_KEY = "fce_lang";
+      const hasLtContent = !!document.querySelector(".lang-lt");
+
+      let currentLang = localStorage.getItem(LANG_KEY);
+      if (!currentLang) {
+        const oldLang = localStorage.getItem("fce_lang_v1");
+        if (oldLang) {
+          currentLang = oldLang;
+          try { localStorage.setItem(LANG_KEY, currentLang); } catch {}
+        } else {
+          currentLang = "en";
+        }
+      }
+
+      if (currentLang === "lt" && !hasLtContent) {
+        currentLang = "en";
+        try { localStorage.setItem(LANG_KEY, currentLang); } catch {}
+      }
+
+      const langSelect = document.getElementById("langSelect");
+      if (langSelect) langSelect.value = currentLang;
+
+      function applyLangUI() {
+        document.querySelectorAll(".lang").forEach(el => el.classList.add("hidden"));
+        document.querySelectorAll(".lang-" + currentLang).forEach(el => el.classList.remove("hidden"));
+      }
+
+      applyLangUI();
+
+      langSelect && langSelect.addEventListener("change", () => {
+        currentLang = langSelect.value;
+        try { localStorage.setItem(LANG_KEY, currentLang); } catch {}
+        applyLangUI();
+      });
+    })();
+  </script>
+</body>
+</html>

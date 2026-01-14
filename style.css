@@ -1031,6 +1031,54 @@
     transform: translateY(-0.5px);
   }
 
+  /* --- Topbar CTA: prevent 2-line wrap on narrow screens --- */
+  .topbar-cta {
+    white-space: nowrap;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+
+  .topbar-cta .lang {
+    white-space: nowrap;
+  }
+
+  /* If space gets tight, keep it on one line and allow graceful truncation */
+  .topbar-right .topbar-cta {
+    max-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Mobile tightening */
+  @media (max-width: 420px) {
+    .topbar-right {
+      gap: 10px;
+    }
+
+    .topbar-cta {
+      padding: 6px 10px;
+      font-size: 13px;
+      border-color: rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.05);
+    }
+
+    /* Arrow is nice on desktop, but costs space on mobile */
+    .topbar-cta::after {
+      display: none;
+    }
+
+    .topbar-right .topbar-cta {
+      max-width: 120px;
+    }
+  }
+
+  /* Super narrow phones */
+  @media (max-width: 360px) {
+    .topbar-right .topbar-cta {
+      max-width: 96px;
+    }
+  }
+
   /* Language selector */
   .lang-select-wrapper {
     position: relative;
@@ -1340,6 +1388,69 @@
     text-align: center;
     opacity: 0.6;
     font-size: 14px;
+  }
+
+  .footer a {
+    color: inherit;               /* inherit muted text color */
+    text-decoration: none;        /* no underline by default */
+    border-bottom: 1px solid rgba(255,255,255,0.18);
+    padding-bottom: 1px;
+    opacity: 0.85;
+    transition: 
+      color 0.15s ease,
+      border-color 0.15s ease,
+      opacity 0.15s ease;
+  }
+
+  .footer a:hover,
+  .footer a:focus {
+    color: #fff;                  /* gently brighter on intent */
+    border-bottom-color: rgba(255,255,255,0.45);
+    opacity: 1;
+  }
+
+  .footer a:focus-visible {
+    outline: none;
+    box-shadow: 0 2px 0 rgba(255,255,255,0.35);
+  }
+
+  /* ================================
+     Docs & content links (dark theme)
+     Avoid bright blue / purple links
+     ================================ */
+
+  .page a:not(.docs-nav-btn):not(.topbar-link):not(.menu-item) {
+    color: rgba(220, 225, 230, 0.9);       /* readable light gray */
+    text-decoration: none;
+    border-bottom: 1px solid rgba(220, 225, 230, 0.25);
+    padding-bottom: 1px;
+    transition:
+      color 0.15s ease,
+      border-color 0.15s ease,
+      opacity 0.15s ease;
+  }
+
+  /* Visited links should NOT turn purple */
+  .page a:visited:not(.docs-nav-btn):not(.topbar-link):not(.menu-item) {
+    color: rgba(220, 225, 230, 0.85);
+  }
+
+  /* Hover / focus */
+  .page a:hover,
+  .page a:focus {
+    color: #ffffff;
+    border-bottom-color: rgba(255,255,255,0.5);
+    opacity: 1;
+  }
+
+  /* Keyboard focus (accessible but subtle) */
+  .page a:focus-visible {
+    outline: none;
+    box-shadow: 0 2px 0 rgba(255,255,255,0.35);
+  }
+
+  .page p a {
+    font-weight: 500;
   }
 
   /* Ensure note class works within cards */

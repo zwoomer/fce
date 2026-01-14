@@ -251,6 +251,7 @@ Shipped improvements:
 - **Precision history polish:** 3-chip summary (Accuracy, Consistency SD, Hits), grouped details sections, explicit baseline comparison text
 - **Topbar layout fixes:** Centered page title, prevented purple visited links, overlay-based text swap (no reflow)
 - **Hamburger menu enhancements:** Hover/active affordances with subtle press feedback
+- **Tightened hover condition:** Brand link text swap only on true hover devices (desktop), completely hidden on touch devices
 - **"Why this exists" page:** New documentation page explaining FCE's philosophy
 - **Learn More restriction:** Only redirects to canonical doc pages (excludes why.html)
 - **GitHub Pages optimization:** Added `.nojekyll` file for faster deployment

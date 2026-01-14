@@ -160,6 +160,7 @@ Status: ✅ Shipped
 - Precision history rendering polish (3-chip summary, grouped details)
 - Topbar layout fixes (centered title, no purple visited links)
 - Hamburger menu enhancements
+- Tightened hover condition: brand link swap only on true hover devices
 - "Why this exists" documentation page
 - GitHub Pages deployment optimization (.nojekyll)
 

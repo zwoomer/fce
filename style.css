@@ -991,15 +991,18 @@
     cursor: pointer;
   }
 
-  .brand-link .brand-short,
-  .brand-link .brand-long {
+  .brand-link .brand-short {
     display: inline-block;
   }
 
-  /* Text swap on hover-capable devices only */
+  .brand-link .brand-long {
+    display: none;
+  }
+
+  /* Text swap ONLY on true hover devices (desktop, mouse/trackpad) */
   @media (hover: hover) and (pointer: fine) {
-    /* Stack the long label on top of the short label */
     .brand-link .brand-long {
+      display: inline-block;
       position: absolute;
       left: 0;
       top: 0;

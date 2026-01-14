@@ -28,6 +28,7 @@ v0.3.2 maintains full backward compatibility. All existing sessions and baseline
 - **Centered page title:** Page title now absolutely centered (no movement when brand text swaps)
 - **No purple visited links:** Topbar links inherit color, preventing purple visited styling
 - **Hamburger affordances:** Enhanced menu button with hover/active states and subtle press feedback
+- **Tightened hover condition:** Brand link text swap only triggers on true hover devices (desktop mouse/trackpad), completely hidden on touch devices
 
 ---
 
@@ -141,6 +142,7 @@ v0.3.2 maintains full backward compatibility. All existing sessions and baseline
 - Precision history rendering refactor (chips, support line, grouped details)
 - Topbar CSS improvements (centered title, overlay text swap, visited link prevention)
 - Hamburger button hover/active affordances
+- Brand link hover condition tightened: `.brand-long` hidden by default (`display: none`), only shown on hover-capable devices
 
 ### Files changed
 

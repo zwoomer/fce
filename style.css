@@ -510,6 +510,36 @@
     opacity: 0.95;
   }
 
+  /* Divided attention legend styling */
+  .divided-legend {
+    line-height: 1.35;
+  }
+
+  .divided-legend .legend-go,
+  .divided-legend .legend-nogo {
+    font-weight: 600;
+    padding: 1px 8px;
+    border-radius: 999px;
+    display: inline-block;
+    margin: 0 2px;
+    border: 1px solid rgba(255,255,255,0.14);
+  }
+
+  .divided-legend .legend-go {
+    background: rgba(80, 200, 120, 0.14);
+  }
+
+  .divided-legend .legend-nogo {
+    background: rgba(240, 90, 90, 0.12);
+  }
+
+  .divided-legend .legend-blue {
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 2px;
+  }
+
   /* Utility header for cards (title left, actions right) */
   .card-utility {
     display: flex;

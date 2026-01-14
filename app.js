@@ -480,8 +480,8 @@ const I18N = {
       },
       divided: {
         go: "SPAUSKITE",
-        nogo: "NESPĮKITE",
-        legend: "SPAUSKITE = atsakyti · NESPĮKITE = laukti · Suskaičiuokite mėlynus blyksnius",
+        nogo: "NESPAUSKITE",
+        legend: "SPAUSKITE = atsakyti · NESPAUSKITE = laukti · Suskaičiuokite mėlynus blyksnius",
       },
     },
     precision: {
@@ -1715,6 +1715,14 @@ startBaselineBtn.addEventListener("click", () => {
     // Mode is determined by the action button clicked - this is the source of truth
     mode = "baseline";
     if (testType.value === "precision") {
+      // Set default to 25 for Baseline mode (or if currently set to Check default of 15)
+      const currentValue = trialCountInput.value.trim();
+      if (!currentValue || currentValue === "15") {
+        trialCountInput.value = 25;
+      }
+      // Ensure value respects precision clamp (10-40)
+      const clamped = clampInt(parseInt(trialCountInput.value, 10), 10, 40);
+      trialCountInput.value = clamped;
       showPrecisionPrep();
     } else {
       beginSession();
@@ -1726,6 +1734,14 @@ startBaselineBtn.addEventListener("click", () => {
     // Mode is determined by the action button clicked - this is the source of truth
     mode = "check";
     if (testType.value === "precision") {
+      // Set default to 15 for Check mode
+      const currentValue = trialCountInput.value.trim();
+      if (!currentValue || currentValue === "25") {
+        trialCountInput.value = 15;
+      }
+      // Ensure value respects precision clamp (10-40)
+      const clamped = clampInt(parseInt(trialCountInput.value, 10), 10, 40);
+      trialCountInput.value = clamped;
       showPrecisionPrep();
     } else {
       beginSession();
@@ -1738,6 +1754,14 @@ startBaselineBtn.addEventListener("click", () => {
       // Mode is determined by the action button clicked - this is the source of truth
       mode = "training";
       if (testType.value === "precision") {
+        // Set default to 15 for Training mode
+        const currentValue = trialCountInput.value.trim();
+        if (!currentValue || currentValue === "25") {
+          trialCountInput.value = 15;
+        }
+        // Ensure value respects precision clamp (10-40)
+        const clamped = clampInt(parseInt(trialCountInput.value, 10), 10, 40);
+        trialCountInput.value = clamped;
         showPrecisionPrep();
       } else {
         beginSession();
@@ -2110,9 +2134,46 @@ startBaselineBtn.addEventListener("click", () => {
     const r = clampInt(Math.round(shortSide * 0.055), 18, 44);
     const padding = Math.round(r * 1.5);
 
+    // Calculate Exit button exclusion zone
+    let exitButtonExclusion = { x: 0, y: 0, width: 0, height: 0 };
+    if (precisionExitBtn) {
+      const exitRect = precisionExitBtn.getBoundingClientRect();
+      const stageRect = stage.getBoundingClientRect();
+      // Calculate button position relative to stage
+      const exitX = exitRect.left - stageRect.left;
+      const exitY = exitRect.top - stageRect.top;
+      const exitWidth = exitRect.width;
+      const exitHeight = exitRect.height;
+      // Add safety margin around button (at least the target radius + some padding)
+      const margin = Math.max(r * 2, 80); // Minimum 80px margin, or 2x target radius
+      exitButtonExclusion = {
+        x: exitX - margin,
+        y: exitY - margin,
+        width: exitWidth + margin * 2,
+        height: exitHeight + margin * 2
+      };
+    }
+
     precisionTargetRadius = r;
-    precisionTargetX = padding + Math.random() * (w - 2 * padding);
-    precisionTargetY = padding + Math.random() * (h - 2 * padding);
+    
+    // Place target, avoiding Exit button area
+    let attempts = 0;
+    let targetX, targetY;
+    do {
+      targetX = padding + Math.random() * (w - 2 * padding);
+      targetY = padding + Math.random() * (h - 2 * padding);
+      attempts++;
+    } while (
+      attempts < 50 && // Safety limit to prevent infinite loop
+      exitButtonExclusion.width > 0 &&
+      targetX >= exitButtonExclusion.x &&
+      targetX <= exitButtonExclusion.x + exitButtonExclusion.width &&
+      targetY >= exitButtonExclusion.y &&
+      targetY <= exitButtonExclusion.y + exitButtonExclusion.height
+    );
+    
+    precisionTargetX = targetX;
+    precisionTargetY = targetY;
 
     // Render target
     if (precisionTarget) {
@@ -2488,9 +2549,8 @@ testType.addEventListener("change", () => {
     if (testType.value === "gonogo") {
       trialCountInput.value = 20;
     } else if (testType.value === "precision") {
-      // Default to 15 (Check mode default), but will be overridden when button is clicked
-      trialCountInput.value = 15;
       // Clamp min to 10, max to 40 for precision
+      // Default values are set per-mode when action buttons are clicked
       trialCountInput.setAttribute("min", "10");
       trialCountInput.setAttribute("max", "40");
     } else {
@@ -2510,56 +2570,65 @@ testType.addEventListener("change", () => {
     }
   });
 
+// Helper function to decorate divided legend with color coding
+function decorateDividedLegend(lang, raw) {
+  const go = I18N[lang]?.stimulus?.divided?.go || "";
+  const nogo = I18N[lang]?.stimulus?.divided?.nogo || "";
+
+  let out = raw;
+
+  // Emphasize GO / NO-GO words using the translated labels
+  if (go) out = out.replace(go, `<span class="legend-go">${go}</span>`);
+  if (nogo) out = out.replace(nogo, `<span class="legend-nogo">${nogo}</span>`);
+
+  // Emphasize "blue" word (language-specific)
+  if (lang === "en") out = out.replace("blue", `<span class="legend-blue">blue</span>`);
+  if (lang === "no") out = out.replace("blå", `<span class="legend-blue">blå</span>`);
+  if (lang === "lt") out = out.replace("mėlynus", `<span class="legend-blue">mėlynus</span>`);
+
+  return out;
+}
+
 // Show/hide divided attention legend based on test type
 function updateDividedLegend() {
-  const instructionEl = document.getElementById("instruction");
-  if (!instructionEl) return;
-  
-  // Remove existing legend if any
-  const existingLegend = document.getElementById("dividedLegend");
-  if (existingLegend) {
-    existingLegend.remove();
-  }
-  
-  // Add legend if divided attention is selected
-  if (testType && testType.value === "divided") {
-    const legend = document.createElement("p");
-    legend.id = "dividedLegend";
-    legend.className = "divided-legend muted";
-    legend.style.marginTop = "8px";
-    legend.style.fontSize = "13px";
-    legend.style.opacity = "0.85";
-    
-    const legendEn = document.createElement("span");
-    legendEn.className = "lang lang-en";
-    legendEn.textContent = I18N.en.stimulus.divided.legend;
-    legend.appendChild(legendEn);
-    
-    const legendNo = document.createElement("span");
-    legendNo.className = "lang lang-no";
-    legendNo.textContent = I18N.no.stimulus.divided.legend;
-    legend.appendChild(legendNo);
-    
-    const legendLt = document.createElement("span");
-    legendLt.className = "lang lang-lt";
-    legendLt.textContent = I18N.lt.stimulus.divided.legend;
-    legend.appendChild(legendLt);
-    
-    instructionEl.appendChild(legend);
-    // Update visibility based on current language (applyLangUI will also handle this, but set initial state correctly)
-    if (currentLang === "no") {
-      legendEn.classList.add("hidden");
-      legendNo.classList.remove("hidden");
-      legendLt.classList.add("hidden");
-    } else if (currentLang === "lt") {
-      legendEn.classList.add("hidden");
-      legendNo.classList.add("hidden");
-      legendLt.classList.remove("hidden");
-    } else {
-      legendEn.classList.remove("hidden");
-      legendNo.classList.add("hidden");
-      legendLt.classList.add("hidden");
-    }
+  const slot = document.getElementById("taskLegendSlot");
+  if (!slot) return;
+
+  // Clear slot
+  slot.innerHTML = "";
+  slot.style.display = "none";
+
+  // Only show when Divided Attention is selected
+  if (!(testType && testType.value === "divided")) return;
+
+  const wrap = document.createElement("div");
+  wrap.id = "dividedLegendInner";
+
+  const en = document.createElement("span");
+  en.className = "lang lang-en";
+  en.innerHTML = decorateDividedLegend("en", I18N.en.stimulus.divided.legend);
+  wrap.appendChild(en);
+
+  const no = document.createElement("span");
+  no.className = "lang lang-no";
+  no.innerHTML = decorateDividedLegend("no", I18N.no.stimulus.divided.legend);
+  wrap.appendChild(no);
+
+  const lt = document.createElement("span");
+  lt.className = "lang lang-lt";
+  lt.innerHTML = decorateDividedLegend("lt", I18N.lt.stimulus.divided.legend);
+  wrap.appendChild(lt);
+
+  slot.appendChild(wrap);
+  slot.style.display = "block";
+
+  // Ensure correct language visibility immediately
+  if (currentLang === "no") {
+    en.classList.add("hidden"); no.classList.remove("hidden"); lt.classList.add("hidden");
+  } else if (currentLang === "lt") {
+    en.classList.add("hidden"); no.classList.add("hidden"); lt.classList.remove("hidden");
+  } else {
+    en.classList.remove("hidden"); no.classList.add("hidden"); lt.classList.add("hidden");
   }
 }
 
@@ -4734,15 +4803,14 @@ function renderTrendFor(testType) {
     const lo = baseline.mean - baseline.sd;
     const hi = baseline.mean + baseline.sd;
     if (isPrecision) {
-      baselineLine.textContent = t("trend.baselineLine")
+      // Build baseline line without "ms" for precision tests
+      const template = t("trend.baselineLine");
+      baselineLine.textContent = template
         .replace("{mean}", fmt(baseline.mean, 2))
         .replace("{sd}", fmt(baseline.sd, 2))
         .replace("{lo}", fmt(lo, 2))
         .replace("{hi}", fmt(hi, 2))
-        .replace(" ms", "")
-        .replace(" ms", "")
-        .replace(" ms", "")
-        .replace(" ms", "");
+        .replace(/ ms/g, "");
     } else {
       baselineLine.textContent = t("trend.baselineLine")
         .replace("{mean}", fmt(baseline.mean, 0))
@@ -4810,7 +4878,8 @@ function renderTrendFor(testType) {
     const deltaLine = document.createElement("div");
     deltaLine.className = "muted";
     if (isPrecision) {
-      deltaLine.textContent = (delta === null) ? "" : t("trend.delta").replace("{delta}", fmt(delta, 2));
+      // For precision, remove "ms" unit label
+      deltaLine.textContent = (delta === null) ? "" : t("trend.delta").replace("{delta}", fmt(delta, 2)).replace(" ms", "");
     } else {
       deltaLine.textContent = (delta === null) ? "" : t("trend.delta").replace("{delta}", fmt(delta, 0));
     }

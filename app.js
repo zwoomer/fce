@@ -129,6 +129,21 @@ const I18N = {
         responded: "responded",
         misses: "misses",
         timeouts: "timeouts",
+        labels: {
+          accuracy: "Accuracy",
+          consistency: "Consistency",
+          execution: "Execution",
+          hits: "Hits",
+          misses: "Misses",
+          timeouts: "Timeouts",
+          avgRt: "Average RT",
+          variability: "Variability (SD)",
+        },
+        comparison: {
+          within: "Accuracy within normal range",
+          slightly: "Accuracy slightly worse than baseline",
+          significantly: "Accuracy significantly worse than baseline",
+        },
       },
       divided: {
         flashes: "Flashes",
@@ -268,7 +283,7 @@ const I18N = {
       noTrialData: "Ingen forsøksdata tilgjengelig",
       empty: "Ingen historikk ennå.",
       noBaseline: "Ingen baseline",
-      noBaselineForComparison: "Ingen baseline for sammenligning.",
+      noBaselineForComparison: "Ingen baseline tilgjengelig for sammenligning.",
       clickToViewDetails: "Trykk for detaljer",
       showTrials: "Vis forsøk",
       hideTrials: "Skjul forsøk",
@@ -276,12 +291,27 @@ const I18N = {
         hit: "treff",
         rt: "rt",
         err: "feil",
-        responded: "svarte",
+        responded: "svart",
         misses: "bom",
         timeouts: "tidsavbrudd",
+        labels: {
+          accuracy: "Nøyaktighet",
+          consistency: "Konsistens",
+          execution: "Utførelse",
+          hits: "Treff",
+          misses: "Bom",
+          timeouts: "Tidsavbrudd",
+          avgRt: "Gjennomsnittlig RT",
+          variability: "Variabilitet (SD)",
+        },
+        comparison: {
+          within: "Nøyaktighet innenfor normalområdet",
+          slightly: "Nøyaktighet noe dårligere enn baseline",
+          significantly: "Nøyaktighet betydelig dårligere enn baseline",
+        },
       },
       divided: {
-        flashes: "Flashes",
+        flashes: "Blink",
         target: "mål",
         answer: "svar",
         error: "feil",
@@ -428,6 +458,21 @@ const I18N = {
         responded: "atsakė",
         misses: "praleistai",
         timeouts: "laiko baigtys",
+        labels: {
+          accuracy: "Tikslumas",
+          consistency: "Nuoseklumas",
+          execution: "Vykdymas",
+          hits: "Pataikymai",
+          misses: "Nepataikymai",
+          timeouts: "Laiko pabaigos",
+          avgRt: "Vidutinis RT",
+          variability: "Kintamumas (SD)",
+        },
+        comparison: {
+          within: "Tikslumas normos ribose",
+          slightly: "Tikslumas šiek tiek prastesnis nei bazė",
+          significantly: "Tikslumas ženkliai prastesnis nei bazė",
+        },
       },
       divided: {
         flashes: "Blyksniai",
@@ -5111,62 +5156,66 @@ function renderHistory() {
     const expectedTrials = expectedTrialsFor(tt);
     const trialsClass = Number.isFinite(trials) ? (trials < expectedTrials ? "warn" : "ok") : "na";
 
-    // Always show: Avg, SD, Trials
-    if (Number.isFinite(avg)) {
-      const chip = document.createElement("span");
-      chip.className = `chip ${avgClass}`;
-      if (tt === "precision") {
-        chip.textContent = `${t("history.precision.err")} ${avg.toFixed(2)}`;
-      } else {
-        chip.textContent = `${t("history.avg")} ${avg.toFixed(0)}ms`;
-      }
-      chips.appendChild(chip);
-    }
-    if (Number.isFinite(sd)) {
-      const chip = document.createElement("span");
-      chip.className = `chip ${sdClass}`;
-      if (tt === "precision") {
-        chip.textContent = `${t("history.sd")} ${sd.toFixed(2)}`;
-      } else {
-        chip.textContent = `${t("history.sd")} ${sd.toFixed(0)}ms`;
-      }
-      chips.appendChild(chip);
-    }
-    if (Number.isFinite(trials)) {
-      const chip = document.createElement("span");
-      chip.className = `chip ${trialsClass}`;
-      chip.textContent = `${t("history.trials")} ${trials}`;
-      chips.appendChild(chip);
-    }
-    
-    // Test-specific metrics
+    // Precision: exactly 3 chips (Accuracy, Consistency SD, Hits)
     if (tt === "precision") {
-      // Precision: show hit rate and RT if available
+      // 1) Accuracy
+      if (Number.isFinite(avg)) {
+        const chip = document.createElement("span");
+        chip.className = `chip ${avgClass}`;
+        chip.textContent = `${t("history.precision.labels.accuracy")} ${avg.toFixed(2)}`;
+        chips.appendChild(chip);
+      }
+      // 2) Consistency SD
+      if (Number.isFinite(sd)) {
+        const chip = document.createElement("span");
+        chip.className = `chip ${sdClass}`;
+        chip.textContent = `${t("history.precision.labels.consistency")} SD ${sd.toFixed(2)}`;
+        chips.appendChild(chip);
+      }
+      // 3) Hits
       const hits = m.hits || 0;
       const respondedTrials = m.respondedTrials || 0;
       if (respondedTrials > 0) {
-        const hitRate = ((hits / respondedTrials) * 100).toFixed(0);
+        const hitRate = Math.round((hits / respondedTrials) * 100);
         const chip = document.createElement("span");
         chip.className = "chip";
-        chip.textContent = `${t("history.precision.hit")} ${hitRate}%`;
+        chip.textContent = `${t("history.precision.labels.hits")} ${hitRate}%`;
         chips.appendChild(chip);
       }
-      if (Number.isFinite(m.meanRtMs) && m.meanRtMs > 0) {
+    } else {
+      // Other tests: Always show: Avg, SD, Trials
+      if (Number.isFinite(avg)) {
         const chip = document.createElement("span");
-        chip.className = "chip";
-        chip.textContent = `${t("history.precision.rt")} ${Math.round(m.meanRtMs)} ms`;
+        chip.className = `chip ${avgClass}`;
+        chip.textContent = `${t("history.avg")} ${avg.toFixed(0)}ms`;
         chips.appendChild(chip);
       }
-    } else if (tt === "gonogo") {
-      if (typeof m.falseAlarms === "number") {
+      if (Number.isFinite(sd)) {
         const chip = document.createElement("span");
-        chip.className = "chip";
-        // Use abbreviated form: FA in EN, but full translation for NO/LT if preferred
-        const faLabel = t("history.falseAlarmsAbbr");
-        chip.textContent = `${faLabel} ${m.falseAlarms}`;
+        chip.className = `chip ${sdClass}`;
+        chip.textContent = `${t("history.sd")} ${sd.toFixed(0)}ms`;
         chips.appendChild(chip);
       }
-    } else if (tt === "divided") {
+      if (Number.isFinite(trials)) {
+        const chip = document.createElement("span");
+        chip.className = `chip ${trialsClass}`;
+        chip.textContent = `${t("history.trials")} ${trials}`;
+        chips.appendChild(chip);
+      }
+    }
+    
+    // Test-specific metrics (non-precision)
+    if (tt !== "precision") {
+      if (tt === "gonogo") {
+        if (typeof m.falseAlarms === "number") {
+          const chip = document.createElement("span");
+          chip.className = "chip";
+          // Use abbreviated form: FA in EN, but full translation for NO/LT if preferred
+          const faLabel = t("history.falseAlarmsAbbr");
+          chip.textContent = `${faLabel} ${m.falseAlarms}`;
+          chips.appendChild(chip);
+        }
+      } else if (tt === "divided") {
       if (typeof m.falseAlarms === "number") {
         const chip = document.createElement("span");
         chip.className = "chip";
@@ -5182,9 +5231,51 @@ function renderHistory() {
         chip.textContent = `${flashLabel} ${m.flashAbsError}`;
         chips.appendChild(chip);
       }
+      }
     }
     
     summary.appendChild(chips);
+    
+    // Muted support line for precision (under chips)
+    if (tt === "precision") {
+      const hits = m.hits || 0;
+      const respondedTrials = m.respondedTrials || 0;
+      const misses = m.misses || 0;
+      const timeouts = m.timeouts || 0;
+      const meanRtMs = m.meanRtMs || 0;
+      const supportLine = document.createElement("div");
+      supportLine.className = "muted";
+      supportLine.style.marginTop = "8px";
+      supportLine.style.fontSize = "13px";
+      
+      const parts = [];
+      if (respondedTrials > 0) {
+        const hitRate = Math.round((hits / respondedTrials) * 100);
+        if (currentLang === "no") {
+          parts.push(`${hitRate} % ${t("history.precision.hit")}`);
+        } else if (currentLang === "lt") {
+          parts.push(`${hitRate} % ${t("history.precision.labels.hits")}`);
+        } else {
+          parts.push(`${hitRate}% ${t("history.precision.labels.hits")}`);
+        }
+      }
+      if (misses > 0) {
+        parts.push(`${misses} ${t("history.precision.misses")}`);
+      }
+      if (timeouts > 0) {
+        parts.push(`${timeouts} ${t("history.precision.timeouts")}`);
+      }
+      if (Number.isFinite(meanRtMs) && meanRtMs > 0) {
+        const rtLabel = currentLang === "no" ? `snitt ${t("history.precision.rt")}` : currentLang === "lt" ? `vid. ${t("history.precision.rt")}` : `avg ${t("history.precision.rt")}`;
+        parts.push(`${rtLabel} ${Math.round(meanRtMs)} ms`);
+      }
+      if (Number.isFinite(trials)) {
+        parts.push(`${trials} ${t("history.trials")}`);
+      }
+      
+      supportLine.textContent = parts.join(" · ");
+      summary.appendChild(supportLine);
+    }
     
     // Affordance text
     const affordance = document.createElement("div");
@@ -5198,33 +5289,78 @@ function renderHistory() {
     details.className = "history-details";
 
     // Detailed lines in details section
-    const line1 = document.createElement("div");
-    line1.className = "history-line";
     if (tt === "precision") {
+      // Precision: grouped sections
+      // SECTION: Accuracy
+      const accuracySection = document.createElement("div");
+      accuracySection.className = "history-line";
+      accuracySection.innerHTML = `<strong>${t("history.precision.labels.accuracy")}</strong>`;
+      details.appendChild(accuracySection);
+      
+      const accuracyLine = document.createElement("div");
+      accuracyLine.className = "history-line muted";
+      const avgErrN = Number.isFinite(avg) ? avg.toFixed(2) : "—";
+      const bestErrN = Number.isFinite(best) ? best.toFixed(2) : "—";
+      const worstErrN = Number.isFinite(worst) ? worst.toFixed(2) : "—";
+      accuracyLine.textContent = `${t("history.avg")}: ${avgErrN} · ${t("history.best")}: ${bestErrN} · ${t("history.worst")}: ${worstErrN}`;
+      details.appendChild(accuracyLine);
+      
+      // SECTION: Consistency
+      const consistencySection = document.createElement("div");
+      consistencySection.className = "history-line";
+      consistencySection.innerHTML = `<strong>${t("history.precision.labels.consistency")}</strong>`;
+      details.appendChild(consistencySection);
+      
+      const consistencyLine = document.createElement("div");
+      consistencyLine.className = "history-line muted";
+      const sdErrN = Number.isFinite(sd) ? sd.toFixed(2) : "—";
+      consistencyLine.textContent = `${t("history.precision.labels.variability")}: ${sdErrN}`;
+      details.appendChild(consistencyLine);
+      
+      // SECTION: Execution
+      const executionSection = document.createElement("div");
+      executionSection.className = "history-line";
+      executionSection.innerHTML = `<strong>${t("history.precision.labels.execution")}</strong>`;
+      details.appendChild(executionSection);
+      
+      const executionLine = document.createElement("div");
+      executionLine.className = "history-line muted";
+      const hits = m.hits || 0;
       const respondedTrials = m.respondedTrials || 0;
-      line1.textContent = `${t("history.precision.err")} ${Number.isFinite(avg) ? avg.toFixed(2) : "—"} · ${t("history.sd")} ${Number.isFinite(sd) ? sd.toFixed(2) : "—"} · ${t("history.trials")} ${Number.isFinite(trials) ? trials : "—"} (${t("history.precision.responded")} ${respondedTrials})`;
-    } else {
-      line1.textContent = `${t("history.avg")} ${Number.isFinite(avg) ? avg.toFixed(0) : "—"} ms · ${t("history.sd")} ${Number.isFinite(sd) ? sd.toFixed(0) : "—"} · ${t("history.trials")} ${Number.isFinite(trials) ? trials : "—"}`;
-    }
-    details.appendChild(line1);
-
-    const line2 = document.createElement("div");
-    line2.className = "history-line muted";
-    if (tt === "precision") {
-      line2.textContent = `${t("history.best")} ${Number.isFinite(best) ? best.toFixed(2) : "—"} · ${t("history.worst")} ${Number.isFinite(worst) ? worst.toFixed(2) : "—"}`;
-    } else {
-      line2.textContent = `${t("history.best")} ${Number.isFinite(best) ? best.toFixed(0) : "—"} · ${t("history.worst")} ${Number.isFinite(worst) ? worst.toFixed(0) : "—"}`;
-    }
-    details.appendChild(line2);
-
-    if (tt === "precision") {
-      const errs = document.createElement("div");
-      errs.className = "history-line";
       const misses = m.misses || 0;
       const timeouts = m.timeouts || 0;
-      errs.textContent = `${t("history.precision.misses")} ${misses} · ${t("history.precision.timeouts")} ${timeouts}`;
-      details.appendChild(errs);
-    } else if (tt === "gonogo") {
+      const meanRtMs = m.meanRtMs || 0;
+      const sdRtMs = m.sdRtMs || 0;
+      
+      const execParts = [];
+      if (respondedTrials > 0) {
+        const hitRate = Math.round((hits / respondedTrials) * 100);
+        execParts.push(`${t("history.precision.labels.hits")}: ${hitRate}% (${respondedTrials} ${t("history.precision.responded")})`);
+      }
+      execParts.push(`${t("history.precision.labels.misses")}: ${misses}`);
+      execParts.push(`${t("history.precision.labels.timeouts")}: ${timeouts}`);
+      if (Number.isFinite(meanRtMs) && meanRtMs > 0) {
+        execParts.push(`${t("history.precision.labels.avgRt")}: ${Math.round(meanRtMs)} ms`);
+        if (Number.isFinite(sdRtMs) && sdRtMs > 0) {
+          execParts.push(`SD: ${Math.round(sdRtMs)} ms`);
+        }
+      }
+      executionLine.textContent = execParts.join(" · ");
+      details.appendChild(executionLine);
+    } else {
+      // Other tests: original format
+      const line1 = document.createElement("div");
+      line1.className = "history-line";
+      line1.textContent = `${t("history.avg")} ${Number.isFinite(avg) ? avg.toFixed(0) : "—"} ms · ${t("history.sd")} ${Number.isFinite(sd) ? sd.toFixed(0) : "—"} · ${t("history.trials")} ${Number.isFinite(trials) ? trials : "—"}`;
+      details.appendChild(line1);
+
+      const line2 = document.createElement("div");
+      line2.className = "history-line muted";
+      line2.textContent = `${t("history.best")} ${Number.isFinite(best) ? best.toFixed(0) : "—"} · ${t("history.worst")} ${Number.isFinite(worst) ? worst.toFixed(0) : "—"}`;
+      details.appendChild(line2);
+    }
+
+    if (tt === "gonogo") {
       const errs = document.createElement("div");
       errs.className = "history-line";
       errs.textContent = `${t("history.misses")} ${m.misses ?? 0} · ${t("history.falseAlarms")} ${m.falseAlarms ?? 0} · ${t("history.falseStarts")} ${m.falseStarts ?? 0}`;
@@ -5291,7 +5427,19 @@ function renderHistory() {
       const cmp = document.createElement("div");
       cmp.className = "history-compare";
       if (tt === "precision") {
-        cmp.textContent = `${status} · Δ ${Number.isFinite(delta) ? (delta >= 0 ? "+" : "") + delta.toFixed(2) : "—"} (${t("history.baseline")} ${baselineValue.toFixed(2)} ± ${baselineSDValue.toFixed(2)} (±2 SD))`;
+        // Precision: explicit accuracy comparison text
+        let accuracyStatus;
+        if (status === t("status.within")) {
+          accuracyStatus = t("history.precision.comparison.within");
+        } else if (status === t("status.slightly")) {
+          accuracyStatus = t("history.precision.comparison.slightly");
+        } else if (status === t("status.significantly")) {
+          accuracyStatus = t("history.precision.comparison.significantly");
+        } else {
+          accuracyStatus = status;
+        }
+        const deltaText = Number.isFinite(delta) ? (delta >= 0 ? "+" : "") + delta.toFixed(2) : "—";
+        cmp.textContent = `${accuracyStatus} (${deltaText})`;
       } else {
         cmp.textContent = `${status} · Δ ${Number.isFinite(delta) ? (delta >= 0 ? "+" : "") + delta.toFixed(0) : "—"} ms (${t("history.baseline")} ${baselineValue.toFixed(0)} ± ${baselineSDValue.toFixed(0)} (±2 SD))`;
       }

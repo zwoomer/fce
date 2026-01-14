@@ -22,7 +22,14 @@
 <body>
   <header class="topbar">
     <button id="menuBtn" aria-label="Menu" aria-controls="menu" aria-expanded="false">☰</button>
-    <a href="index.html?home=1" class="title" style="text-decoration:none; color:inherit;">FCE</a>
+    <a href="index.html?home=1" class="title brand-link" id="brandLink" style="text-decoration:none; color:inherit;" aria-label="To the instrument">
+      <span class="brand-short" aria-hidden="true">FCE</span>
+      <span class="brand-long" aria-hidden="true">
+        <span class="lang lang-en">To the instrument</span>
+        <span class="lang lang-no hidden">Til instrumentet</span>
+        <span class="lang lang-lt hidden">Į instrumentą</span>
+      </span>
+    </a>
     <span class="topbar-page is-hidden" id="topbarPage"></span>
 
     <div class="topbar-right">
@@ -587,6 +594,20 @@
 
       // Init
       applyLanguage(currentLang);
+      
+      // Brand link hint text handler
+      function updateBrandLinkHint() {
+        const brandLink = document.getElementById("brandLink");
+        if (!brandLink) return;
+        const hints = { en: "To the instrument", no: "Til instrumentet", lt: "Į instrumentą" };
+        const hint = hints[currentLang] || hints.en;
+        brandLink.setAttribute("data-hint", hint);
+        brandLink.setAttribute("aria-label", hint);
+      }
+      updateBrandLinkHint();
+      langSelect && langSelect.addEventListener("change", () => {
+        updateBrandLinkHint();
+      });
     })();
   </script>
   <script src="docs.js"></script>

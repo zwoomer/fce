@@ -21,16 +21,17 @@
 <body>
   <header class="topbar">
     <button id="menuBtn" aria-label="Menu" aria-controls="menu" aria-expanded="false">☰</button>
-    <span class="title">FCE</span>
+    <a href="index.html?home=1" class="title brand-link" id="brandLink" style="text-decoration:none; color:inherit;" aria-label="To the instrument">
+      <span class="brand-short" aria-hidden="true">FCE</span>
+      <span class="brand-long" aria-hidden="true">
+        <span class="lang lang-en">To the instrument</span>
+        <span class="lang lang-no hidden">Til instrumentet</span>
+        <span class="lang lang-lt hidden">Į instrumentą</span>
+      </span>
+    </a>
     <span class="topbar-page" aria-hidden="true">Why</span>
 
     <div class="topbar-right">
-      <a href="index.html#instrument" class="topbar-link topbar-cta">
-        <span class="lang lang-en">Open instrument</span>
-        <span class="lang lang-no hidden">Åpne instrument</span>
-        <span class="lang lang-lt hidden">Atidaryti instrumentą</span>
-      </a>
-
       <div class="lang-select-wrapper">
         <select id="langSelect" class="lang-select" aria-label="Language">
           <option value="en">EN</option>
@@ -418,7 +419,29 @@
         currentLang = langSelect.value;
         try { localStorage.setItem(LANG_KEY, currentLang); } catch {}
         applyLangUI();
+        
+        // Update brand link hint
+        updateBrandLinkHint();
       });
+
+      // Brand link hint text handler
+      function updateBrandLinkHint() {
+        const brandLink = document.getElementById("brandLink");
+        if (!brandLink) return;
+
+        const hints = {
+          en: "To the instrument",
+          no: "Til instrumentet",
+          lt: "Į instrumentą"
+        };
+
+        const hint = hints[currentLang] || hints.en;
+        brandLink.setAttribute("data-hint", hint);
+        brandLink.setAttribute("aria-label", hint);
+      }
+
+      // Initial update
+      updateBrandLinkHint();
     })();
   </script>
 </body>

@@ -22,7 +22,14 @@
 <body>
   <header class="topbar">
     <button id="menuBtn" aria-label="Menu" aria-controls="menu" aria-expanded="false">☰</button>
-    <a href="index.html?home=1" class="title" style="text-decoration:none; color:inherit;">FCE</a>
+    <a href="index.html?home=1" class="title brand-link" id="brandLink" style="text-decoration:none; color:inherit;" aria-label="To the instrument">
+      <span class="brand-short" aria-hidden="true">FCE</span>
+      <span class="brand-long" aria-hidden="true">
+        <span class="lang lang-en">To the instrument</span>
+        <span class="lang lang-no hidden">Til instrumentet</span>
+        <span class="lang lang-lt hidden">Į instrumentą</span>
+      </span>
+    </a>
     <span class="topbar-page is-hidden" id="topbarPage"></span>
 
     <div class="topbar-right">
@@ -728,6 +735,58 @@
 
       // Init
       applyLanguage(currentLang);
+      
+      // Brand link hint text handler
+      function updateBrandLinkHint() {
+        const brandLink = document.getElementById("brandLink");
+        if (!brandLink) return;
+        const hints = { en: "To the instrument", no: "Til instrumentet", lt: "Į instrumentą" };
+        const hint = hints[currentLang] || hints.en;
+        brandLink.setAttribute("data-hint", hint);
+        brandLink.setAttribute("aria-label", hint);
+      }
+      updateBrandLinkHint();
+      langSelect && langSelect.addEventListener("change", () => {
+        updateBrandLinkHint();
+      });
+
+      // Store scroll position when leaving page
+      function storeScrollPosition() {
+        try {
+          const scrollPos = window.scrollY || window.pageYOffset || 0;
+          if (scrollPos > 0) {
+            localStorage.setItem("fce_doc_scroll_scope", String(scrollPos));
+          }
+        } catch (e) {
+          // Ignore storage errors
+        }
+      }
+
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "hidden") {
+          storeScrollPosition();
+        }
+      });
+
+      window.addEventListener("beforeunload", storeScrollPosition);
+
+      // Restore scroll position if coming from Learn More
+      try {
+        if (window.location.hash === "#restore-scroll") {
+          const storedScroll = localStorage.getItem("fce_doc_scroll_scope");
+          if (storedScroll) {
+            const scrollPos = parseInt(storedScroll, 10);
+            if (!isNaN(scrollPos) && scrollPos > 0) {
+              history.replaceState(null, "", window.location.pathname);
+              requestAnimationFrame(() => {
+                window.scrollTo(0, scrollPos);
+              });
+            }
+          }
+        }
+      } catch (e) {
+        // Ignore storage errors
+      }
     })();
   </script>
   <script src="docs.js"></script>

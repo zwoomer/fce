@@ -940,6 +940,16 @@
     border-bottom: 1px solid rgba(255,255,255,0.06);
   }
 
+  /* Prevent purple visited styling on topbar links */
+  .topbar a,
+  .topbar a:visited {
+    color: inherit;
+  }
+
+  .topbar a {
+    text-decoration: none;
+  }
+
   #menuBtn {
     width: 48px;
     height: 48px;
@@ -948,6 +958,22 @@
     border: none;
     color: inherit;
     cursor: pointer;
+    border-radius: 12px;
+    transition: background 0.15s ease, transform 0.12s ease, opacity 0.15s ease;
+  }
+
+  #menuBtn:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  #menuBtn:active {
+    transform: scale(0.96);
+    background: rgba(255, 255, 255, 0.09);
+  }
+
+  #menuBtn:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.35);
+    outline-offset: 2px;
   }
 
   .topbar .title {
@@ -957,17 +983,73 @@
     opacity: 0.95;
   }
 
+  /* Brand link with text swap on hover (overlay-based, no reflow) */
+  .brand-link {
+    position: relative;
+    display: inline-block;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  .brand-link .brand-short,
+  .brand-link .brand-long {
+    display: inline-block;
+  }
+
+  /* Text swap on hover-capable devices only */
+  @media (hover: hover) and (pointer: fine) {
+    /* Stack the long label on top of the short label */
+    .brand-link .brand-long {
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
+      transform: translateY(1px);
+      transition: opacity 0.15s ease, transform 0.15s ease;
+      pointer-events: none;
+    }
+
+    .brand-link .brand-short {
+      opacity: 1;
+      transition: opacity 0.15s ease;
+    }
+
+    .brand-link:hover .brand-short,
+    .brand-link:focus-visible .brand-short {
+      opacity: 0;
+    }
+
+    .brand-link:hover .brand-long,
+    .brand-link:focus-visible .brand-long {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .brand-link:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.3);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
   .topbar-page {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-left: 0;
+    max-width: 45vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    pointer-events: none;
     font-size: 15px;
     opacity: 0.75;
-    margin-left: 10px;
     transition: opacity 0.2s ease, transform 0.2s ease;
   }
 
   .topbar-page::before {
-    content: "·";
-    margin: 0 8px;
-    opacity: 0.6;
+    content: "";
+    margin: 0;
   }
 
   .topbar-page.is-hidden {

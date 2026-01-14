@@ -22,7 +22,14 @@
 <body>
   <header class="topbar">
     <button id="menuBtn" aria-label="Menu" aria-controls="menu" aria-expanded="false">☰</button>
-    <span class="title">FCE</span>
+    <a href="index.html?home=1" class="title brand-link" id="brandLink" aria-label="To the instrument">
+      <span class="brand-short" aria-hidden="true">FCE</span>
+      <span class="brand-long" aria-hidden="true">
+        <span class="lang lang-en">To the instrument</span>
+        <span class="lang lang-no hidden">Til instrumentet</span>
+        <span class="lang lang-lt hidden">Į instrumentą</span>
+      </span>
+    </a>
     <span class="topbar-page" id="topbarPage" aria-hidden="true"></span>
     <div class="topbar-right">
       <a href="about.html" class="topbar-link topbar-cta" id="learnMoreLink">
@@ -618,25 +625,91 @@
       const link = document.getElementById("learnMoreLink");
       if (!link) return;
 
+      // Canonical doc pages (those with previous/next navigation)
+      const canonicalDocs = [
+        "about.html",
+        "concept.html",
+        "scope.html",
+        "how-to-use.html",
+        "how-tests-work.html",
+        "faq.html",
+        "baseline-relative.html",
+        "norwegian-context.html"
+      ];
+
       try {
         // Use dedicated docs page tracker, fallback to general tracker
         const lastDocs = localStorage.getItem("fce_last_docs_page");
         const last = localStorage.getItem("fce_last_page");
 
-        // Prefer dedicated docs page tracker
-        const target = (lastDocs && lastDocs.endsWith(".html") && !lastDocs.includes("index.html"))
-          ? lastDocs
-          : (last && last.endsWith(".html") && !last.includes("index.html"))
-            ? last
-            : "about.html";
+        // Prefer dedicated docs page tracker, but only use canonical doc pages
+        let target = null;
+        if (lastDocs && lastDocs.endsWith(".html") && !lastDocs.includes("index.html") && canonicalDocs.includes(lastDocs)) {
+          target = lastDocs;
+        } else if (last && last.endsWith(".html") && !last.includes("index.html") && canonicalDocs.includes(last)) {
+          target = last;
+        }
 
-        link.setAttribute("href", target);
+        // Default to about.html if no valid canonical doc page found
+        const targetPage = target || "about.html";
+        
+        // Add hash to indicate we should restore scroll position
+        link.setAttribute("href", targetPage + "#restore-scroll");
       } catch {
         // Fallback if storage is unavailable
-        link.setAttribute("href", "about.html");
+        link.setAttribute("href", "about.html#restore-scroll");
       }
     })();
   </script>
   <script src="docs.js"></script>
+  <script>
+    // Brand link hint text handler
+    (function() {
+      function updateBrandLinkHint() {
+        const brandLink = document.getElementById("brandLink");
+        if (!brandLink) return;
+
+        // Get current language - check app.js currentLang first, then localStorage
+        let lang = window.currentLang || localStorage.getItem("fce_lang") || "en";
+
+        const hints = {
+          en: "To the instrument",
+          no: "Til instrumentet",
+          lt: "Į instrumentą"
+        };
+
+        const hint = hints[lang] || hints.en;
+        brandLink.setAttribute("data-hint", hint);
+        brandLink.setAttribute("aria-label", hint);
+      }
+
+      // Update on page load
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", updateBrandLinkHint);
+      } else {
+        updateBrandLinkHint();
+      }
+
+      // Listen for language changes (app.js uses currentLang, docs pages use langSelect)
+      const langSelect = document.getElementById("langSelect");
+      if (langSelect) {
+        langSelect.addEventListener("change", updateBrandLinkHint);
+      }
+
+      // Also listen for custom language change events if app.js fires them
+      window.addEventListener("languagechange", updateBrandLinkHint);
+
+      // Poll for currentLang changes (fallback for app.js)
+      if (window.currentLang !== undefined) {
+        let lastLang = window.currentLang;
+        setInterval(() => {
+          if (window.currentLang !== lastLang) {
+            lastLang = window.currentLang;
+            updateBrandLinkHint();
+          }
+        }, 100);
+      }
+    })();
+  </script>
 </body>
 </html>

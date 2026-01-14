@@ -29,6 +29,7 @@ v0.3.2 maintains full backward compatibility. All existing sessions and baseline
 - **No purple visited links:** Topbar links inherit color, preventing purple visited styling
 - **Hamburger affordances:** Enhanced menu button with hover/active states and subtle press feedback
 - **Tightened hover condition:** Brand link text swap only triggers on true hover devices (desktop mouse/trackpad), completely hidden on touch devices
+- **Small screen optimization:** "Learn More" button hidden on screens ≤480px to prevent topbar crowding (accessible via hamburger menu)
 
 ---
 

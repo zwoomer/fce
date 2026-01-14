@@ -1136,8 +1136,13 @@
 
   /* Mobile tightening */
   @media (max-width: 420px) {
+    .topbar {
+      gap: 8px;
+      padding: 0 12px;
+    }
+
     .topbar-right {
-      gap: 10px;
+      gap: 8px;
     }
 
     .topbar-cta {
@@ -1157,10 +1162,26 @@
     }
   }
 
+  /* Super narrow phones - hide Learn More button */
+  @media (max-width: 480px) {
+    .topbar-cta {
+      display: none;
+    }
+  }
+
   /* Super narrow phones */
   @media (max-width: 360px) {
-    .topbar-right .topbar-cta {
-      max-width: 96px;
+    .topbar {
+      gap: 6px;
+      padding: 0 10px;
+    }
+
+    .topbar .title {
+      font-size: 16px;
+    }
+
+    .topbar-right {
+      gap: 6px;
     }
   }
 

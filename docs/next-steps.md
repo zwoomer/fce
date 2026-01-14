@@ -230,6 +230,35 @@ Tagged as **v0.3.0**.
 
 ---
 
+## v0.3.1 — Precision refinements and UX improvements (completed)
+
+Shipped improvements:
+- **Trial count defaults:** Baseline mode defaults to 25 trials, Check/Training default to 15
+- **Trend display:** Removed "ms" unit from Precision trend delta lines (error distance is unitless)
+- **Target placement safety:** Exit button exclusion zone prevents targets near exit button
+- **Divided Attention legend:** Moved to "What to do" panel with color coding
+- **Translation fixes:** Fixed Lithuanian "NESPĮKITE" → "NESPAUSKITE"
+
+Tagged as **v0.3.1**.
+
+---
+
+## v0.3.2 — Unified navigation and Precision history polish (completed)
+
+Shipped improvements:
+- **Unified topbar brand link:** Clickable "FCE" with hover text swap to localized "To the instrument"
+- **Scroll position restoration:** Canonical doc pages remember and restore scroll position
+- **Precision history polish:** 3-chip summary (Accuracy, Consistency SD, Hits), grouped details sections, explicit baseline comparison text
+- **Topbar layout fixes:** Centered page title, prevented purple visited links, overlay-based text swap (no reflow)
+- **Hamburger menu enhancements:** Hover/active affordances with subtle press feedback
+- **"Why this exists" page:** New documentation page explaining FCE's philosophy
+- **Learn More restriction:** Only redirects to canonical doc pages (excludes why.html)
+- **GitHub Pages optimization:** Added `.nojekyll` file for faster deployment
+
+Tagged as **v0.3.2**.
+
+---
+
 ## v0.3.x — Refinements (in progress)
 
 Scope: stabilization, clarity, and robustness of existing functionality.
@@ -237,7 +266,6 @@ No new paradigms are introduced in this version line.
 
 Planned focus areas:
 - Precision test refinements:
-  - Target placement safety margins near edges
   - Consistent hit-radius and timeout handling
   - Minor HUD clarity improvements
 - UX refinements:

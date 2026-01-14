@@ -10,7 +10,7 @@ FCE is designed to support **human interpretation**, not automated judgment.
 
 ## Current status
 
-**Latest release:** v0.3.0  
+**Latest release:** v0.3.2  
 **Status:** Stable (documentation & explanation complete)
 
 ---
@@ -150,6 +150,50 @@ No test logic changes.
 
 ---
 
+## Documentation expansion & utilities (v0.2.6)
+
+### New documentation pages
+- **Concept page** (`concept.html`) — Core concepts, baseline-relative measurement, system properties
+- **Scope & Limits page** (`scope.html`) — Explicit boundaries, interpretation rules, institutional constraints
+
+### Navigation consolidation
+- Consolidated menu navigation across all documentation pages (canonical sequence: About → Concept → Scope → Norwegian Context → How to Use → FAQ)
+- Added Concept and Scope & Limits to index.html menu
+- Updated bottom navigation (docs-nav) to follow consistent sequence
+- Fixed I18N_PAGES mappings for all pages
+- Added `aria-current="page"` attributes for accessibility
+
+### Content improvements
+- Updated "functional execution signals" description (added response stability)
+- Added clarifying sentence separating FCE from intelligence/aptitude assessments
+- Updated Scope & limits section in concept.html to point to scope.html
+- Removed obsolete "not present" notes from all documentation pages
+- Fixed Norwegian translations (e.g., "Lære mer" → "Les mer")
+
+### Navigation enhancements
+- Styled "Learn more" button as topbar CTA (pill button with hover effects and arrow)
+- Implemented smart redirect for "Learn more" button (tracks last visited docs page)
+- All doc pages track `fce_last_docs_page` for navigation continuity
+
+### Documentation utilities
+- Shared copy-to-clipboard utility (`docs.js`) for all documentation pages
+- Copy-ready blocks added to Concept and About pages (EN/NO)
+- Standardized utility-header pattern with tooltip, icon, and status feedback
+- Code deduplication: removed duplicate copy logic from individual pages
+
+---
+
+## Explanatory clarity & visual documentation (v0.2.7)
+
+- Baseline-relative visual explanation page (`baseline-relative.html`) with diagram
+- Variability & recovery interpretation notes
+- Documentation navigation consolidation (contextual links from Concept, About, Norwegian Context)
+- Copy-ready summaries with shared utility
+- Diagram improvements: micro-labels, time direction clarity, visual anchoring
+- No changes to measurement logic or scoring
+
+---
+
 ## Language support, UX improvements & bug fixes (v0.2.8)
 
 - **Lithuanian language support:** Complete translation coverage across core UI and all documentation pages
@@ -185,47 +229,39 @@ No test logic changes.
 
 ---
 
-## Explanatory clarity & visual documentation (v0.2.7)
+## Precision (Target Pointing) test (v0.3.0)
 
-- Baseline-relative visual explanation page (`baseline-relative.html`) with diagram
-- Variability & recovery interpretation notes
-- Documentation navigation consolidation (contextual links from Concept, About, Norwegian Context)
-- Copy-ready summaries with shared utility
-- Diagram improvements: micro-labels, time direction clarity, visual anchoring
-- No changes to measurement logic or scoring
+- **New test type:** Precision (Target Pointing) test with fullscreen UX
+- **Fullscreen test environment:** Consensual fullscreen request with prep overlay
+- **Random target placement:** Targets appear at random positions with variable sizes
+- **Trial-by-trial feedback:** Immediate visual feedback (hit/miss/timeout)
+- **HUD display:** Trial counter, feedback messages, exit button
+- **Baseline-relative evaluation:** Baseline, Check, and Training mode support
+- **Comprehensive i18n:** Complete translations for EN/NO/LT
+- **History integration:** Full History card rendering with per-trial breakdown
 
 ---
 
-## Documentation expansion & utilities (v0.2.6)
+## Precision refinements and UX improvements (v0.3.1)
 
-### New documentation pages
-- **Concept page** (`concept.html`) — Core concepts, baseline-relative measurement, system properties
-- **Scope & Limits page** (`scope.html`) — Explicit boundaries, interpretation rules, institutional constraints
+- **Trial count defaults:** Baseline mode defaults to 25 trials, Check/Training default to 15
+- **Trend display:** Removed "ms" unit from Precision trend delta lines (error distance is unitless)
+- **Target placement safety:** Exit button exclusion zone prevents targets near exit button
+- **Divided Attention legend:** Moved to "What to do" panel with color coding
+- **Translation fixes:** Fixed Lithuanian "NESPĮKITE" → "NESPAUSKITE"
 
-### Navigation consolidation
-- Consolidated menu navigation across all documentation pages (canonical sequence: About → Concept → Scope → Norwegian Context → How to Use → FAQ)
-- Added Concept and Scope & Limits to index.html menu
-- Updated bottom navigation (docs-nav) to follow consistent sequence
-- Fixed I18N_PAGES mappings for all pages
-- Added `aria-current="page"` attributes for accessibility
+---
 
-### Content improvements
-- Updated "functional execution signals" description (added response stability)
-- Added clarifying sentence separating FCE from intelligence/aptitude assessments
-- Updated Scope & limits section in concept.html to point to scope.html
-- Removed obsolete "not present" notes from all documentation pages
-- Fixed Norwegian translations (e.g., "Lære mer" → "Les mer")
+## Unified navigation and Precision history polish (v0.3.2)
 
-### Navigation enhancements
-- Styled "Learn more" button as topbar CTA (pill button with hover effects and arrow)
-- Implemented smart redirect for "Learn more" button (tracks last visited docs page)
-- All doc pages track `fce_last_docs_page` for navigation continuity
-
-### Documentation utilities
-- Shared copy-to-clipboard utility (`docs.js`) for all documentation pages
-- Copy-ready blocks added to Concept and About pages (EN/NO)
-- Standardized utility-header pattern with tooltip, icon, and status feedback
-- Code deduplication: removed duplicate copy logic from individual pages
+- **Unified topbar brand link:** Clickable "FCE" with hover text swap to localized "To the instrument"
+- **Scroll position restoration:** Canonical doc pages remember and restore scroll position
+- **Precision history polish:** 3-chip summary (Accuracy, Consistency SD, Hits), grouped details sections, explicit baseline comparison text
+- **Topbar layout fixes:** Centered page title, prevented purple visited links, overlay-based text swap (no reflow)
+- **Hamburger menu enhancements:** Hover/active affordances with subtle press feedback
+- **"Why this exists" page:** New documentation page explaining FCE's philosophy
+- **Learn More restriction:** Only redirects to canonical doc pages (excludes why.html)
+- **GitHub Pages optimization:** Added `.nojekyll` file for faster deployment
 
 ---
 
@@ -286,6 +322,8 @@ FCE is suitable for:
 - v0.2.8 — Language support, UX improvements & bug fixes
 - v0.2.9 — UX improvements, History enhancements, and onboarding
 - v0.3.0 — Precision (Target Pointing) test with fullscreen UX
+- v0.3.1 — Precision refinements and UX improvements
+- v0.3.2 — Unified navigation and Precision history polish
 
 ---
 

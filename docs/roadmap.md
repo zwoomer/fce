@@ -143,6 +143,30 @@ Status: ✅ Shipped
 
 ---
 
+## v0.3.1 — Precision refinements and UX improvements (completed)
+- Trial count defaults: Baseline 25, Check/Training 15
+- Trend display: Removed "ms" unit from Precision delta lines
+- Target placement safety: Exit button exclusion zone
+- Divided Attention legend: Moved to task hint panel with color coding
+- Translation fixes: Lithuanian "NESPĮKITE" → "NESPAUSKITE"
+
+Status: ✅ Shipped
+
+---
+
+## v0.3.2 — Unified navigation and Precision history polish (completed)
+- Unified topbar brand link with hover text swap
+- Scroll position restoration for canonical doc pages
+- Precision history rendering polish (3-chip summary, grouped details)
+- Topbar layout fixes (centered title, no purple visited links)
+- Hamburger menu enhancements
+- "Why this exists" documentation page
+- GitHub Pages deployment optimization (.nojekyll)
+
+Status: ✅ Shipped
+
+---
+
 ## v0.3.x — Refinements (in progress)
 
 Focus: stabilization and tightening of existing functionality.

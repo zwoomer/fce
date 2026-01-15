@@ -211,6 +211,7 @@ const I18N = {
         exited: "Fullscreen exited — continuing windowed.",
       },
       invalid: "Precision test invalid.",
+      noFullscreenNote: "Note: This Precision session ran without fullscreen. Input consistency may be reduced.",
     },
   },
   no: {
@@ -365,18 +366,19 @@ const I18N = {
         legend: "TRYKK = svar · IKKE = vent · Tell blå blink",
       },
     },
-    precision: {
-      feedback: {
-        hit: "Treff",
-        miss: "Bom",
-        timeout: "Tidsavbrudd",
+      precision: {
+        feedback: {
+          hit: "Treff",
+          miss: "Bom",
+          timeout: "Tidsavbrudd",
+        },
+        fullscreen: {
+          unavailable: "Fullskjerm utilgjengelig — kjører i vindu.",
+          exited: "Fullskjerm avsluttet — fortsetter i vindu.",
+        },
+        invalid: "Presisjonstest ugyldig.",
+        noFullscreenNote: "Merk: Denne presisjonsøkten kjørte uten fullskjerm. Inndata-konsistens kan være redusert.",
       },
-      fullscreen: {
-        unavailable: "Fullskjerm utilgjengelig — kjører i vindu.",
-        exited: "Fullskjerm avsluttet — fortsetter i vindu.",
-      },
-      invalid: "Presisjonstest ugyldig.",
-    },
   },
   lt: {
     ui: {
@@ -529,18 +531,19 @@ const I18N = {
         legend: "SPAUSKITE = atsakyti · NESPAUSKITE = laukti · Suskaičiuokite mėlynus blyksnius",
       },
     },
-    precision: {
-      feedback: {
-        hit: "Pataikymas",
-        miss: "Praleistas",
-        timeout: "Laiko baigtis",
+      precision: {
+        feedback: {
+          hit: "Pataikymas",
+          miss: "Praleistas",
+          timeout: "Laiko baigtis",
+        },
+        fullscreen: {
+          unavailable: "Visas ekranas neprieinamas — veikia lange.",
+          exited: "Visas ekranas uždarytas — tęsiame lange.",
+        },
+        invalid: "Tikslumo testas netinkamas.",
+        noFullscreenNote: "Pastaba: Ši tikslumo sesija vyko be viso ekrano. Įvesties pastovumas gali būti mažesnis.",
       },
-      fullscreen: {
-        unavailable: "Visas ekranas neprieinamas — veikia lange.",
-        exited: "Visas ekranas uždarytas — tęsiame lange.",
-      },
-      invalid: "Tikslumo testas netinkamas.",
-    },
   },
 };
 
@@ -797,17 +800,18 @@ function getBaselineSavedDivided(mean, sd, misses, falseAlarms, falseStarts, fla
   return `Baseline session saved. GO mean: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms | Misses: ${misses} | Inhibitory errors: ${falseAlarms}${flashText}${falseStartsText}${qualityText}${qualityNote}${warningText}`;
 }
 
-function getBaselineSavedPrecision(meanErrN, sdErrN, meanRtMs, qualityNote, quality, deviceWarning) {
+function getBaselineSavedPrecision(meanErrN, sdErrN, meanRtMs, qualityNote, quality, deviceWarning, fullscreenNote) {
   const rtText = meanRtMs > 0 ? (currentLang === "no" ? ` | RT: ${meanRtMs.toFixed(0)} ms` : currentLang === "lt" ? ` | RT: ${meanRtMs.toFixed(0)} ms` : ` | RT: ${meanRtMs.toFixed(0)} ms`) : "";
   const qualityText = quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${quality}`)}` : ` | Quality: ${t(`quality.${quality}`)}`) : "";
   const warningText = deviceWarning || "";
+  const fullscreenNoteText = fullscreenNote || "";
   if (currentLang === "no") {
-    return `Baseline-økt lagret. Feil: ${meanErrN.toFixed(2)} | SD: ${sdErrN.toFixed(2)}${rtText}${qualityText}${qualityNote}${warningText}`;
+    return `Baseline-økt lagret. Feil: ${meanErrN.toFixed(2)} | SD: ${sdErrN.toFixed(2)}${rtText}${qualityText}${qualityNote}${warningText}${fullscreenNoteText}`;
   }
   if (currentLang === "lt") {
-    return `Bazinio lygio sesija išsaugota. Klaida: ${meanErrN.toFixed(2)} | SD: ${sdErrN.toFixed(2)}${rtText}${qualityText}${qualityNote}${warningText}`;
+    return `Bazinio lygio sesija išsaugota. Klaida: ${meanErrN.toFixed(2)} | SD: ${sdErrN.toFixed(2)}${rtText}${qualityText}${qualityNote}${warningText}${fullscreenNoteText}`;
   }
-  return `Baseline session saved. Error: ${meanErrN.toFixed(2)} | SD: ${sdErrN.toFixed(2)}${rtText}${qualityText}${qualityNote}${warningText}`;
+  return `Baseline session saved. Error: ${meanErrN.toFixed(2)} | SD: ${sdErrN.toFixed(2)}${rtText}${qualityText}${qualityNote}${warningText}${fullscreenNoteText}`;
 }
 
 function getCheckReaction(mean, baselineMean, baselineSD, status, falseStarts, qualityNote, quality, deviceWarning) {
@@ -923,17 +927,18 @@ function getCheckDividedAttention(mean, baselineMean, baselineSD, status, falseA
   return `Today GO mean: ${mean.toFixed(0)} ms | Baseline mean: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status} | False alarm rate: ${(falseAlarmsRate * 100).toFixed(1)}% (baseline ${(baselineFARate * 100).toFixed(1)}%) | Flash error: ${flashAbsError} (baseline avg ${baselineFlashError.toFixed(1)})${falseStartsText}${qualityText}${qualityNote}${warningText}`;
 }
 
-function getCheckPrecision(meanErrN, baselineMeanErrN, baselineSDErrN, status, meanRtMs, quality, deviceWarning) {
+function getCheckPrecision(meanErrN, baselineMeanErrN, baselineSDErrN, status, meanRtMs, quality, deviceWarning, fullscreenNote) {
   const qualityText = quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${quality}`)}` : ` | Quality: ${t(`quality.${quality}`)}`) : "";
   const warningText = deviceWarning || "";
+  const fullscreenNoteText = fullscreenNote || "";
   const rtText = meanRtMs > 0 ? (currentLang === "no" ? ` | RT: ${meanRtMs.toFixed(0)} ms` : currentLang === "lt" ? ` | RT: ${meanRtMs.toFixed(0)} ms` : ` | RT: ${meanRtMs.toFixed(0)} ms`) : "";
   if (currentLang === "no") {
-    return `Dagens feil: ${meanErrN.toFixed(2)} | Baseline-feil: ${baselineMeanErrN.toFixed(2)} | Baseline SD: ${baselineSDErrN.toFixed(2)} | Status: ${status}${rtText}${qualityText}${warningText}`;
+    return `Dagens feil: ${meanErrN.toFixed(2)} | Baseline-feil: ${baselineMeanErrN.toFixed(2)} | Baseline SD: ${baselineSDErrN.toFixed(2)} | Status: ${status}${rtText}${qualityText}${warningText}${fullscreenNoteText}`;
   }
   if (currentLang === "lt") {
-    return `Šiandienos klaida: ${meanErrN.toFixed(2)} | Bazinio lygio klaida: ${baselineMeanErrN.toFixed(2)} | Bazinio lygio SD: ${baselineSDErrN.toFixed(2)} | Būsena: ${status}${rtText}${qualityText}${warningText}`;
+    return `Šiandienos klaida: ${meanErrN.toFixed(2)} | Bazinio lygio klaida: ${baselineMeanErrN.toFixed(2)} | Bazinio lygio SD: ${baselineSDErrN.toFixed(2)} | Būsena: ${status}${rtText}${qualityText}${warningText}${fullscreenNoteText}`;
   }
-  return `Today error: ${meanErrN.toFixed(2)} | Baseline error: ${baselineMeanErrN.toFixed(2)} | Baseline SD: ${baselineSDErrN.toFixed(2)} | Status: ${status}${rtText}${qualityText}${warningText}`;
+  return `Today error: ${meanErrN.toFixed(2)} | Baseline error: ${baselineMeanErrN.toFixed(2)} | Baseline SD: ${baselineSDErrN.toFixed(2)} | Status: ${status}${rtText}${qualityText}${warningText}${fullscreenNoteText}`;
 }
 
 function applyTrialEmphasis(trialListEl) {
@@ -1031,7 +1036,7 @@ function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
       break;
       
     case "baseline_saved_precision":
-      summary.textContent = getBaselineSavedPrecision(dataObj.meanErrN, dataObj.sdErrN, dataObj.meanRtMs, dataObj.qualityNote || "", dataObj.quality, dataObj.deviceWarning || "");
+      summary.textContent = getBaselineSavedPrecision(dataObj.meanErrN, dataObj.sdErrN, dataObj.meanRtMs, dataObj.qualityNote || "", dataObj.quality, dataObj.deviceWarning || "", dataObj.fullscreenNote || "");
       break;
       
     case "check_reaction":
@@ -1047,7 +1052,7 @@ function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
       break;
       
     case "check_precision":
-      summary.textContent = getCheckPrecision(dataObj.meanErrN, dataObj.baselineMeanErrN, dataObj.baselineSDErrN, dataObj.status, dataObj.meanRtMs || 0, dataObj.quality, dataObj.deviceWarning || "");
+      summary.textContent = getCheckPrecision(dataObj.meanErrN, dataObj.baselineMeanErrN, dataObj.baselineSDErrN, dataObj.status, dataObj.meanRtMs || 0, dataObj.quality, dataObj.deviceWarning || "", dataObj.fullscreenNote || "");
       break;
       
     case "invalid_no_reaction":
@@ -1720,6 +1725,7 @@ let precisionPointerHandler = null; // Reference to pointerdown handler for clea
 let precisionTrialTimeoutId = null;
 let precisionFullscreenElement = null;
 let precisionIsFullscreen = false;
+let precisionFullscreenAchieved = false; // Track if fullscreen was actually achieved for this session
 
 // Test configuration constants
 const TEST_CONFIG = {
@@ -1866,6 +1872,7 @@ startBaselineBtn.addEventListener("click", () => {
     precisionResetIntent = false; // Reset intent flag
     precisionResetRan = false; // Reset guard flag
     precisionGlobalEscDetected = false; // Reset global Esc flag
+    precisionFullscreenAchieved = false; // Reset fullscreen achievement tracking
     if (precisionTrialTimeoutId) {
       clearTimeout(precisionTrialTimeoutId);
       precisionTrialTimeoutId = null;
@@ -1907,7 +1914,7 @@ startBaselineBtn.addEventListener("click", () => {
       document.body.classList.add("precision-open");
     }
 
-    // Try fullscreen
+    // Try fullscreen (precisionFullscreenAchieved already reset in startPrecisionSession)
     if (precisionStage) {
       const fullscreenPromise = precisionStage.requestFullscreen 
         ? precisionStage.requestFullscreen()
@@ -1922,13 +1929,16 @@ startBaselineBtn.addEventListener("click", () => {
       fullscreenPromise.then(() => {
         precisionIsFullscreen = true;
         precisionFullscreenElement = precisionStage;
+        precisionFullscreenAchieved = true; // Mark as achieved when promise resolves
         updatePrecisionNotice("");
       }).catch(() => {
         precisionIsFullscreen = false;
+        precisionFullscreenAchieved = false; // Mark as not achieved on failure
         updatePrecisionNotice(t("precision.fullscreen.unavailable"));
       });
     } else {
       precisionIsFullscreen = false;
+      precisionFullscreenAchieved = false; // Mark as not achieved if stage missing
       updatePrecisionNotice(t("precision.fullscreen.unavailable"));
     }
 
@@ -3278,7 +3288,20 @@ function getDeviceHints() {
   const isTouch = ("ontouchstart" in window) || (navigator.maxTouchPoints > 0);
   const ua = (navigator.userAgent || "").toLowerCase();
   const userAgentHint = /mobi|android|iphone|ipad/.test(ua) ? "mobile" : "desktop";
-  return { isTouch, userAgentHint };
+  
+  const deviceHints = { isTouch, userAgentHint };
+  
+  // Include Precision fullscreen tracking if this is a Precision session
+  if (testType && testType.value === "precision") {
+    const precisionFullscreenSupported = !!(document.documentElement.requestFullscreen || 
+      document.documentElement.webkitRequestFullscreen || 
+      document.documentElement.mozRequestFullScreen || 
+      document.documentElement.msRequestFullscreen);
+    deviceHints.precisionFullscreenSupported = precisionFullscreenSupported;
+    deviceHints.precisionFullscreenAchieved = precisionFullscreenAchieved || false;
+  }
+  
+  return deviceHints;
 }
 
 function pushHistoryRecord(record) {
@@ -3895,13 +3918,18 @@ function pushHistoryRecord(record) {
           deviceWarning: ""
         }, tt, mode);
       } else if (isPrecision) {
+        // Add fullscreen note if fullscreen was not achieved (baseline/check only, not training)
+        const fullscreenNote = (mode === "baseline" || mode === "check") && !precisionFullscreenAchieved
+          ? ` ${t("precision.noFullscreenNote")}`
+          : "";
         setSummary("baseline_saved_precision", {
           meanErrN: sessionPayload.meanErrN,
           sdErrN: sessionPayload.sdErrN,
           meanRtMs: sessionPayload.meanRtMs,
           qualityNote,
           quality: sessionRecord.quality || "good",
-          deviceWarning: ""
+          deviceWarning: "",
+          fullscreenNote
         }, tt, mode);
       }
 
@@ -3996,6 +4024,10 @@ function pushHistoryRecord(record) {
         const baselineMean = baselineMeanErrN;
         const baselineSD = baselineSDErrN;
         const qualityNote = ""; // Precision doesn't use checkSessionQuality
+        // Add fullscreen note if fullscreen was not achieved (baseline/check only, not training)
+        const fullscreenNote = (mode === "baseline" || mode === "check") && !precisionFullscreenAchieved
+          ? ` ${t("precision.noFullscreenNote")}`
+          : "";
         setSummary("check_precision", {
           meanErrN: sessionPayload.meanErrN,
           baselineMeanErrN: baselineMean,
@@ -4003,7 +4035,8 @@ function pushHistoryRecord(record) {
           status,
           meanRtMs: sessionPayload.meanRtMs,
           quality: sessionRecord.quality || "good",
-          deviceWarning: deviceWarning || ""
+          deviceWarning: deviceWarning || "",
+          fullscreenNote
         }, tt, mode);
         mode = null;
         return;

@@ -185,6 +185,19 @@ const I18N = {
       R2_INSUFFICIENT_DATA: "Session not usable: insufficient data (too few valid responses).",
       R3_EXCESS_NOISE: "Session not usable: excessive errors (too many false starts or inhibitory errors).",
     },
+    remedy: {
+      invalid_no_reaction: "Next step: run again and respond to the GO cue.",
+      invalid_no_go: "Next step: run again and respond on GO trials.",
+      invalid_missing_answer: "Next step: enter your flash count before finishing.",
+      invalid_no_go_responses_divided: "Next step: run again and respond on GO trials.",
+      invalid_precision_no_responses: "Next step: run again and respond to targets.",
+      invalid_precision_insufficient: "Next step: run again and complete enough taps to produce usable data.",
+      invalid_precision_excess_noise: "Next step: rest briefly and re-run with steady input (avoid rushed or missed taps).",
+      invalid_precision_exit: "Next step: run again and complete the session.",
+      not_enough_baseline: "Next step: complete more baseline sessions before using Check.",
+      baseline_not_saved: "Next step: complete a valid Baseline run to start comparisons.",
+      baseline_not_saved_divided: "Next step: complete a valid Baseline run to start comparisons.",
+    },
     stimulus: {
       ready: "Ready…",
       reaction: {
@@ -351,6 +364,19 @@ const I18N = {
       R2_INSUFFICIENT_DATA: "Økt ikke brukbar: utilstrekkelige data (for få gyldige responser).",
       R3_EXCESS_NOISE: "Økt ikke brukbar: for mange feil (for mange feilstarter eller inhibisjonsfeil).",
     },
+    remedy: {
+      invalid_no_reaction: "Neste steg: kjør på nytt og responder på GO-signalet.",
+      invalid_no_go: "Neste steg: kjør på nytt og responder på GO-forsøk.",
+      invalid_missing_answer: "Neste steg: skriv inn antall blink før du avslutter.",
+      invalid_no_go_responses_divided: "Neste steg: kjør på nytt og responder på GO-forsøk.",
+      invalid_precision_no_responses: "Neste steg: kjør på nytt og responder på målene.",
+      invalid_precision_insufficient: "Neste steg: kjør på nytt og fullfør nok trykk for å produsere brukbare data.",
+      invalid_precision_excess_noise: "Neste steg: hvil kort og kjør på nytt med jevn inndata (unngå forhastede eller bommende trykk).",
+      invalid_precision_exit: "Neste steg: kjør på nytt og fullfør økten.",
+      not_enough_baseline: "Neste steg: fullfør flere baseline-økter før du bruker Sjekk.",
+      baseline_not_saved: "Neste steg: fullfør en gyldig Baseline-kjøring for å starte sammenligninger.",
+      baseline_not_saved_divided: "Neste steg: fullfør en gyldig Baseline-kjøring for å starte sammenligninger.",
+    },
     stimulus: {
       ready: "Klar…",
       reaction: {
@@ -515,6 +541,19 @@ const I18N = {
       R1_INVALID_EXECUTION: "Sesija netinkama: vykdymo klaida (nėra užregistruotų galiojančių atsakų).",
       R2_INSUFFICIENT_DATA: "Sesija netinkama: nepakanka duomenų (per mažai galiojančių atsakų).",
       R3_EXCESS_NOISE: "Sesija netinkama: per daug klaidų (per daug klaidingų startų arba slopinimo klaidų).",
+    },
+    remedy: {
+      invalid_no_reaction: "Kitas žingsnis: paleiskite dar kartą ir reaguokite į GO signalą.",
+      invalid_no_go: "Kitas žingsnis: paleiskite dar kartą ir reaguokite į GO bandymus.",
+      invalid_missing_answer: "Kitas žingsnis: įveskite suskaičiuotų blyksnių skaičių prieš baigiant.",
+      invalid_no_go_responses_divided: "Kitas žingsnis: paleiskite dar kartą ir reaguokite į GO bandymus.",
+      invalid_precision_no_responses: "Kitas žingsnis: paleiskite dar kartą ir reaguokite į taikinius.",
+      invalid_precision_insufficient: "Kitas žingsnis: paleiskite dar kartą ir atlikite pakankamai bakstelėjimų, kad būtų gauti naudojami duomenys.",
+      invalid_precision_excess_noise: "Kitas žingsnis: trumpai pailsėkite ir paleiskite dar kartą su pastoviu įvedimu (venkite skubotų arba praleistų bakstelėjimų).",
+      invalid_precision_exit: "Kitas žingsnis: paleiskite dar kartą ir užbaikite sesiją.",
+      not_enough_baseline: "Kitas žingsnis: užbaikite daugiau bazinio lygio sesijų prieš naudojant Patikrą.",
+      baseline_not_saved: "Kitas žingsnis: užbaikite galiojančią Bazinio lygio sesiją, kad pradėtumėte palyginimus.",
+      baseline_not_saved_divided: "Kitas žingsnis: užbaikite galiojančią Bazinio lygio sesiją, kad pradėtumėte palyginimus.",
     },
     stimulus: {
       ready: "Pasiruošti…",
@@ -1057,33 +1096,38 @@ function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
       
     case "invalid_no_reaction":
       const refusalMsg1 = dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : getSessionInvalidNoReaction();
+      const remedyText1 = ` | ${t("remedy.invalid_no_reaction")}`;
       const qualityText1 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
-      summary.textContent = refusalMsg1 + qualityText1;
+      summary.textContent = refusalMsg1 + remedyText1 + qualityText1;
       break;
       
     case "invalid_no_go":
       const refusalMsg2 = dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : getSessionInvalidNoGo();
+      const remedyText2 = ` | ${t("remedy.invalid_no_go")}`;
       const qualityText2 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
-      summary.textContent = refusalMsg2 + qualityText2;
+      summary.textContent = refusalMsg2 + remedyText2 + qualityText2;
       break;
       
     case "not_enough_baseline":
       const refusalMsg3 = dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : getNotEnoughBaseline();
+      const remedyText3 = ` | ${t("remedy.not_enough_baseline")}`;
       const qualityText3 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
-      summary.textContent = refusalMsg3 + qualityText3;
+      summary.textContent = refusalMsg3 + remedyText3 + qualityText3;
       break;
       
     case "baseline_not_saved":
       const refusalMsg4 = dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : getBaselineNotSaved();
+      const remedyText4 = ` | ${t("remedy.baseline_not_saved")}`;
       const qualityText4 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
-      summary.textContent = refusalMsg4 + qualityText4;
+      summary.textContent = refusalMsg4 + remedyText4 + qualityText4;
       break;
       
     case "baseline_not_saved_divided":
       const flashInfo2 = getFlashInfoString(dataObj.flashTarget, dataObj.flashUser, dataObj.flashError);
       const refusalMsg5 = dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : getBaselineNotSavedDivided();
+      const remedyText5 = ` | ${t("remedy.baseline_not_saved_divided")}`;
       const qualityText5 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
-      summary.textContent = refusalMsg5 + flashInfo2 + qualityText5;
+      summary.textContent = refusalMsg5 + flashInfo2 + remedyText5 + qualityText5;
       break;
       
     case "invalid_missing_answer":
@@ -1097,8 +1141,9 @@ function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
       } else {
         refusalMsg6 = "Session not usable for comparison: missing answer";
       }
+      const remedyText6 = ` | ${t("remedy.invalid_missing_answer")}`;
       const qualityText6 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
-      summary.textContent = refusalMsg6 + qualityText6;
+      summary.textContent = refusalMsg6 + remedyText6 + qualityText6;
       break;
       
     case "invalid_no_go_responses_divided":
@@ -1112,8 +1157,9 @@ function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
       } else {
         refusalMsg7 = "Session invalid: no GO responses.";
       }
+      const remedyText7 = ` | ${t("remedy.invalid_no_go_responses_divided")}`;
       const qualityText7 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
-      summary.textContent = refusalMsg7 + qualityText7;
+      summary.textContent = refusalMsg7 + remedyText7 + qualityText7;
       break;
       
     case "invalid_precision_no_responses":
@@ -1126,8 +1172,18 @@ function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
       } else {
         refusalMsg8 = t("precision.invalid");
       }
+      // Determine remedy key based on case type
+      let remedyKey8 = "invalid_precision_exit";
+      if (type === "invalid_precision_no_responses") {
+        remedyKey8 = "invalid_precision_no_responses";
+      } else if (type === "invalid_precision_insufficient") {
+        remedyKey8 = "invalid_precision_insufficient";
+      } else if (type === "invalid_precision_excess_noise") {
+        remedyKey8 = "invalid_precision_excess_noise";
+      }
+      const remedyText8 = ` | ${t(`remedy.${remedyKey8}`)}`;
       const qualityText8 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
-      summary.textContent = refusalMsg8 + qualityText8;
+      summary.textContent = refusalMsg8 + remedyText8 + qualityText8;
       break;
       
     default:
@@ -1713,6 +1769,7 @@ let precisionTargetX = 0;
 let precisionTargetY = 0;
 let precisionTrialStartTime = null;
 let precisionTrialActive = false;
+let precisionTrialResolved = false; // Per-trial resolution guard: prevents late taps after timeout
 let precisionResizeHandler = null;
 let precisionKeyHandler = null;
 let precisionShouldResetOnFullscreenExit = false;
@@ -1863,6 +1920,7 @@ startBaselineBtn.addEventListener("click", () => {
 
     // Reset precision-specific state
     precisionTrialActive = false;
+    precisionTrialResolved = false;
     precisionTrialStartTime = null;
     precisionTargetRadius = 0;
     precisionTargetX = 0;
@@ -2028,6 +2086,43 @@ startBaselineBtn.addEventListener("click", () => {
       precisionPointerHandler = null;
     }
     
+    // Helper: Normalize input coordinates to CSS pixels
+    // Prefers Pointer Events API, falls back to touch/mouse events
+    // Returns { x, y } in CSS pixels relative to target element
+    // CSS pixels are independent of devicePixelRatio, ensuring consistent hit radius
+    function getInputPoint(e, targetElement) {
+      if (!targetElement) return null;
+      
+      const rect = targetElement.getBoundingClientRect();
+      let clientX, clientY;
+      
+      // Prefer Pointer Events API (works for mouse, touch, pen)
+      if (e.pointerId !== undefined && typeof e.clientX === "number") {
+        clientX = e.clientX;
+        clientY = e.clientY;
+      }
+      // Fallback to touch events
+      else if (e.touches && e.touches.length > 0) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+      }
+      // Fallback to mouse events
+      else if (typeof e.clientX === "number") {
+        clientX = e.clientX;
+        clientY = e.clientY;
+      }
+      else {
+        return null;
+      }
+      
+      // Convert to CSS pixels relative to target element
+      // getBoundingClientRect() already returns CSS pixels, so no DPR conversion needed
+      return {
+        x: clientX - rect.left,
+        y: clientY - rect.top
+      };
+    }
+    
     // Precision stage pointerdown handler (stored for cleanup)
     precisionPointerHandler = (e) => {
       // Only handle events on the precision stage
@@ -2038,6 +2133,7 @@ startBaselineBtn.addEventListener("click", () => {
       if (trialIndex > totalTrials) return;
       if (!precisionTrialStartTime) return;
       if (!precisionTrialActive) return; // Guard against double submissions
+      if (precisionTrialResolved) return; // Guard: ignore late taps after timeout
 
       // Prevent default to avoid any browser behaviors
       e.preventDefault();
@@ -2047,20 +2143,23 @@ startBaselineBtn.addEventListener("click", () => {
       const currentStage = document.getElementById("precisionStage");
       if (!currentStage) return;
 
-      // Get pointer position relative to stage
-      const rect = currentStage.getBoundingClientRect();
-      const pointerX = e.clientX - rect.left;
-      const pointerY = e.clientY - rect.top;
+      // Get pointer position in CSS pixels (normalized for DPR/zoom)
+      const point = getInputPoint(e, currentStage);
+      if (!point) return;
+      const pointerX = point.x;
+      const pointerY = point.y;
 
-      // Calculate distance from target center
+      // Calculate distance from target center (both in CSS pixels)
+      // precisionTargetRadius and coordinates are in CSS pixels, ensuring consistent hit radius
       const distPx = Math.hypot(pointerX - precisionTargetX, pointerY - precisionTargetY);
       const errN = distPx / precisionTargetRadius;
       const errNClamped = Math.min(errN, 3);
       const outcome = errN <= 1.0 ? "hit" : "miss";
       const rt = Math.round(performance.now() - precisionTrialStartTime);
 
-      // Mark trial as inactive immediately to prevent double submissions
+      // Mark trial as resolved and inactive immediately to prevent double submissions and late taps
       precisionTrialActive = false;
+      precisionTrialResolved = true;
 
       // Clear timeout safely
       if (precisionTrialTimeoutId) {
@@ -2186,6 +2285,8 @@ startBaselineBtn.addEventListener("click", () => {
     const w = stage.clientWidth || window.innerWidth;
     const h = stage.clientHeight || window.innerHeight;
     const shortSide = Math.min(w, h);
+    // Calculate radius in CSS pixels (independent of devicePixelRatio)
+    // This ensures consistent hit radius across all devices and zoom levels
     const r = clampInt(Math.round(shortSide * 0.055), 18, 44);
     const padding = Math.round(r * 1.5);
 
@@ -2251,6 +2352,7 @@ startBaselineBtn.addEventListener("click", () => {
 
     precisionTrialStartTime = performance.now();
     precisionTrialActive = true;
+    precisionTrialResolved = false; // Reset resolution guard for new trial
 
     // Set timeout for trial
     const config = TEST_CONFIG.precision;
@@ -2259,7 +2361,12 @@ startBaselineBtn.addEventListener("click", () => {
     }
     precisionTrialTimeoutId = setTimeout(() => {
       if (!inSession || testType.value !== "precision") return;
+      // Guard: if trial already resolved (user tapped), ignore timeout
+      if (precisionTrialResolved) return;
+      
       // Timeout - no response
+      // Mark as resolved first to prevent late taps from being processed
+      precisionTrialResolved = true;
       precisionTrialActive = false;
       recordResult({ type: "timeout", rt: null, errN: null });
       showPrecisionFeedback("timeout");
@@ -4179,6 +4286,7 @@ function hardReset() {
   precisionTargetY = 0;
   precisionTrialStartTime = null;
   precisionTrialActive = false;
+  precisionTrialResolved = false;
   if (precisionResizeHandler) {
     window.removeEventListener("resize", precisionResizeHandler);
     window.removeEventListener("orientationchange", precisionResizeHandler);

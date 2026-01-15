@@ -77,6 +77,7 @@ const I18N = {
         training: "Training",
         all: "All",
       },
+      noteLabel: "Note",
     },
     status: {
       within: "Within normal range",
@@ -158,6 +159,11 @@ const I18N = {
         stress: "stress",
       },
       reason: "Reason: ",
+      reasonText: {
+        R1_INVALID_EXECUTION: "execution failure (no valid responses recorded).",
+        R2_INSUFFICIENT_DATA: "insufficient data (too few valid responses).",
+        R3_EXCESS_NOISE: "excessive errors (too many false starts or inhibitory errors).",
+      },
       falseAlarmsAbbr: "FA",
     },
     trialOutcome: {
@@ -257,6 +263,7 @@ const I18N = {
         training: "Trening",
         all: "Alle",
       },
+      noteLabel: "Merk",
     },
     status: {
       within: "Innenfor normalområdet",
@@ -339,6 +346,11 @@ const I18N = {
         stress: "stress",
       },
       reason: "Årsak: ",
+      reasonText: {
+        R1_INVALID_EXECUTION: "utførelsesfeil (ingen gyldige responser registrert).",
+        R2_INSUFFICIENT_DATA: "utilstrekkelige data (for få gyldige responser).",
+        R3_EXCESS_NOISE: "for mange feil (for mange feilstarter eller inhibisjonsfeil).",
+      },
       falseAlarmsAbbr: "IF",
     },
     trialOutcome: {
@@ -438,6 +450,7 @@ const I18N = {
         training: "Treniruotė",
         all: "Visi",
       },
+      noteLabel: "Pastaba",
     },
     status: {
       within: "Įprastame diapazone",
@@ -519,6 +532,11 @@ const I18N = {
         stress: "stresas",
       },
       reason: "Priežastis: ",
+      reasonText: {
+        R1_INVALID_EXECUTION: "vykdymo klaida (nėra užregistruotų galiojančių atsakų).",
+        R2_INSUFFICIENT_DATA: "nepakanka duomenų (per mažai galiojančių atsakų).",
+        R3_EXCESS_NOISE: "per daug klaidų (per daug klaidingų startų arba slopinimo klaidų).",
+      },
       falseAlarmsAbbr: "SK",
     },
     trialOutcome: {
@@ -793,34 +811,92 @@ function getNotEnoughBaseline() {
   return "Not enough baseline sessions. Please record at least 3 baseline sessions.";
 }
 
+// Helper function to format quality label with optional note
+// Strips leading "Note:" / "Merknad:" / "Pastaba:" prefixes to avoid duplication
+// Returns formatted string with quality on one line and note on new line if present
+function formatQualityWithOptionalNote(qualityLabel, qualityNote) {
+  if (!qualityLabel) return "";
+  
+  const qualityLabelText = t("quality.label"); // "Quality" / "Kvalitet" / "Kokybė"
+  
+  if (!qualityNote) {
+    return `${qualityLabelText}: ${qualityLabel}`;
+  }
+  
+  // Strip leading "Note:" / "Merknad:" / "Pastaba:" prefixes (with optional leading whitespace)
+  let cleanNote = qualityNote.trim();
+  const noteLabel = t("ui.noteLabel");
+  const notePrefixPattern = new RegExp(`^\\s*${noteLabel}:\\s*`, "i");
+  if (notePrefixPattern.test(cleanNote)) {
+    cleanNote = cleanNote.replace(notePrefixPattern, "").trim();
+  }
+  // Also check for English "Note:" in case of language mismatch
+  if (/^\s*Note:\s*/i.test(cleanNote)) {
+    cleanNote = cleanNote.replace(/^\s*Note:\s*/i, "").trim();
+  }
+  // Also check for Norwegian "Merknad:" (with optional leading space)
+  if (/^\s*Merknad:\s*/i.test(cleanNote)) {
+    cleanNote = cleanNote.replace(/^\s*Merknad:\s*/i, "").trim();
+  }
+  // Also check for Lithuanian "Pastaba:" (with optional leading space)
+  if (/^\s*Pastaba:\s*/i.test(cleanNote)) {
+    cleanNote = cleanNote.replace(/^\s*Pastaba:\s*/i, "").trim();
+  }
+  
+  return `${qualityLabelText}: ${qualityLabel}\n${noteLabel}: ${cleanNote}`;
+}
+
+// Helper function to get reason-only text from refusal code (for history/details display)
+// Returns just the reason clause without the "Session not usable:" prefix
+// Falls back to full refusal message if reason-only key doesn't exist
+function getRefusalReasonText(refusalCode) {
+  if (!refusalCode) return "";
+  
+  // Try to get reason-only text from history.reasonText.<code>
+  const reasonKey = `history.reasonText.${refusalCode}`;
+  const reasonText = t(reasonKey);
+  
+  // If we got a valid translation (not the key itself), use it
+  if (reasonText && reasonText !== reasonKey) {
+    return reasonText;
+  }
+  
+  // Fallback: return full refusal message (caller can parse if needed)
+  return t(`refusal.${refusalCode}`);
+}
+
 function getBaselineSavedReaction(mean, sd, falseStarts, qualityNote, quality, deviceWarning) {
   const falseStartsText = falseStarts 
     ? (currentLang === "no" ? ` | Feilstarter: ${falseStarts}` : currentLang === "lt" ? ` | Klaidingi startai: ${falseStarts}` : ` | False starts: ${falseStarts}`)
     : "";
-  const qualityText = quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${quality}`)}` : ` | Quality: ${t(`quality.${quality}`)}`) : "";
+  const qualityLabel = quality ? t(`quality.${quality}`) : "";
+  const qualityBlock = formatQualityWithOptionalNote(qualityLabel, qualityNote || "");
+  const qualityText = qualityBlock ? ` | ${qualityBlock}` : "";
   const warningText = deviceWarning || "";
   if (currentLang === "no") {
-    return `Baseline-økt lagret. Gjennomsnitt: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms${falseStartsText}${qualityText}${qualityNote}${warningText}`;
+    return `Baseline-økt lagret. Gjennomsnitt: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms${falseStartsText}${qualityText}${warningText}`;
   }
   if (currentLang === "lt") {
-    return `Bazinio lygio sesija išsaugota. Vidurkis: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms${falseStartsText}${qualityText}${qualityNote}${warningText}`;
+    return `Bazinio lygio sesija išsaugota. Vidurkis: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms${falseStartsText}${qualityText}${warningText}`;
   }
-  return `Baseline session saved. Mean: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms${falseStartsText}${qualityText}${qualityNote}${warningText}`;
+  return `Baseline session saved. Mean: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms${falseStartsText}${qualityText}${warningText}`;
 }
 
 function getBaselineSavedGoNoGo(mean, sd, misses, falseAlarms, falseStarts, qualityNote, quality, deviceWarning) {
   const falseStartsText = falseStarts
     ? (currentLang === "no" ? ` | Feilstarter: ${falseStarts}` : currentLang === "lt" ? ` | Klaidingi startai: ${falseStarts}` : ` | False starts: ${falseStarts}`)
     : "";
-  const qualityText = quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${quality}`)}` : ` | Quality: ${t(`quality.${quality}`)}`) : "";
+  const qualityLabel = quality ? t(`quality.${quality}`) : "";
+  const qualityBlock = formatQualityWithOptionalNote(qualityLabel, qualityNote || "");
+  const qualityText = qualityBlock ? ` | ${qualityBlock}` : "";
   const warningText = deviceWarning || "";
   if (currentLang === "no") {
-    return `Baseline-økt lagret. GO-gjennomsnitt: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms | Bom: ${misses} | Inhibisjonsfeil: ${falseAlarms}${falseStartsText}${qualityText}${qualityNote}${warningText}`;
+    return `Baseline-økt lagret. GO-gjennomsnitt: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms | Bom: ${misses} | Inhibisjonsfeil: ${falseAlarms}${falseStartsText}${qualityText}${warningText}`;
   }
   if (currentLang === "lt") {
-    return `Bazinio lygio sesija išsaugota. GO vidurkis: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms | Praleistai: ${misses} | Slopinimo klaidos: ${falseAlarms}${falseStartsText}${qualityText}${qualityNote}${warningText}`;
+    return `Bazinio lygio sesija išsaugota. GO vidurkis: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms | Praleistai: ${misses} | Slopinimo klaidos: ${falseAlarms}${falseStartsText}${qualityText}${warningText}`;
   }
-  return `Baseline session saved. GO mean: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms | Misses: ${misses} | Inhibitory errors: ${falseAlarms}${falseStartsText}${qualityText}${qualityNote}${warningText}`;
+  return `Baseline session saved. GO mean: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms | Misses: ${misses} | Inhibitory errors: ${falseAlarms}${falseStartsText}${qualityText}${warningText}`;
 }
 
 function getBaselineSavedDivided(mean, sd, misses, falseAlarms, falseStarts, flashTargetCount, flashAbsError, qualityNote, quality, deviceWarning) {
@@ -834,59 +910,67 @@ function getBaselineSavedDivided(mean, sd, misses, falseAlarms, falseStarts, fla
           ? ` | Blyksnių klaida vid.: ${flashAbsError.toFixed(1)} (tikslas: ${flashTargetCount})`
           : ` | Flash error avg: ${flashAbsError.toFixed(1)} (target: ${flashTargetCount})`)
     : "";
-  const qualityText = quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${quality}`)}` : ` | Quality: ${t(`quality.${quality}`)}`) : "";
+  const qualityLabel = quality ? t(`quality.${quality}`) : "";
+  const qualityBlock = formatQualityWithOptionalNote(qualityLabel, qualityNote || "");
+  const qualityText = qualityBlock ? ` | ${qualityBlock}` : "";
   const warningText = deviceWarning || "";
   if (currentLang === "no") {
-    return `Baseline-økt lagret. GO-gjennomsnitt: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms | Bom: ${misses} | Inhibisjonsfeil: ${falseAlarms}${flashText}${falseStartsText}${qualityText}${qualityNote}${warningText}`;
+    return `Baseline-økt lagret. GO-gjennomsnitt: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms | Bom: ${misses} | Inhibisjonsfeil: ${falseAlarms}${flashText}${falseStartsText}${qualityText}${warningText}`;
   }
   if (currentLang === "lt") {
-    return `Bazinio lygio sesija išsaugota. GO vidurkis: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms | Praleistai: ${misses} | Slopinimo klaidos: ${falseAlarms}${flashText}${falseStartsText}${qualityText}${qualityNote}${warningText}`;
+    return `Bazinio lygio sesija išsaugota. GO vidurkis: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms | Praleistai: ${misses} | Slopinimo klaidos: ${falseAlarms}${flashText}${falseStartsText}${qualityText}${warningText}`;
   }
-  return `Baseline session saved. GO mean: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms | Misses: ${misses} | Inhibitory errors: ${falseAlarms}${flashText}${falseStartsText}${qualityText}${qualityNote}${warningText}`;
+  return `Baseline session saved. GO mean: ${mean.toFixed(0)} ms | SD: ${sd.toFixed(0)} ms | Misses: ${misses} | Inhibitory errors: ${falseAlarms}${flashText}${falseStartsText}${qualityText}${warningText}`;
 }
 
 function getBaselineSavedPrecision(meanErrN, sdErrN, meanRtMs, qualityNote, quality, deviceWarning, fullscreenNote) {
   const rtText = meanRtMs > 0 ? (currentLang === "no" ? ` | RT: ${meanRtMs.toFixed(0)} ms` : currentLang === "lt" ? ` | RT: ${meanRtMs.toFixed(0)} ms` : ` | RT: ${meanRtMs.toFixed(0)} ms`) : "";
-  const qualityText = quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${quality}`)}` : ` | Quality: ${t(`quality.${quality}`)}`) : "";
+  const qualityLabel = quality ? t(`quality.${quality}`) : "";
+  const qualityBlock = formatQualityWithOptionalNote(qualityLabel, qualityNote || "");
+  const qualityText = qualityBlock ? ` | ${qualityBlock}` : "";
   const warningText = deviceWarning || "";
   const fullscreenNoteText = fullscreenNote || "";
   if (currentLang === "no") {
-    return `Baseline-økt lagret. Feil: ${meanErrN.toFixed(2)} | SD: ${sdErrN.toFixed(2)}${rtText}${qualityText}${qualityNote}${warningText}${fullscreenNoteText}`;
+    return `Baseline-økt lagret. Feil: ${meanErrN.toFixed(2)} | SD: ${sdErrN.toFixed(2)}${rtText}${qualityText}${warningText}${fullscreenNoteText}`;
   }
   if (currentLang === "lt") {
-    return `Bazinio lygio sesija išsaugota. Klaida: ${meanErrN.toFixed(2)} | SD: ${sdErrN.toFixed(2)}${rtText}${qualityText}${qualityNote}${warningText}${fullscreenNoteText}`;
+    return `Bazinio lygio sesija išsaugota. Klaida: ${meanErrN.toFixed(2)} | SD: ${sdErrN.toFixed(2)}${rtText}${qualityText}${warningText}${fullscreenNoteText}`;
   }
-  return `Baseline session saved. Error: ${meanErrN.toFixed(2)} | SD: ${sdErrN.toFixed(2)}${rtText}${qualityText}${qualityNote}${warningText}${fullscreenNoteText}`;
+  return `Baseline session saved. Error: ${meanErrN.toFixed(2)} | SD: ${sdErrN.toFixed(2)}${rtText}${qualityText}${warningText}${fullscreenNoteText}`;
 }
 
 function getCheckReaction(mean, baselineMean, baselineSD, status, falseStarts, qualityNote, quality, deviceWarning) {
   const falseStartsText = falseStarts
     ? (currentLang === "no" ? ` | Feilstarter: ${falseStarts}` : currentLang === "lt" ? ` | Klaidingi startai: ${falseStarts}` : ` | False starts: ${falseStarts}`)
     : "";
-  const qualityText = quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${quality}`)}` : ` | Quality: ${t(`quality.${quality}`)}`) : "";
+  const qualityLabel = quality ? t(`quality.${quality}`) : "";
+  const qualityBlock = formatQualityWithOptionalNote(qualityLabel, qualityNote || "");
+  const qualityText = qualityBlock ? ` | ${qualityBlock}` : "";
   const warningText = deviceWarning || "";
   if (currentLang === "no") {
-    return `Dagens gjennomsnitt: ${mean.toFixed(0)} ms | Baseline-gjennomsnitt: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status}${falseStartsText}${qualityText}${qualityNote}${warningText}`;
+    return `Dagens gjennomsnitt: ${mean.toFixed(0)} ms | Baseline-gjennomsnitt: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status}${falseStartsText}${qualityText}${warningText}`;
   }
   if (currentLang === "lt") {
-    return `Šiandienos vidurkis: ${mean.toFixed(0)} ms | Bazinio lygio vidurkis: ${baselineMean.toFixed(0)} ms | Bazinio lygio SD: ${baselineSD.toFixed(0)} ms | Būsena: ${status}${falseStartsText}${qualityText}${qualityNote}${warningText}`;
+    return `Šiandienos vidurkis: ${mean.toFixed(0)} ms | Bazinio lygio vidurkis: ${baselineMean.toFixed(0)} ms | Bazinio lygio SD: ${baselineSD.toFixed(0)} ms | Būsena: ${status}${falseStartsText}${qualityText}${warningText}`;
   }
-  return `Today mean: ${mean.toFixed(0)} ms | Baseline mean: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status}${falseStartsText}${qualityText}${qualityNote}${warningText}`;
+  return `Today mean: ${mean.toFixed(0)} ms | Baseline mean: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status}${falseStartsText}${qualityText}${warningText}`;
 }
 
 function getCheckGoNoGo(mean, baselineMean, baselineSD, status, misses, baselineMissAvg, falseAlarms, baselineFAAvg, falseStarts, qualityNote, quality, deviceWarning) {
   const falseStartsText = falseStarts
     ? (currentLang === "no" ? ` | Feilstarter: ${falseStarts}` : currentLang === "lt" ? ` | Klaidingi startai: ${falseStarts}` : ` | False starts: ${falseStarts}`)
     : "";
-  const qualityText = quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${quality}`)}` : ` | Quality: ${t(`quality.${quality}`)}`) : "";
+  const qualityLabel = quality ? t(`quality.${quality}`) : "";
+  const qualityBlock = formatQualityWithOptionalNote(qualityLabel, qualityNote || "");
+  const qualityText = qualityBlock ? ` | ${qualityBlock}` : "";
   const warningText = deviceWarning || "";
   if (currentLang === "no") {
-    return `Dagens GO-gjennomsnitt: ${mean.toFixed(0)} ms | Baseline-gjennomsnitt: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status} | Bom: ${misses} (baseline snitt ${baselineMissAvg.toFixed(1)}) | Inhibisjonsfeil: ${falseAlarms} (baseline snitt ${baselineFAAvg.toFixed(1)})${falseStartsText}${qualityText}${qualityNote}${warningText}`;
+    return `Dagens GO-gjennomsnitt: ${mean.toFixed(0)} ms | Baseline-gjennomsnitt: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status} | Bom: ${misses} (baseline snitt ${baselineMissAvg.toFixed(1)}) | Inhibisjonsfeil: ${falseAlarms} (baseline snitt ${baselineFAAvg.toFixed(1)})${falseStartsText}${qualityText}${warningText}`;
   }
   if (currentLang === "lt") {
-    return `Šiandienos GO vidurkis: ${mean.toFixed(0)} ms | Bazinio lygio vidurkis: ${baselineMean.toFixed(0)} ms | Bazinio lygio SD: ${baselineSD.toFixed(0)} ms | Būsena: ${status} | Praleistai: ${misses} (bazinio lygio vid. ${baselineMissAvg.toFixed(1)}) | Slopinimo klaidos: ${falseAlarms} (bazinio lygio vid. ${baselineFAAvg.toFixed(1)})${falseStartsText}${qualityText}${qualityNote}${warningText}`;
+    return `Šiandienos GO vidurkis: ${mean.toFixed(0)} ms | Bazinio lygio vidurkis: ${baselineMean.toFixed(0)} ms | Bazinio lygio SD: ${baselineSD.toFixed(0)} ms | Būsena: ${status} | Praleistai: ${misses} (bazinio lygio vid. ${baselineMissAvg.toFixed(1)}) | Slopinimo klaidos: ${falseAlarms} (bazinio lygio vid. ${baselineFAAvg.toFixed(1)})${falseStartsText}${qualityText}${warningText}`;
   }
-  return `Today GO mean: ${mean.toFixed(0)} ms | Baseline mean: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status} | Misses: ${misses} (baseline avg ${baselineMissAvg.toFixed(1)}) | Inhibitory errors: ${falseAlarms} (baseline avg ${baselineFAAvg.toFixed(1)})${falseStartsText}${qualityText}${qualityNote}${warningText}`;
+  return `Today GO mean: ${mean.toFixed(0)} ms | Baseline mean: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status} | Misses: ${misses} (baseline avg ${baselineMissAvg.toFixed(1)}) | Inhibitory errors: ${falseAlarms} (baseline avg ${baselineFAAvg.toFixed(1)})${falseStartsText}${qualityText}${warningText}`;
 }
 
 // Divided Attention status comparison (avgMs, falseAlarmsRate, flashAbsError)
@@ -961,19 +1045,23 @@ function getCheckDividedAttention(mean, baselineMean, baselineSD, status, falseA
   const falseStartsText = falseStarts > 0
     ? (currentLang === "no" ? ` | Feilstarter: ${falseStarts}` : currentLang === "lt" ? ` | Klaidingi startai: ${falseStarts}` : ` | False starts: ${falseStarts}`)
     : "";
-  const qualityText = quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${quality}`)}` : ` | Quality: ${t(`quality.${quality}`)}`) : "";
+  const qualityLabel = quality ? t(`quality.${quality}`) : "";
+  const qualityBlock = formatQualityWithOptionalNote(qualityLabel, qualityNote || "");
+  const qualityText = qualityBlock ? ` | ${qualityBlock}` : "";
   const warningText = deviceWarning || "";
   if (currentLang === "no") {
-    return `Dagens GO-gjennomsnitt: ${mean.toFixed(0)} ms | Baseline-gjennomsnitt: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status} | Inhibisjonsfeil-rate: ${(falseAlarmsRate * 100).toFixed(1)}% (baseline ${(baselineFARate * 100).toFixed(1)}%) | Flash-feil: ${flashAbsError} (baseline snitt ${baselineFlashError.toFixed(1)})${falseStartsText}${qualityText}${qualityNote}${warningText}`;
+    return `Dagens GO-gjennomsnitt: ${mean.toFixed(0)} ms | Baseline-gjennomsnitt: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status} | Inhibisjonsfeil-rate: ${(falseAlarmsRate * 100).toFixed(1)}% (baseline ${(baselineFARate * 100).toFixed(1)}%) | Flash-feil: ${flashAbsError} (baseline snitt ${baselineFlashError.toFixed(1)})${falseStartsText}${qualityText}${warningText}`;
   }
   if (currentLang === "lt") {
-    return `Šiandienos GO vidurkis: ${mean.toFixed(0)} ms | Bazinio lygio vidurkis: ${baselineMean.toFixed(0)} ms | Bazinio lygio SD: ${baselineSD.toFixed(0)} ms | Būsena: ${status} | Slopinimo klaidų dažnis: ${(falseAlarmsRate * 100).toFixed(1)}% (bazinis lygis ${(baselineFARate * 100).toFixed(1)}%) | Blyksnių klaida: ${flashAbsError} (bazinio lygio vid. ${baselineFlashError.toFixed(1)})${falseStartsText}${qualityText}${qualityNote}${warningText}`;
+    return `Šiandienos GO vidurkis: ${mean.toFixed(0)} ms | Bazinio lygio vidurkis: ${baselineMean.toFixed(0)} ms | Bazinio lygio SD: ${baselineSD.toFixed(0)} ms | Būsena: ${status} | Slopinimo klaidų dažnis: ${(falseAlarmsRate * 100).toFixed(1)}% (bazinis lygis ${(baselineFARate * 100).toFixed(1)}%) | Blyksnių klaida: ${flashAbsError} (bazinio lygio vid. ${baselineFlashError.toFixed(1)})${falseStartsText}${qualityText}${warningText}`;
   }
-  return `Today GO mean: ${mean.toFixed(0)} ms | Baseline mean: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status} | False alarm rate: ${(falseAlarmsRate * 100).toFixed(1)}% (baseline ${(baselineFARate * 100).toFixed(1)}%) | Flash error: ${flashAbsError} (baseline avg ${baselineFlashError.toFixed(1)})${falseStartsText}${qualityText}${qualityNote}${warningText}`;
+  return `Today GO mean: ${mean.toFixed(0)} ms | Baseline mean: ${baselineMean.toFixed(0)} ms | Baseline SD: ${baselineSD.toFixed(0)} ms | Status: ${status} | False alarm rate: ${(falseAlarmsRate * 100).toFixed(1)}% (baseline ${(baselineFARate * 100).toFixed(1)}%) | Flash error: ${flashAbsError} (baseline avg ${baselineFlashError.toFixed(1)})${falseStartsText}${qualityText}${warningText}`;
 }
 
 function getCheckPrecision(meanErrN, baselineMeanErrN, baselineSDErrN, status, meanRtMs, quality, deviceWarning, fullscreenNote) {
-  const qualityText = quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${quality}`)}` : ` | Quality: ${t(`quality.${quality}`)}`) : "";
+  const qualityLabel = quality ? t(`quality.${quality}`) : "";
+  const qualityBlock = formatQualityWithOptionalNote(qualityLabel, "");
+  const qualityText = qualityBlock ? ` | ${qualityBlock}` : "";
   const warningText = deviceWarning || "";
   const fullscreenNoteText = fullscreenNote || "";
   const rtText = meanRtMs > 0 ? (currentLang === "no" ? ` | RT: ${meanRtMs.toFixed(0)} ms` : currentLang === "lt" ? ` | RT: ${meanRtMs.toFixed(0)} ms` : ` | RT: ${meanRtMs.toFixed(0)} ms`) : "";
@@ -1056,7 +1144,9 @@ function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
   switch (type) {
     case "training_divided":
       const flashInfo = getFlashInfoString(dataObj.flashTargetCount, dataObj.flashUserCount, dataObj.flashAbsError);
-      const qualityTextTraining = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
+      const qualityLabelTraining = dataObj.quality ? t(`quality.${dataObj.quality}`) : "";
+      const qualityBlockTraining = formatQualityWithOptionalNote(qualityLabelTraining, dataObj.qualityNote || "");
+      const qualityTextTraining = qualityBlockTraining ? ` | ${qualityBlockTraining}` : "";
       let trainingText = "";
       if (currentLang === "no") {
         trainingText = `Økt fullført. GO-gjennomsnitt: ${dataObj.mean.toFixed(0)} ms | SD: ${dataObj.sd.toFixed(0)} ms`;
@@ -1103,7 +1193,9 @@ function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
     case "invalid_no_reaction":
       const refusalMsg1 = dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : getSessionInvalidNoReaction();
       const remedyText1 = ` | ${t("remedy.invalid_no_reaction")}`;
-      const qualityText1 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
+      const qualityLabel1 = dataObj.quality ? t(`quality.${dataObj.quality}`) : "";
+      const qualityBlock1 = formatQualityWithOptionalNote(qualityLabel1, "");
+      const qualityText1 = qualityBlock1 ? ` | ${qualityBlock1}` : "";
       const summaryText1 = refusalMsg1 + remedyText1 + qualityText1;
       summary.textContent = summaryText1;
       // Ensure summary is visible (CSS :empty rule might hide it if text is empty)
@@ -1115,21 +1207,27 @@ function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
     case "invalid_no_go":
       const refusalMsg2 = dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : getSessionInvalidNoGo();
       const remedyText2 = ` | ${t("remedy.invalid_no_go")}`;
-      const qualityText2 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
+      const qualityLabel2 = dataObj.quality ? t(`quality.${dataObj.quality}`) : "";
+      const qualityBlock2 = formatQualityWithOptionalNote(qualityLabel2, "");
+      const qualityText2 = qualityBlock2 ? ` | ${qualityBlock2}` : "";
       summary.textContent = refusalMsg2 + remedyText2 + qualityText2;
       break;
       
     case "not_enough_baseline":
       const refusalMsg3 = dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : getNotEnoughBaseline();
       const remedyText3 = ` | ${t("remedy.not_enough_baseline")}`;
-      const qualityText3 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
+      const qualityLabel3 = dataObj.quality ? t(`quality.${dataObj.quality}`) : "";
+      const qualityBlock3 = formatQualityWithOptionalNote(qualityLabel3, "");
+      const qualityText3 = qualityBlock3 ? ` | ${qualityBlock3}` : "";
       summary.textContent = refusalMsg3 + remedyText3 + qualityText3;
       break;
       
     case "baseline_not_saved":
       const refusalMsg4 = dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : getBaselineNotSaved();
       const remedyText4 = ` | ${t("remedy.baseline_not_saved")}`;
-      const qualityText4 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
+      const qualityLabel4 = dataObj.quality ? t(`quality.${dataObj.quality}`) : "";
+      const qualityBlock4 = formatQualityWithOptionalNote(qualityLabel4, "");
+      const qualityText4 = qualityBlock4 ? ` | ${qualityBlock4}` : "";
       summary.textContent = refusalMsg4 + remedyText4 + qualityText4;
       break;
       
@@ -1137,7 +1235,9 @@ function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
       const flashInfo2 = getFlashInfoString(dataObj.flashTarget, dataObj.flashUser, dataObj.flashError);
       const refusalMsg5 = dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : getBaselineNotSavedDivided();
       const remedyText5 = ` | ${t("remedy.baseline_not_saved_divided")}`;
-      const qualityText5 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
+      const qualityLabel5 = dataObj.quality ? t(`quality.${dataObj.quality}`) : "";
+      const qualityBlock5 = formatQualityWithOptionalNote(qualityLabel5, "");
+      const qualityText5 = qualityBlock5 ? ` | ${qualityBlock5}` : "";
       summary.textContent = refusalMsg5 + flashInfo2 + remedyText5 + qualityText5;
       break;
       
@@ -1153,7 +1253,9 @@ function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
         refusalMsg6 = "Session not usable for comparison: missing answer";
       }
       const remedyText6 = ` | ${t("remedy.invalid_missing_answer")}`;
-      const qualityText6 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
+      const qualityLabel6 = dataObj.quality ? t(`quality.${dataObj.quality}`) : "";
+      const qualityBlock6 = formatQualityWithOptionalNote(qualityLabel6, "");
+      const qualityText6 = qualityBlock6 ? ` | ${qualityBlock6}` : "";
       summary.textContent = refusalMsg6 + remedyText6 + qualityText6;
       break;
       
@@ -1169,7 +1271,9 @@ function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
         refusalMsg7 = "Session invalid: no GO responses.";
       }
       const remedyText7 = ` | ${t("remedy.invalid_no_go_responses_divided")}`;
-      const qualityText7 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
+      const qualityLabel7 = dataObj.quality ? t(`quality.${dataObj.quality}`) : "";
+      const qualityBlock7 = formatQualityWithOptionalNote(qualityLabel7, "");
+      const qualityText7 = qualityBlock7 ? ` | ${qualityBlock7}` : "";
       summary.textContent = refusalMsg7 + remedyText7 + qualityText7;
       break;
       
@@ -1193,7 +1297,9 @@ function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
         remedyKey8 = "invalid_precision_excess_noise";
       }
       const remedyText8 = ` | ${t(`remedy.${remedyKey8}`)}`;
-      const qualityText8 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
+      const qualityLabel8 = dataObj.quality ? t(`quality.${dataObj.quality}`) : "";
+      const qualityBlock8 = formatQualityWithOptionalNote(qualityLabel8, "");
+      const qualityText8 = qualityBlock8 ? ` | ${qualityBlock8}` : "";
       summary.textContent = refusalMsg8 + remedyText8 + qualityText8;
       break;
       
@@ -5921,12 +6027,45 @@ function renderHistory() {
       why.className = "history-reason";
       let reasonText = "";
       if (s.flags.refusalCode) {
-        // Use standardized refusal message
-        reasonText = t(`refusal.${s.flags.refusalCode}`);
+        // For Precision, Go/No-Go, and Divided Attention: use reason-only text for compact display
+        // For Reaction Time: show full refusal message (if it uses refusal codes)
+        if (tt === "precision" || tt === "gonogo" || tt === "divided") {
+          // Use helper to get reason-only text (avoids colon parsing for known codes)
+          const reasonOnly = getRefusalReasonText(s.flags.refusalCode);
+          const fullMessage = t(`refusal.${s.flags.refusalCode}`);
+          // Check if helper returned reason-only text (different from full message)
+          if (reasonOnly && reasonOnly !== fullMessage) {
+            // Got reason-only text from i18n key
+            reasonText = t("history.reason") + reasonOnly;
+          } else {
+            // Fallback: parse full message (for backward compatibility with old sessions or unknown codes)
+            const colonIndex = fullMessage.indexOf(":");
+            if (colonIndex >= 0) {
+              reasonText = t("history.reason") + fullMessage.substring(colonIndex + 1).trim();
+            } else {
+              // Fallback: use full message if no colon found
+              reasonText = t("history.reason") + fullMessage;
+            }
+          }
+        } else {
+          // Reaction Time: show full refusal message
+          reasonText = t(`refusal.${s.flags.refusalCode}`);
+        }
       } else if (s.flags.reason) {
-        // Fallback to old reason format (for backward compatibility)
+        // Fallback to old reason format (for backward compatibility with old sessions)
         const reasonLabel = t("history.reason");
-        reasonText = reasonLabel + String(s.flags.reason);
+        // For Precision, Go/No-Go, and Divided: show reason with label
+        if (tt === "precision" || tt === "gonogo" || tt === "divided") {
+          reasonText = reasonLabel + String(s.flags.reason);
+        } else {
+          reasonText = reasonLabel + String(s.flags.reason);
+        }
+      } else if ((tt === "precision" || tt === "gonogo" || tt === "divided") && isInvalid) {
+        // Invalid but no refusalCode/reason: use generic message (Precision only has precision.invalid)
+        if (tt === "precision") {
+          reasonText = t("history.reason") + t("precision.invalid");
+        }
+        // Go/No-Go and Divided don't have generic invalid messages, so skip
       }
       if (reasonText) {
         why.textContent = reasonText;

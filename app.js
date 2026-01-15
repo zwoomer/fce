@@ -90,7 +90,9 @@ const I18N = {
     },
     export: {
       btn: "Export (Copy JSON)",
+      btnCsv: "Export CSV",
       copied: "Copied to clipboard.",
+      csvExported: "CSV exported.",
       empty: "No history to export.",
       failed: "Copy failed — showing text below.",
     },
@@ -269,7 +271,9 @@ const I18N = {
     },
     export: {
       btn: "Eksporter (kopier JSON)",
+      btnCsv: "Eksporter CSV",
       copied: "Kopiert til utklippstavlen.",
+      csvExported: "CSV eksportert.",
       empty: "Ingen historikk å eksportere.",
       failed: "Kopiering feilet — viser tekst under.",
     },
@@ -447,7 +451,9 @@ const I18N = {
     },
     export: {
       btn: "Eksportuoti (kopijuoti JSON)",
+      btnCsv: "Eksportuoti CSV",
       copied: "Kopijuota į iškarpinę.",
+      csvExported: "CSV eksportuotas.",
       empty: "Nėra istorijos eksportavimui.",
       failed: "Kopijavimas nepavyko — rodomas tekstas žemiau.",
     },
@@ -1098,7 +1104,12 @@ function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
       const refusalMsg1 = dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : getSessionInvalidNoReaction();
       const remedyText1 = ` | ${t("remedy.invalid_no_reaction")}`;
       const qualityText1 = dataObj.quality ? (currentLang === "no" ? ` | Kvalitet: ${t(`quality.${dataObj.quality}`)}` : currentLang === "lt" ? ` | Kokybė: ${t(`quality.${dataObj.quality}`)}` : ` | Quality: ${t(`quality.${dataObj.quality}`)}`) : "";
-      summary.textContent = refusalMsg1 + remedyText1 + qualityText1;
+      const summaryText1 = refusalMsg1 + remedyText1 + qualityText1;
+      summary.textContent = summaryText1;
+      // Ensure summary is visible (CSS :empty rule might hide it if text is empty)
+      if (summaryText1) {
+        summary.style.display = "";
+      }
       break;
       
     case "invalid_no_go":
@@ -1189,6 +1200,11 @@ function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
     default:
       // Unknown type, just set text directly
       break;
+  }
+  
+  // Ensure summary is visible after setting text (CSS :empty rule might hide it if text was previously empty)
+  if (summary.textContent && summary.textContent.trim()) {
+    summary.style.display = "";
   }
   
   // After summary is set, scroll to status on mobile (with delay to ensure DOM is updated)
@@ -2887,6 +2903,249 @@ function exportHistoryFor(testType) {
   return { ok: true, text: JSON.stringify(payload, null, 2) };
 }
 
+// CSV export: escape field for CSV (handles commas, quotes, newlines)
+function escapeCsvField(value) {
+  if (value === null || value === undefined) return "";
+  const str = String(value);
+  // If contains comma, quote, or newline, wrap in quotes and escape internal quotes
+  if (str.includes(",") || str.includes('"') || str.includes("\n") || str.includes("\r")) {
+    return `"${str.replace(/"/g, '""')}"`;
+  }
+  return str;
+}
+
+// CSV export: flatten session record to CSV row
+function sessionToCsvRow(session, testType) {
+  const row = [];
+  
+  // Metadata
+  row.push(escapeCsvField(session.id || ""));
+  row.push(escapeCsvField(session.createdAt || ""));
+  // Local timestamp string (format: YYYY-MM-DD HH:mm) - deterministic, locale-independent
+  let timezoneOffsetMin = "";
+  if (session.createdAt) {
+    try {
+      const date = new Date(session.createdAt);
+      // Get local time components (not UTC)
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      const hours = String(date.getHours()).padStart(2, "0");
+      const minutes = String(date.getMinutes()).padStart(2, "0");
+      const localStr = `${year}-${month}-${day} ${hours}:${minutes}`;
+      row.push(escapeCsvField(localStr));
+      // Timezone offset in minutes (behind UTC)
+      timezoneOffsetMin = String(date.getTimezoneOffset());
+    } catch {
+      row.push("");
+    }
+  } else {
+    row.push("");
+  }
+  row.push(escapeCsvField(timezoneOffsetMin));
+  row.push(escapeCsvField(session.mode || ""));
+  row.push(escapeCsvField(session.testType || testType || ""));
+  row.push(escapeCsvField(session.version || ""));
+  
+  // Metrics (flatten based on test type)
+  const metrics = session.metrics || {};
+  if (testType === "reaction") {
+    row.push(escapeCsvField(metrics.avgMs || ""));
+    row.push(escapeCsvField(metrics.sdMs || ""));
+    row.push(escapeCsvField(metrics.bestMs || ""));
+    row.push(escapeCsvField(metrics.worstMs || ""));
+    row.push(escapeCsvField(metrics.trials || ""));
+    row.push(escapeCsvField(metrics.falseStarts || ""));
+    // Non-applicable fields for reaction
+    row.push(""); // hits
+    row.push(""); // misses
+    row.push(""); // falseAlarms
+    row.push(""); // correctRejects
+    row.push(""); // nogoCount
+    row.push(""); // flashTargetCount
+    row.push(""); // flashUserCount
+    row.push(""); // flashAbsError
+    row.push(""); // avgErrN
+    row.push(""); // sdErrN
+    row.push(""); // bestErrN
+    row.push(""); // worstErrN
+    row.push(""); // meanRtMs
+    row.push(""); // sdRtMs
+    row.push(""); // respondedTrials
+    row.push(""); // timeouts
+  } else if (testType === "gonogo") {
+    row.push(escapeCsvField(metrics.avgMs || ""));
+    row.push(escapeCsvField(metrics.sdMs || ""));
+    row.push(escapeCsvField(metrics.bestMs || ""));
+    row.push(escapeCsvField(metrics.worstMs || ""));
+    row.push(escapeCsvField(metrics.trials || ""));
+    row.push(escapeCsvField(metrics.falseStarts || ""));
+    row.push(escapeCsvField(metrics.hits || ""));
+    row.push(escapeCsvField(metrics.misses || ""));
+    row.push(escapeCsvField(metrics.falseAlarms || ""));
+    row.push(escapeCsvField(metrics.correctRejects || ""));
+    row.push(escapeCsvField(metrics.nogoCount || ""));
+    // Non-applicable fields for gonogo
+    row.push(""); // flashTargetCount
+    row.push(""); // flashUserCount
+    row.push(""); // flashAbsError
+    row.push(""); // avgErrN
+    row.push(""); // sdErrN
+    row.push(""); // bestErrN
+    row.push(""); // worstErrN
+    row.push(""); // meanRtMs
+    row.push(""); // sdRtMs
+    row.push(""); // respondedTrials
+    row.push(""); // timeouts
+  } else if (testType === "divided") {
+    row.push(escapeCsvField(metrics.avgMs || ""));
+    row.push(escapeCsvField(metrics.sdMs || ""));
+    row.push(escapeCsvField(metrics.bestMs || ""));
+    row.push(escapeCsvField(metrics.worstMs || ""));
+    row.push(escapeCsvField(metrics.trials || ""));
+    row.push(escapeCsvField(metrics.falseStarts || ""));
+    row.push(escapeCsvField(metrics.hits || ""));
+    row.push(escapeCsvField(metrics.misses || ""));
+    row.push(escapeCsvField(metrics.falseAlarms || ""));
+    row.push(escapeCsvField(metrics.correctRejects || ""));
+    row.push(escapeCsvField(metrics.nogoCount || ""));
+    row.push(escapeCsvField(metrics.flashTargetCount || ""));
+    row.push(escapeCsvField(metrics.flashUserCount || ""));
+    row.push(escapeCsvField(metrics.flashAbsError || ""));
+    // Non-applicable fields for divided
+    row.push(""); // avgErrN
+    row.push(""); // sdErrN
+    row.push(""); // bestErrN
+    row.push(""); // worstErrN
+    row.push(""); // meanRtMs
+    row.push(""); // sdRtMs
+    row.push(""); // respondedTrials
+    row.push(""); // timeouts
+  } else if (testType === "precision") {
+    // Non-applicable fields for precision
+    row.push(""); // avgMs
+    row.push(""); // sdMs
+    row.push(""); // bestMs
+    row.push(""); // worstMs
+    row.push(escapeCsvField(metrics.trials || ""));
+    row.push(""); // falseStarts
+    row.push(escapeCsvField(metrics.hits || ""));
+    row.push(escapeCsvField(metrics.misses || ""));
+    row.push(""); // falseAlarms
+    row.push(""); // correctRejects
+    row.push(""); // nogoCount
+    row.push(""); // flashTargetCount
+    row.push(""); // flashUserCount
+    row.push(""); // flashAbsError
+    row.push(escapeCsvField(metrics.avgErrN || ""));
+    row.push(escapeCsvField(metrics.sdErrN || ""));
+    row.push(escapeCsvField(metrics.bestErrN || ""));
+    row.push(escapeCsvField(metrics.worstErrN || ""));
+    row.push(escapeCsvField(metrics.meanRtMs || ""));
+    row.push(escapeCsvField(metrics.sdRtMs || ""));
+    row.push(escapeCsvField(metrics.respondedTrials || ""));
+    row.push(escapeCsvField(metrics.timeouts || ""));
+  } else {
+    // Unknown test type - fill all with empty
+    for (let i = 0; i < 23; i++) row.push("");
+  }
+  
+  // Quality
+  row.push(escapeCsvField(session.quality || ""));
+  row.push(escapeCsvField(session.qualityNote || ""));
+  
+  // Flags
+  const flags = session.flags || {};
+  row.push(escapeCsvField(flags.invalid ? "true" : "false"));
+  row.push(escapeCsvField(flags.reason || ""));
+  row.push(escapeCsvField(flags.refusalCode || ""));
+  
+  // Device
+  const device = session.device || {};
+  row.push(escapeCsvField(device.userAgent || ""));
+  row.push(escapeCsvField(device.isTouch ? "true" : "false"));
+  row.push(escapeCsvField(device.userAgentHint || ""));
+  row.push(escapeCsvField(device.precisionFullscreenSupported ? "true" : "false"));
+  row.push(escapeCsvField(device.precisionFullscreenAchieved ? "true" : "false"));
+  
+  return row.join(",");
+}
+
+// CSV export: generate CSV content from sessions
+function exportHistoryCsvFor(testType) {
+  const sessions = loadHistory(testType);
+
+  if (!sessions.length) return { ok: false, reason: "empty" };
+
+  // Define CSV headers (fixed order)
+  const headers = [
+    "id",
+    "timestamp",
+    "localTimestamp",
+    "timezoneOffsetMin",
+    "mode",
+    "testType",
+    "version",
+    // Metrics (all test types, blanks for non-applicable)
+    "avgMs",
+    "sdMs",
+    "bestMs",
+    "worstMs",
+    "trials",
+    "falseStarts",
+    "hits",
+    "misses",
+    "falseAlarms",
+    "correctRejects",
+    "nogoCount",
+    "flashTargetCount",
+    "flashUserCount",
+    "flashAbsError",
+    "avgErrN",
+    "sdErrN",
+    "bestErrN",
+    "worstErrN",
+    "meanRtMs",
+    "sdRtMs",
+    "respondedTrials",
+    "timeouts",
+    // Quality
+    "quality",
+    "qualityNote",
+    // Flags
+    "invalid",
+    "reason",
+    "refusalCode",
+    // Device
+    "deviceUserAgent",
+    "deviceIsTouch",
+    "deviceUserAgentHint",
+    "devicePrecisionFullscreenSupported",
+    "devicePrecisionFullscreenAchieved"
+  ];
+
+  // Build CSV content
+  const lines = [headers.join(",")];
+  for (const session of sessions) {
+    lines.push(sessionToCsvRow(session, testType));
+  }
+
+  return { ok: true, text: lines.join("\n") };
+}
+
+// CSV export: download CSV file
+function downloadCsv(content, filename) {
+  const blob = new Blob([content], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
 if (exportHistoryBtn) {
   exportHistoryBtn.addEventListener("click", async () => {
     // Use your existing UI selector for current test type:
@@ -2909,6 +3168,33 @@ if (exportHistoryBtn) {
       setExportStatus(t("export.failed"));
       showExportFallback(res.text);
     }
+  });
+}
+
+// CSV export button handler
+const exportCsvBtn = document.getElementById("exportCsvBtn");
+if (exportCsvBtn) {
+  exportCsvBtn.addEventListener("click", () => {
+    const currentTest = (historyTest && historyTest.value)
+      ? historyTest.value
+      : (testType && testType.value ? testType.value : "reaction"); // fallback
+
+    const res = exportHistoryCsvFor(currentTest);
+
+    if (!res.ok) {
+      setExportStatus(t("export.empty"));
+      return;
+    }
+
+    // Generate filename: fce_<testType>history<YYYY-MM-DD><HHmm><lang>.csv
+    const now = new Date();
+    const dateStr = now.toISOString().slice(0, 10); // YYYY-MM-DD
+    const timeStr = String(now.getHours()).padStart(2, "0") + String(now.getMinutes()).padStart(2, "0");
+    const lang = currentLang || "en";
+    const filename = `fce_${currentTest}history${dateStr}${timeStr}${lang}.csv`;
+
+    downloadCsv(res.text, filename);
+    setExportStatus(t("export.csvExported"));
   });
 }
 

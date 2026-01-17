@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  FCE Canonical Mark
+  ==================
+  This is the single source of truth for all FCE mark variants.
+  
+  Specifications:
+  - ViewBox: 0 0 100 100
+  - Shape: Rounded square (path-based, not rect)
+  - Corner radius: 14 units
+  - Stroke width: 6 units
+  - Stroke color: currentColor (inherits from parent context)
+  - Gap: Intentional interruption on top edge, ~10 units, near right corner
+  
+  Design Intent:
+  This mark represents a containment field with conditional access.
+  The gap signifies controlled entry/exit, not damage or incompleteness.
+  The aesthetic should feel calm, disciplined, and institutional.
+  
+  For variants:
+  - Modify stroke width, corner radius, or gap size as needed
+  - Adjust gap position along any edge
+  - Maintain the two-path structure for clean gap rendering
+  - Preserve the rounded square geometry as the base form
+-->
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!--
+    Rounded square frame split into two paths to create intentional gap.
+    
+    Geometry:
+    - 80x80 square centered in 100x100 viewBox (bounds: 10,10 to 90,90)
+    - Corner radius: 14 units
+    - Gap: Top edge from x=75 to x=85 (10 units, near right corner)
+    
+    Path structure (two separate stroke paths):
+    - Path 1: From gap start (75,10), goes clockwise around frame: 
+              left along top edge, top-left corner, left edge, bottom edge, 
+              right edge, top-right corner, ending at (76,10) just before gap
+    - Path 2: From gap end (85,10), draws segment to (76,10), completing 
+              the top edge after the gap
+    - Gap: The intentional 10-unit interruption between (75,10) and (85,10)
+           The two-path structure ensures clean gap rendering and allows 
+           independent modification for variants.
+  -->
+  
+  <!-- Path 1: Main frame (from gap start, clockwise around, ending just before gap) -->
+  <path
+    d="M 75 10
+       L 24 10
+       A 14 14 0 0 1 10 24
+       L 10 76
+       A 14 14 0 0 1 24 90
+       L 76 90
+       A 14 14 0 0 1 90 76
+       L 90 24
+       A 14 14 0 0 1 76 10"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="6"
+    stroke-linecap="round"
+    stroke-linejoin="round"/>
+  
+  <!-- Path 2: Top edge segment from gap end (completes frame after gap) -->
+  <path
+    d="M 85 10
+       L 76 10"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="6"
+    stroke-linecap="round"
+    stroke-linejoin="round"/>
+</svg>

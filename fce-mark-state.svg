@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  FCE State Mark
+  ==============
+  Derived from fce-icon.svg - expresses system state and readiness.
+  
+  This mark represents a held containment state: readiness and containment,
+  not progress or loading. The filled interior indicates active containment.
+  
+  Specifications:
+  - ViewBox: 0 0 100 100
+  - Same frame geometry as icon variant
+  - Interior fill: currentColor at ~18% opacity (0.18)
+  - Stroke: currentColor (full opacity)
+  - Gap: Top edge, ~10 units (x=75 to x=85), near right corner
+  - No center symbols or text
+  - Flat vector only, no animation
+-->
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Interior fill: rounded square matching frame geometry -->
+  <path
+    d="M 24 10
+       A 14 14 0 0 1 10 24
+       L 10 76
+       A 14 14 0 0 1 24 90
+       L 76 90
+       A 14 14 0 0 1 90 76
+       L 90 24
+       A 14 14 0 0 1 76 10
+       L 24 10
+       Z"
+    fill="currentColor"
+    fill-opacity="0.18"/>
+  
+  <!-- Path 1: Main frame (from gap start, clockwise around) -->
+  <path
+    d="M 75 10
+       L 24 10
+       A 14 14 0 0 1 10 24
+       L 10 76
+       A 14 14 0 0 1 24 90
+       L 76 90
+       A 14 14 0 0 1 90 76
+       L 90 24
+       A 14 14 0 0 1 76 10"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="6"
+    stroke-linecap="round"
+    stroke-linejoin="round"/>
+  
+  <!-- Path 2: Top edge segment after gap -->
+  <path
+    d="M 85 10
+       L 76 10"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="6"
+    stroke-linecap="round"
+    stroke-linejoin="round"/>
+  
+  <!--
+    Optional: Threshold state interruption on bottom edge
+    =====================================================
+    This can be enabled to represent a threshold/transition state.
+    Currently disabled by default - uncomment and adjust as needed.
+    
+    Gap position: Bottom edge, centered (x=45 to x=55, ~10 units)
+    
+    To enable:
+    1. Split bottom edge in Path 1 above (modify the "L 76 90" and "L 24 90" segments)
+    2. Uncomment Path 3 below
+    3. Adjust gap position/size as needed
+  -->
+  <!--
+  <path
+    d="M 55 90
+       L 45 90"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="6"
+    stroke-linecap="round"
+    stroke-linejoin="round"/>
+  -->
+</svg>

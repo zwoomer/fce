@@ -264,6 +264,89 @@ Tagged as **v0.3.2**.
 
 ---
 
+## v0.3.3 — Precision stability, export, and formatting improvements (completed)
+
+Shipped improvements:
+
+**Precision stability:**
+- Fullscreen achievement tracking with non-blocking note when fullscreen not achieved
+- Input coordinate normalization to CSS pixels for consistent hit radius across devices
+- Per-trial resolution guard prevents late taps after timeout
+- Consistent timeout handling ensures single outcome per trial
+
+**Export and data:**
+- CSV export functionality with proper escaping and formatting
+- Deterministic local timestamp format (YYYY-MM-DD HH:mm) with timezone offset
+- Same data scope as JSON export (test-type filtered)
+- Filename format: `fce_<testType>history<YYYY-MM-DD><HHmm><lang>.csv`
+
+**Summary and formatting:**
+- Fixed summary visibility issue for invalid sessions (CSS :empty rule override)
+- Standardized Quality+Note formatting across all tests (Quality on one line, Note on new line)
+- Added `formatQualityWithOptionalNote()` helper for consistent formatting
+- Strip duplicate "Note:" prefixes to avoid duplication
+- Added `ui.noteLabel` i18n key (EN/NO/LT) for localized note labels
+
+**Invalid session display:**
+- Compact "Reason: <reason>" display in history/details for Precision, Go/No-Go, and Divided Attention
+- Full explanation + remedy + quality only in session summary panel
+- Added `history.reasonText.<code>` i18n keys for reason-only text (no prefix)
+- Added `getRefusalReasonText()` helper to avoid colon parsing for known refusal codes
+- Maintains backward compatibility with old sessions via fallback parsing
+
+**Internationalization:**
+- Complete i18n keys for CSV export (EN/NO/LT)
+- Reason-only text keys for all refusal codes (EN/NO/LT)
+- Localized note labels for all languages
+
+**Visual identity system:**
+- Canonical SVG mark (`fce-mark.svg`) — single source of truth for all mark variants
+- Favicon/logo variant (`fce-icon.svg`) — optimized for 16×16 and larger sizes
+- In-app state mark (`fce-mark-state.svg`) — expresses system state with filled interior
+- All marks use consistent geometry: rounded square frame with intentional gap on top edge
+- Clean, flat vector design with no effects, animations, or decorative elements
+
+**Documentation content additions:**
+
+**About page:**
+- "Why repeated use matters" section — emphasizes comparison across time, not single sessions
+- "What FCE reflects (without medical claims)" — grounding explanation of functional performance
+
+**Concept page:**
+- "Baseline comparison and pattern recognition" — explains how repeated use supports pattern awareness
+- "Why performance can change day to day" — contextual factors affecting execution
+
+**How to Use page:**
+- "How to read results over time" — guidance on interpreting trends vs single sessions
+
+**FAQ page:**
+- "Can using FCE help me understand myself better?" — clarifies user-led reflection vs instrument interpretation
+- "Does FCE measure the nervous system, hormones, or the endocannabinoid system?" — explicit physiology boundary
+
+**Scope & Limits page:**
+- "Not interpretive" boundary — added to limits list as final safeguard
+- "Physiology boundary (explicit)" — reinforces that FCE measures observable execution only
+
+**How the tests work page:**
+- "What it reflects" lines added to each test section (Reaction Time, Go/No-Go, Divided Attention, Precision)
+- Clarifies what each test measures without medical claims
+
+**Documentation internationalization:**
+- Complete Norwegian (NO) and Lithuanian (LT) translations for all new content sections
+- All new FAQ entries translated
+- All new boundary statements translated
+- All test reflection descriptions translated
+
+**Content philosophy:**
+- All additions emphasize FCE's function-first approach
+- Clear boundaries between measurement and interpretation
+- User-led reflection vs instrument-guided meaning
+- Explicit non-medical, non-diagnostic framing
+
+Tagged as **v0.3.3**.
+
+---
+
 ## v0.3.x — Refinements (in progress)
 
 Scope: stabilization, clarity, and robustness of existing functionality.
@@ -271,17 +354,17 @@ No new paradigms are introduced in this version line.
 
 Planned focus areas:
 - Precision test refinements:
-  - Consistent hit-radius and timeout handling
+  - ✅ Consistent hit-radius and timeout handling (completed in v0.3.3)
   - Minor HUD clarity improvements
 - UX refinements:
-  - Clearer invalid-session explanations
-  - Small wording improvements in summaries and quality labels
+  - ✅ Clearer invalid-session explanations (completed in v0.3.3)
+  - ✅ Small wording improvements in summaries and quality labels (completed in v0.3.3)
 - Performance and reliability:
   - Event handling cleanup
   - Minor performance optimizations
 - Export improvements:
-  - Optional CSV export (same schema as JSON)
-  - Clearer timestamp labeling
+  - ✅ Optional CSV export (completed in v0.3.3)
+  - ✅ Clearer timestamp labeling (completed in v0.3.3)
 
 v0.3.x is considered complete when Precision behavior is stable across devices
 and no usability regressions remain.

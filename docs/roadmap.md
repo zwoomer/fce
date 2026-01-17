@@ -176,11 +176,13 @@ Status: ✅ Shipped
 
 Focus: stabilization and tightening of existing functionality.
 
-- Precision test calibration and edge-case handling
-- Pointer/touch robustness in fullscreen mode
-- Clearer quality and invalid-session messaging
-- Minor UX consistency improvements
-- Optional CSV export (schema unchanged)
+- ✅ Precision test calibration and edge-case handling (v0.3.3: input normalization, timeout handling)
+- ✅ Pointer/touch robustness in fullscreen mode (v0.3.3: CSS pixel normalization)
+- ✅ Clearer quality and invalid-session messaging (v0.3.3: standardized formatting, compact reason display)
+- ✅ Minor UX consistency improvements (v0.3.3: Quality+Note formatting, summary visibility)
+- ✅ Optional CSV export (v0.3.3: CSV export with deterministic timestamps)
+- ✅ Documentation clarity and boundary reinforcement (v0.3.3: comprehensive content additions across all pages)
+- ✅ Visual identity system (v0.3.3: canonical SVG marks)
 
 No new tests or paradigms are introduced in v0.3.x.
 

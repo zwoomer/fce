@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  FCE Icon / Favicon
+  ==================
+  Derived from fce-mark.svg - the invariant identity mark.
+  
+  This is the empty containment field: an identity that does not explain itself.
+  Optimized for use at 16×16 and larger sizes.
+  
+  Specifications match canonical mark:
+  - ViewBox: 0 0 100 100
+  - Rounded square frame (path-based)
+  - Corner radius: 14 units
+  - Stroke width: 6 units
+  - Stroke color: currentColor
+  - Gap: Top edge, ~10 units (x=75 to x=85), near right corner
+  - No fill, no decoration, no animation
+-->
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Path 1: Main frame (from gap start, clockwise around) -->
+  <path
+    d="M 75 10
+       L 24 10
+       A 14 14 0 0 1 10 24
+       L 10 76
+       A 14 14 0 0 1 24 90
+       L 76 90
+       A 14 14 0 0 1 90 76
+       L 90 24
+       A 14 14 0 0 1 76 10"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="6"
+    stroke-linecap="round"
+    stroke-linejoin="round"/>
+  
+  <!-- Path 2: Top edge segment after gap -->
+  <path
+    d="M 85 10
+       L 76 10"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="6"
+    stroke-linecap="round"
+    stroke-linejoin="round"/>
+</svg>

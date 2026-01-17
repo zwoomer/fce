@@ -10,7 +10,7 @@ FCE is designed to support **human interpretation**, not automated judgment.
 
 ## Current status
 
-**Latest release:** v0.3.2  
+**Latest release:** v0.3.3  
 **Status:** Stable (documentation & explanation complete)
 
 ---
@@ -270,6 +270,19 @@ No test logic changes.
 
 ---
 
+## Precision stability, export, and formatting improvements (v0.3.3)
+
+- **Precision fullscreen tracking:** Track fullscreen achievement and show non-blocking note when fullscreen not achieved
+- **Precision input stability:** Normalize pointer coordinates to CSS pixels for consistent hit radius across devices
+- **Precision timeout handling:** Per-trial resolution guard prevents late taps after timeout
+- **CSV export:** New CSV export functionality with deterministic timestamps and timezone offset
+- **Summary visibility fix:** Ensure invalid session summaries are immediately visible (fixes CSS :empty rule issue)
+- **Quality+Note formatting:** Standardized formatting across all tests with Quality on one line, Note on new line
+- **Invalid session reason display:** Compact "Reason: <reason>" in history/details, full explanation only in session summary
+- **i18n improvements:** Added reason-only text keys to avoid colon parsing, localized note labels
+
+---
+
 ## History & trends
 
 - Per-test session history
@@ -329,6 +342,7 @@ FCE is suitable for:
 - v0.3.0 — Precision (Target Pointing) test with fullscreen UX
 - v0.3.1 — Precision refinements and UX improvements
 - v0.3.2 — Unified navigation and Precision history polish
+- v0.3.3 — Precision stability, export, and formatting improvements
 
 ---
 

@@ -304,7 +304,10 @@ Shipped improvements:
 - Favicon/logo variant (`fce-icon.svg`) — optimized for 16×16 and larger sizes
 - In-app state mark (`fce-mark-state.svg`) — expresses system state with filled interior
 - All marks use consistent geometry: rounded square frame with intentional gap on top edge
+- Geometry optimized for favicon rendering: corner radius 9 units, stroke width 4 units
+- Crisp corners: miter joins and butt caps prevent bulbous appearance at small sizes
 - Clean, flat vector design with no effects, animations, or decorative elements
+- Preview page (`svg-preview.html`) for visual verification at multiple sizes
 
 **Documentation content additions:**
 
@@ -342,6 +345,10 @@ Shipped improvements:
 - Clear boundaries between measurement and interpretation
 - User-led reflection vs instrument-guided meaning
 - Explicit non-medical, non-diagnostic framing
+
+**Documentation cleanup:**
+- Removed Norwegian developer notes from faq.html and how-to-use.html
+- Cleaned up temporary notes about missing scope.html file
 
 Tagged as **v0.3.3**.
 

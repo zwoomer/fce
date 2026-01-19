@@ -146,12 +146,14 @@ Session not usable: execution failure (no valid responses recorded). | Next step
 
 - **Canonical mark (`fce-mark.svg`):** Single source of truth for all mark variants
   - Rounded square frame (path-based, not rect)
-  - Corner radius: 14 units
-  - Stroke width: 6 units
+  - Corner radius: 9 units (optimized for favicon rendering)
+  - Stroke width: 4 units (favicon-safe)
+  - Stroke linejoin: miter (prevents bulbous corners)
+  - Stroke linecap: butt (technical aesthetic)
   - Intentional gap on top edge near right corner (~10 units)
   - Uses `currentColor` for stroke
   - No fill, no text, no symbols
-  - Clean, flat vector design
+  - Clean, flat vector design optimized for small sizes
 
 - **Favicon/logo variant (`fce-icon.svg`):** Derived from canonical mark
   - Same geometry and proportions
@@ -159,10 +161,21 @@ Session not usable: execution failure (no valid responses recorded). | Next step
   - Maintains legibility at small sizes
 
 - **In-app state mark (`fce-mark-state.svg`):** Expresses system state
-  - Same frame geometry as icon variant
+  - Same frame geometry as icon variant (radius 9, stroke 4)
   - Interior fill using `currentColor` at ~18% opacity
+  - Miter joins and butt caps for crisp rendering
   - Represents held containment state (readiness, not progress)
   - Optional commented threshold state interruption (disabled by default)
+
+### Geometry refinement (post-initial release)
+
+- **Favicon-safe rendering:** Reduced stroke width from 6 to 4 units and corner radius from 14 to 9 units
+- **Crisp corners:** Changed stroke-linejoin from round to miter to prevent bulbous corners
+- **Technical aesthetic:** Changed stroke-linecap from round to butt for cleaner, more institutional appearance
+- **Small-size optimization:** Mark renders cleanly at 16×16px favicon size without ornamental artifacts
+- **Gap preservation:** Intentional gap remains visible and clear at all sizes
+- **Consistency:** All three variants (canonical, icon, state) updated with matching geometry
+- **Verification:** Added `svg-preview.html` for visual verification at multiple sizes (16px, 24px, 32px, 64px, 128px)
 
 ### Design philosophy
 
@@ -277,13 +290,14 @@ All additions emphasize:
 - `fce-mark.svg` — Canonical mark (single source of truth)
 - `fce-icon.svg` — Favicon/logo variant
 - `fce-mark-state.svg` — In-app state mark variant
+- `svg-preview.html` — Visual verification page for mark rendering at multiple sizes
 
 ### Documentation files modified
 
 - `about.html` — Two new sections (EN/NO/LT)
 - `concept.html` — Two new sections (EN/NO/LT)
-- `how-to-use.html` — One new section (EN/NO/LT)
-- `faq.html` — Two new Q&A entries (EN/NO/LT)
+- `how-to-use.html` — One new section (EN/NO/LT), removed developer notes
+- `faq.html` — Two new Q&A entries (EN/NO/LT), removed developer notes
 - `scope.html` — One new bullet point, one new section (EN/NO/LT)
 - `how-tests-work.html` — Four "What it reflects" lines (EN/NO/LT)
 

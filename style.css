@@ -1990,6 +1990,7 @@ img, video, iframe, canvas {
 
   .home-history-when {
     white-space: nowrap;
+    flex-shrink: 0;
   }
 
   .home-history-sub {
@@ -2008,6 +2009,47 @@ img, video, iframe, canvas {
 
   .home-history-metrics span {
     white-space: nowrap;
+  }
+
+  /* Mobile fixes for home history panel */
+  @media (max-width: 640px) {
+    .home-history-top {
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: flex-start;
+    }
+
+    .home-history-title {
+      flex: 1 1 auto;
+      min-width: 0;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .home-history-when {
+      white-space: normal;
+      font-size: 12px;
+      flex: 0 0 100%;
+      order: -1;
+      margin-bottom: 2px;
+      opacity: 0.85;
+    }
+
+    .home-history-sub {
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: flex-start;
+    }
+
+    .home-history-metrics {
+      gap: 8px;
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .home-history-metrics span {
+      font-size: 13px;
+    }
   }
 
   /* Tiny accent strip to make it feel "earned" */

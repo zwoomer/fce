@@ -183,6 +183,7 @@ Focus: stabilization and tightening of existing functionality.
 - ✅ Optional CSV export (v0.3.3: CSV export with deterministic timestamps)
 - ✅ Documentation clarity and boundary reinforcement (v0.3.3: comprehensive content additions across all pages)
 - ✅ Visual identity system (v0.3.3: canonical SVG marks, geometry optimized for favicon rendering)
+- ✅ Mobile History panel layout fix (v0.3.3: responsive layout for home page History panel on mobile devices)
 
 No new tests or paradigms are introduced in v0.3.x.
 

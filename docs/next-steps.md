@@ -350,6 +350,11 @@ Shipped improvements:
 - Removed Norwegian developer notes from faq.html and how-to-use.html
 - Cleaned up temporary notes about missing scope.html file
 
+**Mobile UX fixes:**
+- Fixed History panel layout on home page for mobile devices (≤640px)
+- Date/time text now appears on its own line at top of history items on mobile
+- Improved flex wrapping and spacing for better mobile readability
+
 Tagged as **v0.3.3**.
 
 ---

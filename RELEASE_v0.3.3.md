@@ -127,6 +127,15 @@ Session not usable: execution failure (no valid responses recorded). | Next step
 - **Explicit display:** Summary element explicitly shown when content exists
 - **All invalid types:** Fix applies to all invalid session types (no reaction, no go, missing answer, etc.)
 
+### Mobile History panel layout
+
+- **Responsive layout fix:** History panel on home page now displays correctly on mobile devices (≤640px)
+- **Date/time positioning:** Date/time text appears on its own line at top of each history item on mobile to prevent overflow
+- **Flex wrapping:** Top row (badge + mode + date/time) wraps properly on small screens
+- **Spacing adjustments:** Reduced gaps and font sizes for better mobile fit
+- **Metrics row:** Metrics row (value + trials) also wraps properly on mobile
+- **Visual consistency:** Layout maintains readability and proper alignment across all screen sizes
+
 ---
 
 ## 🌐 Internationalization

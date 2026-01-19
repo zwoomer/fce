@@ -80,9 +80,9 @@ const I18N = {
       noteLabel: "Note",
     },
     status: {
-      within: "Within normal range",
-      slightly: "Slightly below normal",
-      significantly: "Significantly below normal",
+      within: "Within your usual range",
+      slightly: "Slightly below your usual range",
+      significantly: "Significantly below your usual range",
       noBaseline: "No baseline yet — add baseline sessions first.",
     },
     baseline: {
@@ -98,14 +98,46 @@ const I18N = {
       failed: "Copy failed — showing text below.",
     },
     trend: {
-      baselineLine: "Baseline: mean {mean} ms | SD {sd} ms | Band: {lo}–{hi} ms (±1 SD)",
+      title: "Change over time (relative to your baseline)",
+      subtitle: "This view shows how each check compares to your own usual performance over time.",
+      baselineHeader: "Your baseline (long-term):",
+      typical: {
+        reaction: "Typical reaction time:",
+        gonogo: "Typical response pattern:",
+        divided: "Typical divided-attention performance:",
+        precision: "Typical precision accuracy:",
+      },
+      variation: "Typical day-to-day variation:",
+      guideHelp: "The shaded area shows where your results usually fall when conditions are similar.",
+      guideBand: "Visual guide band:",
       noBaseline: "No baseline yet — trend uses baseline sessions.",
       noChecks: "No check sessions yet.",
       checkLabel: "Check",
-      delta: "Δ {delta} ms",
-      status: "Status: {status}",
+      delta: "Difference from baseline: {delta}",
+      result: "Result:",
+      footerNote: "This view visualizes change. It does not decide readiness, fitness, or permission.",
       ok: "OK",
       invalid: "INVALID",
+    },
+    session: {
+      chip: {
+        avg: "Average",
+        consistency: "Consistency (this session)",
+        trials: "Trials",
+      },
+      detail: {
+        avg: "Average",
+        consistency: "Consistency",
+        trials: "Trials",
+        compare: {
+          line1: "This result differs by {delta} from your baseline.",
+          line2: {
+            within: "Given how much you usually vary, this difference is still typical for you.",
+            slightly: "Given how much you usually vary, this difference is less typical, but still within a reasonable range.",
+            significantly: "Given how much you usually vary, this difference is not typical for you.",
+          },
+        },
+      },
     },
     history: {
       avg: "avg",
@@ -141,6 +173,7 @@ const I18N = {
           timeouts: "Timeouts",
           avgRt: "Average RT",
           variability: "Variability (SD)",
+          sd: "SD",
         },
         comparison: {
           within: "Accuracy within normal range",
@@ -148,11 +181,26 @@ const I18N = {
           significantly: "Accuracy significantly worse than baseline",
         },
       },
+      gonogo: {
+        nogoTrials: "NO-GO trials",
+        errors: {
+          none: "Errors: none",
+          present: "Errors: present",
+        },
+      },
       divided: {
         flashes: "Flashes",
+        flashesFormat: "Flashes: {answered}/{target}",
         target: "target",
         answer: "answer",
         error: "error",
+        flashMismatch: "flash mismatch (answered {answered} of {target})",
+        errors: {
+          none: "Errors: none",
+          present: "Errors: present",
+          summaryNone: "Errors: none (no misses, false alarms, or flash errors)",
+          summaryPresent: "Errors: present — flash mismatch (answered {answered} of {target}); misses: {misses}; false alarms: {fa}",
+        },
       },
       tags: {
         sleep: "sleep",
@@ -163,6 +211,11 @@ const I18N = {
         R1_INVALID_EXECUTION: "execution failure (no valid responses recorded).",
         R2_INSUFFICIENT_DATA: "insufficient data (too few valid responses).",
         R3_EXCESS_NOISE: "excessive errors (too many false starts or inhibitory errors).",
+      },
+      precision: {
+        notUsable: "Not usable",
+        reasonPrefix: "Reason:",
+        reasonGeneric: "too many execution errors to measure precision reliably.",
       },
       falseAlarmsAbbr: "FA",
     },
@@ -214,6 +267,11 @@ const I18N = {
       gonogo: {
         go: "GO (click)",
         nogo: "NO-GO (don't click)",
+        nogoTrials: "NO-GO trials",
+        errors: {
+          none: "Errors: none",
+          present: "Errors: present",
+        },
       },
       divided: {
         go: "TAP",
@@ -233,6 +291,49 @@ const I18N = {
       },
       invalid: "Precision test invalid.",
       noFullscreenNote: "Note: This Precision session ran without fullscreen. Input consistency may be reduced.",
+    },
+    op: {
+      title: "What happens after a test?",
+      note: "Advisory only. This does not diagnose or decide readiness.",
+      tiers: {
+        baseline_needed_title: "Baseline needed",
+        proceed_title: "Proceed",
+        proceed_caution_title: "Proceed with caution",
+        pause_retest_title: "Pause and retest",
+        rest_retest_later_title: "Rest and retest later",
+        not_usable_title: "Not usable session",
+      },
+      common: {
+        retest_now: "Retest now in a calm, consistent setup.",
+        retest_later: "Rest and recheck later if performance stays below baseline.",
+        take_break: "Take a short break, then re-run a check in a consistent setup.",
+        reduce_load: "Consider lowering intensity and rechecking if needed.",
+        check_conditions: "Check your setup and conditions before retesting.",
+        consider_context: "If this matches your baseline, it's reasonable to continue as planned.",
+        if_symptoms: "If you feel symptoms or fatigue, prioritize rest.",
+      },
+      byTest: {
+        reaction: {
+          oneLine: "This measures alertness and attention. False starts may indicate rushing or setup issues.",
+          bullet1: "Alertness and attention are key factors in reaction time.",
+          bullet2: "False starts often reflect rushing or inconsistent setup.",
+        },
+        gonogo: {
+          oneLine: "This measures inhibition control. False alarms or misses may indicate attention or inhibition issues.",
+          bullet1: "Inhibition control helps manage responses appropriately.",
+          bullet2: "False alarms or misses may reflect attention or inhibition challenges.",
+        },
+        divided: {
+          oneLine: "This measures multi-demand load. Flash errors or inhibitory errors may indicate attention capacity limits.",
+          bullet1: "Multi-demand tasks require managing multiple attention streams.",
+          bullet2: "Flash errors or inhibitory errors may reflect attention capacity limits.",
+        },
+        precision: {
+          oneLine: "This measures fine motor control. Fullscreen and device consistency affect results.",
+          bullet1: "Fine motor control requires steady, consistent input.",
+          bullet2: "Fullscreen and device consistency are important for reliable results.",
+        },
+      },
     },
   },
   no: {
@@ -285,14 +386,46 @@ const I18N = {
       failed: "Kopiering feilet — viser tekst under.",
     },
     trend: {
-      baselineLine: "Baseline: snitt {mean} ms | SD {sd} ms | Bånd: {lo}–{hi} ms (±1 SD)",
+      title: "Endring over tid (i forhold til din baseline)",
+      subtitle: "Denne visningen viser hvordan hver sjekk sammenlignes med din egen vanlige ytelse over tid.",
+      baselineHeader: "Din baseline (langsiktig):",
+      typical: {
+        reaction: "Typisk reaksjonstid:",
+        gonogo: "Typisk responsmønster:",
+        divided: "Typisk delt-oppmerksomhet ytelse:",
+        precision: "Typisk presisjonsnøyaktighet:",
+      },
+      variation: "Typisk dag-til-dag variasjon:",
+      guideHelp: "Det skyggelagte området viser hvor resultatene dine vanligvis faller når forholdene er like.",
+      guideBand: "Visuell guide-bånd:",
       noBaseline: "Ingen baseline ennå — trend bruker baseline-økter.",
       noChecks: "Ingen sjekk-økter ennå.",
       checkLabel: "Sjekk",
-      delta: "Δ {delta} ms",
-      status: "Status: {status}",
+      delta: "Forskjell fra baseline: {delta}",
+      result: "Resultat:",
+      footerNote: "Denne visningen visualiserer endring. Den avgjør ikke klarhet, form eller tillatelse.",
       ok: "OK",
       invalid: "UGYLDIG",
+    },
+    session: {
+      chip: {
+        avg: "Gjennomsnitt",
+        consistency: "Konsistens (denne økten)",
+        trials: "Forsøk",
+      },
+      detail: {
+        avg: "Gjennomsnitt",
+        consistency: "Konsistens",
+        trials: "Forsøk",
+        compare: {
+          line1: "Dette resultatet avviker med {delta} fra din baseline.",
+          line2: {
+            within: "Gitt hvor mye du vanligvis varierer, er denne forskjellen fortsatt typisk for deg.",
+            slightly: "Gitt hvor mye du vanligvis varierer, er denne forskjellen mindre typisk, men fortsatt innenfor et rimelig område.",
+            significantly: "Gitt hvor mye du vanligvis varierer, er denne forskjellen ikke typisk for deg.",
+          },
+        },
+      },
     },
     history: {
       avg: "gj.snitt",
@@ -328,6 +461,7 @@ const I18N = {
           timeouts: "Tidsavbrudd",
           avgRt: "Gjennomsnittlig RT",
           variability: "Variabilitet (SD)",
+          sd: "SD",
         },
         comparison: {
           within: "Nøyaktighet innenfor normalområdet",
@@ -335,11 +469,26 @@ const I18N = {
           significantly: "Nøyaktighet betydelig dårligere enn baseline",
         },
       },
+      gonogo: {
+        nogoTrials: "NO-GO forsøk",
+        errors: {
+          none: "Feil: ingen",
+          present: "Feil: til stede",
+        },
+      },
       divided: {
         flashes: "Blink",
+        flashesFormat: "Blink: {answered}/{target}",
         target: "mål",
         answer: "svar",
         error: "feil",
+        flashMismatch: "blink mismatch (svarte {answered} av {target})",
+        errors: {
+          none: "Feil: ingen",
+          present: "Feil: til stede",
+          summaryNone: "Feil: ingen (ingen bom, inhibisjonsfeil eller blinkfeil)",
+          summaryPresent: "Feil: til stede — blink mismatch (svarte {answered} av {target}); bom: {misses}; inhibisjonsfeil: {fa}",
+        },
       },
       tags: {
         sleep: "søvn",
@@ -350,6 +499,11 @@ const I18N = {
         R1_INVALID_EXECUTION: "utførelsesfeil (ingen gyldige responser registrert).",
         R2_INSUFFICIENT_DATA: "utilstrekkelige data (for få gyldige responser).",
         R3_EXCESS_NOISE: "for mange feil (for mange feilstarter eller inhibisjonsfeil).",
+      },
+      precision: {
+        notUsable: "Ikke brukbar",
+        reasonPrefix: "Årsak:",
+        reasonGeneric: "for mange utførelsesfeil til å måle presisjon pålitelig.",
       },
       falseAlarmsAbbr: "IF",
     },
@@ -401,6 +555,11 @@ const I18N = {
       gonogo: {
         go: "GO (klikk)",
         nogo: "NO-GO (ikke klikk)",
+        nogoTrials: "NO-GO forsøk",
+        errors: {
+          none: "Feil: ingen",
+          present: "Feil: til stede",
+        },
       },
       divided: {
         go: "TRYKK",
@@ -421,6 +580,49 @@ const I18N = {
         invalid: "Presisjonstest ugyldig.",
         noFullscreenNote: "Merk: Denne presisjonsøkten kjørte uten fullskjerm. Inndata-konsistens kan være redusert.",
       },
+    op: {
+      title: "Hva skjer etter en test?",
+      note: "Kun rådgivende. Dette diagnostiserer ikke eller avgjør ikke klarhet.",
+      tiers: {
+        baseline_needed_title: "Baseline nødvendig",
+        proceed_title: "Fortsett",
+        proceed_caution_title: "Fortsett med forsiktighet",
+        pause_retest_title: "Pause og test på nytt",
+        rest_retest_later_title: "Hvil og test senere",
+        not_usable_title: "Ikke brukbar økt",
+      },
+      common: {
+        retest_now: "Test på nytt nå i en rolig, konsistent oppsett.",
+        retest_later: "Hvil og sjekk senere hvis ytelsen forblir under baseline.",
+        take_break: "Ta en kort pause, deretter kjør en sjekk på nytt i et konsistent oppsett.",
+        reduce_load: "Vurder å redusere intensitet og sjekke på nytt hvis nødvendig.",
+        check_conditions: "Sjekk oppsettet og forholdene før du tester på nytt.",
+        consider_context: "Hvis dette matcher din baseline, er det rimelig å fortsette som planlagt.",
+        if_symptoms: "Hvis du føler symptomer eller tretthet, prioriter hvile.",
+      },
+      byTest: {
+        reaction: {
+          oneLine: "Dette måler oppmerksomhet og reaksjon. Feilstarter kan indikere hastverk eller oppsettsproblemer.",
+          bullet1: "Oppmerksomhet og reaksjon er nøkkelfaktorer i reaksjonstid.",
+          bullet2: "Feilstarter reflekterer ofte hastverk eller inkonsistent oppsett.",
+        },
+        gonogo: {
+          oneLine: "Dette måler inhibisjonskontroll. Inhibisjonsfeil eller bom kan indikere oppmerksomhets- eller inhibisjonsproblemer.",
+          bullet1: "Inhibisjonskontroll hjelper med å håndtere responser passende.",
+          bullet2: "Inhibisjonsfeil eller bom kan reflektere oppmerksomhets- eller inhibisjonsutfordringer.",
+        },
+        divided: {
+          oneLine: "Dette måler multi-demand belastning. Blinkfeil eller inhibisjonsfeil kan indikere oppmerksomhetskapasitetsgrenser.",
+          bullet1: "Multi-demand oppgaver krever håndtering av flere oppmerksomhetsstrømmer.",
+          bullet2: "Blinkfeil eller inhibisjonsfeil kan reflektere oppmerksomhetskapasitetsgrenser.",
+        },
+        precision: {
+          oneLine: "Dette måler finmotorisk kontroll. Fullskjerm og enhetskonsistens påvirker resultatene.",
+          bullet1: "Finmotorisk kontroll krever jevn, konsistent inndata.",
+          bullet2: "Fullskjerm og enhetskonsistens er viktig for pålitelige resultater.",
+        },
+      },
+    },
   },
   lt: {
     ui: {
@@ -453,9 +655,9 @@ const I18N = {
       noteLabel: "Pastaba",
     },
     status: {
-      within: "Įprastame diapazone",
-      slightly: "Šiek tiek žemiau įprasto",
-      significantly: "Reikšmingai žemiau įprasto",
+      within: "Jūsų įprastame diapazone",
+      slightly: "Šiek tiek žemiau jūsų įprasto diapazono",
+      significantly: "Reikšmingai žemiau jūsų įprasto diapazono",
       noBaseline: "Dar nėra bazinio lygio — pirmiausia pridėkite bazinio lygio sesijas.",
     },
     baseline: {
@@ -471,14 +673,46 @@ const I18N = {
       failed: "Kopijavimas nepavyko — rodomas tekstas žemiau.",
     },
     trend: {
-      baselineLine: "Bazinis lygis: vidurkis {mean} ms | SD {sd} ms | Diapazonas: {lo}–{hi} ms (±1 SD)",
+      title: "Pokytis laikui bėgant (palyginti su jūsų baziniu lygiu)",
+      subtitle: "Ši peržiūra rodo, kaip kiekviena patikra lyginama su jūsų įprastu veikimu laikui bėgant.",
+      baselineHeader: "Jūsų bazinis lygis (ilgalaikis):",
+      typical: {
+        reaction: "Tipinis reakcijos laikas:",
+        gonogo: "Tipinis atsako modelis:",
+        divided: "Tipinis padalintos dėmesio veikla:",
+        precision: "Tipinis tikslumo tikslumas:",
+      },
+      variation: "Tipinis dienos dieną kintamumas:",
+      guideHelp: "Užtamsinta sritis rodo, kur jūsų rezultatai paprastai patenka, kai sąlygos panašios.",
+      guideBand: "Vizualus gidavimo diapazonas:",
       noBaseline: "Dar nėra bazinio lygio — tendencija naudoja bazinio lygio sesijas.",
       noChecks: "Dar nėra patikros sesijų.",
       checkLabel: "Patikra",
-      delta: "Δ {delta} ms",
-      status: "Būsena: {status}",
+      delta: "Skirtumas nuo bazinio lygio: {delta}",
+      result: "Rezultatas:",
+      footerNote: "Ši peržiūra vizualizuoja pokytį. Ji nesprendžia pasirengimo, tinkamumo ar leidimo.",
       ok: "Gerai",
       invalid: "NETINKAMA",
+    },
+    session: {
+      chip: {
+        avg: "Vidurkis",
+        consistency: "Nuoseklumas (ši sesija)",
+        trials: "Bandymai",
+      },
+      detail: {
+        avg: "Vidurkis",
+        consistency: "Nuoseklumas",
+        trials: "Bandymai",
+        compare: {
+          line1: "Šis rezultatas skiriasi {delta} nuo jūsų bazinio lygio.",
+          line2: {
+            within: "Atsižvelgiant į tai, kiek jūs paprastai kintate, šis skirtumas vis tiek yra tipiškas jums.",
+            slightly: "Atsižvelgiant į tai, kiek jūs paprastai kintate, šis skirtumas yra mažiau tipiškas, bet vis tiek yra pagrįstame diapazone.",
+            significantly: "Atsižvelgiant į tai, kiek jūs paprastai kintate, šis skirtumas nėra tipiškas jums.",
+          },
+        },
+      },
     },
     history: {
       avg: "vid.",
@@ -514,6 +748,7 @@ const I18N = {
           timeouts: "Laiko pabaigos",
           avgRt: "Vidutinis RT",
           variability: "Kintamumas (SD)",
+          sd: "SD",
         },
         comparison: {
           within: "Tikslumas normos ribose",
@@ -521,11 +756,26 @@ const I18N = {
           significantly: "Tikslumas ženkliai prastesnis nei bazė",
         },
       },
+      gonogo: {
+        nogoTrials: "NO-GO bandymai",
+        errors: {
+          none: "Klaidos: nėra",
+          present: "Klaidos: yra",
+        },
+      },
       divided: {
         flashes: "Blyksniai",
+        flashesFormat: "Blyksniai: {answered}/{target}",
         target: "tikslas",
         answer: "atsakymas",
         error: "klaida",
+        flashMismatch: "blyksnių neatitikimas (atsakyta {answered} iš {target})",
+        errors: {
+          none: "Klaidos: nėra",
+          present: "Klaidos: yra",
+          summaryNone: "Klaidos: nėra (nėra praleistų, slopinimo klaidų ar blyksnių klaidų)",
+          summaryPresent: "Klaidos: yra — blyksnių neatitikimas (atsakyta {answered} iš {target}); praleistai: {misses}; slopinimo klaidos: {fa}",
+        },
       },
       tags: {
         sleep: "miegas",
@@ -536,6 +786,11 @@ const I18N = {
         R1_INVALID_EXECUTION: "vykdymo klaida (nėra užregistruotų galiojančių atsakų).",
         R2_INSUFFICIENT_DATA: "nepakanka duomenų (per mažai galiojančių atsakų).",
         R3_EXCESS_NOISE: "per daug klaidų (per daug klaidingų startų arba slopinimo klaidų).",
+      },
+      precision: {
+        notUsable: "Nebenaudojama",
+        reasonPrefix: "Priežastis:",
+        reasonGeneric: "per daug vykdymo klaidų, kad būtų galima patikimai išmatuoti tikslumą.",
       },
       falseAlarmsAbbr: "SK",
     },
@@ -587,6 +842,11 @@ const I18N = {
       gonogo: {
         go: "GO (spauskite)",
         nogo: "NO-GO (nespauskite)",
+        nogoTrials: "NO-GO bandymai",
+        errors: {
+          none: "Klaidos: nėra",
+          present: "Klaidos: yra",
+        },
       },
       divided: {
         go: "SPAUSKITE",
@@ -607,17 +867,115 @@ const I18N = {
         invalid: "Tikslumo testas netinkamas.",
         noFullscreenNote: "Pastaba: Ši tikslumo sesija vyko be viso ekrano. Įvesties pastovumas gali būti mažesnis.",
       },
+    op: {
+      title: "Kas atsitinka po testo?",
+      note: "Tik patariamasis. Tai nediagnozuoja ir nesprendžia pasirengimo.",
+      tiers: {
+        baseline_needed_title: "Reikalingas bazinis lygis",
+        proceed_title: "Tęsti",
+        proceed_caution_title: "Tęsti atsargiai",
+        pause_retest_title: "Pristabdyti ir pakartoti testą",
+        rest_retest_later_title: "Pailsėti ir pakartoti vėliau",
+        not_usable_title: "Netinkama sesija",
+      },
+      common: {
+        retest_now: "Pakartokite testą dabar ramioje, nuoseklioje aplinkoje.",
+        retest_later: "Pailsėkite ir pakartokite vėliau, jei veikla išlieka žemiau bazinio lygio.",
+        take_break: "Trumpai pailsėkite, tada pakartokite patikrą nuoseklioje aplinkoje.",
+        reduce_load: "Apsvarstykite sumažinti intensyvumą ir pakartoti patikrą, jei reikia.",
+        check_conditions: "Patikrinkite savo aplinką ir sąlygas prieš pakartojant testą.",
+        consider_context: "Jei tai atitinka jūsų bazinį lygį, pagrįsta tęsti kaip planuota.",
+        if_symptoms: "Jei jaučiate simptomus ar nuovargį, pirmiausia pailsėkite.",
+      },
+      byTest: {
+        reaction: {
+          oneLine: "Tai matuoja budrumą ir dėmesį. Klaidingi startai gali rodyti skubėjimą arba aplinkos problemas.",
+          bullet1: "Budrumas ir dėmesys yra pagrindiniai reakcijos laiko veiksniai.",
+          bullet2: "Klaidingi startai dažnai atspindi skubėjimą arba nenuoseklų aplinką.",
+        },
+        gonogo: {
+          oneLine: "Tai matuoja slopinimo kontrolę. Slopinimo klaidos arba praleidimai gali rodyti dėmesio arba slopinimo problemas.",
+          bullet1: "Slopinimo kontrolė padeda tinkamai valdyti atsakus.",
+          bullet2: "Slopinimo klaidos arba praleidimai gali atspindėti dėmesio arba slopinimo iššūkius.",
+        },
+        divided: {
+          oneLine: "Tai matuoja daugiafunkcinę apkrovą. Blyksnių klaidos arba slopinimo klaidos gali rodyti dėmesio talpos ribas.",
+          bullet1: "Daugiafunkcinės užduotys reikalauja valdyti kelias dėmesio sroves.",
+          bullet2: "Blyksnių klaidos arba slopinimo klaidos gali atspindėti dėmesio talpos ribas.",
+        },
+        precision: {
+          oneLine: "Tai matuoja smulkųjį motorinį valdymą. Visas ekranas ir įrenginio nuoseklumas veikia rezultatus.",
+          bullet1: "Smulkusis motorinis valdymas reikalauja pastovaus, nuoseklaus įvedimo.",
+          bullet2: "Visas ekranas ir įrenginio nuoseklumas yra svarbūs patikimiems rezultatams.",
+        },
+      },
+    },
   },
 };
 
 function t(path) {
   const parts = path.split(".");
   let value = I18N[currentLang];
+  // Navigate through the object path
   for (const part of parts) {
-    if (!value || typeof value !== "object") return path;
+    if (!value || typeof value !== "object") {
+      // Path broken, try English fallback
+      if (currentLang !== "en") {
+        let fallbackValue = I18N.en;
+        for (const fallbackPart of parts) {
+          if (!fallbackValue || typeof fallbackValue !== "object") {
+            // Fallback also broken, return human-readable fallback for common Precision keys
+            return getPrecisionFallback(path);
+          }
+          fallbackValue = fallbackValue[fallbackPart];
+        }
+        if (fallbackValue !== undefined && typeof fallbackValue === "string") {
+          return fallbackValue;
+        }
+      }
+      return getPrecisionFallback(path);
+    }
     value = value[part];
   }
-  return value !== undefined ? value : path;
+  // Found value in current language
+  if (value !== undefined && typeof value === "string") {
+    return value;
+  }
+  // Value missing or wrong type, try English fallback
+  if (currentLang !== "en") {
+    let fallbackValue = I18N.en;
+    for (const part of parts) {
+      if (!fallbackValue || typeof fallbackValue !== "object") {
+        return getPrecisionFallback(path);
+      }
+      fallbackValue = fallbackValue[part];
+    }
+    if (fallbackValue !== undefined && typeof fallbackValue === "string") {
+      return fallbackValue;
+    }
+  }
+  return getPrecisionFallback(path);
+}
+
+// Safe fallback for Precision labels to prevent raw keys from appearing
+function getPrecisionFallback(path) {
+  const fallbacks = {
+    "history.precision.labels.accuracy": "Accuracy",
+    "history.precision.labels.consistency": "Consistency",
+    "history.precision.labels.execution": "Execution",
+    "history.precision.labels.hits": "Hits",
+    "history.precision.labels.misses": "Misses",
+    "history.precision.labels.timeouts": "Timeouts",
+    "history.precision.labels.avgRt": "Average RT",
+    "history.precision.labels.variability": "Variability (SD)",
+    "history.precision.labels.sd": "SD",
+    "history.precision.responded": "responded",
+    "history.precision.rt": "rt",
+    "history.precision.misses": "misses",
+    "history.precision.timeouts": "timeouts",
+    "history.precision.err": "err",
+  };
+  return fallbacks[path] || path;
 }
 
 // Helper functions for bilingual trial and session strings
@@ -1328,6 +1686,103 @@ function regenerateSummary() {
   setSummary(type, data, tt, m);
 }
 
+// Compute advice tier from session outcomes (pure mapping, no new decisions)
+function computeAdviceTier({ mode, refusalCode, statusText, summaryType }) {
+  // refusalCode present => not_usable
+  if (refusalCode) return "not_usable";
+
+  // If summary type is "not_enough_baseline" => baseline_needed
+  if (summaryType === "not_enough_baseline") return "baseline_needed";
+
+  // For baseline mode: "proceed" but remind to collect multiple baselines
+  if (mode === "baseline") return "proceed";
+
+  // For training mode: keep it minimal (do not imply readiness). Use proceed_caution.
+  if (mode === "training") return "proceed_caution";
+
+  // For check mode: map existing status strings:
+  // status.within => proceed
+  // status.slightly => proceed_caution
+  // status.significantly => pause_retest
+  if (statusText === t("status.within")) return "proceed";
+  if (statusText === t("status.slightly")) return "proceed_caution";
+  if (statusText === t("status.significantly")) return "pause_retest";
+
+  return "proceed_caution";
+}
+
+function setOperationalAdvice(adviceObj) {
+  const wrap = document.getElementById("opAdvice");
+  const body = document.getElementById("opAdviceBody");
+  if (!wrap || !body) return;
+
+  lastAdviceData = adviceObj;
+
+  if (!adviceObj) {
+    wrap.classList.add("hidden");
+    body.innerHTML = "";
+    return;
+  }
+
+  // Build HTML (simple, safe)
+  // Use a short title + one-line + bullets
+  // Avoid rendering raw user input as HTML; only use your own strings and numbers.
+  const { tier, testType, mode, quality, deviceMismatch, extra } = adviceObj;
+
+  const tierTitleKey = `op.tiers.${tier}_title`;
+  const tierTitle = t(tierTitleKey);
+
+  const oneLine = t(`op.byTest.${testType}.oneLine`);
+  const b1 = t(`op.byTest.${testType}.bullet1`);
+  const b2 = t(`op.byTest.${testType}.bullet2`);
+
+  // Common actions by tier (map tier -> 2–3 common items)
+  const items = [];
+  if (tier === "baseline_needed") {
+    items.push(t("op.common.check_conditions"));
+  } else if (tier === "proceed") {
+    items.push(t("op.common.consider_context"));
+  } else if (tier === "proceed_caution") {
+    items.push(t("op.common.reduce_load"), t("op.common.consider_context"));
+  } else if (tier === "pause_retest") {
+    items.push(t("op.common.take_break"), t("op.common.retest_now"));
+  } else if (tier === "rest_retest_later") {
+    items.push(t("op.common.retest_later"), t("op.common.if_symptoms"));
+  } else if (tier === "not_usable") {
+    items.push(t("op.common.check_conditions"), t("op.common.retest_now"));
+  }
+
+  // Optional warnings
+  const warnParts = [];
+  if (quality && quality !== "good") warnParts.push(`${t("quality.label")}: ${t(`quality.${quality}`)}`);
+  if (deviceMismatch) warnParts.push(currentLang === "no"
+    ? "Enhetsvarsel: sammenlignbarhet kan være lavere."
+    : currentLang === "lt"
+      ? "Įrenginio įspėjimas: palyginamumas gali būti mažesnis."
+      : "Device warning: comparability may be lower."
+  );
+
+  const warnLine = warnParts.length ? `<div class="note">${warnParts.join(" · ")}</div>` : "";
+
+  body.innerHTML = `
+    <div><strong>${tierTitle}</strong></div>
+    <div class="muted" style="margin-top:6px;">${oneLine}</div>
+    <ul>
+      <li>${b1}</li>
+      <li>${b2}</li>
+      ${items.map(x => `<li>${x}</li>`).join("")}
+    </ul>
+    ${warnLine}
+  `;
+
+  wrap.classList.remove("hidden");
+}
+
+function regenerateOperationalAdvice() {
+  if (!lastAdviceData) return;
+  setOperationalAdvice(lastAdviceData);
+}
+
 function applyLangUI() {
   // 1) Toggle docs language blocks
   document.querySelectorAll(".lang-en").forEach(el => el.classList.toggle("hidden", currentLang !== "en"));
@@ -1390,6 +1845,9 @@ function applyLangUI() {
   if (summary && summary.textContent && lastSummaryData) {
     regenerateSummary();
   }
+
+  // 7b) Update operational advice if it exists
+  regenerateOperationalAdvice();
 
   // 8) Re-render history if visible
   if (historyListEl) {
@@ -1646,6 +2104,7 @@ if (trialList) trialList.classList.add("session-trials");
 
 // Store last summary generation data for language switching
 let lastSummaryData = null;
+let lastAdviceData = null;
 
 const menuBtn = document.getElementById("menuBtn");
 const menu = document.getElementById("menu");
@@ -2680,6 +3139,15 @@ startBaselineBtn.addEventListener("click", () => {
         refusalCode: flags.refusalCode,
         quality: invalidRecord.quality
       }, "precision", mode);
+      const tier20 = computeAdviceTier({ mode, refusalCode: flags.refusalCode, statusText: null, summaryType: "invalid_precision_exit" });
+      setOperationalAdvice({
+        tier: tier20,
+        testType: "precision",
+        mode,
+        quality: invalidRecord.quality || "good",
+        deviceMismatch: false,
+        extra: {}
+      });
       mode = null;
       updateBaselineInfo();
       return;
@@ -3885,6 +4353,15 @@ function pushHistoryRecord(record) {
           refusalCode: flags.refusalCode,
           quality: invalidRecord.quality
         }, "reaction", mode);
+        const tier1 = computeAdviceTier({ mode, refusalCode: flags.refusalCode, statusText: null, summaryType: "invalid_no_reaction" });
+        setOperationalAdvice({
+          tier: tier1,
+          testType: "reaction",
+          mode,
+          quality: invalidRecord.quality || "good",
+          deviceMismatch: false,
+          extra: {}
+        });
         mode = null;
         updateBaselineInfo(); // Ensure button state is correct
         return;
@@ -3936,6 +4413,15 @@ function pushHistoryRecord(record) {
           refusalCode: flags.refusalCode,
           quality: invalidRecord.quality
         }, "gonogo", mode);
+        const tier2 = computeAdviceTier({ mode, refusalCode: flags.refusalCode, statusText: null, summaryType: "invalid_no_go" });
+        setOperationalAdvice({
+          tier: tier2,
+          testType: "gonogo",
+          mode,
+          quality: invalidRecord.quality || "good",
+          deviceMismatch: false,
+          extra: {}
+        });
         mode = null;
         updateBaselineInfo(); // Ensure button state is correct
         return;
@@ -3993,6 +4479,15 @@ function pushHistoryRecord(record) {
           refusalCode: flags.refusalCode,
           quality: invalidRecord.quality
         }, "divided", mode);
+        const tier3 = computeAdviceTier({ mode, refusalCode: flags.refusalCode, statusText: null, summaryType: "invalid_missing_answer" });
+        setOperationalAdvice({
+          tier: tier3,
+          testType: "divided",
+          mode,
+          quality: invalidRecord.quality || "good",
+          deviceMismatch: false,
+          extra: {}
+        });
         mode = null;
         dividedPlan = null;
         dividedFlashAnswer = null;
@@ -4034,6 +4529,15 @@ function pushHistoryRecord(record) {
           refusalCode: flags.refusalCode,
           quality: invalidRecord.quality
         }, "divided", mode);
+        const tier4 = computeAdviceTier({ mode, refusalCode: flags.refusalCode, statusText: null, summaryType: "invalid_no_go_responses_divided" });
+        setOperationalAdvice({
+          tier: tier4,
+          testType: "divided",
+          mode,
+          quality: invalidRecord.quality || "good",
+          deviceMismatch: false,
+          extra: {}
+        });
         mode = null;
         dividedPlan = null;
         dividedFlashAnswer = null;
@@ -4106,6 +4610,15 @@ function pushHistoryRecord(record) {
           refusalCode: flags.refusalCode,
           quality: invalidRecord.quality
         }, "precision", mode);
+        const tier5 = computeAdviceTier({ mode, refusalCode: flags.refusalCode, statusText: null, summaryType: "invalid_precision_no_responses" });
+        setOperationalAdvice({
+          tier: tier5,
+          testType: "precision",
+          mode,
+          quality: invalidRecord.quality || "good",
+          deviceMismatch: false,
+          extra: {}
+        });
         mode = null;
         updateBaselineInfo();
         return;
@@ -4144,6 +4657,15 @@ function pushHistoryRecord(record) {
           refusalCode: flags.refusalCode,
           quality: invalidRecord.quality
         }, "precision", mode);
+        const tier6 = computeAdviceTier({ mode, refusalCode: flags.refusalCode, statusText: null, summaryType: "invalid_precision_insufficient" });
+        setOperationalAdvice({
+          tier: tier6,
+          testType: "precision",
+          mode,
+          quality: invalidRecord.quality || "good",
+          deviceMismatch: false,
+          extra: {}
+        });
         mode = null;
         updateBaselineInfo();
         return;
@@ -4184,6 +4706,15 @@ function pushHistoryRecord(record) {
           refusalCode: flags.refusalCode,
           quality: invalidRecord.quality
         }, "precision", mode);
+        const tier7 = computeAdviceTier({ mode, refusalCode: flags.refusalCode, statusText: null, summaryType: "invalid_precision_excess_noise" });
+        setOperationalAdvice({
+          tier: tier7,
+          testType: "precision",
+          mode,
+          quality: invalidRecord.quality || "good",
+          deviceMismatch: false,
+          extra: {}
+        });
         mode = null;
         updateBaselineInfo();
         return;
@@ -4341,11 +4872,29 @@ function pushHistoryRecord(record) {
               refusalCode: sessionRecord.flags.refusalCode,
               quality: sessionRecord.quality
             }, tt, mode);
+            const tier8 = computeAdviceTier({ mode, refusalCode: sessionRecord.flags.refusalCode, statusText: null, summaryType: "baseline_not_saved_divided" });
+            setOperationalAdvice({
+              tier: tier8,
+              testType: tt,
+              mode,
+              quality: sessionRecord.quality || "good",
+              deviceMismatch: false,
+              extra: {}
+            });
           } else {
             setSummary("baseline_not_saved", {
               refusalCode: sessionRecord.flags.refusalCode,
               quality: sessionRecord.quality
             }, tt, mode);
+            const tier9 = computeAdviceTier({ mode, refusalCode: sessionRecord.flags.refusalCode, statusText: null, summaryType: "baseline_not_saved" });
+            setOperationalAdvice({
+              tier: tier9,
+              testType: tt,
+              mode,
+              quality: sessionRecord.quality || "good",
+              deviceMismatch: false,
+              extra: {}
+            });
           }
           mode = null;
           if (isDivided) {
@@ -4444,6 +4993,16 @@ function pushHistoryRecord(record) {
     if (mode === "training") {
       // Training mode doesn't update baseline, so ensure button states are correct
       updateBaselineInfo();
+      // Show advisory advice for training mode
+      const tierTraining = computeAdviceTier({ mode: "training", refusalCode: null, statusText: null, summaryType: null });
+      setOperationalAdvice({
+        tier: tierTraining,
+        testType: tt,
+        mode: "training",
+        quality: sessionRecord.quality || "good",
+        deviceMismatch: false,
+        extra: {}
+      });
       mode = null;
       if (isDivided) {
         dividedPlan = null;
@@ -4471,6 +5030,15 @@ function pushHistoryRecord(record) {
           refusalCode: sessionRecord.flags.refusalCode,
           quality: sessionRecord.quality
         }, tt, mode);
+        const tier14 = computeAdviceTier({ mode, refusalCode: sessionRecord.flags.refusalCode, statusText: null, summaryType: "not_enough_baseline" });
+        setOperationalAdvice({
+          tier: tier14,
+          testType: tt,
+          mode,
+          quality: sessionRecord.quality || "good",
+          deviceMismatch: false,
+          extra: {}
+        });
         mode = null;
         if (isDivided) {
           dividedPlan = null;
@@ -4571,6 +5139,15 @@ function pushHistoryRecord(record) {
           quality: sessionRecord.quality || "good",
           deviceWarning: deviceWarning || ""
         }, tt, mode);
+        const tier16 = computeAdviceTier({ mode, refusalCode: null, statusText: status, summaryType: "check_reaction" });
+        setOperationalAdvice({
+          tier: tier16,
+          testType: "reaction",
+          mode,
+          quality: sessionRecord.quality || "good",
+          deviceMismatch: !!deviceWarning,
+          extra: {}
+        });
       } else if (isDivided) {
         // Divided Attention check summary
         // False alarm rate: use NO-GO trial count as denominator
@@ -4598,6 +5175,15 @@ function pushHistoryRecord(record) {
           quality: sessionRecord.quality || "good",
           deviceWarning: deviceWarning || ""
         }, tt, mode);
+        const tier17 = computeAdviceTier({ mode, refusalCode: null, statusText: status, summaryType: "check_divided" });
+        setOperationalAdvice({
+          tier: tier17,
+          testType: "divided",
+          mode,
+          quality: sessionRecord.quality || "good",
+          deviceMismatch: !!deviceWarning,
+          extra: {}
+        });
       } else {
         // For Go/No-Go, also show error counts clearly.
         // Optional: compare errors vs baseline averages (simple, explainable)
@@ -4743,6 +5329,8 @@ function hardReset() {
   trialList.innerHTML = "";
   summary.textContent = "";
   lastSummaryData = null; // Clear summary data on reset
+  lastAdviceData = null; // Clear advice data on reset
+  setOperationalAdvice(null); // Hide advice block
   progress.textContent = "";
 
   // Show context panel when reset to idle
@@ -4944,6 +5532,47 @@ function baselineKeyFor(tt) {
   if (tt === "divided") return "fce_baseline_divided_v1";
   if (tt === "precision") return "fce_baseline_precision_v1";
   return "fce_baseline_reaction_v1";
+}
+
+// Get baseline statistics used for comparison (single source of truth)
+// Returns the same mean/SD used by statusLabelFromCompare and getDividedAttentionStatus
+// For precision: uses meanErrN/sdErrN; for others: uses mean/sd
+// This is the mean of per-session SDs (not stddev of session means)
+function getBaselineForCompare(testType) {
+  try {
+    const key = baselineKeyFor(testType);
+    const raw = localStorage.getItem(key);
+    if (!raw) return null;
+    
+    const baselineSessionsRaw = JSON.parse(raw);
+    const baselineSessions = filterValidBaselineSessions(baselineSessionsRaw);
+    
+    if (baselineSessions.length === 0) return null;
+    
+    const isPrecision = testType === "precision";
+    
+    if (isPrecision) {
+      const baselineMean = mean(baselineSessions.map(s => s.meanErrN || 0));
+      const baselineSD = mean(baselineSessions.map(s => s.sdErrN || 0));
+      return {
+        mean: baselineMean,
+        sd: baselineSD,
+        n: baselineSessions.length,
+        isPrecision: true
+      };
+    } else {
+      const baselineMean = mean(baselineSessions.map(s => s.mean || 0));
+      const baselineSD = mean(baselineSessions.map(s => s.sd || 0));
+      return {
+        mean: baselineMean,
+        sd: baselineSD,
+        n: baselineSessions.length,
+        isPrecision: false
+      };
+    }
+  } catch {
+    return null;
+  }
 }
 
 function minBaselineSessions() {
@@ -5182,6 +5811,11 @@ function sdChipClass(sd, baselineSD) {
 }
 
 // Compute baseline mean/sd from baseline sessions (excluding invalid)
+// NOTE: This function computes SD as stddev of baseline session means (variance of means).
+// This gives a small number (e.g., ±2 ms) representing variability BETWEEN sessions.
+// DO NOT use this SD for "typical day-to-day variation" in Trend - it's different from
+// the comparison SD (mean of per-session SDs, e.g., ±37 ms) used by statusLabelFromCompare.
+// Use getBaselineForCompare() instead for Trend display and status comparisons.
 function computeBaselineFromHistory(sessions) {
   // Determine test type from first session or current selection
   const firstSession = sessions.find(s => s && s.mode === "baseline");
@@ -5201,7 +5835,8 @@ function computeBaselineFromHistory(sessions) {
 
   if (base.length < 1) return null;
 
-  // reuse your mean/stddev if you already have them; otherwise:
+  // Compute mean and stddev of baseline session means (variance of means)
+  // This SD represents variability BETWEEN sessions, not within-session variation
   const m = base.reduce((a, b) => a + b, 0) / base.length;
   const variance = base.length > 1
     ? base.reduce((acc, x) => acc + Math.pow(x - m, 2), 0) / (base.length - 1)
@@ -5223,6 +5858,16 @@ function modeLabel(mode) {
   const m = String(mode).toLowerCase();
   // Use translation system for consistency
   return t(`ui.mode.${m}`) || mode;
+}
+
+// Helper: get unit string for delta/avg display based on test type
+function getUnitForTest(testType) {
+  const tt = String(testType || "").toLowerCase();
+  if (tt === "reaction") return "ms";
+  if (tt === "gonogo") return "ms";
+  if (tt === "divided") return "ms"; // Divided attention uses avgMs for comparison
+  if (tt === "precision") return ""; // Precision uses normalized error, no unit
+  return "ms"; // Default fallback
 }
 
 function renderHomeHistoryPreview() {
@@ -5332,7 +5977,7 @@ function renderHomeHistoryPreview() {
 
     const status = document.createElement("div");
     status.className = "muted";
-    status.textContent = statusText ? t("trend.status").replace("{status}", statusText) : "";
+    status.textContent = statusText || "";
 
     sub.appendChild(metrics);
     sub.appendChild(status);
@@ -5379,30 +6024,50 @@ function renderTrendFor(testType) {
   recentChecksEl.innerHTML = "";
   emptyNote.textContent = "";
 
-  const baseline = computeBaselineFromHistory(sessions);
+  // Get baseline for comparison (same SD used in statusLabelFromCompare)
+  // This uses mean of per-session SDs, not stddev of session means
+  const compareBaseline = getBaselineForCompare(testType);
 
-  if (!baseline) {
-    baselineLine.textContent = t("trend.noBaseline");
+  if (!compareBaseline) {
+    baselineLine.innerHTML = `<p class="muted">${t("trend.noBaseline")}</p>`;
   } else {
-    const isPrecision = baseline.isPrecision || testType === "precision";
-    const lo = baseline.mean - baseline.sd;
-    const hi = baseline.mean + baseline.sd;
-    if (isPrecision) {
-      // Build baseline line without "ms" for precision tests
-      const template = t("trend.baselineLine");
-      baselineLine.textContent = template
-        .replace("{mean}", fmt(baseline.mean, 2))
-        .replace("{sd}", fmt(baseline.sd, 2))
-        .replace("{lo}", fmt(lo, 2))
-        .replace("{hi}", fmt(hi, 2))
-        .replace(/ ms/g, "");
+    const isPrecision = compareBaseline.isPrecision || testType === "precision";
+    
+    // Build new human-readable baseline header
+    const header = document.createElement("div");
+    header.className = "muted";
+    header.style.marginBottom = "8px";
+    header.textContent = t("trend.baselineHeader");
+    
+    const typicalLine = document.createElement("div");
+    typicalLine.className = "muted";
+    typicalLine.style.marginTop = "4px";
+    // Use test-type-specific typical label
+    const typicalKey = `trend.typical.${testType}`;
+    const typicalLabel = t(typicalKey) || (isPrecision ? t("trend.typical.precision") : t("trend.typical.reaction"));
+    typicalLine.textContent = `${typicalLabel} ${fmt(compareBaseline.mean, isPrecision ? 2 : 0)}${isPrecision ? "" : " ms"}`;
+    
+    // Only show variation if SD is valid and positive
+    const variationLine = document.createElement("div");
+    variationLine.className = "muted";
+    variationLine.style.marginTop = "4px";
+    if (Number.isFinite(compareBaseline.sd) && compareBaseline.sd > 0) {
+      variationLine.textContent = `${t("trend.variation")} ±${fmt(compareBaseline.sd, isPrecision ? 2 : 0)}${isPrecision ? "" : " ms"}`;
     } else {
-      baselineLine.textContent = t("trend.baselineLine")
-        .replace("{mean}", fmt(baseline.mean, 0))
-        .replace("{sd}", fmt(baseline.sd, 0))
-        .replace("{lo}", fmt(lo, 0))
-        .replace("{hi}", fmt(hi, 0));
+      variationLine.textContent = `${t("trend.variation")} —`;
     }
+    
+    const guideLine = document.createElement("div");
+    guideLine.className = "muted";
+    guideLine.style.marginTop = "8px";
+    guideLine.style.fontSize = "13px";
+    guideLine.textContent = t("trend.guideHelp");
+    
+    baselineLine.innerHTML = "";
+    baselineLine.appendChild(header);
+    baselineLine.appendChild(typicalLine);
+    baselineLine.appendChild(variationLine);
+    baselineLine.appendChild(guideLine);
   }
 
   // Recent CHECK sessions (exclude invalid if you prefer; I recommend *including* but marking)
@@ -5421,14 +6086,50 @@ function renderTrendFor(testType) {
     const avg = isPrecision ? s?.metrics?.avgErrN : s?.metrics?.avgMs;
     const isInvalid = !!(s?.flags?.invalid);
     const when = formatDateTime(s?.createdAt || s?.id);
-    const delta = (baseline && typeof avg === "number") ? (avg - baseline.mean) : null;
+    // Use compareBaseline.mean for delta calculation (same as used for status)
+    const delta = (compareBaseline && typeof avg === "number" && Number.isFinite(compareBaseline.mean)) 
+      ? (avg - compareBaseline.mean) 
+      : null;
 
-    // Use your existing check status logic if you have it.
-    // If you already store s.statusText, prefer that:
+    // Compute status using same logic as renderHistory (single source of truth)
     let statusText = s?.statusText || "";
-    if (!statusText && baseline && typeof avg === "number" && typeof baseline.sd === "number") {
-      // Use existing statusLabelFromCompare function
-      statusText = statusLabelFromCompare(avg, baseline.mean, baseline.sd);
+    if (!statusText && !isInvalid && Number.isFinite(avg)) {
+      // Load baseline sessions the same way as renderHistory
+      const baselineSessionsRaw = (() => {
+        try {
+          const key = baselineKeyFor(testType);
+          const raw = localStorage.getItem(key);
+          return raw ? JSON.parse(raw) : [];
+        } catch {
+          return [];
+        }
+      })();
+      const baselineSessions = filterValidBaselineSessions(baselineSessionsRaw);
+      
+      if (baselineSessions.length > 0) {
+        if (testType === "divided") {
+          // For divided attention, use multi-metric comparison
+          const m = s.metrics || {};
+          const sessionPayloadMock = {
+            mean: avg,
+            falseAlarms: m.falseAlarms || 0,
+            trials: m.trials || 0,
+            nogoCount: m.nogoCount || 0,
+            flashAbsError: m.flashAbsError || 0
+          };
+          statusText = getDividedAttentionStatus(sessionPayloadMock, baselineSessions);
+        } else if (isPrecision) {
+          // Precision: compare meanErrN
+          const baselineMeanErrN = mean(baselineSessions.map(bs => bs.meanErrN || 0));
+          const baselineSDErrN = mean(baselineSessions.map(bs => bs.sdErrN || 0));
+          statusText = statusLabelFromCompare(avg, baselineMeanErrN, baselineSDErrN);
+        } else {
+          // For reaction and gonogo, use avgMs
+          const baselineMean = mean(baselineSessions.map(bs => bs.mean || 0));
+          const baselineSD = mean(baselineSessions.map(bs => bs.sd || 0));
+          statusText = statusLabelFromCompare(avg, baselineMean, baselineSD);
+        }
+      }
     }
 
     const badgeClass = isInvalid ? "na" : clampBadgeClass(statusText);
@@ -5446,7 +6147,7 @@ function renderTrendFor(testType) {
 
     const sub = document.createElement("div");
     sub.className = "muted";
-    sub.textContent = statusText ? t("trend.status").replace("{status}", statusText) : "";
+    sub.textContent = statusText ? `${t("trend.result")} ${statusText}` : "";
     left.appendChild(sub);
 
     const right = document.createElement("div");
@@ -5462,11 +6163,13 @@ function renderTrendFor(testType) {
 
     const deltaLine = document.createElement("div");
     deltaLine.className = "muted";
-    if (isPrecision) {
-      // For precision, remove "ms" unit label
-      deltaLine.textContent = (delta === null) ? "" : t("trend.delta").replace("{delta}", fmt(delta, 2)).replace(" ms", "");
+    if (delta !== null && Number.isFinite(delta)) {
+      const deltaSigned = delta >= 0 ? `+${fmt(delta, isPrecision ? 2 : 0)}` : fmt(delta, isPrecision ? 2 : 0);
+      const unit = getUnitForTest(testType);
+      const deltaWithUnit = unit ? `${deltaSigned} ${unit}` : deltaSigned;
+      deltaLine.textContent = t("trend.delta").replace("{delta}", deltaWithUnit);
     } else {
-      deltaLine.textContent = (delta === null) ? "" : t("trend.delta").replace("{delta}", fmt(delta, 0));
+      deltaLine.textContent = "";
     }
     right.appendChild(deltaLine);
 
@@ -5696,50 +6399,59 @@ function renderHistory() {
     const expectedTrials = expectedTrialsFor(tt);
     const trialsClass = Number.isFinite(trials) ? (trials < expectedTrials ? "warn" : "ok") : "na";
 
-    // Precision: exactly 3 chips (Accuracy, Consistency SD, Hits)
+    // Precision: chips depend on validity
     if (tt === "precision") {
-      // 1) Accuracy
-      if (Number.isFinite(avg)) {
+      if (isInvalid) {
+        // Invalid sessions: show "Not usable" chip only
         const chip = document.createElement("span");
-        chip.className = `chip ${avgClass}`;
-        chip.textContent = `${t("history.precision.labels.accuracy")} ${avg.toFixed(2)}`;
+        chip.className = "chip bad";
+        chip.textContent = t("history.precision.notUsable");
         chips.appendChild(chip);
-      }
-      // 2) Consistency SD
-      if (Number.isFinite(sd)) {
-        const chip = document.createElement("span");
-        chip.className = `chip ${sdClass}`;
-        chip.textContent = `${t("history.precision.labels.consistency")} SD ${sd.toFixed(2)}`;
-        chips.appendChild(chip);
-      }
-      // 3) Hits
-      const hits = m.hits || 0;
-      const respondedTrials = m.respondedTrials || 0;
-      if (respondedTrials > 0) {
-        const hitRate = Math.round((hits / respondedTrials) * 100);
-        const chip = document.createElement("span");
-        chip.className = "chip";
-        chip.textContent = `${t("history.precision.labels.hits")} ${hitRate}%`;
-        chips.appendChild(chip);
+      } else {
+        // Valid sessions: show Accuracy, Consistency SD, Hits
+        // 1) Accuracy
+        if (Number.isFinite(avg)) {
+          const chip = document.createElement("span");
+          chip.className = `chip ${avgClass}`;
+          chip.textContent = `${t("history.precision.labels.accuracy")} ${avg.toFixed(2)}`;
+          chips.appendChild(chip);
+        }
+        // 2) Consistency SD
+        if (Number.isFinite(sd)) {
+          const chip = document.createElement("span");
+          chip.className = `chip ${sdClass}`;
+          chip.textContent = `${t("session.chip.consistency")} ${sd.toFixed(2)}`;
+          chips.appendChild(chip);
+        }
+        // 3) Hits
+        const hits = m.hits || 0;
+        const respondedTrials = m.respondedTrials || 0;
+        if (respondedTrials > 0) {
+          const hitRate = Math.round((hits / respondedTrials) * 100);
+          const chip = document.createElement("span");
+          chip.className = "chip";
+          chip.textContent = `${t("history.precision.labels.hits")} ${hitRate}%`;
+          chips.appendChild(chip);
+        }
       }
     } else {
       // Other tests: Always show: Avg, SD, Trials
       if (Number.isFinite(avg)) {
         const chip = document.createElement("span");
         chip.className = `chip ${avgClass}`;
-        chip.textContent = `${t("history.avg")} ${avg.toFixed(0)}ms`;
+        chip.textContent = `${t("session.chip.avg")} ${avg.toFixed(0)}ms`;
         chips.appendChild(chip);
       }
       if (Number.isFinite(sd)) {
         const chip = document.createElement("span");
         chip.className = `chip ${sdClass}`;
-        chip.textContent = `${t("history.sd")} ${sd.toFixed(0)}ms`;
+        chip.textContent = `${t("session.chip.consistency")} ${sd.toFixed(0)}ms`;
         chips.appendChild(chip);
       }
       if (Number.isFinite(trials)) {
         const chip = document.createElement("span");
         chip.className = `chip ${trialsClass}`;
-        chip.textContent = `${t("history.trials")} ${trials}`;
+        chip.textContent = `${t("session.chip.trials")} ${trials}`;
         chips.appendChild(chip);
       }
     }
@@ -5747,74 +6459,159 @@ function renderHistory() {
     // Test-specific metrics (non-precision)
     if (tt !== "precision") {
       if (tt === "gonogo") {
-        if (typeof m.falseAlarms === "number") {
-          const chip = document.createElement("span");
-          chip.className = "chip";
-          // Use abbreviated form: FA in EN, but full translation for NO/LT if preferred
-          const faLabel = t("history.falseAlarmsAbbr");
-          chip.textContent = `${faLabel} ${m.falseAlarms}`;
-          chips.appendChild(chip);
-        }
+        // Compact error indicator: single chip instead of individual error pills
+        const misses = m.misses ?? 0;
+        const falseAlarms = m.falseAlarms ?? 0;
+        const falseStarts = m.falseStarts ?? 0;
+        const hasErrors = misses > 0 || falseAlarms > 0 || falseStarts > 0;
+        const chip = document.createElement("span");
+        chip.className = "chip";
+        chip.textContent = hasErrors ? t("history.gonogo.errors.present") : t("history.gonogo.errors.none");
+        chips.appendChild(chip);
       } else if (tt === "divided") {
-      if (typeof m.falseAlarms === "number") {
+        // Compact error indicator: single chip instead of multiple
+        const misses = m.misses ?? 0;
+        const falseAlarms = m.falseAlarms ?? 0;
+        const flashAbsError = (typeof m.flashAbsError === "number" && Number.isFinite(m.flashAbsError)) ? m.flashAbsError : 0;
+        const hasErrors = misses > 0 || falseAlarms > 0 || flashAbsError > 0;
         const chip = document.createElement("span");
         chip.className = "chip";
-        const faLabel = t("history.falseAlarmsAbbr");
-        chip.textContent = `${faLabel} ${m.falseAlarms}`;
+        chip.textContent = hasErrors ? t("history.divided.errors.present") : t("history.divided.errors.none");
         chips.appendChild(chip);
-      }
-      if (typeof m.flashAbsError === "number" && Number.isFinite(m.flashAbsError)) {
-        const chip = document.createElement("span");
-        chip.className = "chip";
-        // Use localized flash error label (flashAbsError is a count, not milliseconds)
-        const flashLabel = t("history.divided.error");
-        chip.textContent = `${flashLabel} ${m.flashAbsError}`;
-        chips.appendChild(chip);
-      }
       }
     }
     
     summary.appendChild(chips);
     
-    // Muted support line for precision (under chips)
-    if (tt === "precision") {
-      const hits = m.hits || 0;
-      const respondedTrials = m.respondedTrials || 0;
-      const misses = m.misses || 0;
-      const timeouts = m.timeouts || 0;
-      const meanRtMs = m.meanRtMs || 0;
-      const supportLine = document.createElement("div");
-      supportLine.className = "muted";
-      supportLine.style.marginTop = "8px";
-      supportLine.style.fontSize = "13px";
+    // Muted support line for go/no-go (under chips) - show NO-GO context and error breakdown if present
+    if (tt === "gonogo") {
+      const nogoCount = (typeof m.nogoCount === "number" && Number.isFinite(m.nogoCount)) ? m.nogoCount : 0;
+      const misses = m.misses ?? 0;
+      const falseAlarms = m.falseAlarms ?? 0;
+      const falseStarts = m.falseStarts ?? 0;
       
+      // Show NO-GO trials context if available
+      if (nogoCount > 0) {
+        const nogoLine = document.createElement("div");
+        nogoLine.className = "muted";
+        nogoLine.style.marginTop = "8px";
+        nogoLine.style.fontSize = "13px";
+        nogoLine.textContent = `${t("history.gonogo.nogoTrials")}: ${nogoCount}`;
+        summary.appendChild(nogoLine);
+      }
+      
+      // Show error breakdown if errors present (only non-zero values)
       const parts = [];
-      if (respondedTrials > 0) {
-        const hitRate = Math.round((hits / respondedTrials) * 100);
-        if (currentLang === "no") {
-          parts.push(`${hitRate} % ${t("history.precision.hit")}`);
-        } else if (currentLang === "lt") {
-          parts.push(`${hitRate} % ${t("history.precision.labels.hits")}`);
-        } else {
-          parts.push(`${hitRate}% ${t("history.precision.labels.hits")}`);
-        }
+      if (falseAlarms > 0) {
+        parts.push(`${t("history.falseAlarms")}: ${falseAlarms}`);
       }
       if (misses > 0) {
-        parts.push(`${misses} ${t("history.precision.misses")}`);
+        parts.push(`${t("history.misses")}: ${misses}`);
       }
-      if (timeouts > 0) {
-        parts.push(`${timeouts} ${t("history.precision.timeouts")}`);
-      }
-      if (Number.isFinite(meanRtMs) && meanRtMs > 0) {
-        const rtLabel = currentLang === "no" ? `snitt ${t("history.precision.rt")}` : currentLang === "lt" ? `vid. ${t("history.precision.rt")}` : `avg ${t("history.precision.rt")}`;
-        parts.push(`${rtLabel} ${Math.round(meanRtMs)} ms`);
-      }
-      if (Number.isFinite(trials)) {
-        parts.push(`${trials} ${t("history.trials")}`);
+      if (falseStarts > 0) {
+        parts.push(`${t("history.falseStarts")}: ${falseStarts}`);
       }
       
-      supportLine.textContent = parts.join(" · ");
-      summary.appendChild(supportLine);
+      if (parts.length > 0) {
+        const supportLine = document.createElement("div");
+        supportLine.className = "muted";
+        supportLine.style.marginTop = "4px";
+        supportLine.style.fontSize = "13px";
+        supportLine.textContent = parts.join(" · ");
+        summary.appendChild(supportLine);
+      }
+    }
+    
+    // Muted support line for divided attention (under chips) - show flash context and error breakdown if present
+    if (tt === "divided") {
+      const ft = (typeof m.flashTargetCount === "number" && Number.isFinite(m.flashTargetCount)) ? m.flashTargetCount : 0;
+      const fa = (typeof m.flashUserCount === "number" && Number.isFinite(m.flashUserCount)) ? m.flashUserCount : 0;
+      const flashMismatch = (Number.isFinite(ft) && Number.isFinite(fa) && ft !== fa);
+      const falseAlarms = m.falseAlarms ?? 0;
+      const misses = m.misses ?? 0;
+      
+      // Show flash context if target is available
+      if (Number.isFinite(ft) && ft > 0) {
+        const flashLine = document.createElement("div");
+        flashLine.className = "muted";
+        flashLine.style.marginTop = "8px";
+        flashLine.style.fontSize = "13px";
+        flashLine.textContent = t("history.divided.flashesFormat")
+          .replace("{answered}", fa)
+          .replace("{target}", ft);
+        summary.appendChild(flashLine);
+      }
+      
+      // Show error breakdown if errors present
+      const parts = [];
+      if (flashMismatch) {
+        parts.push(t("history.divided.flashMismatch")
+          .replace("{answered}", fa)
+          .replace("{target}", ft));
+      }
+      if (falseAlarms > 0) {
+        parts.push(`${t("history.falseAlarms")}: ${falseAlarms}`);
+      }
+      if (misses > 0) {
+        parts.push(`${t("history.misses")}: ${misses}`);
+      }
+      
+      if (parts.length > 0) {
+        const supportLine = document.createElement("div");
+        supportLine.className = "muted";
+        supportLine.style.marginTop = "4px";
+        supportLine.style.fontSize = "13px";
+        supportLine.textContent = parts.join("; ");
+        summary.appendChild(supportLine);
+      }
+    }
+    
+    // Muted support line for precision (under chips)
+    if (tt === "precision") {
+      if (isInvalid) {
+        // Invalid sessions: show "Not usable" and reason
+        const supportLine = document.createElement("div");
+        supportLine.className = "muted";
+        supportLine.style.marginTop = "8px";
+        supportLine.style.fontSize = "13px";
+        const refusalCode = s.flags?.refusalCode;
+        const reasonText = refusalCode ? getRefusalReasonText(refusalCode) : t("history.precision.reasonGeneric");
+        supportLine.textContent = `${t("history.precision.notUsable")} — ${t("history.precision.reasonPrefix")} ${reasonText}`;
+        summary.appendChild(supportLine);
+      } else {
+        // Valid sessions: show execution metrics
+        const hits = m.hits || 0;
+        const respondedTrials = m.respondedTrials || 0;
+        const misses = m.misses || 0;
+        const timeouts = m.timeouts || 0;
+        const meanRtMs = m.meanRtMs || 0;
+        const supportLine = document.createElement("div");
+        supportLine.className = "muted";
+        supportLine.style.marginTop = "8px";
+        supportLine.style.fontSize = "13px";
+        
+        const parts = [];
+        if (respondedTrials > 0) {
+          const hitRate = Math.round((hits / respondedTrials) * 100);
+          parts.push(`${hitRate}% ${t("history.precision.labels.hits")}`);
+        }
+        if (misses > 0) {
+          parts.push(`${misses} ${t("history.precision.misses")}`);
+        }
+        if (timeouts > 0) {
+          parts.push(`${timeouts} ${t("history.precision.timeouts")}`);
+        }
+        if (Number.isFinite(meanRtMs) && meanRtMs > 0) {
+          const rtLabel = currentLang === "no" ? `snitt ${t("history.precision.rt")}` : currentLang === "lt" ? `vid. ${t("history.precision.rt")}` : `avg ${t("history.precision.rt")}`;
+          parts.push(`${rtLabel} ${Math.round(meanRtMs)} ms`);
+        }
+        if (Number.isFinite(trials)) {
+          parts.push(`${trials} ${t("history.trials")}`);
+        }
+        
+        supportLine.textContent = parts.join(" · ");
+        summary.appendChild(supportLine);
+      }
     }
     
     // Affordance text
@@ -5831,67 +6628,105 @@ function renderHistory() {
     // Detailed lines in details section
     if (tt === "precision") {
       // Precision: grouped sections
-      // SECTION: Accuracy
-      const accuracySection = document.createElement("div");
-      accuracySection.className = "history-line";
-      accuracySection.innerHTML = `<strong>${t("history.precision.labels.accuracy")}</strong>`;
-      details.appendChild(accuracySection);
-      
-      const accuracyLine = document.createElement("div");
-      accuracyLine.className = "history-line muted";
-      const avgErrN = Number.isFinite(avg) ? avg.toFixed(2) : "—";
-      const bestErrN = Number.isFinite(best) ? best.toFixed(2) : "—";
-      const worstErrN = Number.isFinite(worst) ? worst.toFixed(2) : "—";
-      accuracyLine.textContent = `${t("history.avg")}: ${avgErrN} · ${t("history.best")}: ${bestErrN} · ${t("history.worst")}: ${worstErrN}`;
-      details.appendChild(accuracyLine);
-      
-      // SECTION: Consistency
-      const consistencySection = document.createElement("div");
-      consistencySection.className = "history-line";
-      consistencySection.innerHTML = `<strong>${t("history.precision.labels.consistency")}</strong>`;
-      details.appendChild(consistencySection);
-      
-      const consistencyLine = document.createElement("div");
-      consistencyLine.className = "history-line muted";
-      const sdErrN = Number.isFinite(sd) ? sd.toFixed(2) : "—";
-      consistencyLine.textContent = `${t("history.precision.labels.variability")}: ${sdErrN}`;
-      details.appendChild(consistencyLine);
-      
-      // SECTION: Execution
-      const executionSection = document.createElement("div");
-      executionSection.className = "history-line";
-      executionSection.innerHTML = `<strong>${t("history.precision.labels.execution")}</strong>`;
-      details.appendChild(executionSection);
-      
-      const executionLine = document.createElement("div");
-      executionLine.className = "history-line muted";
-      const hits = m.hits || 0;
-      const respondedTrials = m.respondedTrials || 0;
-      const misses = m.misses || 0;
-      const timeouts = m.timeouts || 0;
-      const meanRtMs = m.meanRtMs || 0;
-      const sdRtMs = m.sdRtMs || 0;
-      
-      const execParts = [];
-      if (respondedTrials > 0) {
-        const hitRate = Math.round((hits / respondedTrials) * 100);
-        execParts.push(`${t("history.precision.labels.hits")}: ${hitRate}% (${respondedTrials} ${t("history.precision.responded")})`);
-      }
-      execParts.push(`${t("history.precision.labels.misses")}: ${misses}`);
-      execParts.push(`${t("history.precision.labels.timeouts")}: ${timeouts}`);
-      if (Number.isFinite(meanRtMs) && meanRtMs > 0) {
-        execParts.push(`${t("history.precision.labels.avgRt")}: ${Math.round(meanRtMs)} ms`);
-        if (Number.isFinite(sdRtMs) && sdRtMs > 0) {
-          execParts.push(`SD: ${Math.round(sdRtMs)} ms`);
+      if (isInvalid) {
+        // Invalid sessions: show Execution block only
+        const executionSection = document.createElement("div");
+        executionSection.className = "history-line";
+        executionSection.innerHTML = `<strong>${t("history.precision.labels.execution")}</strong>`;
+        details.appendChild(executionSection);
+        
+        const executionLine = document.createElement("div");
+        executionLine.className = "history-line muted";
+        const hits = m.hits || 0;
+        const respondedTrials = m.respondedTrials || 0;
+        const misses = m.misses || 0;
+        const timeouts = m.timeouts || 0;
+        const falseStarts = m.falseStarts || 0;
+        const meanRtMs = m.meanRtMs || 0;
+        const sdRtMs = m.sdRtMs || 0;
+        
+        const execParts = [];
+        if (respondedTrials > 0) {
+          const hitRate = Math.round((hits / respondedTrials) * 100);
+          execParts.push(`${t("history.precision.labels.hits")}: ${hitRate}% (${respondedTrials} ${t("history.precision.responded")})`);
         }
+        execParts.push(`${t("history.precision.labels.misses")}: ${misses}`);
+        if (falseStarts > 0) {
+          execParts.push(`${t("history.falseStarts")}: ${falseStarts}`);
+        }
+        execParts.push(`${t("history.precision.labels.timeouts")}: ${timeouts}`);
+        if (Number.isFinite(meanRtMs) && meanRtMs > 0) {
+          execParts.push(`${t("history.precision.labels.avgRt")}: ${Math.round(meanRtMs)} ms`);
+          if (Number.isFinite(sdRtMs) && sdRtMs > 0) {
+            execParts.push(`${t("history.precision.labels.sd")}: ${Math.round(sdRtMs)} ms`);
+          }
+        }
+        executionLine.textContent = execParts.join(" · ");
+        details.appendChild(executionLine);
+      } else {
+        // Valid sessions: show full breakdown (Accuracy, Consistency, Execution)
+        // SECTION: Accuracy
+        const accuracySection = document.createElement("div");
+        accuracySection.className = "history-line";
+        accuracySection.innerHTML = `<strong>${t("history.precision.labels.accuracy")}</strong>`;
+        details.appendChild(accuracySection);
+        
+        const accuracyLine = document.createElement("div");
+        accuracyLine.className = "history-line muted";
+        const avgErrN = Number.isFinite(avg) ? avg.toFixed(2) : "—";
+        const bestErrN = Number.isFinite(best) ? best.toFixed(2) : "—";
+        const worstErrN = Number.isFinite(worst) ? worst.toFixed(2) : "—";
+        accuracyLine.textContent = `${t("session.detail.avg")}: ${avgErrN} · ${t("history.best")}: ${bestErrN} · ${t("history.worst")}: ${worstErrN}`;
+        details.appendChild(accuracyLine);
+        
+        // SECTION: Consistency
+        const consistencySection = document.createElement("div");
+        consistencySection.className = "history-line";
+        consistencySection.innerHTML = `<strong>${t("history.precision.labels.consistency")}</strong>`;
+        details.appendChild(consistencySection);
+        
+        const consistencyLine = document.createElement("div");
+        consistencyLine.className = "history-line muted";
+        const sdErrN = Number.isFinite(sd) ? sd.toFixed(2) : "—";
+        consistencyLine.textContent = `${t("history.precision.labels.variability")}: ${sdErrN}`;
+        details.appendChild(consistencyLine);
+        
+        // SECTION: Execution
+        const executionSection = document.createElement("div");
+        executionSection.className = "history-line";
+        executionSection.innerHTML = `<strong>${t("history.precision.labels.execution")}</strong>`;
+        details.appendChild(executionSection);
+        
+        const executionLine = document.createElement("div");
+        executionLine.className = "history-line muted";
+        const hits = m.hits || 0;
+        const respondedTrials = m.respondedTrials || 0;
+        const misses = m.misses || 0;
+        const timeouts = m.timeouts || 0;
+        const meanRtMs = m.meanRtMs || 0;
+        const sdRtMs = m.sdRtMs || 0;
+        
+        const execParts = [];
+        if (respondedTrials > 0) {
+          const hitRate = Math.round((hits / respondedTrials) * 100);
+          execParts.push(`${t("history.precision.labels.hits")}: ${hitRate}% (${respondedTrials} ${t("history.precision.responded")})`);
+        }
+        execParts.push(`${t("history.precision.labels.misses")}: ${misses}`);
+        execParts.push(`${t("history.precision.labels.timeouts")}: ${timeouts}`);
+        if (Number.isFinite(meanRtMs) && meanRtMs > 0) {
+          execParts.push(`${t("history.precision.labels.avgRt")}: ${Math.round(meanRtMs)} ms`);
+          if (Number.isFinite(sdRtMs) && sdRtMs > 0) {
+            execParts.push(`${t("history.precision.labels.sd")}: ${Math.round(sdRtMs)} ms`);
+          }
+        }
+        executionLine.textContent = execParts.join(" · ");
+        details.appendChild(executionLine);
       }
-      executionLine.textContent = execParts.join(" · ");
-      details.appendChild(executionLine);
     } else {
       // Other tests: original format
       const line1 = document.createElement("div");
       line1.className = "history-line";
-      line1.textContent = `${t("history.avg")} ${Number.isFinite(avg) ? avg.toFixed(0) : "—"} ms · ${t("history.sd")} ${Number.isFinite(sd) ? sd.toFixed(0) : "—"} · ${t("history.trials")} ${Number.isFinite(trials) ? trials : "—"}`;
+      line1.textContent = `${t("session.detail.avg")} ${Number.isFinite(avg) ? avg.toFixed(0) : "—"} ms · ${t("session.detail.consistency")} ${Number.isFinite(sd) ? sd.toFixed(0) : "—"} ms · ${t("session.detail.trials")} ${Number.isFinite(trials) ? trials : "—"}`;
       details.appendChild(line1);
 
       const line2 = document.createElement("div");
@@ -5901,28 +6736,13 @@ function renderHistory() {
     }
 
     if (tt === "gonogo") {
-      const errs = document.createElement("div");
-      errs.className = "history-line";
-      errs.textContent = `${t("history.misses")} ${m.misses ?? 0} · ${t("history.falseAlarms")} ${m.falseAlarms ?? 0} · ${t("history.falseStarts")} ${m.falseStarts ?? 0}`;
-      details.appendChild(errs);
+      // Go/No-Go: NO-GO context and error breakdown are shown in summary section
+      // Expanded details section shows only additional info (best/worst, comparison, tags, quality, trials)
+      // No duplicate error breakdown here - summary already provides complete high-level explanation
     } else if (tt === "divided") {
-      // Show errors for divided attention
-      const errs = document.createElement("div");
-      errs.className = "history-line";
-      errs.textContent = `${t("history.misses")} ${m.misses ?? 0} · ${t("history.falseAlarms")} ${m.falseAlarms ?? 0} · ${t("history.falseStarts")} ${m.falseStarts ?? 0}`;
-      details.appendChild(errs);
-      
-      // Show flash metrics for divided attention
-      if (typeof m.flashTargetCount === "number" && typeof m.flashUserCount === "number" && typeof m.flashAbsError === "number") {
-        const flashLine = document.createElement("div");
-        flashLine.className = "history-line muted";
-        const flashLabel = t("history.divided.flashes");
-        const targetLabel = t("history.divided.target");
-        const answerLabel = t("history.divided.answer");
-        const errorLabel = t("history.divided.error");
-        flashLine.textContent = `${flashLabel}: ${targetLabel} ${m.flashTargetCount} · ${answerLabel} ${m.flashUserCount} · ${errorLabel} ${m.flashAbsError}`;
-        details.appendChild(flashLine);
-      }
+      // Divided Attention: flash context and error breakdown are shown in summary section
+      // Expanded details section shows only additional info (comparison, tags, quality, trials)
+      // No duplicate lines here - summary already provides complete high-level explanation
     } else {
       // Reaction Time: only false starts
       const fs = document.createElement("div");
@@ -5964,25 +6784,50 @@ function renderHistory() {
         baselineValue = baselineMean;
         baselineSDValue = baselineSD;
       }
-      const cmp = document.createElement("div");
-      cmp.className = "history-compare";
-      if (tt === "precision") {
-        // Precision: explicit accuracy comparison text
-        let accuracyStatus;
-        if (status === t("status.within")) {
-          accuracyStatus = t("history.precision.comparison.within");
-        } else if (status === t("status.slightly")) {
-          accuracyStatus = t("history.precision.comparison.slightly");
-        } else if (status === t("status.significantly")) {
-          accuracyStatus = t("history.precision.comparison.significantly");
-        } else {
-          accuracyStatus = status;
-        }
-        const deltaText = Number.isFinite(delta) ? (delta >= 0 ? "+" : "") + delta.toFixed(2) : "—";
-        cmp.textContent = `${accuracyStatus} (${deltaText})`;
-      } else {
-        cmp.textContent = `${status} · Δ ${Number.isFinite(delta) ? (delta >= 0 ? "+" : "") + delta.toFixed(0) : "—"} ms (${t("history.baseline")} ${baselineValue.toFixed(0)} ± ${baselineSDValue.toFixed(0)} (±2 SD))`;
+      // Add a single divider before comparison section
+      // Check if there's already content in details (metrics lines) - if so, add divider
+      const hasPreviousContent = details.children.length > 0;
+      if (hasPreviousContent) {
+        const divider = document.createElement("div");
+        divider.style.borderTop = "1px solid rgba(255, 255, 255, 0.1)";
+        divider.style.marginTop = "8px";
+        divider.style.paddingTop = "0";
+        divider.style.height = "0";
+        details.appendChild(divider);
       }
+      
+      const cmp = document.createElement("div");
+      // Remove border-top from container to avoid double divider
+      cmp.className = "history-compare";
+      cmp.style.borderTop = "none";
+      cmp.style.marginTop = "0";
+      cmp.style.paddingTop = "10px";
+      // Replace legacy SD-heavy comparison with two clean sentences for all test types
+      const deltaSigned = Number.isFinite(delta) 
+        ? (delta >= 0 ? "+" : "") + (tt === "precision" ? delta.toFixed(2) : delta.toFixed(0))
+        : "—";
+      const unit = getUnitForTest(tt);
+      const deltaWithUnit = unit ? `${deltaSigned} ${unit}` : deltaSigned;
+      const line1 = document.createElement("div");
+      line1.className = "history-compare";
+      line1.style.borderTop = "none";
+      line1.style.paddingTop = "0";
+      line1.style.marginTop = "0";
+      line1.textContent = t("session.detail.compare.line1").replace("{delta}", deltaWithUnit);
+      cmp.appendChild(line1);
+      // Always show line2 with status-specific explanation
+      const line2 = document.createElement("div");
+      line2.className = "history-compare muted";
+      line2.style.marginTop = "4px";
+      // Determine which line2 variant to use based on status
+      let line2Key = "session.detail.compare.line2.within"; // default
+      if (status === t("status.slightly")) {
+        line2Key = "session.detail.compare.line2.slightly";
+      } else if (status === t("status.significantly")) {
+        line2Key = "session.detail.compare.line2.significantly";
+      }
+      line2.textContent = t(line2Key);
+      cmp.appendChild(line2);
       details.appendChild(cmp);
     } else if (s.mode === "check" && !baselineSessions.length) {
       const cmp = document.createElement("div");

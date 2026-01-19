@@ -500,6 +500,34 @@
     margin-top: 12px;
     overflow: visible;
   }
+
+  .op-advice {
+    margin-top: 12px;
+    padding: 16px 16px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 14px;
+  }
+  .op-advice h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 650;
+  }
+  .op-advice-body {
+    margin-top: 10px;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.92);
+  }
+  .op-advice-body ul {
+    margin: 10px 0 0;
+    padding-left: 22px;
+  }
+  .op-advice-body li {
+    margin: 6px 0;
+  }
+  .op-advice .note {
+    margin-top: 10px;
+  }
   
   .panel h2 {
     margin: 0 0 12px 0;

@@ -340,6 +340,16 @@
           <ul id="trialList" class="session-trials" aria-live="polite"></ul>
 
           <p id="summary"></p>
+
+          <div id="opAdvice" class="op-advice hidden" aria-live="polite">
+            <div class="card-utility">
+              <h3 data-i18n="op.title">What happens after a test?</h3>
+            </div>
+            <div id="opAdviceBody" class="op-advice-body"></div>
+            <p class="note" data-i18n="op.note">
+              Advisory only. FCE does not make decisions for you.
+            </p>
+          </div>
         </div>
 
         <!-- History panel -->
@@ -520,6 +530,10 @@
             <ul id="trendRecentChecks" class="trend-list"></ul>
 
             <p id="trendEmptyNote" class="muted"></p>
+            
+            <p class="note" data-i18n="trend.footerNote" style="margin-top: 16px;">
+              This view visualizes change. It does not decide readiness, fitness, or permission.
+            </p>
           </section>
 
           <p id="historyEmpty" class="muted"></p>

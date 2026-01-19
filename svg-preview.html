@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FCE SVG Mark Preview</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background: #111;
+      color: #eee;
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h1 {
+      margin-bottom: 40px;
+    }
+    .preview-section {
+      margin-bottom: 60px;
+    }
+    .preview-section h2 {
+      margin-bottom: 20px;
+      font-size: 1.5em;
+    }
+    .size-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+    .size-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      background: #1a1a1a;
+      border-radius: 8px;
+    }
+    .size-item .label {
+      margin-bottom: 12px;
+      font-size: 0.9em;
+      color: #aaa;
+    }
+    .size-item svg {
+      display: block;
+      background: #222;
+      padding: 8px;
+      border-radius: 4px;
+    }
+    .info {
+      margin-top: 10px;
+      font-size: 0.85em;
+      color: #888;
+      text-align: center;
+    }
+    .corner-check {
+      margin-top: 40px;
+      padding: 20px;
+      background: #1a1a1a;
+      border-radius: 8px;
+    }
+    .corner-check h3 {
+      margin-top: 0;
+    }
+    .check-list {
+      list-style: none;
+      padding: 0;
+    }
+    .check-list li {
+      padding: 8px 0;
+      padding-left: 24px;
+      position: relative;
+    }
+    .check-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #4a9;
+    }
+  </style>
+</head>
+<body>
+  <h1>FCE SVG Mark Preview — Geometry Verification</h1>
+  
+  <div class="preview-section">
+    <h2>fce-mark.svg (Canonical)</h2>
+    <div class="size-grid">
+      <div class="size-item">
+        <div class="label">16×16px</div>
+        <img src="fce-mark.svg" alt="fce-mark" width="16" height="16" style="image-rendering: crisp-edges;" />
+        <div class="info">Favicon size</div>
+      </div>
+      <div class="size-item">
+        <div class="label">24×24px</div>
+        <img src="fce-mark.svg" alt="fce-mark" width="24" height="24" style="image-rendering: crisp-edges;" />
+      </div>
+      <div class="size-item">
+        <div class="label">32×32px</div>
+        <img src="fce-mark.svg" alt="fce-mark" width="32" height="32" style="image-rendering: crisp-edges;" />
+      </div>
+      <div class="size-item">
+        <div class="label">64×64px</div>
+        <img src="fce-mark.svg" alt="fce-mark" width="64" height="64" style="image-rendering: crisp-edges;" />
+      </div>
+      <div class="size-item">
+        <div class="label">128×128px</div>
+        <img src="fce-mark.svg" alt="fce-mark" width="128" height="128" style="image-rendering: crisp-edges;" />
+      </div>
+    </div>
+    <img src="fce-mark.svg" alt="fce-mark" style="width: 200px; height: 200px; image-rendering: crisp-edges;" />
+  </div>
+
+  <div class="preview-section">
+    <h2>fce-icon.svg (Favicon)</h2>
+    <div class="size-grid">
+      <div class="size-item">
+        <div class="label">16×16px</div>
+        <img src="fce-icon.svg" alt="fce-icon" width="16" height="16" style="image-rendering: crisp-edges;" />
+        <div class="info">Favicon size</div>
+      </div>
+      <div class="size-item">
+        <div class="label">24×24px</div>
+        <img src="fce-icon.svg" alt="fce-icon" width="24" height="24" style="image-rendering: crisp-edges;" />
+      </div>
+      <div class="size-item">
+        <div class="label">32×32px</div>
+        <img src="fce-icon.svg" alt="fce-icon" width="32" height="32" style="image-rendering: crisp-edges;" />
+      </div>
+      <div class="size-item">
+        <div class="label">64×64px</div>
+        <img src="fce-icon.svg" alt="fce-icon" width="64" height="64" style="image-rendering: crisp-edges;" />
+      </div>
+      <div class="size-item">
+        <div class="label">128×128px</div>
+        <img src="fce-icon.svg" alt="fce-icon" width="128" height="128" style="image-rendering: crisp-edges;" />
+      </div>
+    </div>
+    <img src="fce-icon.svg" alt="fce-icon" style="width: 200px; height: 200px;" />
+  </div>
+
+  <div class="preview-section">
+    <h2>fce-mark-state.svg (Stateful)</h2>
+    <div class="size-grid">
+      <div class="size-item">
+        <div class="label">16×16px</div>
+        <img src="fce-mark-state.svg" alt="fce-mark-state" width="16" height="16" style="image-rendering: crisp-edges;" />
+        <div class="info">Favicon size</div>
+      </div>
+      <div class="size-item">
+        <div class="label">24×24px</div>
+        <img src="fce-mark-state.svg" alt="fce-mark-state" width="24" height="24" style="image-rendering: crisp-edges;" />
+      </div>
+      <div class="size-item">
+        <div class="label">32×32px</div>
+        <img src="fce-mark-state.svg" alt="fce-mark-state" width="32" height="32" style="image-rendering: crisp-edges;" />
+      </div>
+      <div class="size-item">
+        <div class="label">64×64px</div>
+        <img src="fce-mark-state.svg" alt="fce-mark-state" width="64" height="64" style="image-rendering: crisp-edges;" />
+      </div>
+      <div class="size-item">
+        <div class="label">128×128px</div>
+        <img src="fce-mark-state.svg" alt="fce-mark-state" width="128" height="128" style="image-rendering: crisp-edges;" />
+      </div>
+    </div>
+    <img src="fce-mark-state.svg" alt="fce-mark-state" style="width: 200px; height: 200px;" />
+  </div>
+
+  <div class="corner-check">
+    <h3>Verification Checklist</h3>
+    <ul class="check-list">
+      <li>Corners are crisp and technical (no bulbous blobs)</li>
+      <li>Gap is visible and intentional at all sizes</li>
+      <li>Stroke appears consistent (no swelling at corners)</li>
+      <li>Mark maintains calm, institutional aesthetic</li>
+      <li>Stateful variant shows subtle interior fill</li>
+      <li>Gap remains readable at 16×16px favicon size</li>
+    </ul>
+  </div>
+
+  <div style="margin-top: 40px; padding: 20px; background: #1a1a1a; border-radius: 8px;">
+    <h3>Technical Details</h3>
+    <ul style="color: #aaa; line-height: 1.8;">
+      <li><strong>Stroke width:</strong> 4 units (was 6)</li>
+      <li><strong>Corner radius:</strong> 9 units (was 14)</li>
+      <li><strong>Stroke linecap:</strong> butt (was round)</li>
+      <li><strong>Stroke linejoin:</strong> miter (was round)</li>
+      <li><strong>Gap length:</strong> ~10 units (preserved)</li>
+      <li><strong>Fill opacity (state):</strong> 0.18 (preserved)</li>
+    </ul>
+  </div>
+</body>
+</html>

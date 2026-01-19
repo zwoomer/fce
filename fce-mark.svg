@@ -7,8 +7,8 @@
   Specifications:
   - ViewBox: 0 0 100 100
   - Shape: Rounded square (path-based, not rect)
-  - Corner radius: 14 units
-  - Stroke width: 6 units
+  - Corner radius: 9 units
+  - Stroke width: 4 units
   - Stroke color: currentColor (inherits from parent context)
   - Gap: Intentional interruption on top edge, ~10 units, near right corner
   
@@ -29,15 +29,15 @@
     
     Geometry:
     - 80x80 square centered in 100x100 viewBox (bounds: 10,10 to 90,90)
-    - Corner radius: 14 units
+    - Corner radius: 9 units
     - Gap: Top edge from x=75 to x=85 (10 units, near right corner)
     
     Path structure (two separate stroke paths):
     - Path 1: From gap start (75,10), goes clockwise around frame: 
               left along top edge, top-left corner, left edge, bottom edge, 
-              right edge, top-right corner, ending at (76,10) just before gap
-    - Path 2: From gap end (85,10), draws segment to (76,10), completing 
-              the top edge after the gap
+              right edge, top-right corner, ending at (81,10) where corner starts
+    - Path 2: From gap end (85,10), draws segment to (81,10), completing 
+              the top edge after the gap and before the corner
     - Gap: The intentional 10-unit interruption between (75,10) and (85,10)
            The two-path structure ensures clean gap rendering and allows 
            independent modification for variants.
@@ -46,27 +46,27 @@
   <!-- Path 1: Main frame (from gap start, clockwise around, ending just before gap) -->
   <path
     d="M 75 10
-       L 24 10
-       A 14 14 0 0 1 10 24
-       L 10 76
-       A 14 14 0 0 1 24 90
-       L 76 90
-       A 14 14 0 0 1 90 76
-       L 90 24
-       A 14 14 0 0 1 76 10"
+       L 19 10
+       A 9 9 0 0 1 10 19
+       L 10 81
+       A 9 9 0 0 1 19 90
+       L 81 90
+       A 9 9 0 0 1 90 81
+       L 90 19
+       A 9 9 0 0 1 81 10"
     fill="none"
     stroke="currentColor"
-    stroke-width="6"
-    stroke-linecap="round"
-    stroke-linejoin="round"/>
+    stroke-width="4"
+    stroke-linecap="butt"
+    stroke-linejoin="miter"/>
   
   <!-- Path 2: Top edge segment from gap end (completes frame after gap) -->
   <path
     d="M 85 10
-       L 76 10"
+       L 81 10"
     fill="none"
     stroke="currentColor"
-    stroke-width="6"
-    stroke-linecap="round"
-    stroke-linejoin="round"/>
+    stroke-width="4"
+    stroke-linecap="butt"
+    stroke-linejoin="miter"/>
 </svg>

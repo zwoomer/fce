@@ -19,15 +19,15 @@
 <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
   <!-- Interior fill: rounded square matching frame geometry -->
   <path
-    d="M 24 10
-       A 14 14 0 0 1 10 24
-       L 10 76
-       A 14 14 0 0 1 24 90
-       L 76 90
-       A 14 14 0 0 1 90 76
-       L 90 24
-       A 14 14 0 0 1 76 10
-       L 24 10
+    d="M 19 10
+       A 9 9 0 0 1 10 19
+       L 10 81
+       A 9 9 0 0 1 19 90
+       L 81 90
+       A 9 9 0 0 1 90 81
+       L 90 19
+       A 9 9 0 0 1 81 10
+       L 19 10
        Z"
     fill="currentColor"
     fill-opacity="0.18"/>
@@ -35,29 +35,29 @@
   <!-- Path 1: Main frame (from gap start, clockwise around) -->
   <path
     d="M 75 10
-       L 24 10
-       A 14 14 0 0 1 10 24
-       L 10 76
-       A 14 14 0 0 1 24 90
-       L 76 90
-       A 14 14 0 0 1 90 76
-       L 90 24
-       A 14 14 0 0 1 76 10"
+       L 19 10
+       A 9 9 0 0 1 10 19
+       L 10 81
+       A 9 9 0 0 1 19 90
+       L 81 90
+       A 9 9 0 0 1 90 81
+       L 90 19
+       A 9 9 0 0 1 81 10"
     fill="none"
     stroke="currentColor"
-    stroke-width="6"
-    stroke-linecap="round"
-    stroke-linejoin="round"/>
+    stroke-width="4"
+    stroke-linecap="butt"
+    stroke-linejoin="miter"/>
   
   <!-- Path 2: Top edge segment after gap -->
   <path
     d="M 85 10
-       L 76 10"
+       L 81 10"
     fill="none"
     stroke="currentColor"
-    stroke-width="6"
-    stroke-linecap="round"
-    stroke-linejoin="round"/>
+    stroke-width="4"
+    stroke-linecap="butt"
+    stroke-linejoin="miter"/>
   
   <!--
     Optional: Threshold state interruption on bottom edge
@@ -78,8 +78,8 @@
        L 45 90"
     fill="none"
     stroke="currentColor"
-    stroke-width="6"
-    stroke-linecap="round"
-    stroke-linejoin="round"/>
+    stroke-width="4"
+    stroke-linecap="butt"
+    stroke-linejoin="miter"/>
   -->
 </svg>

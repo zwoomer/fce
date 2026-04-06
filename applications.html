@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>FCE — Applications / Use Contexts</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <script>
+    try {
+      const p = location.pathname.split("/").pop() || "index.html";
+      localStorage.setItem("fce_last_page", p);
+      if (p && p.endsWith(".html") && !p.includes("index.html")) {
+        localStorage.setItem("fce_last_docs_page", p);
+      }
+    } catch {}
+  </script>
+</head>
+
+<body>
+  <header class="topbar">
+    <button id="menuBtn" aria-label="Menu" aria-controls="menu" aria-expanded="false">☰</button>
+    <a href="index.html?home=1" class="title brand-link" id="brandLink" style="text-decoration:none; color:inherit;" aria-label="To the instrument">
+      <span class="brand-short" aria-hidden="true">FCE</span>
+      <span class="brand-long" aria-hidden="true">
+        <span class="lang lang-en">To the instrument</span>
+        <span class="lang lang-no hidden">Til instrumentet</span>
+        <span class="lang lang-lt hidden">Į instrumentą</span>
+      </span>
+    </a>
+    <span class="topbar-page is-hidden" id="topbarPage"></span>
+
+    <div class="topbar-right">
+      <div class="lang-select-wrapper">
+        <select id="langSelect" class="lang-select" aria-label="Language">
+          <option value="en">EN</option>
+          <option value="no">NO</option>
+          <option value="lt">LT</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <nav id="menu" class="menu">
+    <div class="menu-header">
+      <button id="closeMenuBtn" class="menu-close-btn" aria-label="Close menu">×</button>
+    </div>
+
+    <a class="menu-item" href="index.html?home=1">
+      <span class="lang lang-en">Home</span>
+      <span class="lang lang-no hidden">Hjem</span>
+      <span class="lang lang-lt hidden">Pradžia</span>
+    </a>
+
+    <a class="menu-item" href="index.html?view=history">
+      <span class="lang lang-en">History</span>
+      <span class="lang lang-no hidden">Historikk</span>
+      <span class="lang lang-lt hidden">Istorija</span>
+    </a>
+
+    <div class="menu-section" id="menuSectionCore">
+      <button type="button" class="menu-section-toggle" id="menuToggleCore" aria-expanded="false" aria-controls="menuPanelCore">
+        <span class="menu-section-label">
+          <span class="lang lang-en">Core Docs</span>
+          <span class="lang lang-no hidden">Kjernedokumentasjon</span>
+          <span class="lang lang-lt hidden">Pagrindiniai dokumentai</span>
+        </span>
+        <span class="menu-chevron" aria-hidden="true">▸</span>
+      </button>
+      <div class="menu-section-panel" id="menuPanelCore" role="region" aria-labelledby="menuToggleCore">
+        <a class="menu-item menu-item-nested" href="about.html">
+          <span class="lang lang-en">About</span>
+          <span class="lang lang-no hidden">Om</span>
+          <span class="lang lang-lt hidden">Apie</span>
+        </a>
+        <a class="menu-item menu-item-nested" href="concept.html">
+          <span class="lang lang-en">Concept</span>
+          <span class="lang lang-no hidden">Konsept</span>
+          <span class="lang lang-lt hidden">Koncepcija</span>
+        </a>
+        <a class="menu-item menu-item-nested" href="what-fce-measures.html">
+          <span class="lang lang-en">What FCE Measures</span>
+          <span class="lang lang-no hidden">Hva FCE måler</span>
+          <span class="lang lang-lt hidden">Ką FCE matuoja</span>
+        </a>
+        <a class="menu-item menu-item-nested" href="scope.html">
+          <span class="lang lang-en">Scope &amp; Limits</span>
+          <span class="lang lang-no hidden">Omfang &amp; begrensninger</span>
+          <span class="lang lang-lt hidden">Apimtis ir ribos</span>
+        </a>
+        <a class="menu-item menu-item-nested" href="how-to-use.html">
+          <span class="lang lang-en">How to Use</span>
+          <span class="lang lang-no hidden">Hvordan bruke</span>
+          <span class="lang lang-lt hidden">Kaip naudoti</span>
+        </a>
+        <a class="menu-item menu-item-nested" href="how-tests-work.html">
+          <span class="lang lang-en">How the tests work</span>
+          <span class="lang lang-no hidden">Hvordan testene fungerer</span>
+          <span class="lang lang-lt hidden">Kaip veikia testai</span>
+        </a>
+        <a class="menu-item menu-item-nested" href="faq.html">
+          <span class="lang lang-en">FAQ</span>
+          <span class="lang lang-no hidden">FAQ</span>
+          <span class="lang lang-lt hidden">DUK</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="menu-section" id="menuSectionContext">
+      <button type="button" class="menu-section-toggle" id="menuToggleContext" aria-expanded="false" aria-controls="menuPanelContext">
+        <span class="menu-section-label">
+          <span class="lang lang-en">Context &amp; Development</span>
+          <span class="lang lang-no hidden">Kontekst og utvikling</span>
+          <span class="lang lang-lt hidden">Kontekstas ir plėtra</span>
+        </span>
+        <span class="menu-chevron" aria-hidden="true">▸</span>
+      </button>
+      <div class="menu-section-panel" id="menuPanelContext" role="region" aria-labelledby="menuToggleContext">
+        <a class="menu-item menu-item-nested" href="why.html">
+          <span class="lang lang-en">Why this exists</span>
+          <span class="lang lang-no hidden">Hvorfor dette finnes</span>
+          <span class="lang lang-lt hidden">Kodėl tai egzistuoja</span>
+        </a>
+        <a class="menu-item menu-item-nested" href="applications.html" aria-current="page">
+          <span class="lang lang-en">Applications / Use Contexts</span>
+          <span class="lang lang-no hidden">Bruksområder / kontekster</span>
+          <span class="lang lang-lt hidden">Taikymo sritys / naudojimo kontekstai</span>
+        </a>
+        <a class="menu-item menu-item-nested" href="validation-research.html">
+          <span class="lang lang-en">Validation / Research</span>
+          <span class="lang lang-no hidden">Validering / forskning</span>
+          <span class="lang lang-lt hidden">Validavimas / tyrimai</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <div id="menuOverlay" class="menu-overlay hidden"></div>
+
+  <main class="page">
+    <section class="container">
+
+      <!-- EN -->
+      <div class="lang lang-en">
+        <header class="hero">
+          <h1>Applications / Use Contexts</h1>
+          <p class="lead">
+            FCE is designed for situations where a person needs a structured signal about their current functional state — without turning that signal into an automatic decision.
+          </p>
+          <blockquote class="quote">
+            “FCE informs judgment. It does not replace it.”
+          </blockquote>
+        </header>
+
+        <section class="card">
+          <h3>Personal self-check</h3>
+          <p>
+            FCE is primarily designed for individual use.
+          </p>
+          <ul>
+            <li>before demanding tasks</li>
+            <li>after poor sleep or stress</li>
+            <li>during periods of fatigue or recovery</li>
+          </ul>
+          <p class="muted">
+            The purpose is awareness, not a guarantee of safety.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Recovery and rehabilitation support</h3>
+          <p>
+            FCE can be used as a structured reference during recovery processes.
+          </p>
+          <ul>
+            <li>tracking return toward baseline</li>
+            <li>observing variability across days</li>
+            <li>supporting pacing decisions</li>
+          </ul>
+          <p class="muted">
+            FCE does not replace clinical assessment. It can complement it.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Load management and burnout prevention</h3>
+          <p>
+            FCE can help identify patterns of instability before they become obvious subjectively.
+          </p>
+          <ul>
+            <li>increasing variability</li>
+            <li>slower response patterns</li>
+            <li>inconsistent execution</li>
+          </ul>
+          <p class="muted">
+            These are signals, not diagnoses.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Athletic readiness and recovery</h3>
+          <p>
+            In training contexts, FCE can act as a lightweight readiness signal.
+          </p>
+          <ul>
+            <li>day-to-day variation tracking</li>
+            <li>return-to-baseline monitoring</li>
+            <li>decision support for training intensity</li>
+          </ul>
+          <p class="muted">
+            It does not measure performance capacity directly.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Self-check before demanding tasks</h3>
+          <p>
+            FCE may be used before tasks requiring sustained attention or precision.
+          </p>
+          <ul>
+            <li>driving</li>
+            <li>technical work</li>
+            <li>decision-heavy tasks</li>
+          </ul>
+          <p>
+            The output should be interpreted alongside context, not used as a pass/fail decision.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Institutional use (restricted)</h3>
+          <p>
+            FCE can be used within institutional contexts only under strict conditions:
+          </p>
+          <ul>
+            <li>voluntary participation</li>
+            <li>informed consent</li>
+            <li>no automatic decisions</li>
+            <li>transparent interpretation rules</li>
+            <li>human review required</li>
+            <li>separation from enforcement systems</li>
+          </ul>
+          <p class="muted">
+            If these conditions are not met, the use is not aligned with the design of FCE.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>What all use contexts share</h3>
+          <ul>
+            <li>FCE provides signals, not conclusions</li>
+            <li>context remains necessary</li>
+            <li>human judgment remains primary</li>
+            <li>results should not be treated as definitive</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h3>Boundary</h3>
+          <p>
+            FCE should not be used as:
+          </p>
+          <ul>
+            <li>a certification tool</li>
+            <li>a legal decision system</li>
+            <li>a replacement for medical evaluation</li>
+            <li>a standalone indicator of real-world capability</li>
+          </ul>
+          <p class="muted">
+            For limitations and constraints, see <a href="scope.html">Scope &amp; Limits</a>.
+          </p>
+        </section>
+      </div>
+
+      <!-- NO -->
+      <div class="lang lang-no hidden">
+        <header class="hero">
+          <h1>Bruksområder / kontekster</h1>
+          <p class="lead">
+            FCE er laget for situasjoner der en person trenger et strukturert signal om dagens funksjonelle tilstand — uten at signalet blir en automatisk beslutning.
+          </p>
+          <blockquote class="quote">
+            «FCE informerer dømmekraft. Den erstatter den ikke.»
+          </blockquote>
+        </header>
+
+        <section class="card">
+          <h3>Personlig egenkontroll</h3>
+          <p>
+            FCE er primært laget for individuell bruk.
+          </p>
+          <ul>
+            <li>før krevende oppgaver</li>
+            <li>etter dårlig søvn eller stress</li>
+            <li>i perioder med utmattelse eller restitusjon</li>
+          </ul>
+          <p class="muted">
+            Formålet er bevissthet, ikke bekreftelse av sikkerhet.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Støtte til restitusjon og rehabilitering</h3>
+          <p>
+            FCE kan brukes som strukturert referanse i restitusjonsprosesser.
+          </p>
+          <ul>
+            <li>følge tilbake mot baseline</li>
+            <li>observere variasjon mellom dager</li>
+            <li>støtte beslutninger om tempo og belastning</li>
+          </ul>
+          <p class="muted">
+            FCE erstatter ikke klinisk vurdering. Den kan komplettere den.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Belastningsstyring og forebygging av utbrenthet</h3>
+          <p>
+            FCE kan bidra til å se mønstre av ustabilitet før de blir tydelige subjektivt.
+          </p>
+          <ul>
+            <li>økende variasjon</li>
+            <li>tregere responsmønstre</li>
+            <li>inkonsistent utførelse</li>
+          </ul>
+          <p class="muted">
+            Dette er signaler, ikke diagnoser.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Idrett: beredskap og restitusjon</h3>
+          <p>
+            I treningskontekst kan FCE fungere som et enkelt beredskapssignal.
+          </p>
+          <ul>
+            <li>dag-til-dag-variasjon</li>
+            <li>overvåking av tilbake mot baseline</li>
+            <li>beslutningsstøtte for treningsintensitet</li>
+          </ul>
+          <p class="muted">
+            Den måler ikke prestasjonskapasitet direkte.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Egenkontroll før krevende oppgaver</h3>
+          <p>
+            FCE kan brukes før oppgaver som krever vedvarende oppmerksomhet eller presisjon.
+          </p>
+          <ul>
+            <li>kjøring</li>
+            <li>teknisk arbeid</li>
+            <li>beslutningskrevende oppgaver</li>
+          </ul>
+          <p>
+            Resultatet bør tolkes sammen med kontekst, ikke som bestått/ikke bestått.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Institusjonell bruk (begrenset)</h3>
+          <p>
+            FCE kan brukes i institusjonelle sammenhenger bare under strenge betingelser:
+          </p>
+          <ul>
+            <li>frivillig deltakelse</li>
+            <li>informert samtykke</li>
+            <li>ingen automatiserte beslutninger</li>
+            <li>transparente tolkningsregler</li>
+            <li>menneskelig gjennomgang påkrevd</li>
+            <li>adskillelse fra tvang og sanksjonssystemer</li>
+          </ul>
+          <p class="muted">
+            Hvis disse betingelsene ikke er oppfylt, er bruken ikke i tråd med FCEs design.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Hva alle brukskontekster deler</h3>
+          <ul>
+            <li>FCE gir signaler, ikke konklusjoner</li>
+            <li>kontekst er fortsatt nødvendig</li>
+            <li>menneskelig skjønn er primært</li>
+            <li>resultater bør ikke behandles som endelige</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h3>Grense</h3>
+          <p>
+            FCE bør ikke brukes som:
+          </p>
+          <ul>
+            <li>sertifiseringsverktøy</li>
+            <li>rettslig beslutningssystem</li>
+            <li>erstatning for medisinsk vurdering</li>
+            <li>en selvstendig indikator på faktisk funksjonsevne</li>
+          </ul>
+          <p class="muted">
+            For begrensninger og rammer, se <a href="scope.html">Omfang &amp; begrensninger</a>.
+          </p>
+        </section>
+      </div>
+
+      <!-- LT -->
+      <div class="lang lang-lt hidden">
+        <header class="hero">
+          <h1>Taikymo sritys / naudojimo kontekstai</h1>
+          <p class="lead">
+            FCE skirtas situacijoms, kai žmogui reikia struktūrizuoto signalo apie dabartinę funkcinę būseną — nepaverčiant šio signalo automatiniu sprendimo pagrindu.
+          </p>
+          <blockquote class="quote">
+            „FCE informuoja sprendimą. Jis jo nepakeičia.“
+          </blockquote>
+        </header>
+
+        <section class="card">
+          <h3>Asmeninė savikontrolė</h3>
+          <p>
+            FCE visų pirma skirtas individualiam naudojimui.
+          </p>
+          <ul>
+            <li>prieš reiklius uždavinius</li>
+            <li>po prasto miego ar streso</li>
+            <li>nuovargio ar atsigavimo laikotarpiu</li>
+          </ul>
+          <p class="muted">
+            Tikslas — sąmoningumas, ne saugumo patvirtinimas.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Atsigavimo ir reabilitacijos palaikymas</h3>
+          <p>
+            FCE gali būti naudojamas kaip struktūrizuota atraminė informacija atsigavimo procesuose.
+          </p>
+          <ul>
+            <li>grįžimo link bazinio lygio stebėjimas</li>
+            <li>kitimo tarp dienų pastebėjimas</li>
+            <li>tempo ir krūvio sprendimų palaikymas</li>
+          </ul>
+          <p class="muted">
+            FCE nepakeičia klinikinio vertinimo. Jis gali jį papildyti.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Krūvio valdymas ir išsekimo prevencija</h3>
+          <p>
+            FCE gali padėti pastebėti nestabilumo požymius, kol jie subjektyviai dar neaiškūs.
+          </p>
+          <ul>
+            <li>didėjantis kintamumas</li>
+            <li>lėtesni atsako modeliai</li>
+            <li>nekonsistentiškas vykdymas</li>
+          </ul>
+          <p class="muted">
+            Tai signalai, ne diagnozės.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Sportinis pasirengimas ir atsigavimas</h3>
+          <p>
+            Treniruotės kontekste FCE gali būti lengvas pasirengimo signalas.
+          </p>
+          <ul>
+            <li>kasdienės variacijos stebėjimas</li>
+            <li>grįžimo link bazinio lygio stebėjimas</li>
+            <li>sprendimų dėl treniruotės intensyvumo palaikymas</li>
+          </ul>
+          <p class="muted">
+            Jis tiesiogiai nematuoja veiklos pajėgumo.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Savikontrolė prieš reiklius uždavinius</h3>
+          <p>
+            FCE gali būti naudojamas prieš užduotis, reikalaujančias ilgalaikio dėmesio ar tikslumo.
+          </p>
+          <ul>
+            <li>vairavimas</li>
+            <li>techninis darbas</li>
+            <li>sprendimų reikalaujančios užduotys</li>
+          </ul>
+          <p>
+            Rezultatą reikia interpretuoti kartu su kontekstu, ne kaip „praėjo / nepraėjo“ sprendimą.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Institucinis naudojimas (ribotas)</h3>
+          <p>
+            FCE institucinėje aplinkoje gali būti naudojamas tik griežtomis sąlygomis:
+          </p>
+          <ul>
+            <li>savanoriškas dalyvavimas</li>
+            <li>informuotas sutikimas</li>
+            <li>jokie automatiniai sprendimai</li>
+            <li>skaidrios interpretacijos taisyklės</li>
+            <li>privalomas žmogaus peržiūros žingsnis</li>
+            <li>atskyrimas nuo vykdymo ir sankcijų sistemų</li>
+          </ul>
+          <p class="muted">
+            Jei šių sąlygų nėra, naudojimas neatitinka FCE dizaino.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Kas bendra visiems naudojimo kontekstams</h3>
+          <ul>
+            <li>FCE pateikia signalus, ne išvadas</li>
+            <li>kontekstas vis dar būtinas</li>
+            <li>žmogaus sprendimas lieka pagrindinis</li>
+            <li>rezultatų negalima laikyti galutiniais</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h3>Ribos</h3>
+          <p>
+            FCE neturėtų būti naudojamas kaip:
+          </p>
+          <ul>
+            <li>sertifikavimo priemonė</li>
+            <li>teisinis sprendimų sistema</li>
+            <li>pakaitalas medicininiam vertinimui</li>
+            <li>atskiras realaus pasaulio pajėgumo rodiklis</li>
+          </ul>
+          <p class="muted">
+            Apribojimams ir rėmams žr. <a href="scope.html">Apimtis ir ribos</a>.
+          </p>
+        </section>
+      </div>
+
+      <nav class="docs-nav">
+        <div class="docs-nav-left">
+          <a href="why.html" class="docs-nav-btn">
+            <span class="lang lang-en">← Why this exists</span>
+            <span class="lang lang-no hidden">← Hvorfor dette finnes</span>
+            <span class="lang lang-lt hidden">← Kodėl tai egzistuoja</span>
+          </a>
+        </div>
+
+        <div class="docs-nav-center">
+          <a href="index.html#instrument" class="docs-nav-btn">
+            <span class="lang lang-en">Open instrument</span>
+            <span class="lang lang-no hidden">Åpne instrument</span>
+            <span class="lang lang-lt hidden">Atidaryti instrumentą</span>
+          </a>
+        </div>
+
+        <div class="docs-nav-right">
+          <a href="validation-research.html" class="docs-nav-btn">
+            <span class="lang lang-en">Validation / Research →</span>
+            <span class="lang lang-no hidden">Validering / forskning →</span>
+            <span class="lang lang-lt hidden">Validavimas / tyrimai →</span>
+          </a>
+        </div>
+      </nav>
+
+      <footer class="footer muted">
+        <p>FCE — Functional Cognition &amp; Execution</p>
+        <p class="footer-builtby">Designed and built by Zwoomer</p>
+      </footer>
+    </section>
+  </main>
+
+
+  <script>
+    (function () {
+      const menu = document.getElementById("menu");
+      const overlay = document.getElementById("menuOverlay");
+      const menuBtn = document.getElementById("menuBtn");
+      const closeMenuBtn = document.getElementById("closeMenuBtn");
+
+      function openMenu() {
+        menu.classList.add("open");
+        overlay.classList.remove("hidden");
+        document.body.classList.add("menu-open");
+        if (menuBtn) menuBtn.setAttribute("aria-expanded", "true");
+      }
+
+      function closeMenu() {
+        menu.classList.remove("open");
+        overlay.classList.add("hidden");
+        document.body.classList.remove("menu-open");
+        if (menuBtn) menuBtn.setAttribute("aria-expanded", "false");
+      }
+
+      menuBtn && menuBtn.addEventListener("click", () => {
+        if (menu.classList.contains("open")) closeMenu();
+        else openMenu();
+      });
+
+      closeMenuBtn && closeMenuBtn.addEventListener("click", closeMenu);
+      overlay && overlay.addEventListener("click", closeMenu);
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && menu.classList.contains("open")) closeMenu();
+      });
+
+      document.querySelectorAll(".menu-item").forEach(item => {
+        item.addEventListener("click", (e) => {
+          if (!item.classList.contains("is-disabled")) closeMenu();
+          else e.preventDefault();
+        });
+      });
+
+      const LANG_KEY = "fce_lang";
+      const hasLtContent = !!document.querySelector(".lang-lt");
+
+      let currentLang = localStorage.getItem(LANG_KEY);
+      if (!currentLang) {
+        const oldLang = localStorage.getItem("fce_lang_v1");
+        if (oldLang) {
+          currentLang = oldLang;
+          try { localStorage.setItem(LANG_KEY, currentLang); } catch {}
+        } else {
+          currentLang = "en";
+        }
+      }
+
+      if (currentLang === "lt" && !hasLtContent) {
+        currentLang = "en";
+        try { localStorage.setItem(LANG_KEY, currentLang); } catch {}
+      }
+
+      const langSelect = document.getElementById("langSelect");
+
+      if (langSelect) {
+        const hasLtOption = Array.from(langSelect.options).some(opt => opt.value === "lt");
+        if (!hasLtOption) {
+          const ltOption = document.createElement("option");
+          ltOption.value = "lt";
+          ltOption.textContent = "LT";
+          langSelect.appendChild(ltOption);
+        }
+      }
+
+      if (langSelect) langSelect.value = currentLang;
+
+      const I18N_PAGES = {
+        en: {
+          about: "About",
+          concept: "Concept",
+          "what-fce-measures": "What FCE Measures",
+          scope: "Scope & Limits",
+          "how-to-use": "How to use",
+          "how-tests-work": "How the tests work",
+          faq: "FAQ",
+          applications: "Applications / Use Contexts",
+          "validation-research": "Validation / Research"
+        },
+        no: {
+          about: "Om",
+          concept: "Konsept",
+          "what-fce-measures": "Hva FCE måler",
+          scope: "Omfang & begrensninger",
+          "how-to-use": "Hvordan bruke",
+          "how-tests-work": "Hvordan testene fungerer",
+          faq: "FAQ",
+          applications: "Bruksområder / kontekster",
+          "validation-research": "Validering / forskning"
+        },
+        lt: {
+          about: "Apie",
+          concept: "Koncepcija",
+          "what-fce-measures": "Ką FCE matuoja",
+          scope: "Apimtis ir ribos",
+          "how-to-use": "Kaip naudoti",
+          "how-tests-work": "Kaip veikia testai",
+          faq: "DUK",
+          applications: "Taikymo sritys / naudojimo kontekstai",
+          "validation-research": "Validavimas / tyrimai"
+        }
+      };
+
+      function getPageTitle(lang) {
+        const pageName = (location.pathname.split("/").pop() || "about.html").replace(".html", "");
+        return (I18N_PAGES[lang] && I18N_PAGES[lang][pageName])
+          ? I18N_PAGES[lang][pageName]
+          : (I18N_PAGES.en[pageName] || "Applications / Use Contexts");
+      }
+
+      function updateTopbarPage() {
+        const topbarPage = document.getElementById("topbarPage");
+        if (topbarPage) {
+          topbarPage.textContent = getPageTitle(currentLang);
+        }
+      }
+
+      function applyLanguage(lang) {
+        let contentLang = lang;
+        if (contentLang === "lt" && !hasLtContent) {
+          contentLang = "en";
+        }
+
+        const uiLang = contentLang;
+
+        currentLang = contentLang;
+        try { localStorage.setItem(LANG_KEY, contentLang); } catch {}
+        if (langSelect) langSelect.value = currentLang;
+
+        document.querySelectorAll(".lang-en").forEach(el => el.classList.toggle("hidden", contentLang !== "en"));
+        document.querySelectorAll(".lang-no").forEach(el => el.classList.toggle("hidden", contentLang !== "no"));
+        document.querySelectorAll(".lang-lt").forEach(el => el.classList.toggle("hidden", contentLang !== "lt"));
+
+        document.querySelectorAll(".menu .lang-en, .docs-nav .lang-en").forEach(el => {
+          el.classList.toggle("hidden", uiLang !== "en");
+        });
+        document.querySelectorAll(".menu .lang-no, .docs-nav .lang-no").forEach(el => {
+          el.classList.toggle("hidden", uiLang !== "no");
+        });
+        document.querySelectorAll(".menu .lang-lt, .docs-nav .lang-lt").forEach(el => {
+          el.classList.toggle("hidden", uiLang !== "lt");
+        });
+
+        updateTopbarPage();
+        setupScrollObserver();
+      }
+
+      let scrollObserver = null;
+      function setupScrollObserver() {
+        if (scrollObserver) scrollObserver.disconnect();
+
+        const pageHeading = document.querySelector(".lang:not(.hidden) .hero h1, .lang:not(.hidden) .hero h2")
+          || document.querySelector(".hero h1, .hero h2");
+        const topbarPage = document.getElementById("topbarPage");
+        if (!topbarPage || !pageHeading) return;
+
+        function updateVisibility(isIntersecting) {
+          if (isIntersecting) topbarPage.classList.add("is-hidden");
+          else topbarPage.classList.remove("is-hidden");
+        }
+
+        scrollObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => updateVisibility(entry.isIntersecting));
+        }, { threshold: 0.25 });
+
+        scrollObserver.observe(pageHeading);
+      }
+
+      langSelect && langSelect.addEventListener("change", (e) => applyLanguage(e.target.value));
+
+      applyLanguage(currentLang);
+
+      function updateBrandLinkHint() {
+        const brandLink = document.getElementById("brandLink");
+        if (!brandLink) return;
+        const hints = { en: "To the instrument", no: "Til instrumentet", lt: "Į instrumentą" };
+        const hint = hints[currentLang] || hints.en;
+        brandLink.setAttribute("data-hint", hint);
+        brandLink.setAttribute("aria-label", hint);
+      }
+
+      updateBrandLinkHint();
+      langSelect && langSelect.addEventListener("change", () => {
+        updateBrandLinkHint();
+      });
+
+      function storeScrollPosition() {
+        try {
+          const scrollPos = window.scrollY || window.pageYOffset || 0;
+          if (scrollPos > 0) {
+            localStorage.setItem("fce_doc_scroll_applications", String(scrollPos));
+          }
+        } catch (e) {}
+      }
+
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "hidden") {
+          storeScrollPosition();
+        }
+      });
+
+      window.addEventListener("beforeunload", storeScrollPosition);
+
+      try {
+        const restoreScroll = sessionStorage.getItem("fce_restore_scroll");
+        if (restoreScroll) {
+          sessionStorage.removeItem("fce_restore_scroll");
+          const scrollPos = parseInt(restoreScroll, 10);
+          if (!isNaN(scrollPos) && scrollPos > 0) {
+            requestAnimationFrame(() => {
+              window.scrollTo(0, scrollPos);
+            });
+          }
+        } else if (window.location.hash === "#restore-scroll") {
+          const storedScroll = localStorage.getItem("fce_doc_scroll_applications");
+          if (storedScroll) {
+            const scrollPos = parseInt(storedScroll, 10);
+            if (!isNaN(scrollPos) && scrollPos > 0) {
+              history.replaceState(null, "", window.location.pathname);
+              requestAnimationFrame(() => {
+                window.scrollTo(0, scrollPos);
+              });
+            }
+          }
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <script src="menu-sections.js" defer></script>
+  <script src="docs.js"></script>
+</body>
+</html>

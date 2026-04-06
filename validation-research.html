@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>FCE — Validation / Research</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <script>
+    try {
+      const p = location.pathname.split("/").pop() || "index.html";
+      localStorage.setItem("fce_last_page", p);
+      if (p && p.endsWith(".html") && !p.includes("index.html")) {
+        localStorage.setItem("fce_last_docs_page", p);
+      }
+    } catch {}
+  </script>
+</head>
+
+<body>
+  <header class="topbar">
+    <button id="menuBtn" aria-label="Menu" aria-controls="menu" aria-expanded="false">☰</button>
+    <a href="index.html?home=1" class="title brand-link" id="brandLink" style="text-decoration:none; color:inherit;" aria-label="To the instrument">
+      <span class="brand-short" aria-hidden="true">FCE</span>
+      <span class="brand-long" aria-hidden="true">
+        <span class="lang lang-en">To the instrument</span>
+        <span class="lang lang-no hidden">Til instrumentet</span>
+        <span class="lang lang-lt hidden">Į instrumentą</span>
+      </span>
+    </a>
+    <span class="topbar-page is-hidden" id="topbarPage"></span>
+
+    <div class="topbar-right">
+      <div class="lang-select-wrapper">
+        <select id="langSelect" class="lang-select" aria-label="Language">
+          <option value="en">EN</option>
+          <option value="no">NO</option>
+          <option value="lt">LT</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <nav id="menu" class="menu">
+    <div class="menu-header">
+      <button id="closeMenuBtn" class="menu-close-btn" aria-label="Close menu">×</button>
+    </div>
+
+    <a class="menu-item" href="index.html?home=1">
+      <span class="lang lang-en">Home</span>
+      <span class="lang lang-no hidden">Hjem</span>
+      <span class="lang lang-lt hidden">Pradžia</span>
+    </a>
+
+    <a class="menu-item" href="index.html?view=history">
+      <span class="lang lang-en">History</span>
+      <span class="lang lang-no hidden">Historikk</span>
+      <span class="lang lang-lt hidden">Istorija</span>
+    </a>
+
+    <div class="menu-section" id="menuSectionCore">
+      <button type="button" class="menu-section-toggle" id="menuToggleCore" aria-expanded="false" aria-controls="menuPanelCore">
+        <span class="menu-section-label">
+          <span class="lang lang-en">Core Docs</span>
+          <span class="lang lang-no hidden">Kjernedokumentasjon</span>
+          <span class="lang lang-lt hidden">Pagrindiniai dokumentai</span>
+        </span>
+        <span class="menu-chevron" aria-hidden="true">▸</span>
+      </button>
+      <div class="menu-section-panel" id="menuPanelCore" role="region" aria-labelledby="menuToggleCore">
+        <a class="menu-item menu-item-nested" href="about.html">
+          <span class="lang lang-en">About</span>
+          <span class="lang lang-no hidden">Om</span>
+          <span class="lang lang-lt hidden">Apie</span>
+        </a>
+        <a class="menu-item menu-item-nested" href="concept.html">
+          <span class="lang lang-en">Concept</span>
+          <span class="lang lang-no hidden">Konsept</span>
+          <span class="lang lang-lt hidden">Koncepcija</span>
+        </a>
+        <a class="menu-item menu-item-nested" href="what-fce-measures.html">
+          <span class="lang lang-en">What FCE Measures</span>
+          <span class="lang lang-no hidden">Hva FCE måler</span>
+          <span class="lang lang-lt hidden">Ką FCE matuoja</span>
+        </a>
+        <a class="menu-item menu-item-nested" href="scope.html">
+          <span class="lang lang-en">Scope &amp; Limits</span>
+          <span class="lang lang-no hidden">Omfang &amp; begrensninger</span>
+          <span class="lang lang-lt hidden">Apimtis ir ribos</span>
+        </a>
+        <a class="menu-item menu-item-nested" href="how-to-use.html">
+          <span class="lang lang-en">How to Use</span>
+          <span class="lang lang-no hidden">Hvordan bruke</span>
+          <span class="lang lang-lt hidden">Kaip naudoti</span>
+        </a>
+        <a class="menu-item menu-item-nested" href="how-tests-work.html">
+          <span class="lang lang-en">How the tests work</span>
+          <span class="lang lang-no hidden">Hvordan testene fungerer</span>
+          <span class="lang lang-lt hidden">Kaip veikia testai</span>
+        </a>
+        <a class="menu-item menu-item-nested" href="faq.html">
+          <span class="lang lang-en">FAQ</span>
+          <span class="lang lang-no hidden">FAQ</span>
+          <span class="lang lang-lt hidden">DUK</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="menu-section" id="menuSectionContext">
+      <button type="button" class="menu-section-toggle" id="menuToggleContext" aria-expanded="false" aria-controls="menuPanelContext">
+        <span class="menu-section-label">
+          <span class="lang lang-en">Context &amp; Development</span>
+          <span class="lang lang-no hidden">Kontekst og utvikling</span>
+          <span class="lang lang-lt hidden">Kontekstas ir plėtra</span>
+        </span>
+        <span class="menu-chevron" aria-hidden="true">▸</span>
+      </button>
+      <div class="menu-section-panel" id="menuPanelContext" role="region" aria-labelledby="menuToggleContext">
+        <a class="menu-item menu-item-nested" href="why.html">
+          <span class="lang lang-en">Why this exists</span>
+          <span class="lang lang-no hidden">Hvorfor dette finnes</span>
+          <span class="lang lang-lt hidden">Kodėl tai egzistuoja</span>
+        </a>
+        <a class="menu-item menu-item-nested" href="applications.html">
+          <span class="lang lang-en">Applications / Use Contexts</span>
+          <span class="lang lang-no hidden">Bruksområder / kontekster</span>
+          <span class="lang lang-lt hidden">Taikymo sritys / naudojimo kontekstai</span>
+        </a>
+        <a class="menu-item menu-item-nested" href="validation-research.html" aria-current="page">
+          <span class="lang lang-en">Validation / Research</span>
+          <span class="lang lang-no hidden">Validering / forskning</span>
+          <span class="lang lang-lt hidden">Validavimas / tyrimai</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <div id="menuOverlay" class="menu-overlay hidden"></div>
+
+  <main class="page">
+    <section class="container">
+      <p class="muted">
+        <span class="lang lang-en">Placeholder page. Full documentation is coming soon.</span>
+        <span class="lang lang-no hidden">Plassholderside. Full dokumentasjon kommer.</span>
+        <span class="lang lang-lt hidden">Įrašymo puslapis. Visa dokumentacija bus pateikta vėliau.</span>
+      </p>
+
+      <!-- EN -->
+      <div class="lang lang-en">
+        <header class="hero">
+          <h2>Validation / Research</h2>
+          <p class="lead">
+            This page will summarize validation approach and research notes for FCE.
+          </p>
+        </header>
+        <section class="card">
+          <h3>Coming soon</h3>
+          <p>Content is under development.</p>
+        </section>
+      </div>
+
+      <!-- NO -->
+      <div class="lang lang-no hidden">
+        <header class="hero">
+          <h2>Validering / forskning</h2>
+          <p class="lead">
+            Denne siden vil oppsummere validering og forskningsnotater for FCE.
+          </p>
+        </header>
+        <section class="card">
+          <h3>Kommer snart</h3>
+          <p>Innhold er under utvikling.</p>
+        </section>
+      </div>
+
+      <!-- LT -->
+      <div class="lang lang-lt hidden">
+        <header class="hero">
+          <h2>Validavimas / tyrimai</h2>
+          <p class="lead">
+            Šiame puslapyje bus apibendrintas validavimas ir FCE tyrimų pastabos.
+          </p>
+        </header>
+        <section class="card">
+          <h3>Netrukus</h3>
+          <p>Turinys rengiamas.</p>
+        </section>
+      </div>
+
+      <nav class="docs-nav">
+        <div class="docs-nav-left">
+          <a href="applications.html" class="docs-nav-btn">
+            <span class="lang lang-en">← Applications / Use Contexts</span>
+            <span class="lang lang-no hidden">← Bruksområder / kontekster</span>
+            <span class="lang lang-lt hidden">← Taikymo sritys / naudojimo kontekstai</span>
+          </a>
+        </div>
+
+        <div class="docs-nav-center">
+          <a href="index.html#instrument" class="docs-nav-btn">
+            <span class="lang lang-en">Open instrument</span>
+            <span class="lang lang-no hidden">Åpne instrument</span>
+            <span class="lang lang-lt hidden">Atidaryti instrumentą</span>
+          </a>
+        </div>
+
+        <div class="docs-nav-right">
+          <a href="about.html" class="docs-nav-btn">
+            <span class="lang lang-en">About →</span>
+            <span class="lang lang-no hidden">Om →</span>
+            <span class="lang lang-lt hidden">Apie →</span>
+          </a>
+        </div>
+      </nav>
+
+      <footer class="footer muted">
+        <p>FCE — Functional Cognition &amp; Execution</p>
+        <p class="footer-builtby">Designed and built by Zwoomer</p>
+      </footer>
+    </section>
+  </main>
+
+
+  <script>
+    (function () {
+      const menu = document.getElementById("menu");
+      const overlay = document.getElementById("menuOverlay");
+      const menuBtn = document.getElementById("menuBtn");
+      const closeMenuBtn = document.getElementById("closeMenuBtn");
+
+      function openMenu() {
+        menu.classList.add("open");
+        overlay.classList.remove("hidden");
+        document.body.classList.add("menu-open");
+        if (menuBtn) menuBtn.setAttribute("aria-expanded", "true");
+      }
+
+      function closeMenu() {
+        menu.classList.remove("open");
+        overlay.classList.add("hidden");
+        document.body.classList.remove("menu-open");
+        if (menuBtn) menuBtn.setAttribute("aria-expanded", "false");
+      }
+
+      menuBtn && menuBtn.addEventListener("click", () => {
+        if (menu.classList.contains("open")) closeMenu();
+        else openMenu();
+      });
+
+      closeMenuBtn && closeMenuBtn.addEventListener("click", closeMenu);
+      overlay && overlay.addEventListener("click", closeMenu);
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && menu.classList.contains("open")) closeMenu();
+      });
+
+      document.querySelectorAll(".menu-item").forEach(item => {
+        item.addEventListener("click", (e) => {
+          if (!item.classList.contains("is-disabled")) closeMenu();
+          else e.preventDefault();
+        });
+      });
+
+      const LANG_KEY = "fce_lang";
+      const hasLtContent = !!document.querySelector(".lang-lt");
+
+      let currentLang = localStorage.getItem(LANG_KEY);
+      if (!currentLang) {
+        const oldLang = localStorage.getItem("fce_lang_v1");
+        if (oldLang) {
+          currentLang = oldLang;
+          try { localStorage.setItem(LANG_KEY, currentLang); } catch {}
+        } else {
+          currentLang = "en";
+        }
+      }
+
+      if (currentLang === "lt" && !hasLtContent) {
+        currentLang = "en";
+        try { localStorage.setItem(LANG_KEY, currentLang); } catch {}
+      }
+
+      const langSelect = document.getElementById("langSelect");
+
+      if (langSelect) {
+        const hasLtOption = Array.from(langSelect.options).some(opt => opt.value === "lt");
+        if (!hasLtOption) {
+          const ltOption = document.createElement("option");
+          ltOption.value = "lt";
+          ltOption.textContent = "LT";
+          langSelect.appendChild(ltOption);
+        }
+      }
+
+      if (langSelect) langSelect.value = currentLang;
+
+      const I18N_PAGES = {
+        en: {
+          about: "About",
+          concept: "Concept",
+          "what-fce-measures": "What FCE Measures",
+          scope: "Scope & Limits",
+          "how-to-use": "How to use",
+          "how-tests-work": "How the tests work",
+          faq: "FAQ",
+          applications: "Applications / Use Contexts",
+          "validation-research": "Validation / Research"
+        },
+        no: {
+          about: "Om",
+          concept: "Konsept",
+          "what-fce-measures": "Hva FCE måler",
+          scope: "Omfang & begrensninger",
+          "how-to-use": "Hvordan bruke",
+          "how-tests-work": "Hvordan testene fungerer",
+          faq: "FAQ",
+          applications: "Bruksområder / kontekster",
+          "validation-research": "Validering / forskning"
+        },
+        lt: {
+          about: "Apie",
+          concept: "Koncepcija",
+          "what-fce-measures": "Ką FCE matuoja",
+          scope: "Apimtis ir ribos",
+          "how-to-use": "Kaip naudoti",
+          "how-tests-work": "Kaip veikia testai",
+          faq: "DUK",
+          applications: "Taikymo sritys / naudojimo kontekstai",
+          "validation-research": "Validavimas / tyrimai"
+        }
+      };
+
+      function getPageTitle(lang) {
+        const pageName = (location.pathname.split("/").pop() || "about.html").replace(".html", "");
+        return (I18N_PAGES[lang] && I18N_PAGES[lang][pageName])
+          ? I18N_PAGES[lang][pageName]
+          : (I18N_PAGES.en[pageName] || "Validation / Research");
+      }
+
+      function updateTopbarPage() {
+        const topbarPage = document.getElementById("topbarPage");
+        if (topbarPage) {
+          topbarPage.textContent = getPageTitle(currentLang);
+        }
+      }
+
+      function applyLanguage(lang) {
+        let contentLang = lang;
+        if (contentLang === "lt" && !hasLtContent) {
+          contentLang = "en";
+        }
+
+        const uiLang = contentLang;
+
+        currentLang = contentLang;
+        try { localStorage.setItem(LANG_KEY, contentLang); } catch {}
+        if (langSelect) langSelect.value = currentLang;
+
+        document.querySelectorAll(".lang-en").forEach(el => el.classList.toggle("hidden", contentLang !== "en"));
+        document.querySelectorAll(".lang-no").forEach(el => el.classList.toggle("hidden", contentLang !== "no"));
+        document.querySelectorAll(".lang-lt").forEach(el => el.classList.toggle("hidden", contentLang !== "lt"));
+
+        document.querySelectorAll(".menu .lang-en, .docs-nav .lang-en").forEach(el => {
+          el.classList.toggle("hidden", uiLang !== "en");
+        });
+        document.querySelectorAll(".menu .lang-no, .docs-nav .lang-no").forEach(el => {
+          el.classList.toggle("hidden", uiLang !== "no");
+        });
+        document.querySelectorAll(".menu .lang-lt, .docs-nav .lang-lt").forEach(el => {
+          el.classList.toggle("hidden", uiLang !== "lt");
+        });
+
+        updateTopbarPage();
+        setupScrollObserver();
+      }
+
+      let scrollObserver = null;
+      function setupScrollObserver() {
+        if (scrollObserver) scrollObserver.disconnect();
+
+        const pageHeading = document.querySelector(".lang:not(.hidden) .hero h2") || document.querySelector(".hero h2");
+        const topbarPage = document.getElementById("topbarPage");
+        if (!topbarPage || !pageHeading) return;
+
+        function updateVisibility(isIntersecting) {
+          if (isIntersecting) topbarPage.classList.add("is-hidden");
+          else topbarPage.classList.remove("is-hidden");
+        }
+
+        scrollObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => updateVisibility(entry.isIntersecting));
+        }, { threshold: 0.25 });
+
+        scrollObserver.observe(pageHeading);
+      }
+
+      langSelect && langSelect.addEventListener("change", (e) => applyLanguage(e.target.value));
+
+      applyLanguage(currentLang);
+
+      function updateBrandLinkHint() {
+        const brandLink = document.getElementById("brandLink");
+        if (!brandLink) return;
+        const hints = { en: "To the instrument", no: "Til instrumentet", lt: "Į instrumentą" };
+        const hint = hints[currentLang] || hints.en;
+        brandLink.setAttribute("data-hint", hint);
+        brandLink.setAttribute("aria-label", hint);
+      }
+
+      updateBrandLinkHint();
+      langSelect && langSelect.addEventListener("change", () => {
+        updateBrandLinkHint();
+      });
+
+      function storeScrollPosition() {
+        try {
+          const scrollPos = window.scrollY || window.pageYOffset || 0;
+          if (scrollPos > 0) {
+            localStorage.setItem("fce_doc_scroll_validation-research", String(scrollPos));
+          }
+        } catch (e) {}
+      }
+
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "hidden") {
+          storeScrollPosition();
+        }
+      });
+
+      window.addEventListener("beforeunload", storeScrollPosition);
+
+      try {
+        const restoreScroll = sessionStorage.getItem("fce_restore_scroll");
+        if (restoreScroll) {
+          sessionStorage.removeItem("fce_restore_scroll");
+          const scrollPos = parseInt(restoreScroll, 10);
+          if (!isNaN(scrollPos) && scrollPos > 0) {
+            requestAnimationFrame(() => {
+              window.scrollTo(0, scrollPos);
+            });
+          }
+        } else if (window.location.hash === "#restore-scroll") {
+          const storedScroll = localStorage.getItem("fce_doc_scroll_validation-research");
+          if (storedScroll) {
+            const scrollPos = parseInt(storedScroll, 10);
+            if (!isNaN(scrollPos) && scrollPos > 0) {
+              history.replaceState(null, "", window.location.pathname);
+              requestAnimationFrame(() => {
+                window.scrollTo(0, scrollPos);
+              });
+            }
+          }
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <script src="menu-sections.js" defer></script>
+  <script src="docs.js"></script>
+</body>
+</html>

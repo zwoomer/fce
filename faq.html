@@ -6,12 +6,10 @@
   <title>FCE — FAQ</title>
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Remember last visited page -->
   <script>
     try {
       const p = location.pathname.split("/").pop() || "index.html";
       localStorage.setItem("fce_last_page", p);
-      // Also track last docs page (exclude index.html)
       if (p && p.endsWith(".html") && !p.includes("index.html")) {
         localStorage.setItem("fce_last_docs_page", p);
       }
@@ -71,16 +69,16 @@
       <span class="lang lang-lt hidden">Koncepcija</span>
     </a>
 
+    <a class="menu-item" href="what-fce-measures.html">
+      <span class="lang lang-en">What FCE Measures</span>
+      <span class="lang lang-no hidden">Hva FCE måler</span>
+      <span class="lang lang-lt hidden">Ką FCE matuoja</span>
+    </a>
+
     <a class="menu-item" href="scope.html">
       <span class="lang lang-en">Scope &amp; Limits</span>
       <span class="lang lang-no hidden">Omfang &amp; begrensninger</span>
       <span class="lang lang-lt hidden">Apimtis ir ribos</span>
-    </a>
-
-    <a class="menu-item" href="norwegian-context.html">
-      <span class="lang lang-en">Norwegian Context</span>
-      <span class="lang lang-no hidden">Norsk kontekst</span>
-      <span class="lang lang-lt hidden">Norvegiškas kontekstas</span>
     </a>
 
     <a class="menu-item" href="how-to-use.html">
@@ -112,14 +110,14 @@
         <section class="hero">
           <h2>FAQ</h2>
           <p class="lead">
-            Short answers, clear boundaries, and practical definitions.
+            Short answers, practical definitions, and clear boundaries.
           </p>
 
           <div style="margin: 18px auto 0; text-align: center; max-width: 720px;">
             <div class="chips" aria-label="FCE principles">
               <span class="chip">Baseline-relative</span>
               <span class="chip">Function-first</span>
-              <span class="chip">Local-only by default</span>
+              <span class="chip">Local-first</span>
               <span class="chip">Refusal protects</span>
               <span class="chip">Human interpretation</span>
             </div>
@@ -135,194 +133,119 @@
                     color: #eee;
                     transition: all 0.2s ease;
                     display: inline-block;">
-            <span class="lang lang-en">Open instrument</span>
-            <span class="lang lang-no hidden">Åpne instrument</span>
-            <span class="lang lang-lt hidden">Atidaryti instrumentą</span>
+            Open instrument
           </a>
         </div>
 
         <section class="card">
-          <h3>Where should I start?</h3>
-          <p>
-            If you want the full explanation in a readable, non-technical format:
-          </p>
-          <ul>
-            <li><a href="concept.html"><strong>Concept</strong></a> — what FCE is and why baseline-relative matters</li>
-            <li><a href="scope.html"><strong>Scope &amp; Limits</strong></a> — explicit non-goals and safeguards</li>
-            <li><a href="how-to-use.html"><strong>How to Use</strong></a> — baseline, checks, and safe interpretation</li>
-          </ul>
-        </section>
-
-        <section class="card">
           <h3>What is FCE?</h3>
           <p>
-            <strong>FCE (Functional Cognition &amp; Execution)</strong> is a baseline-relative functional instrument.
-            It measures how your performance <em>today</em> compares to <em>your own normal range</em> — not to population averages.
-          </p>
-          <p class="muted">
-            FCE measures function (speed, control, consistency). It does not measure diagnoses, substances, or “worthiness”.
+            FCE is a baseline-relative functional instrument. It compares current short-task performance to your own usual range rather than to population averages.
           </p>
         </section>
 
         <section class="card">
-          <h3>Is this a medical test?</h3>
+          <h3>Is FCE a medical test?</h3>
           <p><strong>No.</strong></p>
           <p>
             FCE is not diagnostic and does not replace clinical evaluation.
-            It is a functional measurement tool designed to support tracking and careful interpretation.
           </p>
         </section>
 
         <section class="card">
-          <h3>Does FCE measure the nervous system, hormones, or the endocannabinoid system?</h3>
-
+          <h3>Does FCE detect substances or internal biological states?</h3>
           <p><strong>No.</strong></p>
-
           <p>
-            FCE does not measure biological systems, substances, or internal physiological states.
-            It measures functional execution: how quickly, accurately, and consistently a person performs short tasks.
-          </p>
-
-          <p class="muted">
-            These outcomes can reflect the combined influence of many underlying systems, but FCE does not identify or
-            attribute causes. It is a function-first instrument with human-led interpretation.
+            FCE does not detect substances, hormones, neurological states, or internal physiological systems directly. It measures observable task execution only.
           </p>
         </section>
 
         <section class="card">
-          <h3>What tests are included?</h3>
+          <h3>What tasks are included?</h3>
           <ul>
             <li><strong>Reaction Time</strong> — response speed and consistency</li>
-            <li><strong>Go / No-Go</strong> — inhibition and control under time pressure</li>
-            <li><strong>Divided Attention</strong> — Go / No-Go while counting brief visual flashes</li>
-            <li><strong>Precision (Target Pointing)</strong> — motor accuracy and execution consistency</li>
+            <li><strong>Go / No-Go</strong> — inhibition and response control</li>
+            <li><strong>Divided Attention</strong> — dual-demand execution</li>
+            <li><strong>Precision</strong> — motor accuracy and consistency</li>
           </ul>
-          <p class="muted">
-            Divided Attention evaluates multiple signals. The overall status follows the <strong>worst deviation</strong>,
-            so one strong signal cannot hide another weak signal.
-          </p>
         </section>
 
         <section class="card">
-          <h3>How is this different from typical “reaction time” websites?</h3>
+          <h3>What do Baseline, Check, and Training mean?</h3>
           <ul>
-            <li>FCE builds a <strong>personal baseline</strong> instead of comparing you to others</li>
-            <li>Results are interpreted relative to <em>your own normal</em></li>
-            <li>Multiple execution domains are measured (not one number)</li>
-            <li>Sessions are stored locally and shown transparently in History</li>
+            <li><strong>Baseline</strong> builds your personal reference range.</li>
+            <li><strong>Check</strong> compares today to that reference.</li>
+            <li><strong>Training</strong> is practice only and does not update baseline.</li>
           </ul>
         </section>
 
         <section class="card">
-          <h3>What do “Baseline”, “Check”, and “Training” mean?</h3>
+          <h3>Why do I need more than one baseline session?</h3>
+          <p>
+            Because performance varies naturally. A baseline should reflect your usual range, not a single score.
+          </p>
+          <p class="muted">
+            Most users should collect 3–5 usable baseline sessions.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Can I compare across different devices?</h3>
+          <p>
+            Not reliably. Device and input differences can affect timing and error patterns.
+          </p>
+          <p class="muted">
+            Use the same device and input method for baseline and checks whenever possible.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>What do Mean and SD mean?</h3>
           <ul>
-            <li><strong>Baseline</strong> — builds your normal range (your reference)</li>
-            <li><strong>Check</strong> — compares today to your baseline</li>
-            <li><strong>Training</strong> — practice only (never updates baseline)</li>
+            <li><strong>Mean</strong> = average value</li>
+            <li><strong>SD (standard deviation)</strong> = how variable the results are</li>
           </ul>
           <p class="muted">
-            Mode is determined by the action button you choose.
+            Lower SD usually means more stable performance. Higher SD usually means more spread or inconsistency.
           </p>
         </section>
 
         <section class="card">
-          <h3>Why do I need multiple baseline sessions?</h3>
+          <h3>What does Not usable mean?</h3>
           <p>
-            Performance naturally varies day to day.
-            A baseline is not one “best” score — it’s a stable reference built from multiple sessions.
-          </p>
-          <p class="muted">
-            Most people should collect <strong>3–5</strong> baseline sessions under normal conditions.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Can I compare results across devices?</h3>
-          <p>
-            Not reliably. Different devices and input methods (mouse vs touch) can change timing and error patterns.
-          </p>
-          <p class="muted">
-            For clean comparisons, build baseline and run checks on the same device and input method.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>What do “Mean” and “SD” mean?</h3>
-          <p>
-            FCE summarizes performance using two simple statistics:
+            It means the session was not reliable enough for comparison.
           </p>
           <ul>
-            <li>
-              <strong>Mean</strong> — the average value (example: average reaction time across trials).
-            </li>
-            <li>
-              <strong>SD (Standard Deviation)</strong> — how variable the results are.
-              Low SD = more stable/consistent. High SD = more spread and less stable performance.
-            </li>
+            <li>too little valid data</li>
+            <li>too much noise</li>
+            <li>too much execution failure</li>
           </ul>
           <p class="muted">
-            In practice: two sessions can have the same mean but different SD. One can be steady, the other uneven.
+            Not usable is protection, not punishment.
           </p>
         </section>
 
         <section class="card">
-          <h3>What does “Not usable” mean?</h3>
-          <p>
-            Sometimes a session is marked as <em>not usable</em>. This is intentional.
-          </p>
-          <ul>
-            <li>It protects accuracy when data quality is too low</li>
-            <li>It prevents false certainty from incomplete or distorted input</li>
-          </ul>
-          <p class="muted">
-            Refusal is protection, not failure. Retesting is always allowed.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Do context fields change my result?</h3>
-          <p>
-            No. Context fields (sleep, stress, note) are saved as metadata only.
-            They do not affect scoring or comparison.
-          </p>
-          <p class="muted">
-            Measurement first. Interpretation second.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Can FCE tell whether I'm impaired by a specific substance?</h3>
+          <h3>Do context fields change scoring?</h3>
           <p><strong>No.</strong></p>
           <p>
-            FCE measures function — not cause.
-            Different causes can produce similar functional deviation (sleep loss, stress, illness, medication, alcohol, cannabis, distraction).
+            Context fields such as sleep, stress, and notes are stored as metadata only.
           </p>
         </section>
 
         <section class="card">
-          <h3>Can using FCE help me understand myself better?</h3>
-          <p>
-            FCE does not interpret results or provide explanations about behavior, mood, or causes.
-            It is a functional measurement instrument.
-          </p>
-          <p>
-            However, some users find that repeated use helps them notice changes in their own performance
-            over time, such as stability, variability, or deviation from their normal range.
-          </p>
-          <p class="muted">
-            Any reflection that follows is user-led.
-            FCE does not guide interpretation or suggest meaning.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Is FCE meant to be used for legal enforcement?</h3>
+          <h3>Can FCE tell why performance changed?</h3>
           <p><strong>No.</strong></p>
           <p>
-            FCE is not a legal verdict engine and should not be used for automatic enforcement or binding decisions.
+            Different causes can produce similar deviations. FCE shows change in function. It does not identify the cause of that change.
           </p>
-          <p class="muted">
-            If explored institutionally, safeguards must keep it voluntary, transparent, and contestable.
+        </section>
+
+        <section class="card">
+          <h3>Can FCE be used for automatic legal or institutional decisions?</h3>
+          <p><strong>No.</strong></p>
+          <p>
+            FCE is not a legal verdict engine and should not be treated as an automated decision system.
           </p>
         </section>
 
@@ -331,262 +254,23 @@
           <p>
             Locally in your browser on this device. FCE does not require an account and does not upload data by default.
           </p>
-          <p class="muted">
-            Clearing site data in your browser will remove local history and baseline from that device.
-          </p>
         </section>
 
         <section class="card">
           <h3>Can I export my results?</h3>
           <p>
             Yes. Export is optional and user-initiated.
-            The default instrument is designed around local storage and transparency-first history.
-          </p>
-          <p class="muted">
-            Any institutional data flow should be explicit and separate from the core instrument.
           </p>
         </section>
-      </div>
 
-      <!-- LT -->
-      <div class="lang lang-lt hidden">
-        <section class="hero">
-          <h2>DUK</h2>
-          <p class="lead">
-            Trumpi atsakymai, aiškios ribos ir praktiniai apibrėžimai.
-          </p>
-
-          <div style="margin: 18px auto 0; text-align: center; max-width: 720px;">
-            <div class="chips" aria-label="FCE principai">
-              <span class="chip">Palyginimas su baze</span>
-              <span class="chip">Funkcija pirma</span>
-              <span class="chip">Vietinis pagal nutylėjimą</span>
-              <span class="chip">Atsisakymas saugo</span>
-              <span class="chip">Žmogaus interpretacija</span>
-            </div>
+        <section class="card">
+          <h3>Where should I read next?</h3>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
+            <a href="about.html" class="badge" style="text-decoration:none;">About</a>
+            <a href="concept.html" class="badge" style="text-decoration:none;">Concept</a>
+            <a href="what-fce-measures.html" class="badge" style="text-decoration:none;">What FCE Measures</a>
+            <a href="scope.html" class="badge" style="text-decoration:none;">Scope &amp; Limits</a>
           </div>
-        </section>
-
-        <div style="margin: 24px auto; text-align: center; max-width: 600px; padding: 0 16px;">
-          <a href="index.html#instrument"
-             style="padding: 10px 20px; font-size: 14px; text-decoration: none;
-                    border: 1px solid rgba(255,255,255,0.15);
-                    border-radius: 8px;
-                    background: rgba(255,255,255,0.05);
-                    color: #eee;
-                    transition: all 0.2s ease;
-                    display: inline-block;">
-            <span class="lang lang-en">Open instrument</span>
-            <span class="lang lang-no hidden">Åpne instrument</span>
-            <span class="lang lang-lt hidden">Atidaryti instrumentą</span>
-          </a>
-        </div>
-
-        <section class="card">
-          <h3>Nuo ko pradėti?</h3>
-          <p>
-            Jei norite pilno paaiškinimo skaitomu, netechniniu formatu:
-          </p>
-          <ul>
-            <li><a href="concept.html"><strong>Koncepcija</strong></a> — kas yra FCE ir kodėl svarbus palyginimas su baziniu lygiu</li>
-            <li><a href="scope.html"><strong>Apimtis ir ribos</strong></a> — aiškūs ne-tikslai ir apsaugos priemonės</li>
-            <li><a href="how-to-use.html"><strong>Kaip naudoti</strong></a> — bazinis lygis, patikros ir saugi interpretacija</li>
-          </ul>
-        </section>
-
-        <section class="card">
-          <h3>Kas yra FCE?</h3>
-          <p>
-            <strong>FCE (Functional Cognition &amp; Execution)</strong> yra su baziniu lygiu lyginamas funkcinis instrumentas.
-            Jis matuoja, kaip jūsų vykdymas <em>šiandien</em> lyginasi su <em>jūsų pačių įprastu diapazonu</em> — o ne su populiacijos vidurkiais.
-          </p>
-          <p class="muted">
-            FCE matuoja funkciją (greitį, kontrolę, nuoseklumą). Jis nematuoja diagnozių, medžiagų ar „vertės".
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Ar tai medicininis testas?</h3>
-          <p><strong>Ne.</strong></p>
-          <p>
-            FCE nėra diagnostinis ir nepakeičia klinikinio vertinimo.
-            Tai funkcinio matavimo įrankis, skirtas palaikyti stebėseną ir atsargią interpretaciją.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Kokie testai įtraukti?</h3>
-          <ul>
-            <li><strong>Reakcijos laikas</strong> — atsakymo greitis ir nuoseklumas</li>
-            <li><strong>Go / No-Go</strong> — slopinimas ir kontrolė esant laiko spaudimui</li>
-            <li><strong>Padalytas dėmesys</strong> — Go / No-Go skaičiuojant trumpus vizualinius blykstes</li>
-            <li><strong>Tikslumas (Taikinio nusitaikymas)</strong> — motorinio tikslumo ir vykdymo nuoseklumas</li>
-          </ul>
-          <p class="muted">
-            Padalytas dėmesys vertina kelis signalus. Bendras statusas seka <strong>blogiausią nukrypimą</strong>,
-            todėl vienas stiprus signalas negali paslėpti kito silpno signalo.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Kuo tai skiriasi nuo tipinių „reakcijos laiko" svetainių?</h3>
-          <ul>
-            <li>FCE kuria <strong>asmeninį bazinį lygį</strong> užuot lyginant jus su kitais</li>
-            <li>Rezultatai interpretuojami palyginti su <em>jūsų pačių įprastu</em></li>
-            <li>Matuojami keli vykdymo domenai (ne vienas skaičius)</li>
-            <li>Sesijos saugomos lokaliai ir rodomos skaidriai Istorijoje</li>
-          </ul>
-        </section>
-
-        <section class="card">
-          <h3>Ką reiškia „Bazinis lygis", „Patikra" ir „Treniruotė"?</h3>
-          <ul>
-            <li><strong>Bazinis lygis</strong> — kuria jūsų įprastą diapazoną (jūsų atskaitos taškas)</li>
-            <li><strong>Patikra</strong> — lygina šiandieną su jūsų baziniu lygiu</li>
-            <li><strong>Treniruotė</strong> — tik praktika (niekada neatnaujina bazinio lygio)</li>
-          </ul>
-          <p class="muted">
-            Režimą lemia pasirinktas veiksmo mygtukas.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Kodėl man reikia kelių bazinio lygio sesijų?</h3>
-          <p>
-            Vykdymas natūraliai skiriasi diena nuo dienos.
-            Bazinis lygis nėra vienas „geriausias" rezultatas — tai stabilus atskaitos taškas, sudarytas iš kelių sesijų.
-          </p>
-          <p class="muted">
-            Dauguma žmonių turėtų surinkti <strong>3–5</strong> bazinio lygio sesijas įprastomis sąlygomis.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Ar galiu lyginti rezultatus tarp skirtingų įrenginių?</h3>
-          <p>
-            Ne patikimai. Skirtingi įrenginiai ir įvesties būdai (pelė vs lietimas) gali keisti laiką ir klaidų modelius.
-          </p>
-          <p class="muted">
-            Siekiant švarių palyginimų, susikurkite bazinį lygį ir atlikite patikras tame pačiame įrenginyje ir tuo pačiu įvesties būdu.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Ką reiškia „Vidurkis" ir „SD"?</h3>
-          <p>
-            FCE apibendrina vykdymą naudodamas du paprastus statistinius rodiklius:
-          </p>
-          <ul>
-            <li>
-              <strong>Vidurkis (Mean)</strong> — vidutinė vertė (pavyzdys: vidutinis reakcijos laikas per bandymus).
-            </li>
-            <li>
-              <strong>SD (Standartinis nuokrypis)</strong> — kiek kintami rezultatai.
-              Žemas SD = stabiliau/nuosekliau. Aukštas SD = didesnis išsibarstymas ir mažiau stabilus vykdymas.
-            </li>
-          </ul>
-          <p class="muted">
-            Praktiškai: dvi sesijos gali turėti tą patį vidurkį, bet skirtingą SD. Viena gali būti pastovi, kita — netolygi.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Ką reiškia „Netinkama"?</h3>
-          <p>
-            Kartais sesija pažymima kaip <em>netinkama</em>. Tai sąmoningai.
-          </p>
-          <ul>
-            <li>Tai apsaugo tikslumą, kai duomenų kokybė per žema</li>
-            <li>Tai apsaugo nuo klaidingo tikrumo dėl nepilnų ar iškraipytų duomenų</li>
-          </ul>
-          <p class="muted">
-            Atsisakymas yra apsauga, o ne nesėkmė. Pakartotinis testas visada leidžiamas.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Ar konteksto laukai keičia mano rezultatą?</h3>
-          <p>
-            Ne. Konteksto laukai (miegas, stresas, pažyma) saugomi tik kaip metadata.
-            Jie neveikia vertinimo ar palyginimo.
-          </p>
-          <p class="muted">
-            Pirmiausia matavimas. Antra — interpretacija.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Ar FCE gali nustatyti, ar mane paveikė konkreti medžiaga?</h3>
-          <p><strong>Ne.</strong></p>
-          <p>
-            FCE matuoja funkciją — o ne priežastį.
-            Skirtingos priežastys gali sukelti panašų funkcinį nukrypimą (miego trūkumas, stresas, liga, vaistai, alkoholis, kanapės, išsiblaškymas).
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Ar FCE matuoja nervų sistemą, hormonus arba endokanabinoidinę sistemą?</h3>
-
-          <p><strong>Ne.</strong></p>
-
-          <p>
-            FCE nematuoja biologinių sistemų, medžiagų ar vidinių fiziologinių būsenų.
-            Jis matuoja funkcinį vykdymą: kaip greitai, tiksliai ir pastoviai žmogus atlieka trumpas užduotis.
-          </p>
-
-          <p class="muted">
-            Rezultatai gali atspindėti daugelio vidinių sistemų bendrą įtaką, tačiau FCE nenustato
-            ir nepriskiria priežasčių. Tai „funkcija pirmiausia" instrumentas, kurio interpretacija yra žmogaus rankose.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Ar FCE naudojimas gali padėti geriau suprasti save?</h3>
-          <p>
-            FCE neinterpretuoja rezultatų ir neteikia paaiškinimų apie elgesį, nuotaiką ar priežastis.
-            Tai yra funkcinio matavimo instrumentas.
-          </p>
-          <p>
-            Tačiau kai kurie vartotojai pastebi, kad pakartotinis naudojimas padeda atpažinti
-            savo vykdymo pokyčius laikui bėgant, pavyzdžiui, stabilumą, kintamumą
-            ar nukrypimus nuo įprasto lygio.
-          </p>
-          <p class="muted">
-            Bet kokia refleksija vyksta vartotojo iniciatyva.
-            FCE nenurodo interpretacijos ar prasmės.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Ar FCE skirtas teisiniam priverstiniam naudojimui?</h3>
-          <p><strong>Ne.</strong></p>
-          <p>
-            FCE nėra teisinis verdiktų variklis ir neturėtų būti naudojamas automatiniam priverstiniam naudojimui ar privalomiems sprendimams.
-          </p>
-          <p class="muted">
-            Jei naudojamas instituciniuose kontekstuose, apsaugos priemonės turi užtikrinti, kad jis būtų savanoriškas, skaidrus ir ginčytinas.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Kur saugomi mano duomenys?</h3>
-          <p>
-            Lokaliai jūsų naršyklėje šiame įrenginyje. FCE nereikalauja paskyros ir pagal nutylėjimą neįkelia duomenų.
-          </p>
-          <p class="muted">
-            Išvalydami svetainės duomenis naršyklėje pašalinsite vietinę istoriją ir bazinį lygį iš to įrenginio.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Ar galiu eksportuoti savo rezultatus?</h3>
-          <p>
-            Taip. Eksportas yra pasirenkamas ir inicijuojamas vartotojo.
-            Pagrindinis instrumentas sukurtas aplink vietinę saugyklą ir skaidrumą pirmiausia istorijai.
-          </p>
-          <p class="muted">
-            Bet koks institucinis duomenų srautas turėtų būti aiškus ir atskirtas nuo pagrindinio instrumento.
-          </p>
         </section>
       </div>
 
@@ -595,14 +279,14 @@
         <section class="hero">
           <h2>FAQ</h2>
           <p class="lead">
-            Korte svar, tydelige grenser og praktiske definisjoner.
+            Korte svar, praktiske definisjoner og tydelige grenser.
           </p>
 
           <div style="margin: 18px auto 0; text-align: center; max-width: 720px;">
             <div class="chips" aria-label="FCE prinsipper">
               <span class="chip">Baseline-relativ</span>
               <span class="chip">Funksjon først</span>
-              <span class="chip">Lokalt som standard</span>
+              <span class="chip">Lokalt først</span>
               <span class="chip">Avslag beskytter</span>
               <span class="chip">Menneskelig tolkning</span>
             </div>
@@ -618,194 +302,119 @@
                     color: #eee;
                     transition: all 0.2s ease;
                     display: inline-block;">
-            <span class="lang lang-en">Open instrument</span>
-            <span class="lang lang-no hidden">Åpne instrument</span>
-            <span class="lang lang-lt hidden">Atidaryti instrumentą</span>
+            Åpne instrument
           </a>
         </div>
 
         <section class="card">
-          <h3>Hvor bør jeg starte?</h3>
-          <p>
-            Hvis du vil ha forklaringen i et lesbart, ikke-teknisk format:
-          </p>
-          <ul>
-            <li><a href="concept.html"><strong>Konsept</strong></a> — hva FCE er og hvorfor baseline-relativt er viktig</li>
-            <li><a href="scope.html"><strong>Omfang &amp; begrensninger</strong></a> — eksplisitte ikke-mål og sikringer</li>
-            <li><a href="how-to-use.html"><strong>Hvordan bruke</strong></a> — baseline, sjekk og trygg tolkning</li>
-          </ul>
-        </section>
-
-        <section class="card">
           <h3>Hva er FCE?</h3>
           <p>
-            <strong>FCE (Functional Cognition &amp; Execution)</strong> er et baseline-relativt, funksjonelt instrument.
-            Det måler hvordan prestasjon <em>i dag</em> sammenlignes med <em>ditt eget normalområde</em> — ikke med befolkningsgjennomsnitt.
-          </p>
-          <p class="muted">
-            FCE måler funksjon (hastighet, kontroll, stabilitet). Det måler ikke diagnoser, rusmidler eller «verdi som person».
+            FCE er et baseline-relativt funksjonsinstrument. Det sammenligner nåværende prestasjon i korte oppgaver med ditt eget normalområde fremfor med befolkningsgjennomsnitt.
           </p>
         </section>
 
         <section class="card">
-          <h3>Er dette en medisinsk test?</h3>
+          <h3>Er FCE en medisinsk test?</h3>
           <p><strong>Nei.</strong></p>
           <p>
             FCE er ikke diagnostisk og erstatter ikke klinisk vurdering.
-            Det er et funksjonelt måleverktøy ment for sporing og varsom tolkning.
           </p>
         </section>
 
         <section class="card">
-          <h3>Hvilke tester er inkludert?</h3>
-          <ul>
-            <li><strong>Reaksjonstid</strong> — responshastighet og stabilitet</li>
-            <li><strong>Go / No-Go</strong> — inhibisjon og kontroll under tidspress</li>
-            <li><strong>Delt oppmerksomhet</strong> — Go / No-Go mens du teller korte visuelle blink</li>
-            <li><strong>Presisjon (Målpeking)</strong> — motorisk nøyaktighet og utførelseskonsistens</li>
-          </ul>
-          <p class="muted">
-            Delt oppmerksomhet vurderer flere signaler. Totalstatus følger <strong>største avvik</strong>,
-            slik at et sterkt signal ikke kan skjule et svakt signal.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Hvordan er dette forskjellig fra vanlige “reaction time”-sider?</h3>
-          <ul>
-            <li>FCE bygger en <strong>personlig baseline</strong> i stedet for å sammenligne deg med andre</li>
-            <li>Resultater tolkes relativt til <em>din egen normal</em></li>
-            <li>Flere utførelsesdomener måles (ikke bare ett tall)</li>
-            <li>Økter lagres lokalt og vises åpent i historikk</li>
-          </ul>
-        </section>
-
-        <section class="card">
-          <h3>Hva betyr “Baseline”, “Sjekk” og “Trening”?</h3>
-          <ul>
-            <li><strong>Baseline</strong> — bygger normalområdet (referansen din)</li>
-            <li><strong>Sjekk</strong> — sammenligner i dag med baseline</li>
-            <li><strong>Trening</strong> — kun øving (oppdaterer aldri baseline)</li>
-          </ul>
-          <p class="muted">
-            Modus bestemmes av hvilken knapp du trykker.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Hvorfor trenger jeg flere baseline-økter?</h3>
-          <p>
-            Prestasjon varierer naturlig fra dag til dag.
-            Baseline er ikke én “beste” score — det er en stabil referanse bygget av flere økter.
-          </p>
-          <p class="muted">
-            De fleste bør samle <strong>3–5</strong> baseline-økter under normale forhold.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Kan jeg sammenligne på tvers av enheter?</h3>
-          <p>
-            Ikke pålitelig. Ulike enheter og inndatametoder (mus vs touch) kan endre timing og feilmønstre.
-          </p>
-          <p class="muted">
-            For rene sammenligninger: bygg baseline og kjør sjekk på samme enhet og inndatametode.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Hva betyr “Mean” og “SD”?</h3>
-          <p>
-            FCE oppsummerer ofte prestasjon med to enkle statistikker:
-          </p>
-          <ul>
-            <li>
-              <strong>Mean</strong> — gjennomsnittet (for eksempel gjennomsnittlig reaksjonstid).
-            </li>
-            <li>
-              <strong>SD (standardavvik)</strong> — hvor variabelt resultatet er.
-              Lav SD = mer stabilt/konsistent. Høy SD = mer spredning og mindre stabil prestasjon.
-            </li>
-          </ul>
-          <p class="muted">
-            I praksis: to økter kan ha samme gjennomsnitt, men ulik SD. Én kan være jevn, den andre ujevn.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Hva betyr “Ikke brukbar”?</h3>
-          <p>
-            Noen ganger markeres en økt som <em>ikke brukbar</em>. Dette er med vilje.
-          </p>
-          <ul>
-            <li>Det beskytter nøyaktighet når datakvaliteten er for lav</li>
-            <li>Det hindrer falsk sikkerhet fra ufullstendig eller forstyrret input</li>
-          </ul>
-          <p class="muted">
-            Avslag er beskyttelse, ikke feil. Du kan alltid teste på nytt.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Endrer kontekstfeltene resultatet?</h3>
-          <p>
-            Nei. Kontekstfeltene (søvn, stress, notat) lagres kun som metadata.
-            De påvirker ikke scoring eller sammenligning.
-          </p>
-          <p class="muted">
-            Først måling. Deretter tolkning.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Kan FCE si om jeg er påvirket av et bestemt stoff?</h3>
+          <h3>Påviser FCE stoffer eller indre biologiske tilstander?</h3>
           <p><strong>Nei.</strong></p>
           <p>
-            FCE måler funksjon — ikke årsak.
-            Ulike årsaker kan gi lignende funksjonsavvik (søvnmangel, stress, sykdom, medisiner, alkohol, cannabis, distraksjon).
+            FCE påviser ikke stoffer, hormoner, nevrologiske tilstander eller indre fysiologiske systemer direkte. Det måler kun observerbar oppgaveutførelse.
           </p>
         </section>
 
         <section class="card">
-          <h3>Måler FCE nervesystemet, hormoner eller det endokannabinoide systemet?</h3>
+          <h3>Hvilke oppgaver er inkludert?</h3>
+          <ul>
+            <li><strong>Reaksjonstid</strong> — responshastighet og konsistens</li>
+            <li><strong>Go / No-Go</strong> — inhibisjon og responskontroll</li>
+            <li><strong>Delt oppmerksomhet</strong> — utførelse under to samtidige krav</li>
+            <li><strong>Presisjon</strong> — motorisk nøyaktighet og konsistens</li>
+          </ul>
+        </section>
 
+        <section class="card">
+          <h3>Hva betyr Baseline, Sjekk og Trening?</h3>
+          <ul>
+            <li><strong>Baseline</strong> bygger ditt personlige referanseområde.</li>
+            <li><strong>Sjekk</strong> sammenligner i dag med denne referansen.</li>
+            <li><strong>Trening</strong> er kun øving og oppdaterer ikke baseline.</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h3>Hvorfor trenger jeg mer enn én baseline-økt?</h3>
+          <p>
+            Fordi prestasjon varierer naturlig. En baseline bør reflektere ditt vanlige område, ikke én enkelt score.
+          </p>
+          <p class="muted">
+            De fleste brukere bør samle 3–5 brukbare baseline-økter.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Kan jeg sammenligne mellom ulike enheter?</h3>
+          <p>
+            Ikke pålitelig. Forskjeller i enhet og input kan påvirke timing og feilmønstre.
+          </p>
+          <p class="muted">
+            Bruk samme enhet og inndatametode for baseline og sjekk når det er mulig.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Hva betyr Mean og SD?</h3>
+          <ul>
+            <li><strong>Mean</strong> = gjennomsnittlig verdi</li>
+            <li><strong>SD (standardavvik)</strong> = hvor variable resultatene er</li>
+          </ul>
+          <p class="muted">
+            Lavere SD betyr vanligvis mer stabil prestasjon. Høyere SD betyr mer spredning eller ujevnhet.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Hva betyr Ikke brukbar?</h3>
+          <p>
+            Det betyr at økten ikke var pålitelig nok til sammenligning.
+          </p>
+          <ul>
+            <li>for lite gyldige data</li>
+            <li>for mye støy</li>
+            <li>for mye utførelsessvikt</li>
+          </ul>
+          <p class="muted">
+            Ikke brukbar er beskyttelse, ikke straff.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Endrer kontekstfelter scoren?</h3>
           <p><strong>Nei.</strong></p>
-
           <p>
-            FCE måler ikke biologiske systemer, stoffer eller indre fysiologiske tilstander.
-            Det måler funksjonell utførelse: hvor raskt, nøyaktig og konsistent en person gjennomfører korte oppgaver.
-          </p>
-
-          <p class="muted">
-            Utfallet kan reflektere samlet påvirkning fra mange underliggende systemer, men FCE identifiserer ikke
-            og tilskriver ikke årsaker. Det er et funksjon-først instrument med menneskestyrt tolkning.
+            Kontekstfelter som søvn, stress og notater lagres kun som metadata.
           </p>
         </section>
 
         <section class="card">
-          <h3>Kan bruk av FCE hjelpe meg å forstå meg selv bedre?</h3>
-          <p>
-            FCE tolker ikke resultater og gir ingen forklaringer om atferd, humør eller årsaker.
-            Det er et instrument for funksjonell måling.
-          </p>
-          <p>
-            Noen brukere opplever likevel at gjentatt bruk gjør det lettere å legge merke til
-            endringer i egen utførelse over tid, som stabilitet, variasjon eller avvik fra normalnivå.
-          </p>
-          <p class="muted">
-            All eventuell refleksjon skjer på brukerens initiativ.
-            FCE gir ikke føringer for tolkning eller mening.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Er FCE ment for juridisk håndheving?</h3>
+          <h3>Kan FCE fortelle hvorfor prestasjonen endret seg?</h3>
           <p><strong>Nei.</strong></p>
           <p>
-            FCE er ikke en juridisk domsmotor og skal ikke brukes for automatisk håndheving eller bindende beslutninger.
+            Ulike årsaker kan gi lignende avvik. FCE viser endring i funksjon. Det identifiserer ikke årsaken til endringen.
           </p>
-          <p class="muted">
-            Hvis det utforskes institusjonelt, må sikringer holde det frivillig, transparent og etterprøvbart.
+        </section>
+
+        <section class="card">
+          <h3>Kan FCE brukes til automatiske juridiske eller institusjonelle beslutninger?</h3>
+          <p><strong>Nei.</strong></p>
+          <p>
+            FCE er ikke en juridisk domsmotor og skal ikke behandles som et automatisk beslutningssystem.
           </p>
         </section>
 
@@ -814,20 +423,192 @@
           <p>
             Lokalt i nettleseren på denne enheten. FCE krever ingen konto og laster ikke opp data som standard.
           </p>
-          <p class="muted">
-            Hvis du sletter nettsteddata i nettleseren, fjernes lokal historikk og baseline fra den enheten.
+        </section>
+
+        <section class="card">
+          <h3>Kan jeg eksportere resultatene?</h3>
+          <p>
+            Ja. Eksport er valgfritt og brukerstyrt.
           </p>
         </section>
 
         <section class="card">
-          <h3>Kan jeg eksportere resultater?</h3>
+          <h3>Hva bør jeg lese videre?</h3>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
+            <a href="about.html" class="badge" style="text-decoration:none;">Om</a>
+            <a href="concept.html" class="badge" style="text-decoration:none;">Konsept</a>
+            <a href="what-fce-measures.html" class="badge" style="text-decoration:none;">Hva FCE måler</a>
+            <a href="scope.html" class="badge" style="text-decoration:none;">Omfang &amp; begrensninger</a>
+          </div>
+        </section>
+      </div>
+
+      <!-- LT -->
+      <div class="lang lang-lt hidden">
+        <section class="hero">
+          <h2>DUK</h2>
+          <p class="lead">
+            Trumpi atsakymai, praktiniai apibrėžimai ir aiškios ribos.
+          </p>
+
+          <div style="margin: 18px auto 0; text-align: center; max-width: 720px;">
+            <div class="chips" aria-label="FCE principai">
+              <span class="chip">Lyginama su baze</span>
+              <span class="chip">Funkcija pirmiau</span>
+              <span class="chip">Vietinis veikimas</span>
+              <span class="chip">Atsisakymas saugo</span>
+              <span class="chip">Žmogaus interpretacija</span>
+            </div>
+          </div>
+        </section>
+
+        <div style="margin: 24px auto; text-align: center; max-width: 600px; padding: 0 16px;">
+          <a href="index.html#instrument"
+             style="padding: 10px 20px; font-size: 14px; text-decoration: none;
+                    border: 1px solid rgba(255,255,255,0.15);
+                    border-radius: 8px;
+                    background: rgba(255,255,255,0.05);
+                    color: #eee;
+                    transition: all 0.2s ease;
+                    display: inline-block;">
+            Atidaryti instrumentą
+          </a>
+        </div>
+
+        <section class="card">
+          <h3>Kas yra FCE?</h3>
           <p>
-            Ja. Eksport er valgfritt og brukerstyrt.
-            Standardinstrumentet er designet rundt lokal lagring og “historikk først”.
+            FCE yra su baze lyginamas funkcinis instrumentas. Jis lygina dabartinį trumpų užduočių atlikimą su jūsų pačių įprastu diapazonu, o ne su populiacijos vidurkiais.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Ar FCE yra medicininis testas?</h3>
+          <p><strong>Ne.</strong></p>
+          <p>
+            FCE nėra diagnostinis ir nepakeičia klinikinio vertinimo.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Ar FCE aptinka medžiagas ar vidines biologines būsenas?</h3>
+          <p><strong>Ne.</strong></p>
+          <p>
+            FCE tiesiogiai neaptinka medžiagų, hormonų, neurologinių būsenų ar vidinių fiziologinių sistemų. Jis matuoja tik stebimą užduočių atlikimą.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Kokios užduotys įtrauktos?</h3>
+          <ul>
+            <li><strong>Reakcijos laikas</strong> — atsako greitis ir pastovumas</li>
+            <li><strong>Go / No-Go</strong> — inhibicija ir atsako kontrolė</li>
+            <li><strong>Dalytas dėmesys</strong> — atlikimas esant dviem vienu metu keliamiems reikalavimams</li>
+            <li><strong>Tikslumas</strong> — motorinis tikslumas ir pastovumas</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h3>Ką reiškia Bazė, Patikra ir Treniruotė?</h3>
+          <ul>
+            <li><strong>Bazė</strong> sukuria jūsų asmeninį atskaitos diapazoną.</li>
+            <li><strong>Patikra</strong> lygina šiandieną su šia atskaita.</li>
+            <li><strong>Treniruotė</strong> skirta tik praktikai ir neatnaujina bazės.</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h3>Kodėl man reikia daugiau nei vienos bazės sesijos?</h3>
+          <p>
+            Nes atlikimas natūraliai kinta. Bazė turėtų atspindėti jūsų įprastą diapazoną, o ne vieną rezultatą.
           </p>
           <p class="muted">
-            Eventuelle institusjonelle dataflyter bør være eksplisitte og separate fra kjernen.
+            Dauguma vartotojų turėtų surinkti 3–5 tinkamas bazės sesijas.
           </p>
+        </section>
+
+        <section class="card">
+          <h3>Ar galiu lyginti tarp skirtingų įrenginių?</h3>
+          <p>
+            Nepatikimai. Įrenginio ir įvesties skirtumai gali paveikti laiką ir klaidų modelius.
+          </p>
+          <p class="muted">
+            Kai tik įmanoma, naudokite tą patį įrenginį ir įvesties būdą bazei ir patikroms.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Ką reiškia Mean ir SD?</h3>
+          <ul>
+            <li><strong>Mean</strong> = vidutinė reikšmė</li>
+            <li><strong>SD (standartinis nuokrypis)</strong> = kiek rezultatai kinta</li>
+          </ul>
+          <p class="muted">
+            Mažesnis SD paprastai reiškia stabilesnį atlikimą. Didesnis SD paprastai reiškia didesnį išsibarstymą ar netolygumą.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Ką reiškia Netinkama naudoti?</h3>
+          <p>
+            Tai reiškia, kad sesija nebuvo pakankamai patikima palyginimui.
+          </p>
+          <ul>
+            <li>per mažai galiojančių duomenų</li>
+            <li>per daug triukšmo</li>
+            <li>per daug vykdymo klaidų</li>
+          </ul>
+          <p class="muted">
+            Netinkama naudoti yra apsauga, ne bausmė.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Ar konteksto laukai keičia vertinimą?</h3>
+          <p><strong>Ne.</strong></p>
+          <p>
+            Konteksto laukai, tokie kaip miegas, stresas ir pastabos, saugomi tik kaip metaduomenys.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Ar FCE gali pasakyti, kodėl atlikimas pasikeitė?</h3>
+          <p><strong>Ne.</strong></p>
+          <p>
+            Skirtingos priežastys gali sukelti panašius nukrypimus. FCE parodo funkcijos pokytį. Jis nenustato to pokyčio priežasties.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Ar FCE gali būti naudojamas automatiniams teisiniams ar instituciniams sprendimams?</h3>
+          <p><strong>Ne.</strong></p>
+          <p>
+            FCE nėra teisinio verdikto variklis ir neturėtų būti laikomas automatine sprendimų sistema.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Kur saugomi mano duomenys?</h3>
+          <p>
+            Lokaliai jūsų naršyklėje šiame įrenginyje. FCE nereikalauja paskyros ir pagal nutylėjimą neįkelia duomenų.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Ar galiu eksportuoti rezultatus?</h3>
+          <p>
+            Taip. Eksportas yra pasirenkamas ir inicijuojamas vartotojo.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Ką turėčiau skaityti toliau?</h3>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
+            <a href="about.html" class="badge" style="text-decoration:none;">Apie</a>
+            <a href="concept.html" class="badge" style="text-decoration:none;">Koncepcija</a>
+            <a href="what-fce-measures.html" class="badge" style="text-decoration:none;">Ką FCE matuoja</a>
+            <a href="scope.html" class="badge" style="text-decoration:none;">Apimtis ir ribos</a>
+          </div>
         </section>
       </div>
 
@@ -907,8 +688,7 @@
 
       const LANG_KEY = "fce_lang";
       const hasLtContent = !!document.querySelector(".lang-lt");
-      
-      // Check for legacy key first, then use fce_lang
+
       let currentLang = localStorage.getItem(LANG_KEY);
       if (!currentLang) {
         const oldLang = localStorage.getItem("fce_lang_v1");
@@ -920,15 +700,13 @@
         }
       }
 
-      // Fallback: if LT is selected but page has no LT content, use EN
       if (currentLang === "lt" && !hasLtContent) {
         currentLang = "en";
         try { localStorage.setItem(LANG_KEY, currentLang); } catch {}
       }
 
       const langSelect = document.getElementById("langSelect");
-      
-      // Ensure LT option exists (selector parity across pages)
+
       if (langSelect) {
         const hasLtOption = Array.from(langSelect.options).some(opt => opt.value === "lt");
         if (!hasLtOption) {
@@ -938,33 +716,36 @@
           langSelect.appendChild(ltOption);
         }
       }
-      
+
       if (langSelect) langSelect.value = currentLang;
 
       const I18N_PAGES = {
         en: {
           about: "About",
-          "how-to-use": "How to use",
-          faq: "FAQ",
-          "norwegian-context": "Norwegian Context",
           concept: "Concept",
-          scope: "Scope & Limits"
+          "what-fce-measures": "What FCE Measures",
+          scope: "Scope & Limits",
+          "how-to-use": "How to use",
+          "how-tests-work": "How the tests work",
+          faq: "FAQ"
         },
         no: {
           about: "Om",
-          "how-to-use": "Hvordan bruke",
-          faq: "FAQ",
-          "norwegian-context": "Norsk kontekst",
           concept: "Konsept",
-          scope: "Omfang & begrensninger"
+          "what-fce-measures": "Hva FCE måler",
+          scope: "Omfang & begrensninger",
+          "how-to-use": "Hvordan bruke",
+          "how-tests-work": "Hvordan testene fungerer",
+          faq: "FAQ"
         },
         lt: {
           about: "Apie",
-          "how-to-use": "Kaip naudoti",
-          faq: "DUK",
-          "norwegian-context": "Norvegiškas kontekstas",
           concept: "Koncepcija",
-          scope: "Apimtis ir ribos"
+          "what-fce-measures": "Ką FCE matuoja",
+          scope: "Apimtis ir ribos",
+          "how-to-use": "Kaip naudoti",
+          "how-tests-work": "Kaip veikia testai",
+          faq: "DUK"
         }
       };
 
@@ -983,25 +764,21 @@
       }
 
       function applyLanguage(lang) {
-        // Determine content language (with fallback)
         let contentLang = lang;
         if (contentLang === "lt" && !hasLtContent) {
           contentLang = "en";
         }
-        
-        // Determine UI language (LT labels now available)
+
         const uiLang = contentLang;
-        
+
         currentLang = contentLang;
         try { localStorage.setItem(LANG_KEY, contentLang); } catch {}
         if (langSelect) langSelect.value = currentLang;
 
-        // Apply content visibility
         document.querySelectorAll(".lang-en").forEach(el => el.classList.toggle("hidden", contentLang !== "en"));
         document.querySelectorAll(".lang-no").forEach(el => el.classList.toggle("hidden", contentLang !== "no"));
         document.querySelectorAll(".lang-lt").forEach(el => el.classList.toggle("hidden", contentLang !== "lt"));
 
-        // Apply UI label visibility (menu/nav items)
         document.querySelectorAll(".menu .lang-en, .docs-nav .lang-en").forEach(el => {
           el.classList.toggle("hidden", uiLang !== "en");
         });
@@ -1038,10 +815,8 @@
 
       langSelect && langSelect.addEventListener("change", (e) => applyLanguage(e.target.value));
 
-      // Init
       applyLanguage(currentLang);
-      
-      // Brand link hint text handler
+
       function updateBrandLinkHint() {
         const brandLink = document.getElementById("brandLink");
         if (!brandLink) return;
@@ -1050,21 +825,19 @@
         brandLink.setAttribute("data-hint", hint);
         brandLink.setAttribute("aria-label", hint);
       }
+
       updateBrandLinkHint();
       langSelect && langSelect.addEventListener("change", () => {
         updateBrandLinkHint();
       });
 
-      // Store scroll position when leaving page
       function storeScrollPosition() {
         try {
           const scrollPos = window.scrollY || window.pageYOffset || 0;
           if (scrollPos > 0) {
             localStorage.setItem("fce_doc_scroll_faq", String(scrollPos));
           }
-        } catch (e) {
-          // Ignore storage errors
-        }
+        } catch (e) {}
       }
 
       document.addEventListener("visibilitychange", () => {
@@ -1075,7 +848,6 @@
 
       window.addEventListener("beforeunload", storeScrollPosition);
 
-      // Restore scroll position if coming from Learn More
       try {
         if (window.location.hash === "#restore-scroll") {
           const storedScroll = localStorage.getItem("fce_doc_scroll_faq");
@@ -1089,9 +861,7 @@
             }
           }
         }
-      } catch (e) {
-        // Ignore storage errors
-      }
+      } catch (e) {}
     })();
   </script>
   <script src="docs.js"></script>

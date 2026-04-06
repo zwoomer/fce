@@ -6,12 +6,10 @@
   <title>FCE — About</title>
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Remember last visited page -->
   <script>
     try {
       const p = location.pathname.split("/").pop() || "index.html";
       localStorage.setItem("fce_last_page", p);
-      // Also track last docs page (exclude index.html)
       if (p && p.endsWith(".html") && !p.includes("index.html")) {
         localStorage.setItem("fce_last_docs_page", p);
       }
@@ -72,16 +70,16 @@
       <span class="lang lang-lt hidden">Koncepcija</span>
     </a>
 
+    <a class="menu-item" href="what-fce-measures.html">
+      <span class="lang lang-en">What FCE Measures</span>
+      <span class="lang lang-no hidden">Hva FCE måler</span>
+      <span class="lang lang-lt hidden">Ką FCE matuoja</span>
+    </a>
+
     <a class="menu-item" href="scope.html">
       <span class="lang lang-en">Scope &amp; Limits</span>
       <span class="lang lang-no hidden">Omfang &amp; begrensninger</span>
       <span class="lang lang-lt hidden">Apimtis ir ribos</span>
-    </a>
-
-    <a class="menu-item" href="norwegian-context.html">
-      <span class="lang lang-en">Norwegian Context</span>
-      <span class="lang lang-no hidden">Norsk kontekst</span>
-      <span class="lang lang-lt hidden">Norvegiškas kontekstas</span>
     </a>
 
     <a class="menu-item" href="how-to-use.html">
@@ -114,8 +112,8 @@
           <h2>About</h2>
 
           <p class="lead">
-            <strong>FCE (Functional Cognition &amp; Execution)</strong> is a baseline-relative functional instrument.
-            It measures how performance today compares to <em>your own normal range</em> — not to population averages.
+            <strong>FCE (Functional Cognition &amp; Execution)</strong> is a baseline-relative functional measurement tool.
+            It compares today’s short-task performance to your own usual range rather than to population averages.
           </p>
 
           <blockquote class="quote">
@@ -126,8 +124,7 @@
             <div class="chips" aria-label="FCE principles">
               <span class="chip">Baseline-relative</span>
               <span class="chip">Function-first</span>
-              <span class="chip">Offline-first</span>
-              <span class="chip">Local-only by default</span>
+              <span class="chip">Local-first</span>
               <span class="chip">Refusal protects</span>
               <span class="chip">Human interpretation</span>
             </div>
@@ -143,15 +140,45 @@
                     color: #eee;
                     transition: all 0.2s ease;
                     display: inline-block;">
-            <span class="lang lang-en">Open instrument</span>
-            <span class="lang lang-no hidden">Åpne instrument</span>
-            <span class="lang lang-lt hidden">Atidaryti instrumentą</span>
+            Open instrument
           </a>
         </div>
 
+        <section class="card">
+          <h3>What FCE is</h3>
+          <p>
+            FCE is a short-task instrument designed to detect change in functional execution over time.
+            It measures performance signals such as reaction speed, response control, divided attention, and motor precision.
+          </p>
+          <p class="muted">
+            It does not compare you to a population norm. It compares current performance to your own baseline.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>What FCE does</h3>
+          <ul>
+            <li>Measures short-task functional performance</li>
+            <li>Builds a personal baseline through repeated sessions</li>
+            <li>Compares later checks to that baseline</li>
+            <li>Stores session history locally by default</li>
+            <li>Refuses to score when comparison would be misleading</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h3>What FCE does not do</h3>
+          <ul>
+            <li>It does not diagnose medical, psychiatric, or neurological conditions</li>
+            <li>It does not detect substances or determine their effects</li>
+            <li>It does not explain why performance changed</li>
+            <li>It does not produce automated or binding decisions</li>
+          </ul>
+        </section>
+
         <section class="card copy-block">
           <div class="card-utility">
-            <h3>One-paragraph overview (copy-ready)</h3>
+            <h3>One-paragraph overview</h3>
             <button
               class="copy-btn"
               type="button"
@@ -163,298 +190,47 @@
               <span class="copy-label">Copy</span>
             </button>
           </div>
+
           <p class="note" id="aboutOverviewEn">
-            FCE is a baseline-relative functional performance instrument that measures short-task execution and tracks change relative to an individual&rsquo;s normal range. It is designed for repeatable checks and transparent history, with local-only data by default and refusal logic that protects against misleading results. FCE is not diagnostic and does not produce automated decisions.
+            FCE is a baseline-relative functional measurement tool that tracks short-task performance over time relative to an individual’s own usual range. It is designed for repeated checks, transparent history, and cautious interpretation, with local-only storage by default and refusal logic that protects against misleading comparisons. FCE is not diagnostic and does not produce automated decisions.
           </p>
+
           <span class="muted copy-status" data-copy-status="en" aria-live="polite"></span>
         </section>
 
         <section class="card">
-          <h3>Why repeated use matters</h3>
-
-          <p>
-            FCE is designed to be used more than once. A single session provides a snapshot,
-            while repeated use allows comparison across time.
-          </p>
-
-          <p>
-            By running the same short tasks under different real-world conditions
-            (e.g. rested, tired, distracted, recovered), users may become better at noticing
-            consistency, variability, and deviation from their own normal range.
-          </p>
-
-          <p class="muted">
-            FCE does not interpret results or explain causes.
-            Any recognition of patterns is user-led and emerges through comparison,
-            not instruction.
-          </p>
-
-          <p class="muted">
-            Insight, if any, comes from repetition and comparison — not from a single result.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>What FCE reflects (without medical claims)</h3>
-
-          <p>
-            Functional performance reflects the combined state of multiple body systems, including neural signaling,
-            attention control, motor execution, and background regulation involved in arousal, stress, and recovery.
-          </p>
-
-          <p class="muted">
-            FCE does not measure these systems directly. It measures observable task execution (speed, control, consistency)
-            and compares today's performance to an individual's own baseline.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Start here</h3>
+          <h3>Where to go next</h3>
           <p>
             If you are new to FCE, read these pages in order:
           </p>
           <ul>
-            <li><strong>Concept</strong> — what FCE is, what problem it solves, and why baseline-relative matters</li>
-            <li><strong>How baseline-relative measurement works</strong> <span class="muted">(visual explanation)</span> — simplified visual explanation</li>
-            <li><strong>How to Use</strong> — how to build a baseline and interpret checks safely</li>
-            <li><strong>How the tests work</strong> — procedural instructions for each test type</li>
-            <li><strong>FAQ</strong> — definitions and clear boundaries</li>
-            <li><strong>Norwegian Context</strong> — neutral institutional framing (traffic safety, arbeidsevne, NAV)</li>
+            <li><strong>Concept</strong> — the logic behind baseline-relative measurement</li>
+            <li><strong>Scope &amp; Limits</strong> — what FCE is not and what it cannot do</li>
+            <li><strong>How to Use</strong> — practical steps for baseline and checks</li>
+            <li><strong>How the tests work</strong> — what each test measures</li>
+            <li><strong>FAQ</strong> — definitions and boundaries</li>
           </ul>
-          <p class="muted">
-            Concept and Scope are designed to be readable by non-technical stakeholders.
-          </p>
 
           <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
             <a href="concept.html" class="badge" style="text-decoration:none;">Concept</a>
+            <a href="what-fce-measures.html" class="badge" style="text-decoration:none;">What FCE Measures</a>
+            <a href="scope.html" class="badge" style="text-decoration:none;">Scope &amp; Limits</a>
             <a href="how-to-use.html" class="badge" style="text-decoration:none;">How to Use</a>
             <a href="how-tests-work.html" class="badge" style="text-decoration:none;">How the tests work</a>
             <a href="faq.html" class="badge" style="text-decoration:none;">FAQ</a>
-            <a href="norwegian-context.html" class="badge" style="text-decoration:none;">Norwegian Context</a>
           </div>
-
-        </section>
-
-        <section class="card">
-          <h3>What FCE measures (and what it does not)</h3>
-          <p>
-            FCE is a short-task instrument that captures functional execution signals such as:
-            reaction speed, response stability, inhibitory control, attention under divided load, and motor accuracy.
-          </p>
-
-          <hr />
-
-          <p><strong>FCE does:</strong></p>
-          <ul>
-            <li>Track functional performance over time relative to a personal baseline</li>
-            <li>Support careful self-checks and structured monitoring</li>
-            <li>Refuse to score when data quality is insufficient</li>
-          </ul>
-
-          <p><strong>FCE does not:</strong></p>
-          <ul>
-            <li>Diagnose medical, psychiatric, or neurological conditions</li>
-            <li>Detect substances or infer causes of deviation</li>
-            <li>Produce automated or binding decisions</li>
-          </ul>
-
-          <p class="muted">
-            FCE focuses on execution under time and attention constraints, not on intelligence, knowledge, or aptitude.
-          </p>
-
-          <p class="muted">
-            FCE is designed to support human interpretation, not replace it.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Integrity and refusal</h3>
-          <p>
-            FCE includes integrity logic that labels sessions by quality. If a session cannot support a valid comparison,
-            FCE marks it as <em>not usable</em> rather than generating a misleading result.
-          </p>
-          <ul>
-            <li>Protects against false certainty from incomplete or distorted input</li>
-            <li>Encourages repeatability and cautious interpretation</li>
-            <li>Preserves the baseline-relative design</li>
-          </ul>
-          <p class="muted">
-            Refusal is protection — not failure. Retesting is always allowed.
-          </p>
         </section>
 
         <section class="card">
           <h3>Privacy model</h3>
           <p>
-            FCE is designed to work offline and store data locally by default.
-            There are no accounts and no server upload in the default instrument.
+            FCE is designed to work locally by default. There are no accounts and no server upload in the default instrument.
           </p>
           <ul>
-            <li>Local-only storage (on this device)</li>
-            <li>Manual export (optional)</li>
-            <li>Transparency-first history (sessions visible to the user)</li>
+            <li>Local-only storage on this device</li>
+            <li>Manual export only if the user chooses it</li>
+            <li>Transparent session history visible to the user</li>
           </ul>
-          <p class="muted">
-            Any future institutional layer should be explicit and separate — not silently bundled into the instrument.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Quick links</h3>
-          <ul>
-            <li><a href="concept.html">Concept</a></li>
-            <li><a href="baseline-relative.html">How baseline-relative measurement works <span class="muted">(visual explanation)</span></a></li>
-            <li><a href="norwegian-context.html">Norwegian Context</a></li>
-            <li><a href="how-to-use.html">How to Use</a></li>
-            <li><a href="how-tests-work.html">How the tests work</a></li>
-            <li><a href="faq.html">FAQ</a></li>
-            <li><a href="index.html?view=history">History (instrument)</a></li>
-          </ul>
-        </section>
-      </div>
-
-      <!-- LT -->
-      <div class="lang lang-lt hidden">
-        <section class="hero">
-          <h2>Apie FCE</h2>
-          <p class="lead">
-            <strong>FCE (Functional Cognition &amp; Execution)</strong> yra su asmeniniu baziniu lygiu lyginamas funkcinio vertinimo instrumentas.
-            Jis skirtas pakartojamai stebėsenai: kaip vykdymas veikia šiandien, palyginti su jūsų įprastu lygiu.
-          </p>
-
-          <div style="margin: 18px auto 0; text-align: center; max-width: 720px;">
-            <div class="chips" aria-label="FCE santrauka">
-              <span class="chip">Funkcija</span>
-              <span class="chip">Palyginimas su baze</span>
-              <span class="chip">Vietinė saugykla</span>
-              <span class="chip">Skaidri istorija</span>
-              <span class="chip">Atsisakymas saugo</span>
-            </div>
-          </div>
-        </section>
-
-        <div style="margin: 24px auto; text-align: center; max-width: 760px; padding: 0 16px;">
-          <a href="index.html#instrument"
-             style="padding: 10px 20px; font-size: 14px; text-decoration: none;
-                    border: 1px solid rgba(255,255,255,0.15);
-                    border-radius: 8px;
-                    background: rgba(255,255,255,0.05);
-                    color: #eee;
-                    transition: all 0.2s ease;
-                    display: inline-block;">
-            <span class="lang lang-en">Open instrument</span>
-            <span class="lang lang-no hidden">Åpne instrument</span>
-            <span class="lang lang-lt hidden">Atidaryti instrumentą</span>
-          </a>
-        </div>
-
-        <section class="card copy-block">
-          <div class="card-utility">
-            <h3>Trumpa apžvalga (paruošta kopijuoti)</h3>
-            <button
-              class="copy-btn"
-              type="button"
-              data-copy-target="#aboutOverviewLt"
-              data-tooltip="Kopijuoti"
-              aria-label="Kopijuoti trumpą apžvalgą"
-            >
-              <span class="copy-icon" aria-hidden="true">📋</span>
-              <span class="copy-label">Kopijuoti</span>
-            </button>
-          </div>
-
-          <p class="note" id="aboutOverviewLt">
-            FCE yra su asmeniniu baziniu lygiu lyginamas funkcinio vykdymo instrumentas, matuojantis trumpų užduočių vykdymą ir sekantis pokytį
-            palyginti su individo įprastu diapazonu. Jis skirtas pakartojamoms patikroms ir skaidriai istorijai, su vietine saugykla pagal nutylėjimą
-            ir atsisakymo logika, saugančia nuo klaidinančių rezultatų. FCE nediagnozuoja ir nepateikia automatizuotų sprendimų.
-          </p>
-
-          <span class="muted copy-status" data-copy-status="lt" aria-live="polite"></span>
-        </section>
-
-        <section class="card">
-          <h3>Kodėl svarbus pakartotinis naudojimas</h3>
-
-          <p>
-            FCE yra sukurtas naudoti daugiau nei vieną kartą.
-            Viena sesija suteikia momentinį vaizdą,
-            o pakartotinis naudojimas leidžia palyginti rezultatus laikui bėgant.
-          </p>
-
-          <p>
-            Atliekant tas pačias trumpas užduotis skirtingomis realiomis sąlygomis
-            (pavyzdžiui, pailsėjus, pavargus, išsiblaškius ar atsistačius),
-            vartotojas gali geriau pastebėti pastovumą, kintamumą
-            ir nukrypimus nuo savo įprasto diapazono.
-          </p>
-
-          <p class="muted">
-            FCE neinterpretuoja rezultatų ir neaiškina priežasčių.
-            Bet koks dėsningumų pastebėjimas kyla paties vartotojo iniciatyva
-            ir atsiranda per palyginimą, o ne per instrukcijas.
-          </p>
-
-          <p class="muted">
-            Bet kokia įžvalga, jei ji atsiranda,
-            kyla iš pasikartojimo ir palyginimo,
-            o ne iš vieno rezultato.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Ką FCE atspindi (be medicininių teiginių)</h3>
-
-          <p>
-            Funkcinė veikla atspindi kelių organizmo sistemų bendrą būseną, įskaitant nervinių signalų perdavimą,
-            dėmesio kontrolę, motorinį vykdymą ir foninę reguliaciją, susijusią su sužadinimu, stresu ir atsistatymu.
-          </p>
-
-          <p class="muted">
-            FCE šių sistemų tiesiogiai nematuoja. Jis matuoja stebimą užduočių atlikimą (greitį, kontrolę, pastovumą)
-            ir lygina šiandienos rezultatą su asmens baze (baseline).
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Kas FCE yra</h3>
-          <ul>
-            <li><strong>Funkcinis instrumentas:</strong> matuoja vykdymą trumpose užduotyse.</li>
-            <li><strong>Su baziniu lygiu lyginamas:</strong> lygina su asmeniniu baziniu lygiu, o ne su populiacijos normomis.</li>
-            <li><strong>Pakartojamas:</strong> sukurtas stebėti pokyčius laikui bėgant.</li>
-            <li><strong>Saugus pagal dizainą:</strong> atsisako pateikti rezultatą, kai duomenys nepatikimi.</li>
-          </ul>
-        </section>
-
-        <section class="card">
-          <h3>Kam tai skirta</h3>
-          <p>
-            FCE gali būti naudojama asmeninei stebėsenai, tyrimų kontekstuose ar kaip papildomas signalas funkcinio vertinimo procesuose,
-            kai reikalingas skaidrus ir pakartojamas vykdymo matas.
-          </p>
-          <p class="muted">
-            FCE nėra diagnostinis įrankis ir nėra skirtas automatizuoti sprendimų priėmimą.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Greiti nuorodos</h3>
-          <ul>
-            <li><a href="concept.html">Koncepcija</a></li>
-            <li><a href="baseline-relative.html">Kaip veikia palyginimas su baziniu lygiu <span class="muted">(vizualus paaiškinimas)</span></a></li>
-            <li><a href="norwegian-context.html">Norvegiškas kontekstas</a></li>
-            <li><a href="how-to-use.html">Kaip naudoti</a></li>
-            <li><a href="how-tests-work.html">Kaip veikia testai</a></li>
-            <li><a href="faq.html">DUK</a></li>
-            <li><a href="index.html?view=history">Istorija (instrumentas)</a></li>
-          </ul>
-        </section>
-
-        <section class="card">
-          <h3>Privatumas (pagal nutylėjimą)</h3>
-          <p>
-            FCE sukurta taip, kad pagal nutylėjimą veiktų lokaliai: be paskyrų, be privalomų įkėlimų, be stebėjimo.
-            Sesijų istorija saugoma įrenginyje, o eksportas (jei naudojamas) yra vartotojo veiksmas.
-          </p>
         </section>
       </div>
 
@@ -464,8 +240,8 @@
           <h2>Om</h2>
 
           <p class="lead">
-            <strong>FCE (Functional Cognition &amp; Execution)</strong> er et baseline-relativt, funksjonelt instrument.
-            Det måler hvordan prestasjon i dag sammenlignes med <em>din egen normal</em> — ikke med befolkningsgjennomsnitt.
+            <strong>FCE (Functional Cognition &amp; Execution)</strong> er et baseline-relativt verktøy for funksjonell måling.
+            Det sammenligner dagens prestasjon i korte oppgaver med ditt eget normalområde, ikke med befolkningsgjennomsnitt.
           </p>
 
           <blockquote class="quote">
@@ -476,8 +252,7 @@
             <div class="chips" aria-label="FCE prinsipper">
               <span class="chip">Baseline-relativ</span>
               <span class="chip">Funksjon først</span>
-              <span class="chip">Offline først</span>
-              <span class="chip">Lokalt som standard</span>
+              <span class="chip">Lokalt først</span>
               <span class="chip">Avslag beskytter</span>
               <span class="chip">Menneskelig tolkning</span>
             </div>
@@ -497,9 +272,41 @@
           </a>
         </div>
 
+        <section class="card">
+          <h3>Hva FCE er</h3>
+          <p>
+            FCE er et kort-oppgave instrument laget for å oppdage endring i funksjonell utførelse over tid.
+            Det måler prestasjonssignaler som reaksjonshastighet, responskontroll, delt oppmerksomhet og motorisk presisjon.
+          </p>
+          <p class="muted">
+            Det sammenligner deg ikke med en befolkningsnorm. Det sammenligner nåværende prestasjon med din egen baseline.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Hva FCE gjør</h3>
+          <ul>
+            <li>Måler funksjonell prestasjon i korte oppgaver</li>
+            <li>Bygger en personlig baseline gjennom gjentatte økter</li>
+            <li>Sammenligner senere sjekker med denne baselinen</li>
+            <li>Lagrer historikk lokalt som standard</li>
+            <li>Gir avslag når sammenligning ville blitt misvisende</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h3>Hva FCE ikke gjør</h3>
+          <ul>
+            <li>Det stiller ikke medisinske, psykiatriske eller nevrologiske diagnoser</li>
+            <li>Det påviser ikke rusmidler eller bestemmer deres effekt</li>
+            <li>Det forklarer ikke hvorfor prestasjon har endret seg</li>
+            <li>Det gir ikke automatiserte eller bindende beslutninger</li>
+          </ul>
+        </section>
+
         <section class="card copy-block">
           <div class="card-utility">
-            <h3>Kort oversikt (klar til å kopiere)</h3>
+            <h3>Kort oversikt</h3>
             <button
               class="copy-btn"
               type="button"
@@ -511,160 +318,184 @@
               <span class="copy-label">Kopier</span>
             </button>
           </div>
+
           <p class="note" id="aboutOverviewNo">
-            FCE er et baseline-relativt instrument for funksjonell prestasjon som måler utførelse i korte oppgaver og følger endring relativt til individets normalområde. Det er laget for repeterbare sjekker og transparent historikk, med lokal lagring som standard og avslaglogikk som beskytter mot misvisende resultater. FCE er ikke diagnostisk og gir ikke automatiserte beslutninger.
+            FCE er et baseline-relativt verktøy for funksjonell måling som følger prestasjon i korte oppgaver over tid relativt til individets eget normalområde. Det er laget for gjentatte sjekker, transparent historikk og varsom tolkning, med lokal lagring som standard og avslaglogikk som beskytter mot misvisende sammenligninger. FCE er ikke diagnostisk og gir ikke automatiserte beslutninger.
           </p>
+
           <span class="muted copy-status" data-copy-status="no" aria-live="polite"></span>
         </section>
 
         <section class="card">
-          <h3>Hvorfor gjentatt bruk er viktig</h3>
-
-          <p>
-            FCE er laget for å brukes mer enn én gang. Én enkelt økt gir et øyeblikksbilde,
-            mens gjentatt bruk muliggjør sammenligning over tid.
-          </p>
-
-          <p>
-            Ved å gjennomføre de samme korte oppgavene under ulike reelle forhold
-            (for eksempel uthvilt, trøtt, distrahert eller restituert),
-            kan brukeren bli bedre til å legge merke til stabilitet, variasjon
-            og avvik fra eget normalområde.
-          </p>
-
-          <p class="muted">
-            FCE tolker ikke resultater og forklarer ikke årsaker.
-            Eventuell mønstergjenkjenning skjer på brukerens initiativ
-            og oppstår gjennom sammenligning, ikke instruksjon.
-          </p>
-
-          <p class="muted">
-            Eventuell innsikt kommer fra repetisjon og sammenligning
-            — ikke fra ett enkelt resultat.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Hva FCE reflekterer (uten medisinske påstander)</h3>
-
-          <p>
-            Funksjonell ytelse reflekterer samlet tilstand i flere kroppssystemer, inkludert nevral signalering,
-            oppmerksomhetskontroll, motorisk utførelse og bakgrunnsregulering knyttet til aktivering, stress og restitusjon.
-          </p>
-
-          <p class="muted">
-            FCE måler ikke disse systemene direkte. Det måler observerbar oppgaveutførelse (hastighet, kontroll, konsistens)
-            og sammenligner dagens prestasjon med personens egen baseline.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Start her</h3>
+          <h3>Hvor du går videre</h3>
           <p>
             Hvis du er ny til FCE, les disse sidene i rekkefølge:
           </p>
           <ul>
-            <li><strong>Konsept</strong> — hva FCE er, hvilket problem det løser, og hvorfor baseline-relativt er viktig</li>
-            <li><strong>Hvordan bruke</strong> — hvordan bygge baseline og tolke sjekk på en trygg måte</li>
-            <li><strong>FAQ</strong> — definisjoner og tydelige grenser</li>
-            <li><strong>Norsk kontekst</strong> — nøktern institusjonell ramme (trafikksikkerhet, arbeidsevne, NAV)</li>
+            <li><strong>Konsept</strong> — logikken bak baseline-relativ måling</li>
+            <li><strong>Omfang &amp; begrensninger</strong> — hva FCE ikke er og hva det ikke kan gjøre</li>
+            <li><strong>Hvordan bruke</strong> — praktiske steg for baseline og sjekker</li>
+            <li><strong>Hvordan testene fungerer</strong> — hva hver test måler</li>
+            <li><strong>FAQ</strong> — definisjoner og grenser</li>
           </ul>
-          <p class="muted">
-            Konsept og omfang er laget for å være lesbart også for ikke-tekniske interessenter.
-          </p>
 
           <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
             <a href="concept.html" class="badge" style="text-decoration:none;">Konsept</a>
+            <a href="what-fce-measures.html" class="badge" style="text-decoration:none;">Hva FCE måler</a>
+            <a href="scope.html" class="badge" style="text-decoration:none;">Omfang &amp; begrensninger</a>
             <a href="how-to-use.html" class="badge" style="text-decoration:none;">Hvordan bruke</a>
             <a href="how-tests-work.html" class="badge" style="text-decoration:none;">Hvordan testene fungerer</a>
             <a href="faq.html" class="badge" style="text-decoration:none;">FAQ</a>
-            <a href="norwegian-context.html" class="badge" style="text-decoration:none;">Norsk kontekst</a>
           </div>
-        </section>
-
-        <section class="card">
-          <h3>Hva FCE måler (og hva det ikke gjør)</h3>
-          <p>
-            FCE er et kort-oppgave instrument som fanger funksjonelle utførelsessignaler som:
-            reaksjonshastighet, responsstabilitet, inhibisjonskontroll, oppmerksomhet under delt belastning og motorisk nøyaktighet.
-          </p>
-
-          <hr />
-
-          <p><strong>FCE gjør:</strong></p>
-          <ul>
-            <li>Følge funksjonell prestasjon over tid, relativt til personlig baseline</li>
-            <li>Støtte forsiktige selv-sjekker og strukturert oppfølging</li>
-            <li>Gi avslag når datakvaliteten ikke er god nok</li>
-          </ul>
-
-          <p><strong>FCE gjør ikke:</strong></p>
-          <ul>
-            <li>Stille medisinske, psykiatriske eller nevrologiske diagnoser</li>
-            <li>Påvise rusmidler eller trekke slutninger om årsak</li>
-            <li>Gi automatiserte eller bindende beslutninger</li>
-          </ul>
-
-          <p class="muted">
-            FCE fokuserer på utførelse under tid- og oppmerksomhetskrav, ikke på intelligens, kunnskap eller evnenivå.
-          </p>
-
-          <p class="muted">
-            FCE er laget for å støtte menneskelig vurdering, ikke erstatte den.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Integritet og avslag</h3>
-          <p>
-            FCE har integritetslogikk som merker økter etter kvalitet. Hvis en økt ikke kan gi en gyldig sammenligning,
-            markeres den som <em>ikke brukbar</em> i stedet for å gi et misvisende resultat.
-          </p>
-          <ul>
-            <li>Beskytter mot falsk sikkerhet fra ufullstendig eller forstyrret input</li>
-            <li>Oppmuntrer repeterbarhet og varsom tolkning</li>
-            <li>Bevarer baseline-relativt design</li>
-          </ul>
-          <p class="muted">
-            Avslag er beskyttelse — ikke feil. Du kan alltid teste på nytt.
-          </p>
         </section>
 
         <section class="card">
           <h3>Personvernmodell</h3>
           <p>
-            FCE er designet for å fungere offline og lagre data lokalt som standard.
-            Det er ingen konto og ingen serveropplasting i standard-instrumentet.
+            FCE er laget for å fungere lokalt som standard. Det er ingen konto og ingen serveropplasting i standardinstrumentet.
           </p>
           <ul>
-            <li>Lokal lagring (på denne enheten)</li>
-            <li>Manuell eksport (valgfritt)</li>
-            <li>Transparens-først historikk (økter synlige for brukeren)</li>
+            <li>Lokal lagring på denne enheten</li>
+            <li>Manuell eksport bare hvis brukeren velger det</li>
+            <li>Transparent historikk som er synlig for brukeren</li>
           </ul>
+        </section>
+      </div>
+
+      <!-- LT -->
+      <div class="lang lang-lt hidden">
+        <section class="hero">
+          <h2>Apie</h2>
+
+          <p class="lead">
+            <strong>FCE (Functional Cognition &amp; Execution)</strong> yra su asmenine baze lyginamas funkcinio matavimo įrankis.
+            Jis lygina šiandienos trumpų užduočių atlikimą su jūsų įprastu diapazonu, o ne su populiacijos vidurkiu.
+          </p>
+
+          <blockquote class="quote">
+            „Kaip šiandien funkcionuojate, palyginti su savimi?“
+          </blockquote>
+
+          <div style="margin: 18px auto 0; text-align: center; max-width: 720px;">
+            <div class="chips" aria-label="FCE principai">
+              <span class="chip">Lyginama su baze</span>
+              <span class="chip">Funkcija pirmiau</span>
+              <span class="chip">Vietinis veikimas</span>
+              <span class="chip">Atsisakymas saugo</span>
+              <span class="chip">Žmogaus interpretacija</span>
+            </div>
+          </div>
+        </section>
+
+        <div style="margin: 24px auto; text-align: center; max-width: 760px; padding: 0 16px;">
+          <a href="index.html#instrument"
+             style="padding: 10px 20px; font-size: 14px; text-decoration: none;
+                    border: 1px solid rgba(255,255,255,0.15);
+                    border-radius: 8px;
+                    background: rgba(255,255,255,0.05);
+                    color: #eee;
+                    transition: all 0.2s ease;
+                    display: inline-block;">
+            Atidaryti instrumentą
+          </a>
+        </div>
+
+        <section class="card">
+          <h3>Kas yra FCE</h3>
+          <p>
+            FCE yra trumpų užduočių instrumentas, skirtas nustatyti funkcinio vykdymo pokyčius laikui bėgant.
+            Jis matuoja tokius atlikimo signalus kaip reakcijos greitis, atsako kontrolė, padalintas dėmesys ir motorinis tikslumas.
+          </p>
           <p class="muted">
-            Eventuelle fremtidige institusjonelle lag må være eksplisitte og separate — ikke skjult innebygd.
+            Jis nelygina jūsų su populiacijos norma. Jis lygina dabartinį atlikimą su jūsų pačių baze.
           </p>
         </section>
 
         <section class="card">
-          <h3>Hurtiglenker</h3>
+          <h3>Ką FCE daro</h3>
           <ul>
-            <li><a href="concept.html">Konsept</a></li>
-            <li><a href="norwegian-context.html">Norsk kontekst</a></li>
-            <li><a href="how-to-use.html">Hvordan bruke</a></li>
-            <li><a href="how-tests-work.html">Hvordan testene fungerer</a></li>
-            <li><a href="faq.html">FAQ</a></li>
-            <li><a href="index.html?view=history">Historikk (instrument)</a></li>
+            <li>Matuoja funkcinį atlikimą trumpose užduotyse</li>
+            <li>Kuria asmeninę bazę per pakartotines sesijas</li>
+            <li>Lygina vėlesnes patikras su ta baze</li>
+            <li>Pagal nutylėjimą saugo istoriją lokaliai</li>
+            <li>Atsisako vertinti, kai palyginimas būtų klaidinantis</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h3>Ko FCE nedaro</h3>
+          <ul>
+            <li>Jis nediagnozuoja medicininių, psichiatrinių ar neurologinių būklių</li>
+            <li>Jis neaptinka medžiagų ir nenustato jų poveikio</li>
+            <li>Jis nepaaiškina, kodėl atlikimas pasikeitė</li>
+            <li>Jis nepateikia automatinių ar privalomų sprendimų</li>
+          </ul>
+        </section>
+
+        <section class="card copy-block">
+          <div class="card-utility">
+            <h3>Trumpa apžvalga</h3>
+            <button
+              class="copy-btn"
+              type="button"
+              data-copy-target="#aboutOverviewLt"
+              data-tooltip="Kopijuoti"
+              aria-label="Kopijuoti apžvalgą"
+            >
+              <span class="copy-icon" aria-hidden="true">📋</span>
+              <span class="copy-label">Kopijuoti</span>
+            </button>
+          </div>
+
+          <p class="note" id="aboutOverviewLt">
+            FCE yra su asmenine baze lyginamas funkcinio matavimo įrankis, kuris laikui bėgant seka trumpų užduočių atlikimą, lygindamas jį su paties žmogaus įprastu diapazonu. Jis sukurtas pakartotinėms patikroms, skaidriai istorijai ir atsargiai interpretacijai, su vietine saugykla pagal nutylėjimą ir atsisakymo logika, saugančia nuo klaidinančių palyginimų. FCE nediagnozuoja ir nepateikia automatizuotų sprendimų.
+          </p>
+
+          <span class="muted copy-status" data-copy-status="lt" aria-live="polite"></span>
+        </section>
+
+        <section class="card">
+          <h3>Kur eiti toliau</h3>
+          <p>
+            Jei FCE naudojate pirmą kartą, skaitykite šiuos puslapius tokia tvarka:
+          </p>
+          <ul>
+            <li><strong>Koncepcija</strong> — bazės atžvilgiu veikiančio matavimo logika</li>
+            <li><strong>Apimtis ir ribos</strong> — kas FCE nėra ir ko jis negali padaryti</li>
+            <li><strong>Kaip naudoti</strong> — praktiniai žingsniai bazei ir patikroms</li>
+            <li><strong>Kaip veikia testai</strong> — ką matuoja kiekvienas testas</li>
+            <li><strong>DUK</strong> — sąvokos ir ribos</li>
+          </ul>
+
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
+            <a href="concept.html" class="badge" style="text-decoration:none;">Koncepcija</a>
+            <a href="what-fce-measures.html" class="badge" style="text-decoration:none;">Ką FCE matuoja</a>
+            <a href="scope.html" class="badge" style="text-decoration:none;">Apimtis ir ribos</a>
+            <a href="how-to-use.html" class="badge" style="text-decoration:none;">Kaip naudoti</a>
+            <a href="how-tests-work.html" class="badge" style="text-decoration:none;">Kaip veikia testai</a>
+            <a href="faq.html" class="badge" style="text-decoration:none;">DUK</a>
+          </div>
+        </section>
+
+        <section class="card">
+          <h3>Privatumo modelis</h3>
+          <p>
+            FCE pagal nutylėjimą veikia lokaliai. Standartinėje instrumento versijoje nėra paskyrų ir nėra duomenų siuntimo į serverį.
+          </p>
+          <ul>
+            <li>Vietinė saugykla šiame įrenginyje</li>
+            <li>Rankinis eksportas tik vartotojui pasirinkus</li>
+            <li>Skaidri sesijų istorija, matoma pačiam vartotojui</li>
           </ul>
         </section>
       </div>
 
       <nav class="docs-nav">
         <div class="docs-nav-left">
-          <a href="index.html?home=1" class="docs-nav-btn">
-            <span class="lang lang-en">← Home</span>
-            <span class="lang lang-no hidden">← Hjem</span>
-            <span class="lang lang-lt hidden">← Pradžia</span>
+          <a href="faq.html" class="docs-nav-btn">
+            <span class="lang lang-en">← FAQ</span>
+            <span class="lang lang-no hidden">← FAQ</span>
+            <span class="lang lang-lt hidden">← DUK</span>
           </a>
         </div>
 
@@ -727,7 +558,6 @@
         if (e.key === "Escape" && menu.classList.contains("open")) closeMenu();
       });
 
-      // Close menu when clicking menu items (skip disabled items)
       document.querySelectorAll(".menu-item").forEach(item => {
         item.addEventListener("click", (e) => {
           if (!item.classList.contains("is-disabled")) closeMenu();
@@ -737,8 +567,7 @@
 
       const LANG_KEY = "fce_lang";
       const hasLtContent = !!document.querySelector(".lang-lt");
-      
-      // Check for legacy key first, then use fce_lang
+
       let currentLang = localStorage.getItem(LANG_KEY);
       if (!currentLang) {
         const oldLang = localStorage.getItem("fce_lang_v1");
@@ -750,15 +579,13 @@
         }
       }
 
-      // Fallback: if LT is selected but page has no LT content, use EN
       if (currentLang === "lt" && !hasLtContent) {
         currentLang = "en";
         try { localStorage.setItem(LANG_KEY, currentLang); } catch {}
       }
 
       const langSelect = document.getElementById("langSelect");
-      
-      // Ensure LT option exists (selector parity across pages)
+
       if (langSelect) {
         const hasLtOption = Array.from(langSelect.options).some(opt => opt.value === "lt");
         if (!hasLtOption) {
@@ -768,32 +595,35 @@
           langSelect.appendChild(ltOption);
         }
       }
-      
+
       if (langSelect) langSelect.value = currentLang;
 
       const I18N_PAGES = {
         en: {
           about: "About",
           concept: "Concept",
+          "what-fce-measures": "What FCE Measures",
           scope: "Scope & Limits",
-          "norwegian-context": "Norwegian Context",
           "how-to-use": "How to use",
+          "how-tests-work": "How the tests work",
           faq: "FAQ"
         },
         no: {
           about: "Om",
           concept: "Konsept",
+          "what-fce-measures": "Hva FCE måler",
           scope: "Omfang & begrensninger",
-          "norwegian-context": "Norsk kontekst",
           "how-to-use": "Hvordan bruke",
+          "how-tests-work": "Hvordan testene fungerer",
           faq: "FAQ"
         },
         lt: {
           about: "Apie",
           concept: "Koncepcija",
+          "what-fce-measures": "Ką FCE matuoja",
           scope: "Apimtis ir ribos",
-          "norwegian-context": "Norvegiškas kontekstas",
           "how-to-use": "Kaip naudoti",
+          "how-tests-work": "Kaip veikia testai",
           faq: "DUK"
         }
       };
@@ -813,25 +643,21 @@
       }
 
       function applyLanguage(lang) {
-        // Determine content language (with fallback)
         let contentLang = lang;
         if (contentLang === "lt" && !hasLtContent) {
           contentLang = "en";
         }
-        
-        // Determine UI language (LT labels now available)
+
         const uiLang = contentLang;
-        
+
         currentLang = contentLang;
         try { localStorage.setItem(LANG_KEY, contentLang); } catch {}
         if (langSelect) langSelect.value = currentLang;
 
-        // Apply content visibility
         document.querySelectorAll(".lang-en").forEach(el => el.classList.toggle("hidden", contentLang !== "en"));
         document.querySelectorAll(".lang-no").forEach(el => el.classList.toggle("hidden", contentLang !== "no"));
         document.querySelectorAll(".lang-lt").forEach(el => el.classList.toggle("hidden", contentLang !== "lt"));
 
-        // Apply UI label visibility (menu/nav items)
         document.querySelectorAll(".menu .lang-en, .docs-nav .lang-en").forEach(el => {
           el.classList.toggle("hidden", uiLang !== "en");
         });
@@ -868,24 +694,8 @@
 
       langSelect && langSelect.addEventListener("change", (e) => applyLanguage(e.target.value));
 
-      // Track navigation to baseline-relative.html
-      document.querySelectorAll('a[href="baseline-relative.html"]').forEach(link => {
-        link.addEventListener("click", () => {
-          try {
-            const sourceUrl = window.location.href.split('#')[0]; // Remove hash for consistent URLs
-            const scrollPos = window.scrollY || window.pageYOffset || 0;
-            sessionStorage.setItem("fce_baseline_relative_source", sourceUrl);
-            sessionStorage.setItem("fce_baseline_relative_scroll", String(scrollPos));
-          } catch (e) {
-            // Ignore storage errors
-          }
-        });
-      });
-
-      // Init
       applyLanguage(currentLang);
-      
-      // Brand link hint text handler
+
       function updateBrandLinkHint() {
         const brandLink = document.getElementById("brandLink");
         if (!brandLink) return;
@@ -894,36 +704,30 @@
         brandLink.setAttribute("data-hint", hint);
         brandLink.setAttribute("aria-label", hint);
       }
+
       updateBrandLinkHint();
       langSelect && langSelect.addEventListener("change", () => {
         updateBrandLinkHint();
       });
-      
-      // Store scroll position when leaving page
+
       function storeScrollPosition() {
         try {
           const scrollPos = window.scrollY || window.pageYOffset || 0;
           if (scrollPos > 0) {
             localStorage.setItem("fce_doc_scroll_about", String(scrollPos));
           }
-        } catch (e) {
-          // Ignore storage errors
-        }
+        } catch (e) {}
       }
 
-      // Store scroll on visibility change (user navigating away)
       document.addEventListener("visibilitychange", () => {
         if (document.visibilityState === "hidden") {
           storeScrollPosition();
         }
       });
 
-      // Store scroll on beforeunload
       window.addEventListener("beforeunload", storeScrollPosition);
 
-      // Restore scroll position if returning from baseline-relative.html or Learn More
       try {
-        // Check sessionStorage first (for baseline-relative flow)
         const restoreScroll = sessionStorage.getItem("fce_restore_scroll");
         if (restoreScroll) {
           sessionStorage.removeItem("fce_restore_scroll");
@@ -934,12 +738,10 @@
             });
           }
         } else if (window.location.hash === "#restore-scroll") {
-          // Check localStorage for stored scroll position (from Learn More)
           const storedScroll = localStorage.getItem("fce_doc_scroll_about");
           if (storedScroll) {
             const scrollPos = parseInt(storedScroll, 10);
             if (!isNaN(scrollPos) && scrollPos > 0) {
-              // Remove hash to clean URL
               history.replaceState(null, "", window.location.pathname);
               requestAnimationFrame(() => {
                 window.scrollTo(0, scrollPos);
@@ -947,9 +749,7 @@
             }
           }
         }
-      } catch (e) {
-        // Ignore storage errors
-      }
+      } catch (e) {}
     })();
   </script>
   <script src="docs.js"></script>

@@ -6,12 +6,10 @@
   <title>FCE — How the tests work</title>
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Remember last visited page -->
   <script>
     try {
       const p = location.pathname.split("/").pop() || "index.html";
       localStorage.setItem("fce_last_page", p);
-      // Also track last docs page (exclude index.html)
       if (p && p.endsWith(".html") && !p.includes("index.html")) {
         localStorage.setItem("fce_last_docs_page", p);
       }
@@ -72,16 +70,16 @@
       <span class="lang lang-lt hidden">Koncepcija</span>
     </a>
 
+    <a class="menu-item" href="what-fce-measures.html">
+      <span class="lang lang-en">What FCE Measures</span>
+      <span class="lang lang-no hidden">Hva FCE måler</span>
+      <span class="lang lang-lt hidden">Ką FCE matuoja</span>
+    </a>
+
     <a class="menu-item" href="scope.html">
       <span class="lang lang-en">Scope &amp; Limits</span>
       <span class="lang lang-no hidden">Omfang &amp; begrensninger</span>
       <span class="lang lang-lt hidden">Apimtis ir ribos</span>
-    </a>
-
-    <a class="menu-item" href="norwegian-context.html">
-      <span class="lang lang-en">Norwegian Context</span>
-      <span class="lang lang-no hidden">Norsk kontekst</span>
-      <span class="lang lang-lt hidden">Norvegiškas kontekstas</span>
     </a>
 
     <a class="menu-item" href="how-to-use.html">
@@ -113,8 +111,12 @@
         <section class="hero">
           <h2>How the tests work</h2>
           <p class="lead">
-            Simple procedural instructions for each test type. What to do, what counts as an error, and how to practice.
+            This page explains what each task measures, what you do during the task, and what counts as an error.
           </p>
+
+          <blockquote class="quote">
+            “Respond as quickly and accurately as you can. Accuracy and consistency both matter.”
+          </blockquote>
         </section>
 
         <div style="margin: 24px auto; text-align: center; max-width: 760px; padding: 0 16px;">
@@ -126,86 +128,134 @@
                     color: #eee;
                     transition: all 0.2s ease;
                     display: inline-block;">
-            <span class="lang lang-en">Open instrument</span>
-            <span class="lang lang-no hidden">Åpne instrument</span>
-            <span class="lang lang-lt hidden">Atidaryti instrumentą</span>
+            Open instrument
           </a>
         </div>
 
         <section class="card">
-          <h3>What to do</h3>
+          <h3>General rule</h3>
           <p>
-            Each test measures different aspects of functional execution. Follow the on-screen instructions,
-            respond as quickly and accurately as you can, and avoid clicking before the signal appears.
+            All tasks are short and standardized. The goal is not perfection. The goal is consistent execution that can be compared over time.
           </p>
+          <ul>
+            <li>Wait for the task signal.</li>
+            <li>Respond only when required.</li>
+            <li>Try to be both fast and accurate.</li>
+            <li>Avoid clicking or tapping too early.</li>
+          </ul>
         </section>
 
         <section class="card">
           <h3>Reaction Time</h3>
           <p class="muted">
-            What it reflects: response initiation speed and consistency under simple conditions.
+            Measures simple response speed and response consistency.
           </p>
+          <p><strong>What you do:</strong></p>
           <ul>
-            <li>Wait for the green signal to appear</li>
-            <li>Click or tap as quickly as possible when you see it</li>
-            <li>Repeat for each trial</li>
+            <li>Wait for the signal to appear.</li>
+            <li>Click or tap as quickly as possible when it appears.</li>
+            <li>Repeat across trials.</li>
+          </ul>
+          <p><strong>What gets recorded:</strong></p>
+          <ul>
+            <li>reaction time on valid responses</li>
+            <li>false starts</li>
+            <li>session variability</li>
           </ul>
           <p class="muted">
-            <strong>What counts as a false start:</strong> Clicking before the signal appears. False starts are recorded but don't affect your reaction time average.
+            A false start means responding before the signal appears.
           </p>
         </section>
 
         <section class="card">
           <h3>Go / No-Go</h3>
           <p class="muted">
-            What it reflects: inhibitory control and timing under decision pressure.
+            Measures response initiation and inhibition control.
           </p>
+          <p><strong>What you do:</strong></p>
           <ul>
-            <li>When you see <strong>GO</strong> (green), click or tap immediately</li>
-            <li>When you see <strong>NO-GO</strong> (red), do nothing — wait for the next trial</li>
-            <li>Most trials will be GO, but some will be NO-GO</li>
+            <li>Respond immediately on <strong>GO</strong> trials.</li>
+            <li>Do nothing on <strong>NO-GO</strong> trials.</li>
+          </ul>
+          <p><strong>What gets recorded:</strong></p>
+          <ul>
+            <li>reaction time on GO trials</li>
+            <li>misses on GO trials</li>
+            <li>false alarms on NO-GO trials</li>
+            <li>session variability</li>
           </ul>
           <p class="muted">
-            <strong>What counts as an error:</strong> Clicking on NO-GO (false alarm) or missing a GO signal (miss). Both are recorded and affect your results.
+            Missing a GO trial and responding on a NO-GO trial are both treated as errors.
           </p>
         </section>
 
         <section class="card">
           <h3>Divided Attention</h3>
           <p class="muted">
-            What it reflects: execution stability while attention is split between action and a secondary signal.
+            Measures performance while handling two demands at once.
           </p>
+          <p><strong>What you do:</strong></p>
           <ul>
-            <li>Do the Go / No-Go task (respond to GO, ignore NO-GO)</li>
-            <li>At the same time, count brief blue flashes that appear during trials</li>
-            <li>After the session, enter the number of flashes you counted</li>
+            <li>Perform the Go / No-Go task.</li>
+            <li>At the same time, count brief blue flashes during the session.</li>
+            <li>Enter the flash count at the end.</li>
+          </ul>
+          <p><strong>What gets recorded:</strong></p>
+          <ul>
+            <li>GO reaction time</li>
+            <li>misses and false alarms</li>
+            <li>flash-count accuracy</li>
+            <li>combined execution stability</li>
           </ul>
           <p class="muted">
-            <strong>What counts as an error:</strong> Missing GO signals, clicking on NO-GO, or miscounting flashes. All are recorded.
+            This is not only a response task. It is a dual-demand task.
           </p>
         </section>
 
         <section class="card">
           <h3>Precision (Target Pointing)</h3>
           <p class="muted">
-            What it reflects: motor execution accuracy and correction consistency across repeated trials.
+            Measures motor accuracy and motor consistency across repeated target hits.
           </p>
+          <p><strong>What you do:</strong></p>
           <ul>
-            <li>Tap or click the target as accurately as possible when it appears</li>
-            <li>Error is measured as distance from the target center</li>
-            <li>Both average accuracy and consistency (spread) are evaluated</li>
+            <li>Tap or click the target as accurately as possible when it appears.</li>
+            <li>Repeat across trials.</li>
+          </ul>
+          <p><strong>What gets recorded:</strong></p>
+          <ul>
+            <li>distance from target center</li>
+            <li>normalized error</li>
+            <li>response timing</li>
+            <li>consistency across trials</li>
           </ul>
           <p class="muted">
-            <strong>Best practice:</strong> Use fullscreen mode and maintain a stable posture for consistent results.
+            Best results come from a stable position and, when available, fullscreen use.
           </p>
         </section>
 
         <section class="card">
-          <h3>Practice first</h3>
+          <h3>About errors and unusable sessions</h3>
           <p>
-            If you're new to FCE or returning after a break, use <strong>Training</strong> mode first.
-            Training runs the same tasks but doesn't update your baseline. Use it to get familiar with the tasks
-            before building a baseline or running checks.
+            Errors are not hidden. FCE records them because they are part of the functional signal.
+          </p>
+          <ul>
+            <li>early responses can count as false starts</li>
+            <li>misses and false alarms affect inhibitory tasks</li>
+            <li>very noisy or incomplete sessions may be marked <em>Not usable</em></li>
+          </ul>
+          <p class="muted">
+            Not usable does not mean failure. It means the session was not reliable enough for comparison.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Use Training first if needed</h3>
+          <p>
+            If a task feels unfamiliar, use <strong>Training</strong> mode before building baseline or running checks.
+          </p>
+          <p class="muted">
+            Training lets you get used to the task without affecting your baseline.
           </p>
         </section>
       </div>
@@ -215,8 +265,12 @@
         <section class="hero">
           <h2>Hvordan testene fungerer</h2>
           <p class="lead">
-            Enkle prosedyreinstruksjoner for hver testtype. Hva du skal gjøre, hva som teller som feil, og hvordan du øver.
+            Denne siden forklarer hva hver oppgave måler, hva du gjør i oppgaven, og hva som teller som feil.
           </p>
+
+          <blockquote class="quote">
+            «Svar så raskt og nøyaktig du kan. Både nøyaktighet og konsistens betyr noe.»
+          </blockquote>
         </section>
 
         <div style="margin: 24px auto; text-align: center; max-width: 760px; padding: 0 16px;">
@@ -228,86 +282,134 @@
                     color: #eee;
                     transition: all 0.2s ease;
                     display: inline-block;">
-            <span class="lang lang-en">Open instrument</span>
-            <span class="lang lang-no hidden">Åpne instrument</span>
-            <span class="lang lang-lt hidden">Atidaryti instrumentą</span>
+            Åpne instrument
           </a>
         </div>
 
         <section class="card">
-          <h3>Hva du skal gjøre</h3>
+          <h3>Generell regel</h3>
           <p>
-            Hver test måler ulike aspekter av funksjonell utførelse. Følg instruksjonene på skjermen,
-            responder så raskt og nøyaktig som mulig, og unngå å klikke før signalet vises.
+            Alle oppgaver er korte og standardiserte. Målet er ikke perfeksjon. Målet er konsistent utførelse som kan sammenlignes over tid.
           </p>
+          <ul>
+            <li>Vent på signalet.</li>
+            <li>Svar bare når det kreves.</li>
+            <li>Prøv å være både rask og presis.</li>
+            <li>Unngå å klikke eller trykke for tidlig.</li>
+          </ul>
         </section>
 
         <section class="card">
           <h3>Reaksjonstid</h3>
           <p class="muted">
-            Hva det reflekterer: responsstart-hastighet og konsistens under en enkel oppgave.
+            Måler enkel responshastighet og responskonsistens.
           </p>
+          <p><strong>Hva du gjør:</strong></p>
           <ul>
-            <li>Vent på at det grønne signalet vises</li>
-            <li>Klikk eller trykk så raskt som mulig når du ser det</li>
-            <li>Gjenta for hvert forsøk</li>
+            <li>Vent på at signalet vises.</li>
+            <li>Klikk eller trykk så raskt som mulig når det vises.</li>
+            <li>Gjenta over flere forsøk.</li>
+          </ul>
+          <p><strong>Hva som registreres:</strong></p>
+          <ul>
+            <li>reaksjonstid på gyldige responser</li>
+            <li>feilstarter</li>
+            <li>variabilitet i økten</li>
           </ul>
           <p class="muted">
-            <strong>Hva som teller som feilstart:</strong> Å klikke før signalet vises. Feilstarter registreres, men påvirker ikke gjennomsnittlig reaksjonstid.
+            En feilstart betyr at du svarte før signalet kom.
           </p>
         </section>
 
         <section class="card">
           <h3>Go / No-Go</h3>
           <p class="muted">
-            Hva det reflekterer: inhibisjonskontroll og timing under beslutningspress.
+            Måler responsstart og inhibisjonskontroll.
           </p>
+          <p><strong>Hva du gjør:</strong></p>
           <ul>
-            <li>Når du ser <strong>GO</strong> (grønn), klikk eller trykk umiddelbart</li>
-            <li>Når du ser <strong>NO-GO</strong> (rød), gjør ingenting — vent på neste forsøk</li>
-            <li>De fleste forsøk vil være GO, men noen vil være NO-GO</li>
+            <li>Svar umiddelbart på <strong>GO</strong>-forsøk.</li>
+            <li>Gjør ingenting på <strong>NO-GO</strong>-forsøk.</li>
+          </ul>
+          <p><strong>Hva som registreres:</strong></p>
+          <ul>
+            <li>reaksjonstid på GO-forsøk</li>
+            <li>bom på GO-forsøk</li>
+            <li>falske alarmer på NO-GO-forsøk</li>
+            <li>variabilitet i økten</li>
           </ul>
           <p class="muted">
-            <strong>Hva som teller som feil:</strong> Å klikke på NO-GO (falsk alarm) eller å bomme på et GO-signal (bom). Begge registreres og påvirker resultatene.
+            Å bomme på GO og å svare på NO-GO behandles begge som feil.
           </p>
         </section>
 
         <section class="card">
           <h3>Delt oppmerksomhet</h3>
           <p class="muted">
-            Hva det reflekterer: stabil utførelse mens oppmerksomheten deles mellom handling og et sekundært signal.
+            Måler prestasjon mens du håndterer to krav samtidig.
           </p>
+          <p><strong>Hva du gjør:</strong></p>
           <ul>
-            <li>Gjør Go / No-Go-oppgaven (responder på GO, ignorer NO-GO)</li>
-            <li>Samtidig teller du korte blå blink som vises under forsøkene</li>
-            <li>Etter økten, skriv inn antall blink du telte</li>
+            <li>Utfør Go / No-Go-oppgaven.</li>
+            <li>Telle samtidig korte blå blink gjennom økten.</li>
+            <li>Skriv inn blinktallet til slutt.</li>
+          </ul>
+          <p><strong>Hva som registreres:</strong></p>
+          <ul>
+            <li>GO-reaksjonstid</li>
+            <li>bom og falske alarmer</li>
+            <li>nøyaktighet i blinktelling</li>
+            <li>samlet utførelsesstabilitet</li>
           </ul>
           <p class="muted">
-            <strong>Hva som teller som feil:</strong> Å bomme på GO-signaler, klikke på NO-GO, eller å telle feil antall blink. Alt registreres.
+            Dette er ikke bare en responstest. Det er en todelt krav-oppgave.
           </p>
         </section>
 
         <section class="card">
-          <h3>Presisjon (Målpeking)</h3>
+          <h3>Presisjon (målpeking)</h3>
           <p class="muted">
-            Hva det reflekterer: motorisk presisjon og korrigeringskonsistens over gjentatte forsøk.
+            Måler motorisk nøyaktighet og motorisk konsistens over gjentatte mål.
           </p>
+          <p><strong>Hva du gjør:</strong></p>
           <ul>
-            <li>Trykk eller klikk på målet så nøyaktig som mulig når det vises</li>
-            <li>Feil måles som avstand fra målens sentrum</li>
-            <li>Både gjennomsnittlig nøyaktighet og konsistens (spredning) vurderes</li>
+            <li>Trykk eller klikk på målet så nøyaktig som mulig når det vises.</li>
+            <li>Gjenta over flere forsøk.</li>
+          </ul>
+          <p><strong>Hva som registreres:</strong></p>
+          <ul>
+            <li>avstand fra målens sentrum</li>
+            <li>normalisert feil</li>
+            <li>responstiming</li>
+            <li>konsistens over forsøk</li>
           </ul>
           <p class="muted">
-            <strong>Best practice:</strong> Bruk fullskjermmodus og oppretthold stabil kroppsholdning for konsistente resultater.
+            Best resultat får du med stabil sittestilling og, når tilgjengelig, fullskjerm.
           </p>
         </section>
 
         <section class="card">
-          <h3>Øv først</h3>
+          <h3>Om feil og ikke brukbare økter</h3>
           <p>
-            Hvis du er ny til FCE eller kommer tilbake etter en pause, bruk <strong>Trening</strong>-modus først.
-            Trening kjører samme oppgaver, men oppdaterer ikke baseline. Bruk den for å bli kjent med oppgavene
-            før du bygger baseline eller kjører sjekker.
+            Feil skjules ikke. FCE registrerer dem fordi de er en del av det funksjonelle signalet.
+          </p>
+          <ul>
+            <li>tidlige responser kan telle som feilstarter</li>
+            <li>bom og falske alarmer påvirker inhibisjonsoppgaver</li>
+            <li>svært støyende eller ufullstendige økter kan markeres som <em>Ikke brukbar</em></li>
+          </ul>
+          <p class="muted">
+            Ikke brukbar betyr ikke at du mislyktes. Det betyr at økten ikke var pålitelig nok til sammenligning.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Bruk Trening først ved behov</h3>
+          <p>
+            Hvis en oppgave kjennes uvant, bruk <strong>Trening</strong> før du bygger baseline eller kjører sjekker.
+          </p>
+          <p class="muted">
+            Trening lar deg bli vant til oppgaven uten å påvirke baseline.
           </p>
         </section>
       </div>
@@ -317,8 +419,12 @@
         <section class="hero">
           <h2>Kaip veikia testai</h2>
           <p class="lead">
-            Paprastos procedūrinės instrukcijos kiekvienam testo tipui. Ką daryti, kas laikoma klaida ir kaip praktikuotis.
+            Šiame puslapyje paaiškinama, ką matuoja kiekviena užduotis, ką jūs darote ir kas laikoma klaida.
           </p>
+
+          <blockquote class="quote">
+            „Atsakykite kuo greičiau ir kuo tiksliau. Svarbus ir tikslumas, ir pastovumas.“
+          </blockquote>
         </section>
 
         <div style="margin: 24px auto; text-align: center; max-width: 760px; padding: 0 16px;">
@@ -330,86 +436,134 @@
                     color: #eee;
                     transition: all 0.2s ease;
                     display: inline-block;">
-            <span class="lang lang-en">Open instrument</span>
-            <span class="lang lang-no hidden">Åpne instrument</span>
-            <span class="lang lang-lt hidden">Atidaryti instrumentą</span>
+            Atidaryti instrumentą
           </a>
         </div>
 
         <section class="card">
-          <h3>Ką daryti</h3>
+          <h3>Bendra taisyklė</h3>
           <p>
-            Kiekvienas testas matuoja skirtingus funkcinio vykdymo aspektus. Laikykitės ekrane rodomų instrukcijų,
-            reaguokite kuo greičiau ir tiksliau, ir venkite spustelėti prieš pasirodant signalui.
+            Visos užduotys yra trumpos ir standartizuotos. Tikslas nėra tobulumas. Tikslas yra pastovus atlikimas, kurį būtų galima lyginti laikui bėgant.
           </p>
+          <ul>
+            <li>Laukite signalo.</li>
+            <li>Atsakykite tik tada, kai to reikia.</li>
+            <li>Stenkitės būti ir greiti, ir tikslūs.</li>
+            <li>Venkite spausti ar bakstelėti per anksti.</li>
+          </ul>
         </section>
 
         <section class="card">
           <h3>Reakcijos laikas</h3>
           <p class="muted">
-            Ką tai atspindi: reakcijos inicijavimo greitį ir pastovumą esant paprastai užduočiai.
+            Matuoja paprastą reakcijos greitį ir reakcijos pastovumą.
           </p>
+          <p><strong>Ką jūs darote:</strong></p>
           <ul>
-            <li>Laukite, kol pasirodys žalias signalas</li>
-            <li>Spustelėkite arba bakstelėkite kuo greičiau, kai jį pamatysite</li>
-            <li>Kartokite kiekvienam bandymui</li>
+            <li>Laukiate, kol pasirodys signalas.</li>
+            <li>Spustelite arba bakstelite kuo greičiau, kai jis pasirodo.</li>
+            <li>Kartojate per kelis bandymus.</li>
+          </ul>
+          <p><strong>Kas registruojama:</strong></p>
+          <ul>
+            <li>reakcijos laikas galiojantiems atsakymams</li>
+            <li>klaidingi startai</li>
+            <li>sesijos kintamumas</li>
           </ul>
           <p class="muted">
-            <strong>Kas laikoma klaidingu startu:</strong> Spustelėjimas prieš pasirodant signalui. Klaidingi startai registruojami, bet neturi įtakos vidutiniam reakcijos laikui.
+            Klaidingas startas reiškia, kad sureagavote prieš pasirodant signalui.
           </p>
         </section>
 
         <section class="card">
           <h3>Go / No-Go</h3>
           <p class="muted">
-            Ką tai atspindi: inhibicijos kontrolę ir laiko tikslumą esant sprendimo spaudimui.
+            Matuoja atsako inicijavimą ir inhibicijos kontrolę.
           </p>
+          <p><strong>Ką jūs darote:</strong></p>
           <ul>
-            <li>Kai pamatysite <strong>GO</strong> (žalias), spustelėkite arba bakstelėkite nedelsiant</li>
-            <li>Kai pamatysite <strong>NO-GO</strong> (raudonas), nieko nedarykite — laukite kito bandymo</li>
-            <li>Dauguma bandymų bus GO, bet kai kurie bus NO-GO</li>
+            <li>Nedelsdami atsakote į <strong>GO</strong> bandymus.</li>
+            <li>Nieko nedarote per <strong>NO-GO</strong> bandymus.</li>
+          </ul>
+          <p><strong>Kas registruojama:</strong></p>
+          <ul>
+            <li>reakcijos laikas GO bandymuose</li>
+            <li>praleidimai GO bandymuose</li>
+            <li>klaidingi atsakai NO-GO bandymuose</li>
+            <li>sesijos kintamumas</li>
           </ul>
           <p class="muted">
-            <strong>Kas laikoma klaida:</strong> Spustelėjimas ant NO-GO (klaidingas atsakas) arba praleistas GO signalas (praleistas). Abu registruojami ir turi įtakos rezultatams.
+            Tiek praleistas GO, tiek atsakas per NO-GO laikomi klaidomis.
           </p>
         </section>
 
         <section class="card">
-          <h3>Dalyta dėmesio užduotis</h3>
+          <h3>Dalytas dėmesys</h3>
           <p class="muted">
-            Ką tai atspindi: vykdymo stabilumą, kai dėmesys padalintas tarp veiksmų ir antrinio signalo.
+            Matuoja atlikimą, kai vienu metu tenka valdyti du reikalavimus.
           </p>
+          <p><strong>Ką jūs darote:</strong></p>
           <ul>
-            <li>Atlikite Go / No-Go užduotį (reaguokite į GO, ignoruokite NO-GO)</li>
-            <li>Tuo pačiu metu skaičiuokite trumpus mėlynus blyksnius, kurie pasirodo bandymų metu</li>
-            <li>Po sesijos įveskite suskaičiuotų blyksnių skaičių</li>
+            <li>Atliekate Go / No-Go užduotį.</li>
+            <li>Tuo pačiu metu skaičiuojate trumpus mėlynus blyksnius sesijos metu.</li>
+            <li>Pabaigoje įvedate blyksnių skaičių.</li>
+          </ul>
+          <p><strong>Kas registruojama:</strong></p>
+          <ul>
+            <li>GO reakcijos laikas</li>
+            <li>praleidimai ir klaidingi atsakai</li>
+            <li>blyksnių skaičiavimo tikslumas</li>
+            <li>bendras atlikimo stabilumas</li>
           </ul>
           <p class="muted">
-            <strong>Kas laikoma klaida:</strong> Praleisti GO signalai, spustelėjimas ant NO-GO arba neteisingai suskaičiuoti blyksniai. Viskas registruojama.
+            Tai nėra tik reakcijos užduotis. Tai dvigubo reikalavimo užduotis.
           </p>
         </section>
 
         <section class="card">
-          <h3>Tikslumas (Taikinio nusitaikymas)</h3>
+          <h3>Tikslumas (taikinio nuspaudimas)</h3>
           <p class="muted">
-            Ką tai atspindi: motorinį tikslumą ir korekcijos pastovumą per pakartotinius bandymus.
+            Matuoja motorinį tikslumą ir motorinį pastovumą per pakartotinius taikinius.
           </p>
+          <p><strong>Ką jūs darote:</strong></p>
           <ul>
-            <li>Bakstelėkite arba spustelėkite taikinį kuo tiksliau, kai jis pasirodo</li>
-            <li>Klaida matuojama kaip atstumas nuo taikinio centro</li>
-            <li>Vertinama ir vidutinė tikslumas, ir nuoseklumas (išsibarstymas)</li>
+            <li>Bakstelite arba spustelite taikinį kuo tiksliau, kai jis pasirodo.</li>
+            <li>Kartojate per kelis bandymus.</li>
+          </ul>
+          <p><strong>Kas registruojama:</strong></p>
+          <ul>
+            <li>atstumas nuo taikinio centro</li>
+            <li>normalizuota paklaida</li>
+            <li>atsako laikas</li>
+            <li>pastovumas per bandymus</li>
           </ul>
           <p class="muted">
-            <strong>Geriausia praktika:</strong> Naudokite viso ekrano režimą ir laikykite stabilų laikyseną, kad gautumėte nuoseklius rezultatus.
+            Geriausi rezultatai gaunami išlaikant stabilią padėtį ir, kai įmanoma, naudojant viso ekrano režimą.
           </p>
         </section>
 
         <section class="card">
-          <h3>Pirmiausia praktikuokitės</h3>
+          <h3>Apie klaidas ir netinkamas sesijas</h3>
           <p>
-            Jei esate naujas FCE naudotojas arba grįžęs po pertraukos, pirmiausia naudokite <strong>Treniruotės</strong> režimą.
-            Treniruotė vykdo tas pačias užduotis, bet neatnaujina bazinio lygio. Naudokite ją, kad susipažintumėte su užduotimis
-            prieš kuriant bazinį lygį arba atliekant patikras.
+            Klaidos nėra slepiamos. FCE jas registruoja, nes jos yra funkcinio signalo dalis.
+          </p>
+          <ul>
+            <li>ankstyvi atsakai gali būti laikomi klaidingais startais</li>
+            <li>praleidimai ir klaidingi atsakai veikia inhibicijos užduotis</li>
+            <li>labai triukšmingos ar neužbaigtos sesijos gali būti pažymėtos kaip <em>Netinkama naudoti</em></li>
+          </ul>
+          <p class="muted">
+            Netinkama naudoti nereiškia nesėkmės. Tai reiškia, kad sesija nebuvo pakankamai patikima palyginimui.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Jei reikia, pirmiausia naudokite Treniruotę</h3>
+          <p>
+            Jei užduotis atrodo neįprasta, prieš kurdami bazę ar vykdydami patikras pirmiausia naudokite <strong>Treniruotę</strong>.
+          </p>
+          <p class="muted">
+            Treniruotė leidžia priprasti prie užduoties nepaveikiant jūsų bazės.
           </p>
         </section>
       </div>
@@ -491,7 +645,7 @@
 
       const LANG_KEY = "fce_lang";
       const hasLtContent = !!document.querySelector(".lang-lt");
-      
+
       let currentLang = localStorage.getItem(LANG_KEY);
       if (!currentLang) {
         const oldLang = localStorage.getItem("fce_lang_v1");
@@ -509,7 +663,7 @@
       }
 
       const langSelect = document.getElementById("langSelect");
-      
+
       if (langSelect) {
         const hasLtOption = Array.from(langSelect.options).some(opt => opt.value === "lt");
         if (!hasLtOption) {
@@ -519,15 +673,15 @@
           langSelect.appendChild(ltOption);
         }
       }
-      
+
       if (langSelect) langSelect.value = currentLang;
 
       const I18N_PAGES = {
         en: {
           about: "About",
           concept: "Concept",
+          "what-fce-measures": "What FCE Measures",
           scope: "Scope & Limits",
-          "norwegian-context": "Norwegian Context",
           "how-to-use": "How to use",
           "how-tests-work": "How the tests work",
           faq: "FAQ"
@@ -535,8 +689,8 @@
         no: {
           about: "Om",
           concept: "Konsept",
+          "what-fce-measures": "Hva FCE måler",
           scope: "Omfang & begrensninger",
-          "norwegian-context": "Norsk kontekst",
           "how-to-use": "Hvordan bruke",
           "how-tests-work": "Hvordan testene fungerer",
           faq: "FAQ"
@@ -544,8 +698,8 @@
         lt: {
           about: "Apie",
           concept: "Koncepcija",
+          "what-fce-measures": "Ką FCE matuoja",
           scope: "Apimtis ir ribos",
-          "norwegian-context": "Norvegiškas kontekstas",
           "how-to-use": "Kaip naudoti",
           "how-tests-work": "Kaip veikia testai",
           faq: "DUK"
@@ -571,9 +725,9 @@
         if (contentLang === "lt" && !hasLtContent) {
           contentLang = "en";
         }
-        
+
         const uiLang = contentLang;
-        
+
         currentLang = contentLang;
         try { localStorage.setItem(LANG_KEY, contentLang); } catch {}
         if (langSelect) langSelect.value = currentLang;
@@ -619,8 +773,7 @@
       langSelect && langSelect.addEventListener("change", (e) => applyLanguage(e.target.value));
 
       applyLanguage(currentLang);
-      
-      // Brand link hint text handler
+
       function updateBrandLinkHint() {
         const brandLink = document.getElementById("brandLink");
         if (!brandLink) return;
@@ -629,21 +782,19 @@
         brandLink.setAttribute("data-hint", hint);
         brandLink.setAttribute("aria-label", hint);
       }
+
       updateBrandLinkHint();
       langSelect && langSelect.addEventListener("change", () => {
         updateBrandLinkHint();
       });
 
-      // Store scroll position when leaving page
       function storeScrollPosition() {
         try {
           const scrollPos = window.scrollY || window.pageYOffset || 0;
           if (scrollPos > 0) {
             localStorage.setItem("fce_doc_scroll_how-tests-work", String(scrollPos));
           }
-        } catch (e) {
-          // Ignore storage errors
-        }
+        } catch (e) {}
       }
 
       document.addEventListener("visibilitychange", () => {
@@ -654,7 +805,6 @@
 
       window.addEventListener("beforeunload", storeScrollPosition);
 
-      // Restore scroll position if coming from Learn More
       try {
         if (window.location.hash === "#restore-scroll") {
           const storedScroll = localStorage.getItem("fce_doc_scroll_how-tests-work");
@@ -668,9 +818,7 @@
             }
           }
         }
-      } catch (e) {
-        // Ignore storage errors
-      }
+      } catch (e) {}
     })();
   </script>
   <script src="docs.js"></script>

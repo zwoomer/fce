@@ -3,15 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>FCE — Scope & Limits</title>
+  <title>FCE — Scope &amp; Limits</title>
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Remember last visited page -->
   <script>
     try {
       const p = location.pathname.split("/").pop() || "index.html";
       localStorage.setItem("fce_last_page", p);
-      // Also track last docs page (exclude index.html)
       if (p && p.endsWith(".html") && !p.includes("index.html")) {
         localStorage.setItem("fce_last_docs_page", p);
       }
@@ -72,16 +70,16 @@
       <span class="lang lang-lt hidden">Koncepcija</span>
     </a>
 
+    <a class="menu-item" href="what-fce-measures.html">
+      <span class="lang lang-en">What FCE Measures</span>
+      <span class="lang lang-no hidden">Hva FCE måler</span>
+      <span class="lang lang-lt hidden">Ką FCE matuoja</span>
+    </a>
+
     <a class="menu-item" href="scope.html" aria-current="page">
       <span class="lang lang-en">Scope &amp; Limits</span>
       <span class="lang lang-no hidden">Omfang &amp; begrensninger</span>
       <span class="lang lang-lt hidden">Apimtis ir ribos</span>
-    </a>
-
-    <a class="menu-item" href="norwegian-context.html">
-      <span class="lang lang-en">Norwegian Context</span>
-      <span class="lang lang-no hidden">Norsk kontekst</span>
-      <span class="lang lang-lt hidden">Norvegiškas kontekstas</span>
     </a>
 
     <a class="menu-item" href="how-to-use.html">
@@ -112,9 +110,9 @@
       <div class="lang lang-en">
         <section class="hero">
           <h2>Scope &amp; Limits</h2>
+
           <p class="lead">
-            This page defines what FCE does and does not do. These boundaries are intentional.
-            They are designed to protect people, prevent over-interpretation, and preserve measurement integrity.
+            This page defines the boundaries of FCE. These boundaries are intentional and non-negotiable.
           </p>
 
           <blockquote class="quote">
@@ -122,10 +120,10 @@
           </blockquote>
 
           <div style="margin: 18px auto 0; text-align: center; max-width: 720px;">
-            <div class="chips" aria-label="FCE safeguards">
+            <div class="chips" aria-label="FCE boundaries">
               <span class="chip">Not diagnostic</span>
-              <span class="chip">Not legal judgment</span>
               <span class="chip">Not substance detection</span>
+              <span class="chip">Not legal judgment</span>
               <span class="chip">Not automated decisions</span>
               <span class="chip">Refusal protects</span>
             </div>
@@ -138,9 +136,7 @@
                     border: 1px solid rgba(255,255,255,0.15); border-radius: 8px;
                     background: rgba(255,255,255,0.05); color: #eee;
                     transition: all 0.2s ease; display: inline-block;">
-            <span class="lang lang-en">Read Concept</span>
-            <span class="lang lang-no hidden">Les Konsept</span>
-            <span class="lang lang-lt hidden">Skaityti koncepciją</span>
+            Read Concept
           </a>
           <span style="display:inline-block; width:10px;"></span>
           <a href="index.html#instrument"
@@ -148,104 +144,101 @@
                     border: 1px solid rgba(255,255,255,0.15); border-radius: 8px;
                     background: rgba(255,255,255,0.05); color: #eee;
                     transition: all 0.2s ease; display: inline-block;">
-            <span class="lang lang-en">Open instrument</span>
-            <span class="lang lang-no hidden">Åpne instrument</span>
-            <span class="lang lang-lt hidden">Atidaryti instrumentą</span>
+            Open instrument
           </a>
         </div>
 
         <section class="card">
+          <h3>What FCE is not</h3>
+          <ul>
+            <li>FCE is not a diagnostic tool.</li>
+            <li>FCE is not a substance detection tool.</li>
+            <li>FCE is not a legal or disciplinary judgment system.</li>
+            <li>FCE is not a clinical triage system.</li>
+            <li>FCE is not an automated decision engine.</li>
+            <li>FCE is not a one-session verdict.</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h3>What FCE cannot do</h3>
+          <ul>
+            <li>FCE cannot determine why performance changed.</li>
+            <li>FCE cannot identify whether a change came from sleep, stress, illness, medication, distraction, recovery, or any other cause.</li>
+            <li>FCE cannot determine real-world fitness, permission, readiness, or legal status.</li>
+            <li>FCE cannot replace clinical judgment, institutional review, or human interpretation.</li>
+            <li>FCE cannot convert short-task results into conclusions beyond what was measured.</li>
+          </ul>
+        </section>
+
+        <section class="card">
           <h3>What FCE does</h3>
           <ul>
-            <li><strong>Measures functional execution</strong> using short standardized tasks (speed, control, stability)</li>
-            <li><strong>Compares performance to a personal baseline</strong> (baseline-relative, not population-normative)</li>
-            <li><strong>Supports repeatable self-checks and monitoring</strong> with transparent history</li>
-            <li><strong>Labels low-quality sessions</strong> and can refuse to score when comparison would be misleading</li>
-            <li><strong>Stores data locally by default</strong>, with optional user-initiated export</li>
+            <li>Measures short-task functional execution.</li>
+            <li>Compares current performance to a personal baseline.</li>
+            <li>Supports repeated self-comparison over time.</li>
+            <li>Stores history locally by default.</li>
+            <li>Refuses comparison when data quality is too low.</li>
           </ul>
         </section>
 
         <section class="card">
-          <h3>What FCE does not do (explicit non-goals)</h3>
+          <h3>Physiology boundary</h3>
           <p>
-            FCE is intentionally limited. It must not be used to imply more than it measures.
+            FCE does not measure neurological function, hormonal state, substance presence, or physiological systems directly.
           </p>
-          <ul>
-            <li><strong>Not diagnostic</strong> — does not diagnose medical, psychiatric, or neurological conditions</li>
-            <li><strong>Not clinical triage</strong> — does not replace clinical evaluation or emergency assessment</li>
-            <li><strong>Not legal judgment</strong> — does not determine legal responsibility, guilt, innocence, or compliance</li>
-            <li><strong>Not substance detection</strong> — does not detect drugs/alcohol or infer biochemical states</li>
-            <li><strong>Not cause attribution</strong> — does not explain <em>why</em> performance changed</li>
-            <li><strong>Not automated decision-making</strong> — does not issue binding outcomes (e.g., “fit/unfit”)</li>
-            <li><strong>Not single-session determinism</strong> — one session should not be treated as a decisive verdict</li>
-            <li>
-              <strong>Not interpretive:</strong>
-              FCE does not guide reflection, suggest meaning, or infer personal circumstances.
-            </li>
-          </ul>
-        </section>
-
-        <section class="card">
-          <h3>Physiology boundary (explicit)</h3>
-
-          <p>
-            FCE does not measure neurological function, hormonal status, substance presence, or physiological systems.
+          <p class="muted">
             It measures observable task execution only.
           </p>
-
-          <p class="muted">
-            Results are not medical conclusions and must not be treated as diagnostic or enforcement outputs.
-          </p>
         </section>
 
         <section class="card">
-          <h3>Interpretation rules (required)</h3>
+          <h3>When FCE refuses a result</h3>
+          <p>
+            FCE may mark a session as <em>not usable</em> instead of producing a comparison.
+          </p>
           <ul>
-            <li><strong>History-first:</strong> interpret patterns over time, not one-off results</li>
-            <li><strong>Device consistency:</strong> baseline and checks should be on the same device/input method</li>
-            <li><strong>Context matters:</strong> sleep loss, stress, illness, distraction, medication effects can affect function</li>
-            <li><strong>No cause inference:</strong> similar deviations can arise from many different causes</li>
-            <li><strong>Human oversight:</strong> results are informational, not authoritative decisions</li>
+            <li>too little valid data</li>
+            <li>too much noise or execution failure</li>
+            <li>conditions that make comparison unreliable</li>
           </ul>
           <p class="muted">
-            For practical workflow guidance, see <a href="how-to-use.html">How to Use</a>.
+            Refusal is protection against misleading interpretation. It is not punishment and it is not failure.
           </p>
         </section>
 
         <section class="card">
-          <h3>Refusal and integrity (harm-reduction by design)</h3>
-          <p>
-            FCE includes refusal logic. If data quality is insufficient for comparison, the system may mark a session as
-            <em>not usable</em> rather than producing a misleading score.
-          </p>
+          <h3>Interpretation responsibility</h3>
           <ul>
-            <li>Protects against false certainty from incomplete or distorted input</li>
-            <li>Prevents “forcing” a number when the measurement is not reliable</li>
-            <li>Encourages retesting under cleaner conditions</li>
+            <li>Results must be read in context.</li>
+            <li>Patterns over time matter more than one-off sessions.</li>
+            <li>Device and input consistency matter.</li>
+            <li>Human interpretation remains necessary.</li>
+            <li>FCE outputs are signals, not conclusions.</li>
           </ul>
           <p class="muted">
-            Refusal is protection — not failure.
+            For practical workflow, see <a href="how-to-use.html">How to Use</a>.
           </p>
         </section>
 
         <section class="card">
-          <h3>Institutional use (constraints)</h3>
+          <h3>Institutional boundary</h3>
           <p>
-            If FCE is explored in institutional contexts, the following constraints should be treated as baseline requirements:
+            If FCE is ever explored in institutional settings, the following conditions should be treated as minimum requirements:
           </p>
           <ul>
-            <li><strong>Voluntary participation</strong> with clear consent and the ability to decline without penalty</li>
-            <li><strong>Transparency</strong> about what is measured, how it is interpreted, and what it cannot conclude</li>
-            <li><strong>Contestability</strong> — results must be reviewable and never treated as automatic enforcement</li>
-            <li><strong>Separation of layers</strong> — any data-sharing or reporting layer must be explicit and separate</li>
-            <li><strong>Independent validation</strong> — thresholds and claims should be tested and documented</li>
+            <li>voluntary participation</li>
+            <li>clear consent</li>
+            <li>transparent interpretation rules</li>
+            <li>reviewability and contestability</li>
+            <li>no automatic enforcement</li>
+            <li>separation between the instrument and any sharing or reporting layer</li>
           </ul>
         </section>
 
         <section class="card copy-block">
           <div class="card-utility">
-            <h3>Short disclaimer (copy-ready)</h3>
-
+            <h3>Short disclaimer</h3>
             <button
               class="copy-btn"
               type="button"
@@ -259,160 +252,10 @@
           </div>
 
           <p class="note" id="disclaimerEn">
-            FCE is a baseline-relative functional performance instrument. It measures short-task execution and tracks changes
-            relative to a personal baseline. FCE does not diagnose conditions, detect substances, infer causes, or produce
-            automated or binding decisions. Results must be interpreted by a human and should be considered together with
-            context and history.
+            FCE is a baseline-relative functional performance instrument. It measures short-task execution and compares results to a personal baseline. FCE does not diagnose conditions, detect substances, explain causes, or produce automated or binding decisions. Results must be interpreted by a human and considered together with context and history.
           </p>
 
           <span class="muted copy-status" data-copy-status="en" aria-live="polite"></span>
-        </section>
-      </div>
-
-      <!-- LT -->
-      <div class="lang lang-lt hidden">
-        <section class="hero">
-          <h2>Apimtis ir ribos</h2>
-          <p class="lead">
-            Šiame puslapyje apibrėžiama, ką FCE daro ir ko nedaro. Šios ribos yra sąmoningos —
-            jos skirtos apsaugoti žmones, sumažinti perinterpretavimo riziką ir išlaikyti matavimo integralumą.
-          </p>
-
-          <blockquote class="quote">
-            „FCE matuoja funkcinį vykdymą. Jis neaiškina priežasčių, nepriskiria etikečių ir nepriima sprendimų."
-          </blockquote>
-
-          <div style="margin: 18px auto 0; text-align: center; max-width: 720px;">
-            <div class="chips" aria-label="FCE apsaugos priemonės">
-              <span class="chip">Nediagnostinis</span>
-              <span class="chip">Ne teisinis sprendimas</span>
-              <span class="chip">Neautomatizuota</span>
-              <span class="chip">Vietiniai duomenys</span>
-              <span class="chip">Atsisakymas saugo</span>
-            </div>
-          </div>
-        </section>
-
-        <div style="margin: 24px auto; text-align: center; max-width: 760px; padding: 0 16px;">
-          <a href="concept.html"
-             style="padding: 10px 20px; font-size: 14px; text-decoration: none;
-                    border: 1px solid rgba(255,255,255,0.15); border-radius: 8px;
-                    background: rgba(255,255,255,0.05); color: #eee;
-                    transition: all 0.2s ease; display: inline-block;">
-            <span class="lang lang-en">Read Concept</span>
-            <span class="lang lang-no hidden">Les Konsept</span>
-            <span class="lang lang-lt hidden">Skaityti koncepciją</span>
-          </a>
-          <span style="display:inline-block; width:10px;"></span>
-          <a href="index.html#instrument"
-             style="padding: 10px 20px; font-size: 14px; text-decoration: none;
-                    border: 1px solid rgba(255,255,255,0.15); border-radius: 8px;
-                    background: rgba(255,255,255,0.05); color: #eee;
-                    transition: all 0.2s ease; display: inline-block;">
-            <span class="lang lang-en">Open instrument</span>
-            <span class="lang lang-no hidden">Åpne instrument</span>
-            <span class="lang lang-lt hidden">Atidaryti instrumentą</span>
-          </a>
-        </div>
-
-        <section class="card">
-          <h3>Ką FCE daro</h3>
-          <ul>
-            <li>Matuoja trumpų užduočių vykdymą (pvz., reakcijos greitį, slopinimo kontrolę, padalytą dėmesį).</li>
-            <li>Lygina rezultatus su asmeniniu baziniu lygiu, o ne su populiacijos normomis.</li>
-            <li>Suteikia pakartojamą būdą stebėti pokytį laikui bėgant toje pačioje įrenginio ir įvesties aplinkoje.</li>
-            <li>Rodo skaidrią istoriją (vietinė saugykla pagal nutylėjimą).</li>
-          </ul>
-        </section>
-
-        <section class="card">
-          <h3>Ką FCE nedaro (aiškūs ne-tikslai)</h3>
-          <ul>
-            <li><strong>Nediagnozuoja:</strong> nepateikia medicininių, psichiatrinių ar neurologinių diagnozių.</li>
-            <li><strong>Neaptinka medžiagų:</strong> tai nėra alkoholio ar kitų medžiagų aptikimo priemonė.</li>
-            <li><strong>Neaiškina priežasčių:</strong> FCE matuoja funkciją, bet neatsako „kodėl" ji pasikeitė.</li>
-            <li><strong>Nepriima sprendimų:</strong> FCE nėra automatinis sprendimų variklis ir nepateikia privalomų išvadų.</li>
-            <li><strong>Nepateikia teisinio vertinimo:</strong> nėra „tinkamas / netinkamas" verdiktų ar kaltės išvadų.</li>
-            <li><strong>Nėra vienos sesijos nuosprendis:</strong> viena sesija neturėtų būti laikoma lemiamu rezultatu.</li>
-            <li>
-              <strong>Neinterpretuojantis:</strong>
-              FCE nenukreipia refleksijos, nesiūlo prasmės
-              ir neišveda asmeninių aplinkybių.
-            </li>
-          </ul>
-        </section>
-
-        <section class="card">
-          <h3>Fiziologijos riba (aiškiai)</h3>
-
-          <p>
-            FCE nematuoja neurologinės funkcijos, hormonų būklės, medžiagų buvimo ar fiziologinių sistemų.
-            Jis matuoja tik stebimą užduočių atlikimą.
-          </p>
-
-          <p class="muted">
-            Rezultatai nėra medicininės išvados ir negali būti laikomi diagnostika ar taikymo / vykdymo pagrindu.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Tolkinimo taisyklės (privaloma)</h3>
-          <ul>
-            <li><strong>Vertinkite kontekste:</strong> interpretacija turi atsižvelgti į aplinkybes ir istoriją.</li>
-            <li><strong>Žiūrėkite į dėsningumus:</strong> pakartotiniai matavimai yra svarbesni nei vienas taškas.</li>
-            <li><strong>Venkite perinterpretavimo:</strong> funkcijos pokytis nereiškia priežasties ar diagnozės.</li>
-            <li><strong>Ribokite naudojimą:</strong> FCE rezultatai neturėtų būti naudojami kaip vienintelis sprendimo pagrindas.</li>
-          </ul>
-          <p class="muted">
-            FCE sukurta kaip matavimo instrumentas, o ne kaip „sprendimas". Žmogaus interpretacija yra būtina.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Atsisakymas ir integralumas (žalos mažinimas pagal dizainą)</h3>
-          <p>
-            FCE turi atsisakymo logiką: kai sesijos kokybė per žema patikimam palyginimui, sistema atsisako pateikti rezultatą
-            (arba pažymi sesiją kaip netinkamą palyginimui), kad būtų išvengta klaidinančių išvadų.
-          </p>
-          <ul>
-            <li>Apsaugo nuo klaidingo tikrumo, kai duomenys nepilni ar iškraipyti.</li>
-            <li>Palaiko pakartojamumą ir skaidrumą.</li>
-            <li>Atsisakymas yra apsauga, o ne bausmė.</li>
-          </ul>
-        </section>
-
-        <section class="card">
-          <h3>Institucinis naudojimas (rėmai)</h3>
-          <ul>
-            <li><strong>Ne automatizavimui:</strong> FCE neturėtų būti naudojama automatiniams sprendimams ar sankcijoms.</li>
-            <li><strong>Ne vienintelis kriterijus:</strong> jei naudojama, tai tik kaip papildomas signalas kartu su kontekstu ir žmogaus vertinimu.</li>
-            <li><strong>Aiškus sutikimas:</strong> praktikoje būtina užtikrinti informuotą sutikimą ir proporcingumą.</li>
-            <li><strong>Duomenų kontrolė:</strong> pagal nutylėjimą duomenys lieka įrenginyje; eksportas turi būti vartotojo veiksmas.</li>
-          </ul>
-        </section>
-
-        <section class="card copy-block">
-          <div class="card-utility">
-            <h3>Trumpa atsakomybės ribojimo formuluotė (paruošta kopijuoti)</h3>
-            <button
-              class="copy-btn"
-              type="button"
-              data-copy-target="#disclaimerLt"
-              data-tooltip="Kopijuoti"
-              aria-label="Kopijuoti trumpą atsakomybės ribojimo formuluotę"
-            >
-              <span class="copy-icon" aria-hidden="true">📋</span>
-              <span class="copy-label">Kopijuoti</span>
-            </button>
-          </div>
-
-          <p class="note" id="disclaimerLt">
-            FCE yra su asmeniniu baziniu lygiu lyginamas funkcinio vykdymo instrumentas. Jis matuoja trumpų užduočių vykdymą ir
-            stebi pokyčius, lygindamas su asmenine baze. FCE nediagnozuoja, neaptinka medžiagų, neaiškina priežasčių ir nepateikia
-            automatizuotų ar privalomų sprendimų. Rezultatai turi būti interpretuojami žmogaus ir vertinami kartu su kontekstu bei istorija.
-          </p>
-
-          <span class="muted copy-status" data-copy-status="lt" aria-live="polite"></span>
         </section>
       </div>
 
@@ -420,9 +263,9 @@
       <div class="lang lang-no hidden">
         <section class="hero">
           <h2>Omfang &amp; begrensninger</h2>
+
           <p class="lead">
-            Denne siden definerer hva FCE gjør og ikke gjør. Disse grensene er bevisste.
-            De skal beskytte mennesker, hindre overtolkning og bevare måleintegritet.
+            Denne siden definerer grensene for FCE. Disse grensene er bevisste og ikke-forhandlingsbare.
           </p>
 
           <blockquote class="quote">
@@ -430,10 +273,10 @@
           </blockquote>
 
           <div style="margin: 18px auto 0; text-align: center; max-width: 720px;">
-            <div class="chips" aria-label="FCE sikringer">
+            <div class="chips" aria-label="FCE grenser">
               <span class="chip">Ikke diagnostisk</span>
+              <span class="chip">Ikke stoffdeteksjon</span>
               <span class="chip">Ikke juridisk dom</span>
-              <span class="chip">Ikke rus-/stoffdeteksjon</span>
               <span class="chip">Ikke automatiske beslutninger</span>
               <span class="chip">Avslag beskytter</span>
             </div>
@@ -446,9 +289,7 @@
                     border: 1px solid rgba(255,255,255,0.15); border-radius: 8px;
                     background: rgba(255,255,255,0.05); color: #eee;
                     transition: all 0.2s ease; display: inline-block;">
-            <span class="lang lang-en">Read Concept</span>
-            <span class="lang lang-no hidden">Les Konsept</span>
-            <span class="lang lang-lt hidden">Skaityti koncepciją</span>
+            Les Konsept
           </a>
           <span style="display:inline-block; width:10px;"></span>
           <a href="index.html#instrument"
@@ -456,65 +297,77 @@
                     border: 1px solid rgba(255,255,255,0.15); border-radius: 8px;
                     background: rgba(255,255,255,0.05); color: #eee;
                     transition: all 0.2s ease; display: inline-block;">
-            <span class="lang lang-en">Open instrument</span>
-            <span class="lang lang-no hidden">Åpne instrument</span>
-            <span class="lang lang-lt hidden">Atidaryti instrumentą</span>
+            Åpne instrument
           </a>
         </div>
 
         <section class="card">
+          <h3>Hva FCE ikke er</h3>
+          <ul>
+            <li>FCE er ikke et diagnostisk verktøy.</li>
+            <li>FCE er ikke et verktøy for stoff- eller rusdeteksjon.</li>
+            <li>FCE er ikke et juridisk eller disiplinært domssystem.</li>
+            <li>FCE er ikke et klinisk triageverktøy.</li>
+            <li>FCE er ikke en automatisert beslutningsmotor.</li>
+            <li>FCE er ikke en dom basert på én økt.</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h3>Hva FCE ikke kan gjøre</h3>
+          <ul>
+            <li>FCE kan ikke avgjøre hvorfor prestasjon endret seg.</li>
+            <li>FCE kan ikke identifisere om endringen skyldes søvn, stress, sykdom, medikasjon, distraksjon, restitusjon eller noe annet.</li>
+            <li>FCE kan ikke avgjøre reell egnethet, tillatelse, readiness eller juridisk status.</li>
+            <li>FCE kan ikke erstatte klinisk vurdering, institusjonell gjennomgang eller menneskelig tolkning.</li>
+            <li>FCE kan ikke omgjøre korte oppgaveresultater til konklusjoner utover det som faktisk ble målt.</li>
+          </ul>
+        </section>
+
+        <section class="card">
           <h3>Hva FCE gjør</h3>
           <ul>
-            <li><strong>Måler funksjonell utførelse</strong> med korte standardiserte oppgaver (hastighet, kontroll, stabilitet)</li>
-            <li><strong>Sammenligner mot personlig baseline</strong> (baseline-relativt, ikke befolkningsnormativt)</li>
-            <li><strong>Støtter repeterbare selv-sjekker og oppfølging</strong> med åpen historikk</li>
-            <li><strong>Merker lav datakvalitet</strong> og kan gi avslag når sammenligning ville være misvisende</li>
-            <li><strong>Lagrer data lokalt som standard</strong>, med valgfri brukerstyrt eksport</li>
+            <li>Måler funksjonell utførelse i korte oppgaver.</li>
+            <li>Sammenligner nåværende prestasjon med personlig baseline.</li>
+            <li>Støtter gjentatt sammenligning over tid.</li>
+            <li>Lagrer historikk lokalt som standard.</li>
+            <li>Gir avslag når datakvaliteten er for lav.</li>
           </ul>
         </section>
 
         <section class="card">
-          <h3>Hva FCE ikke gjør (eksplisitte ikke-mål)</h3>
+          <h3>Fysiologisk grense</h3>
           <p>
-            FCE er bevisst avgrenset. Det skal ikke brukes til å antyde mer enn det faktisk måler.
+            FCE måler ikke nevrologisk funksjon, hormonell tilstand, tilstedeværelse av stoffer eller fysiologiske systemer direkte.
           </p>
-          <ul>
-            <li><strong>Ikke diagnostisk</strong> — stiller ikke medisinske, psykiatriske eller nevrologiske diagnoser</li>
-            <li><strong>Ikke klinisk triage</strong> — erstatter ikke klinisk vurdering eller akuttvurdering</li>
-            <li><strong>Ikke juridisk dom</strong> — avgjør ikke ansvar, skyld/uskyld eller etterlevelse</li>
-            <li><strong>Ikke rus-/stoffdeteksjon</strong> — påviser ikke alkohol/rusmidler eller biokjemisk tilstand</li>
-            <li><strong>Ikke årsaksforklaring</strong> — forklarer ikke <em>hvorfor</em> prestasjon endret seg</li>
-            <li><strong>Ikke automatisert beslutning</strong> — gir ikke bindende utfall (f.eks. “egnet/uegnet”)</li>
-            <li><strong>Ikke basert på én økt</strong> — én økt skal ikke behandles som en avgjørende dom</li>
-            <li>
-              <strong>Ikke tolkende:</strong>
-              FCE gir ikke føringer for refleksjon, foreslår ikke mening
-              og utleder ikke personlige omstendigheter.
-            </li>
-          </ul>
-        </section>
-
-        <section class="card">
-          <h3>Fysiologi-grense (tydelig)</h3>
-
-          <p>
-            FCE måler ikke nevrologisk funksjon, hormonstatus, tilstedeværelse av stoffer eller fysiologiske systemer.
+          <p class="muted">
             Det måler kun observerbar oppgaveutførelse.
           </p>
+        </section>
 
+        <section class="card">
+          <h3>Når FCE gir avslag</h3>
+          <p>
+            FCE kan markere en økt som <em>ikke brukbar</em> i stedet for å produsere en sammenligning.
+          </p>
+          <ul>
+            <li>for lite gyldige data</li>
+            <li>for mye støy eller utførelsessvikt</li>
+            <li>forhold som gjør sammenligning upålitelig</li>
+          </ul>
           <p class="muted">
-            Resultater er ikke medisinske konklusjoner og må ikke behandles som diagnostikk eller håndhevingsgrunnlag.
+            Avslag er beskyttelse mot misvisende tolkning. Det er ikke straff og det er ikke feil.
           </p>
         </section>
 
         <section class="card">
-          <h3>Tolkningsregler (påkrevd)</h3>
+          <h3>Tolkningsansvar</h3>
           <ul>
-            <li><strong>Historikk først:</strong> tolk mønstre over tid, ikke enkeltøkt</li>
-            <li><strong>Enhetskonsistens:</strong> baseline og sjekk bør være på samme enhet/inndatametode</li>
-            <li><strong>Kontekst betyr noe:</strong> søvnmangel, stress, sykdom, distraksjon, medikamenteffekter kan påvirke funksjon</li>
-            <li><strong>Ikke anta årsak:</strong> like avvik kan komme av mange forskjellige forhold</li>
-            <li><strong>Menneskelig vurdering:</strong> resultater er informasjonsgrunnlag, ikke autoritativ beslutning</li>
+            <li>Resultater må leses i kontekst.</li>
+            <li>Mønstre over tid betyr mer enn enkeltøkter.</li>
+            <li>Enhets- og inputkonsistens betyr noe.</li>
+            <li>Menneskelig tolkning er fortsatt nødvendig.</li>
+            <li>FCE-utdata er signaler, ikke konklusjoner.</li>
           </ul>
           <p class="muted">
             For praktisk arbeidsflyt, se <a href="how-to-use.html">Hvordan bruke</a>.
@@ -522,39 +375,23 @@
         </section>
 
         <section class="card">
-          <h3>Avslag og integritet (skadereduksjon i design)</h3>
+          <h3>Institusjonell grense</h3>
           <p>
-            FCE har avslaglogikk. Hvis datakvaliteten er for lav til sammenligning, kan systemet markere en økt som
-            <em>ikke brukbar</em> i stedet for å gi et misvisende resultat.
+            Dersom FCE noen gang utforskes i institusjonell sammenheng, bør følgende behandles som minstekrav:
           </p>
           <ul>
-            <li>Beskytter mot falsk sikkerhet basert på ufullstendig eller forstyrret input</li>
-            <li>Hindrer at man “tvinger frem” et tall når målingen ikke er pålitelig</li>
-            <li>Oppmuntrer retest under renere forhold</li>
-          </ul>
-          <p class="muted">
-            Avslag er beskyttelse — ikke feil.
-          </p>
-        </section>
-
-        <section class="card">
-          <h3>Institusjonell bruk (rammer)</h3>
-          <p>
-            Hvis FCE utforskes i institusjonell sammenheng, bør følgende rammer behandles som minstekrav:
-          </p>
-          <ul>
-            <li><strong>Frivillighet</strong> med tydelig samtykke og mulighet til å avstå uten sanksjon</li>
-            <li><strong>Transparens</strong> om hva som måles, hvordan det tolkes og hva det ikke kan konkludere</li>
-            <li><strong>Etterprøvbarhet</strong> — resultater må kunne gjennomgås og aldri behandles som automatisk håndheving</li>
-            <li><strong>Lagdeling</strong> — eventuelle delings-/rapportlag må være eksplisitte og separate</li>
-            <li><strong>Uavhengig validering</strong> — terskler og påstander bør testes og dokumenteres</li>
+            <li>frivillig deltakelse</li>
+            <li>tydelig samtykke</li>
+            <li>transparente tolkningsregler</li>
+            <li>etterprøvbarhet og klagemulighet</li>
+            <li>ingen automatisk håndheving</li>
+            <li>skille mellom instrumentet og eventuelle delings- eller rapportlag</li>
           </ul>
         </section>
 
         <section class="card copy-block">
           <div class="card-utility">
-            <h3>Kort ansvarsfraskrivelse (klar til å kopiere)</h3>
-
+            <h3>Kort ansvarsfraskrivelse</h3>
             <button
               class="copy-btn"
               type="button"
@@ -568,22 +405,172 @@
           </div>
 
           <p class="note" id="disclaimerNo">
-            FCE er et baseline-relativt instrument for funksjonell prestasjon. Det måler utførelse i korte oppgaver og følger
-            endringer relativt til personlig baseline. FCE stiller ikke diagnose, påviser ikke rusmidler, trekker ikke slutninger
-            om årsak og gir ikke automatiserte eller bindende beslutninger. Resultater må tolkes av et menneske og bør sees i
-            sammenheng med kontekst og historikk.
+            FCE er et baseline-relativt instrument for funksjonell prestasjon. Det måler utførelse i korte oppgaver og sammenligner resultater med personlig baseline. FCE stiller ikke diagnose, påviser ikke stoffer, forklarer ikke årsak og gir ikke automatiserte eller bindende beslutninger. Resultater må tolkes av et menneske og vurderes sammen med kontekst og historikk.
           </p>
 
           <span class="muted copy-status" data-copy-status="no" aria-live="polite"></span>
         </section>
       </div>
 
+      <!-- LT -->
+      <div class="lang lang-lt hidden">
+        <section class="hero">
+          <h2>Apimtis ir ribos</h2>
+
+          <p class="lead">
+            Šiame puslapyje apibrėžiamos FCE ribos. Šios ribos yra sąmoningos ir neginčijamos.
+          </p>
+
+          <blockquote class="quote">
+            „FCE matuoja funkcinį atlikimą. Jis neaiškina priežasčių, nepriskiria etikečių ir nepriima sprendimų.“
+          </blockquote>
+
+          <div style="margin: 18px auto 0; text-align: center; max-width: 720px;">
+            <div class="chips" aria-label="FCE ribos">
+              <span class="chip">Nediagnostinis</span>
+              <span class="chip">Ne medžiagų aptikimas</span>
+              <span class="chip">Ne teisinis sprendimas</span>
+              <span class="chip">Ne automatiniai sprendimai</span>
+              <span class="chip">Atsisakymas saugo</span>
+            </div>
+          </div>
+        </section>
+
+        <div style="margin: 24px auto; text-align: center; max-width: 760px; padding: 0 16px;">
+          <a href="concept.html"
+             style="padding: 10px 20px; font-size: 14px; text-decoration: none;
+                    border: 1px solid rgba(255,255,255,0.15); border-radius: 8px;
+                    background: rgba(255,255,255,0.05); color: #eee;
+                    transition: all 0.2s ease; display: inline-block;">
+            Skaityti koncepciją
+          </a>
+          <span style="display:inline-block; width:10px;"></span>
+          <a href="index.html#instrument"
+             style="padding: 10px 20px; font-size: 14px; text-decoration: none;
+                    border: 1px solid rgba(255,255,255,0.15); border-radius: 8px;
+                    background: rgba(255,255,255,0.05); color: #eee;
+                    transition: all 0.2s ease; display: inline-block;">
+            Atidaryti instrumentą
+          </a>
+        </div>
+
+        <section class="card">
+          <h3>Kas FCE nėra</h3>
+          <ul>
+            <li>FCE nėra diagnostinis įrankis.</li>
+            <li>FCE nėra medžiagų ar apsvaigimo aptikimo priemonė.</li>
+            <li>FCE nėra teisinio ar drausminio vertinimo sistema.</li>
+            <li>FCE nėra klinikinio triage sistema.</li>
+            <li>FCE nėra automatinis sprendimų variklis.</li>
+            <li>FCE nėra vienos sesijos nuosprendis.</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h3>Ko FCE negali padaryti</h3>
+          <ul>
+            <li>FCE negali nustatyti, kodėl atlikimas pasikeitė.</li>
+            <li>FCE negali nustatyti, ar pokytį sukėlė miegas, stresas, liga, vaistai, išsiblaškymas, atsistatymas ar kažkas kita.</li>
+            <li>FCE negali nustatyti realaus tinkamumo, leidimo, pasirengimo ar teisinio statuso.</li>
+            <li>FCE negali pakeisti klinikinio vertinimo, institucinės peržiūros ar žmogaus interpretacijos.</li>
+            <li>FCE negali paversti trumpų užduočių rezultatų išvadomis, kurios viršija tai, kas iš tikrųjų buvo išmatuota.</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h3>Ką FCE daro</h3>
+          <ul>
+            <li>Matuoja funkcinį atlikimą trumpose užduotyse.</li>
+            <li>Lygina dabartinį atlikimą su asmenine baze.</li>
+            <li>Palaiko pakartotinį lyginimą laikui bėgant.</li>
+            <li>Pagal nutylėjimą saugo istoriją lokaliai.</li>
+            <li>Atsisako pateikti palyginimą, kai duomenų kokybė per žema.</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h3>Fiziologinė riba</h3>
+          <p>
+            FCE tiesiogiai nematuoja neurologinės funkcijos, hormoninės būklės, medžiagų buvimo ar fiziologinių sistemų.
+          </p>
+          <p class="muted">
+            Jis matuoja tik stebimą užduočių atlikimą.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Kada FCE atsisako pateikti rezultatą</h3>
+          <p>
+            FCE gali pažymėti sesiją kaip <em>netinkamą naudoti</em>, užuot pateikęs palyginimą.
+          </p>
+          <ul>
+            <li>per mažai galiojančių duomenų</li>
+            <li>per daug triukšmo arba vykdymo klaidų</li>
+            <li>sąlygos, dėl kurių palyginimas tampa nepatikimas</li>
+          </ul>
+          <p class="muted">
+            Atsisakymas yra apsauga nuo klaidinančios interpretacijos. Tai nėra bausmė ir tai nėra nesėkmė.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Interpretacijos atsakomybė</h3>
+          <ul>
+            <li>Rezultatai turi būti skaitomi kontekste.</li>
+            <li>Dėsningumai laikui bėgant svarbesni nei pavienės sesijos.</li>
+            <li>Įrenginio ir įvesties nuoseklumas yra svarbus.</li>
+            <li>Žmogaus interpretacija išlieka būtina.</li>
+            <li>FCE išvestys yra signalai, o ne išvados.</li>
+          </ul>
+          <p class="muted">
+            Praktiniam naudojimui žr. <a href="how-to-use.html">Kaip naudoti</a>.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Institucinė riba</h3>
+          <p>
+            Jei FCE kada nors būtų nagrinėjamas instituciniuose kontekstuose, šios sąlygos turėtų būti laikomos minimaliomis:
+          </p>
+          <ul>
+            <li>savanoriškas dalyvavimas</li>
+            <li>aiškus sutikimas</li>
+            <li>skaidrios interpretavimo taisyklės</li>
+            <li>peržiūrimumas ir galimybė ginčyti</li>
+            <li>jokio automatinio vykdymo</li>
+            <li>atskyrimas tarp instrumento ir bet kokio dalijimosi ar ataskaitų sluoksnio</li>
+          </ul>
+        </section>
+
+        <section class="card copy-block">
+          <div class="card-utility">
+            <h3>Trumpa atsakomybės ribojimo formuluotė</h3>
+            <button
+              class="copy-btn"
+              type="button"
+              data-copy-target="#disclaimerLt"
+              data-tooltip="Kopijuoti"
+              aria-label="Kopijuoti atsakomybės ribojimo formuluotę"
+            >
+              <span class="copy-icon" aria-hidden="true">📋</span>
+              <span class="copy-label">Kopijuoti</span>
+            </button>
+          </div>
+
+          <p class="note" id="disclaimerLt">
+            FCE yra su asmenine baze lyginamas funkcinio atlikimo instrumentas. Jis matuoja trumpų užduočių atlikimą ir lygina rezultatus su asmenine baze. FCE nediagnozuoja būklių, neaptinka medžiagų, neaiškina priežasčių ir nepateikia automatinių ar privalomų sprendimų. Rezultatai turi būti interpretuojami žmogaus ir vertinami kartu su kontekstu bei istorija.
+          </p>
+
+          <span class="muted copy-status" data-copy-status="lt" aria-live="polite"></span>
+        </section>
+      </div>
+
       <nav class="docs-nav">
         <div class="docs-nav-left">
-          <a href="concept.html" class="docs-nav-btn">
-            <span class="lang lang-en">← Concept</span>
-            <span class="lang lang-no hidden">← Konsept</span>
-            <span class="lang lang-lt hidden">← Koncepcija</span>
+          <a href="what-fce-measures.html" class="docs-nav-btn">
+            <span class="lang lang-en">← What FCE Measures</span>
+            <span class="lang lang-no hidden">← Hva FCE måler</span>
+            <span class="lang lang-lt hidden">← Ką FCE matuoja</span>
           </a>
         </div>
 
@@ -596,10 +583,10 @@
         </div>
 
         <div class="docs-nav-right">
-          <a href="norwegian-context.html" class="docs-nav-btn">
-            <span class="lang lang-en">Next →</span>
-            <span class="lang lang-no hidden">Neste →</span>
-            <span class="lang lang-lt hidden">Kitas →</span>
+          <a href="how-to-use.html" class="docs-nav-btn">
+            <span class="lang lang-en">How to Use →</span>
+            <span class="lang lang-no hidden">Hvordan bruke →</span>
+            <span class="lang lang-lt hidden">Kaip naudoti →</span>
           </a>
         </div>
       </nav>
@@ -655,8 +642,7 @@
 
       const LANG_KEY = "fce_lang";
       const hasLtContent = !!document.querySelector(".lang-lt");
-      
-      // Check for legacy key first, then use fce_lang
+
       let currentLang = localStorage.getItem(LANG_KEY);
       if (!currentLang) {
         const oldLang = localStorage.getItem("fce_lang_v1");
@@ -668,15 +654,13 @@
         }
       }
 
-      // Fallback: if LT is selected but page has no LT content, use EN
       if (currentLang === "lt" && !hasLtContent) {
         currentLang = "en";
         try { localStorage.setItem(LANG_KEY, currentLang); } catch {}
       }
 
       const langSelect = document.getElementById("langSelect");
-      
-      // Ensure LT option exists (selector parity across pages)
+
       if (langSelect) {
         const hasLtOption = Array.from(langSelect.options).some(opt => opt.value === "lt");
         if (!hasLtOption) {
@@ -686,33 +670,36 @@
           langSelect.appendChild(ltOption);
         }
       }
-      
+
       if (langSelect) langSelect.value = currentLang;
 
       const I18N_PAGES = {
         en: {
           about: "About",
-          "how-to-use": "How to use",
-          faq: "FAQ",
-          "norwegian-context": "Norwegian Context",
           concept: "Concept",
-          scope: "Scope & Limits"
+          "what-fce-measures": "What FCE Measures",
+          scope: "Scope & Limits",
+          "how-to-use": "How to use",
+          "how-tests-work": "How the tests work",
+          faq: "FAQ"
         },
         no: {
           about: "Om",
-          "how-to-use": "Hvordan bruke",
-          faq: "FAQ",
-          "norwegian-context": "Norsk kontekst",
           concept: "Konsept",
-          scope: "Omfang & begrensninger"
+          "what-fce-measures": "Hva FCE måler",
+          scope: "Omfang & begrensninger",
+          "how-to-use": "Hvordan bruke",
+          "how-tests-work": "Hvordan testene fungerer",
+          faq: "FAQ"
         },
         lt: {
           about: "Apie",
-          "how-to-use": "Kaip naudoti",
-          faq: "DUK",
-          "norwegian-context": "Norvegiškas kontekstas",
           concept: "Koncepcija",
-          scope: "Apimtis ir ribos"
+          "what-fce-measures": "Ką FCE matuoja",
+          scope: "Apimtis ir ribos",
+          "how-to-use": "Kaip naudoti",
+          "how-tests-work": "Kaip veikia testai",
+          faq: "DUK"
         }
       };
 
@@ -731,25 +718,21 @@
       }
 
       function applyLanguage(lang) {
-        // Determine content language (with fallback)
         let contentLang = lang;
         if (contentLang === "lt" && !hasLtContent) {
           contentLang = "en";
         }
-        
-        // Determine UI language (LT labels now available)
+
         const uiLang = contentLang;
-        
+
         currentLang = contentLang;
         try { localStorage.setItem(LANG_KEY, contentLang); } catch {}
         if (langSelect) langSelect.value = currentLang;
 
-        // Apply content visibility
         document.querySelectorAll(".lang-en").forEach(el => el.classList.toggle("hidden", contentLang !== "en"));
         document.querySelectorAll(".lang-no").forEach(el => el.classList.toggle("hidden", contentLang !== "no"));
         document.querySelectorAll(".lang-lt").forEach(el => el.classList.toggle("hidden", contentLang !== "lt"));
 
-        // Apply UI label visibility (menu/nav items)
         document.querySelectorAll(".menu .lang-en, .docs-nav .lang-en").forEach(el => {
           el.classList.toggle("hidden", uiLang !== "en");
         });
@@ -786,10 +769,8 @@
 
       langSelect && langSelect.addEventListener("change", (e) => applyLanguage(e.target.value));
 
-      // Init
       applyLanguage(currentLang);
-      
-      // Brand link hint text handler
+
       function updateBrandLinkHint() {
         const brandLink = document.getElementById("brandLink");
         if (!brandLink) return;
@@ -798,21 +779,19 @@
         brandLink.setAttribute("data-hint", hint);
         brandLink.setAttribute("aria-label", hint);
       }
+
       updateBrandLinkHint();
       langSelect && langSelect.addEventListener("change", () => {
         updateBrandLinkHint();
       });
 
-      // Store scroll position when leaving page
       function storeScrollPosition() {
         try {
           const scrollPos = window.scrollY || window.pageYOffset || 0;
           if (scrollPos > 0) {
             localStorage.setItem("fce_doc_scroll_scope", String(scrollPos));
           }
-        } catch (e) {
-          // Ignore storage errors
-        }
+        } catch (e) {}
       }
 
       document.addEventListener("visibilitychange", () => {
@@ -823,7 +802,6 @@
 
       window.addEventListener("beforeunload", storeScrollPosition);
 
-      // Restore scroll position if coming from Learn More
       try {
         if (window.location.hash === "#restore-scroll") {
           const storedScroll = localStorage.getItem("fce_doc_scroll_scope");
@@ -837,9 +815,7 @@
             }
           }
         }
-      } catch (e) {
-        // Ignore storage errors
-      }
+      } catch (e) {}
     })();
   </script>
   <script src="docs.js"></script>

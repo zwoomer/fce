@@ -10,8 +10,8 @@ FCE is designed to support **human interpretation**, not automated judgment.
 
 ## Current status
 
-**Latest release:** v0.3.3  
-**Status:** Stable (documentation & explanation complete)
+**Latest release:** v0.4.0  
+**Status:** Stable (interpretation layer pass + documentation IA)
 
 ---
 
@@ -64,6 +64,11 @@ Measures fine motor control and spatial accuracy.
 - Reaction time
 - Hit/miss/timeout rates
 - Baseline-relative evaluation
+
+### Deviation signals and validation
+
+- Deviation thresholds (e.g. 1SD / 2SD) are practical signals of change, not calibrated indicators of real-world capability.
+- FCE has not yet been validated against real-world performance outcomes.
 
 ---
 
@@ -283,13 +288,25 @@ No test logic changes.
 
 ---
 
+## Interpretation layer, docs IA, and navigation (v0.4.0)
+
+- **History & Trend clarity:** Shared compare logic across home preview, History, and Trend; human-readable baseline header and recent checks (EN/NO/LT)
+- **Onboarding:** Clearer first-run copy; returning users scroll to `#instruction`
+- **Documentation site:** Grouped menu (Core Docs / Context & Development), `applications.html`, `validation-research.html` (validation stance / research directions), **What FCE Measures** in reading order
+- **Docs navigation:** FAQ → Why → Applications → Validation; responsive docs-nav for long translations
+- **Footers:** “Designed and built by Zwoomer” on instrument and all doc pages
+- **Repository:** Older release notes under `docs/releases/`; canonical SVG marks and `svg-preview.html` removed from repo root (restore assets or add a new preview if needed)
+
+---
+
 ## History & trends
 
 - Per-test session history
 - Mode-aware filtering (Baseline / Check / Training)
 - Clear handling of invalid or low-quality sessions
+- **v0.4.0:** Home History preview and Trend panel share aligned baseline comparison logic; readable baseline header (typical value, variation, guidance) and recent-check list with EN/NO/LT copy
 - Minimal trend view showing:
-  - Baseline band (±1 SD)
+  - Baseline summary (mean / variation as applicable)
   - Recent check sessions
 
 ---
@@ -321,7 +338,7 @@ FCE is suitable for:
 
 - Functional self-monitoring
 - Performance and fatigue research
-- Traffic and workplace safety discussions
+- Exploratory discussion of functional performance in safety-relevant contexts
 - Pilot studies and institutional evaluation
 
 ---
@@ -343,20 +360,21 @@ FCE is suitable for:
 - v0.3.1 — Precision refinements and UX improvements
 - v0.3.2 — Unified navigation and Precision history polish
 - v0.3.3 — Precision stability, export, and formatting improvements
+- v0.4.0 — Interpretation layer, documentation IA, grouped nav, applications page
 
 ---
 
 ## Planned development
 
-Future development will proceed in two stages:
+Future development will proceed in stages:
 
-### v0.3.x — Refinement
-Short-term focus on stabilizing the Precision test, improving clarity,
-and polishing UX without adding new paradigms.
+### v0.4.x — Synthesis & reporting (next)
+Deeper longitudinal views, optional printable report, metadata filtering (descriptive only),
+and further trend visualization — still local-only, baseline-relative, and human-interpreted.
 
-### v0.4 — Interpretation & trends
-Medium-term focus on synthesis, trend visualization, and improved export/reporting,
-while preserving FCE's baseline-relative and privacy-first design.
+### Completed lines
+- **v0.3.x** closed at v0.3.3 (Precision stability, export, docs boundaries).
+- **v0.4.0** delivers the first interpretation-layer pass and documentation architecture update (see `RELEASE_v0.4.0.md`).
 
 No future version will introduce:
 - Accounts or cloud storage

@@ -172,35 +172,39 @@ Status: ✅ Shipped
 
 ---
 
-## v0.3.x — Refinements (in progress)
+## v0.3.x — Refinements (completed)
 
-Focus: stabilization and tightening of existing functionality.
+Closed at **v0.3.3**: Precision stability, CSV export, formatting, invalid-session UX, documentation boundaries, visual marks, mobile History layout. No new test paradigms in this line.
 
-- ✅ Precision test calibration and edge-case handling (v0.3.3: input normalization, timeout handling)
-- ✅ Pointer/touch robustness in fullscreen mode (v0.3.3: CSS pixel normalization)
-- ✅ Clearer quality and invalid-session messaging (v0.3.3: standardized formatting, compact reason display)
-- ✅ Minor UX consistency improvements (v0.3.3: Quality+Note formatting, summary visibility)
-- ✅ Optional CSV export (v0.3.3: CSV export with deterministic timestamps)
-- ✅ Documentation clarity and boundary reinforcement (v0.3.3: comprehensive content additions across all pages)
-- ✅ Visual identity system (v0.3.3: canonical SVG marks, geometry optimized for favicon rendering)
-- ✅ Mobile History panel layout fix (v0.3.3: responsive layout for home page History panel on mobile devices)
-
-No new tests or paradigms are introduced in v0.3.x.
-
-Status: 🔄 In progress
+Status: ✅ Complete (tag **v0.3.3**)
 
 ---
 
-## v0.4 — Synthesis & trends (planned)
+## v0.4.0 — Interpretation layer & documentation IA (completed)
 
-Focus: interpretation, readability, and longitudinal insight.
+Focus: clearer interpretation copy in the instrument, grouped docs navigation, new doc pages, and repo hygiene.
 
-- Multi-task session overview (summary-level interpretation)
-- Visual trend graphs for baseline stability and check comparisons
-- Session metadata filtering (sleep, stress, notes)
-- Export and reporting improvements
-- Documentation updates aligned with new views
+**Shipped:**
+- Shared compare logic across home History preview, History, and Trend; readable baseline + recent-checks trend UI (EN/NO/LT)
+- Onboarding copy and scroll targets (`#instruction` / `#instrument` alignment)
+- Grouped hamburger menu (Core vs Context), `menu-sections.js`, `applications.html`, `validation-research.html` (validation / research page), **What FCE Measures** in IA
+- Docs-nav flow and responsive long-label layout; footer attribution
+- Release notes archived under `docs/releases/` for older versions; root SVG marks removed (follow-up: preview/favicon paths)
 
-v0.4 remains local-only, baseline-relative, and human-interpreted.
+**Still local-only, baseline-relative, human-interpreted.**
 
-Status: 🧭 Exploratory
+Status: ✅ Shipped (see `RELEASE_v0.4.0.md`)
+
+---
+
+## v0.4.x — Synthesis & trends (planned)
+
+Focus: deeper longitudinal insight and reporting, without automated judgment.
+
+- Multi-task or cross-session summary views (non-diagnostic)
+- Richer trend visualization (baseline stability, check comparisons over time)
+- Metadata filtering / grouping (sleep, stress, notes — descriptive only)
+- Printable session report; optional export polish (CSV exists since v0.3.3)
+- Restore or relocate mark SVG assets if required for deployment
+
+Status: 🧭 Next

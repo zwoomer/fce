@@ -359,48 +359,50 @@ Tagged as **v0.3.3**.
 
 ---
 
-## v0.3.x — Refinements (in progress)
+## v0.3.x — Refinements (complete at v0.3.3)
 
-Scope: stabilization, clarity, and robustness of existing functionality.
-No new paradigms are introduced in this version line.
-
-Planned focus areas:
-- Precision test refinements:
-  - ✅ Consistent hit-radius and timeout handling (completed in v0.3.3)
-  - Minor HUD clarity improvements
-- UX refinements:
-  - ✅ Clearer invalid-session explanations (completed in v0.3.3)
-  - ✅ Small wording improvements in summaries and quality labels (completed in v0.3.3)
-- Performance and reliability:
-  - Event handling cleanup
-  - Minor performance optimizations
-- Export improvements:
-  - ✅ Optional CSV export (completed in v0.3.3)
-  - ✅ Clearer timestamp labeling (completed in v0.3.3)
-
-v0.3.x is considered complete when Precision behavior is stable across devices
-and no usability regressions remain.
+The v0.3.x line closed at tag **v0.3.3**: Precision stability, CSV export, Quality+Note formatting, invalid-session reason display, documentation boundary work, visual mark system (see `RELEASE_v0.3.3.md`), and mobile History layout fixes. No further v0.3.x releases are planned.
 
 ---
 
-## v0.4 — Synthesis & interpretation layer (planned)
+## v0.4.0 — Interpretation layer, docs IA, and navigation polish (completed)
 
-Purpose: improve readability, interpretation, and usefulness of existing data,
-without changing the underlying measurement philosophy.
+Shipped improvements:
 
-Planned directions (non-binding):
-- Multi-task overview:
-  - At-a-glance summary of all tests in a session
-  - Optional composite indicator (explicitly non-diagnostic)
-- Trend visualization:
-  - Baseline stability over time
-  - Check vs baseline comparison across sessions
-- Context-aware review:
-  - Filtering and grouping by sleep, stress, or other metadata
-  - Metadata remains descriptive only (no scoring impact)
-- Export & sharing:
-  - Structured CSV export
-  - Printable single-session report (HTML-first)
+**Instrument — interpretation & History**
+- Shared baseline comparison patterns across home History preview, History cards, and Trend panel
+- Human-readable Trend baseline header (typical value, variation, short guidance) with EN/NO/LT strings
+- Recent checks list and empty states aligned with compare logic; Precision vs ms units handled consistently
+- Supporting CSS for trend list and home history preview
 
-v0.4 does not introduce accounts, cloud storage, diagnostics,
-or automated decision-making.
+**Onboarding & entry**
+- Clearer first-run onboarding copy (EN/NO/LT)
+- Returning users scroll to `#instruction`; `#instrument` deep-link behavior aligned
+
+**Documentation site**
+- Grouped hamburger menu: **Core Docs** vs **Context & Development** (`menu-sections.js`, `aria-expanded`, auto-open current section)
+- **What FCE Measures** in core reading order; **`applications.html`** (full EN/NO/LT content); **`validation-research.html`** (validation stance and research directions, EN/NO/LT)
+- Docs-nav sequence: FAQ → Why → Applications → Validation; responsive `.docs-nav` for long translations
+- Footers: **Designed and built by Zwoomer**; simplified FCE tagline (Why link via menu)
+- `index.html` canonical doc list updated for Learn-more / last-page continuity
+
+**Repository**
+- Older release notes moved to `docs/releases/` (v0.2.9–v0.3.1); root `RELEASE_v0.3.3.md` maintained
+- Canonical SVG mark files and `svg-preview.html` removed from repo root (restore or replace if marks/preview are needed)
+
+Tagged as **v0.4.0** (see `RELEASE_v0.4.0.md`).
+
+---
+
+## v0.4.x — Synthesis & reporting (next)
+
+Purpose: extend readability and longitudinal insight **without** changing measurement philosophy or adding automated judgment.
+
+Still open (non-binding):
+- Multi-task / multi-session overview at a glance (explicitly non-diagnostic)
+- Richer trend visualization (baseline stability, check trajectories)
+- Context-aware review: filter/group by metadata (sleep, stress, notes) — metadata descriptive only
+- Printable single-session report (HTML-first); CSV already shipped in v0.3.3
+- Restore or relocate favicon / mark SVGs and add an optional preview page if needed
+
+v0.4.x does not introduce accounts, cloud storage, diagnostics, or automated decision-making.

@@ -1373,6 +1373,65 @@
     cursor: default;
   }
 
+  /* Grouped menu sections */
+  .menu-section {
+    margin-top: 4px;
+  }
+
+  .menu-section-toggle {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 10px;
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    text-align: left;
+    font-size: inherit;
+    font-family: inherit;
+    transition: background-color 0.2s ease;
+    border-radius: 4px;
+  }
+
+  .menu-section-toggle:hover {
+    background: #1a1a1a;
+  }
+
+  .menu-section-label {
+    font-weight: 600;
+    font-size: 0.92em;
+    letter-spacing: 0.02em;
+    opacity: 0.95;
+  }
+
+  .menu-chevron {
+    flex-shrink: 0;
+    font-size: 0.75em;
+    opacity: 0.65;
+    transition: transform 0.18s ease;
+  }
+
+  .menu-section.is-open .menu-chevron {
+    transform: rotate(90deg);
+  }
+
+  .menu-section-panel {
+    display: none;
+    padding: 2px 0 6px 0;
+  }
+
+  .menu-section.is-open .menu-section-panel {
+    display: block;
+  }
+
+  .menu-item.menu-item-nested {
+    padding-left: 16px;
+    font-size: 0.96em;
+  }
+
   .view.hidden {
     display: none;
   }
@@ -1522,6 +1581,12 @@
     text-align: center;
     opacity: 0.6;
     font-size: 14px;
+  }
+
+  .footer .footer-builtby {
+    margin: 12px 0 0;
+    font-size: 13px;
+    opacity: 0.9;
   }
 
   .footer a {
@@ -2206,7 +2271,7 @@ select option:disabled {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 16px;
+  gap: 12px 16px;
   margin: 32px auto;
   max-width: 720px;
   padding: 0 16px;
@@ -2216,10 +2281,11 @@ select option:disabled {
 .docs-nav-left,
 .docs-nav-center,
 .docs-nav-right {
-  flex: 1;
+  flex: 1 1 0;
   display: flex;
   justify-content: center;
   min-width: 0;
+  max-width: 100%;
 }
 
 .docs-nav-left {
@@ -2231,8 +2297,9 @@ select option:disabled {
 }
 
 .docs-nav-btn {
-  padding: 10px 20px;
+  padding: 10px 16px;
   font-size: 14px;
+  line-height: 1.35;
   text-decoration: none;
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 8px;
@@ -2240,7 +2307,13 @@ select option:disabled {
   color: #eee;
   transition: all 0.2s ease;
   display: inline-block;
-  white-space: nowrap;
+  max-width: 100%;
+  text-align: center;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+  box-sizing: border-box;
 }
 
 .docs-nav-btn:hover {
@@ -2248,17 +2321,30 @@ select option:disabled {
   border-color: rgba(255, 255, 255, 0.25);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 900px) {
   .docs-nav {
     flex-direction: column;
+    align-items: stretch;
     gap: 12px;
   }
-  
+
   .docs-nav-left,
   .docs-nav-center,
   .docs-nav-right {
+    flex: none;
     width: 100%;
+    max-width: none;
     justify-content: center;
+  }
+
+  .docs-nav-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .docs-nav {
+    gap: 10px;
   }
 }
 

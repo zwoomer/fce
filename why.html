@@ -6,7 +6,6 @@
   <title>FCE — Why this exists</title>
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Remember last visited page (works across all pages) -->
   <script>
     try {
       const p = location.pathname.split("/").pop() || "index.html";
@@ -63,53 +62,81 @@
       <span class="lang lang-lt hidden">Istorija</span>
     </a>
 
-    <a href="about.html" class="menu-item">
-      <span class="lang lang-en">About</span>
-      <span class="lang lang-no hidden">Om</span>
-      <span class="lang lang-lt hidden">Apie</span>
-    </a>
+    <div class="menu-section" id="menuSectionCore">
+      <button type="button" class="menu-section-toggle" id="menuToggleCore" aria-expanded="false" aria-controls="menuPanelCore">
+        <span class="menu-section-label">
+          <span class="lang lang-en">Core Docs</span>
+          <span class="lang lang-no hidden">Kjernedokumentasjon</span>
+          <span class="lang lang-lt hidden">Pagrindiniai dokumentai</span>
+        </span>
+        <span class="menu-chevron" aria-hidden="true">▸</span>
+      </button>
+      <div class="menu-section-panel" id="menuPanelCore" role="region" aria-labelledby="menuToggleCore">
+        <a class="menu-item menu-item-nested" href="about.html">
+          <span class="lang lang-en">About</span>
+          <span class="lang lang-no hidden">Om</span>
+          <span class="lang lang-lt hidden">Apie</span>
+        </a>
+        <a class="menu-item menu-item-nested" href="concept.html">
+          <span class="lang lang-en">Concept</span>
+          <span class="lang lang-no hidden">Konsept</span>
+          <span class="lang lang-lt hidden">Koncepcija</span>
+        </a>
+        <a class="menu-item menu-item-nested" href="what-fce-measures.html">
+          <span class="lang lang-en">What FCE Measures</span>
+          <span class="lang lang-no hidden">Hva FCE måler</span>
+          <span class="lang lang-lt hidden">Ką FCE matuoja</span>
+        </a>
+        <a class="menu-item menu-item-nested" href="scope.html">
+          <span class="lang lang-en">Scope &amp; Limits</span>
+          <span class="lang lang-no hidden">Omfang &amp; begrensninger</span>
+          <span class="lang lang-lt hidden">Apimtis ir ribos</span>
+        </a>
+        <a class="menu-item menu-item-nested" href="how-to-use.html">
+          <span class="lang lang-en">How to Use</span>
+          <span class="lang lang-no hidden">Hvordan bruke</span>
+          <span class="lang lang-lt hidden">Kaip naudoti</span>
+        </a>
+        <a class="menu-item menu-item-nested" href="how-tests-work.html">
+          <span class="lang lang-en">How the tests work</span>
+          <span class="lang lang-no hidden">Hvordan testene fungerer</span>
+          <span class="lang lang-lt hidden">Kaip veikia testai</span>
+        </a>
+        <a class="menu-item menu-item-nested" href="faq.html">
+          <span class="lang lang-en">FAQ</span>
+          <span class="lang lang-no hidden">FAQ</span>
+          <span class="lang lang-lt hidden">DUK</span>
+        </a>
+      </div>
+    </div>
 
-    <a href="concept.html" class="menu-item">
-      <span class="lang lang-en">Concept</span>
-      <span class="lang lang-no hidden">Konsept</span>
-      <span class="lang lang-lt hidden">Koncepcija</span>
-    </a>
-
-    <a href="what-fce-measures.html" class="menu-item">
-      <span class="lang lang-en">What FCE Measures</span>
-      <span class="lang lang-no hidden">Hva FCE måler</span>
-      <span class="lang lang-lt hidden">Ką FCE matuoja</span>
-    </a>
-
-    <a href="scope.html" class="menu-item">
-      <span class="lang lang-en">Scope &amp; limits</span>
-      <span class="lang lang-no hidden">Omfang og grenser</span>
-      <span class="lang lang-lt hidden">Apimtis ir ribos</span>
-    </a>
-
-    <a href="how-to-use.html" class="menu-item">
-      <span class="lang lang-en">How to use</span>
-      <span class="lang lang-no hidden">Hvordan bruke</span>
-      <span class="lang lang-lt hidden">Kaip naudoti</span>
-    </a>
-
-    <a href="how-tests-work.html" class="menu-item">
-      <span class="lang lang-en">How tests work</span>
-      <span class="lang lang-no hidden">Hvordan testene fungerer</span>
-      <span class="lang lang-lt hidden">Kaip veikia testai</span>
-    </a>
-
-    <a href="faq.html" class="menu-item">
-      <span class="lang lang-en">FAQ</span>
-      <span class="lang lang-no hidden">FAQ</span>
-      <span class="lang lang-lt hidden">DUK</span>
-    </a>
-
-    <a href="why.html" class="menu-item" aria-current="page">
-      <span class="lang lang-en">Why this exists</span>
-      <span class="lang lang-no hidden">Hvorfor dette finnes</span>
-      <span class="lang lang-lt hidden">Kodėl tai egzistuoja</span>
-    </a>
+    <div class="menu-section" id="menuSectionContext">
+      <button type="button" class="menu-section-toggle" id="menuToggleContext" aria-expanded="false" aria-controls="menuPanelContext">
+        <span class="menu-section-label">
+          <span class="lang lang-en">Context &amp; Development</span>
+          <span class="lang lang-no hidden">Kontekst og utvikling</span>
+          <span class="lang lang-lt hidden">Kontekstas ir plėtra</span>
+        </span>
+        <span class="menu-chevron" aria-hidden="true">▸</span>
+      </button>
+      <div class="menu-section-panel" id="menuPanelContext" role="region" aria-labelledby="menuToggleContext">
+        <a class="menu-item menu-item-nested" href="why.html" aria-current="page">
+          <span class="lang lang-en">Why this exists</span>
+          <span class="lang lang-no hidden">Hvorfor dette finnes</span>
+          <span class="lang lang-lt hidden">Kodėl tai egzistuoja</span>
+        </a>
+        <a class="menu-item menu-item-nested" href="applications.html">
+          <span class="lang lang-en">Applications / Use Contexts</span>
+          <span class="lang lang-no hidden">Bruksområder / kontekster</span>
+          <span class="lang lang-lt hidden">Taikymo sritys / naudojimo kontekstai</span>
+        </a>
+        <a class="menu-item menu-item-nested" href="validation-research.html">
+          <span class="lang lang-en">Validation / Research</span>
+          <span class="lang lang-no hidden">Validering / forskning</span>
+          <span class="lang lang-lt hidden">Validavimas / tyrimai</span>
+        </a>
+      </div>
+    </div>
   </nav>
 
   <div id="menuOverlay" class="menu-overlay hidden" aria-hidden="true"></div>
@@ -118,681 +145,372 @@
     <section class="container">
       <p class="muted">
         <span class="lang lang-en">
-          This page describes the creator's design intent and values; it does not describe system behavior or provide instructions for use.
+          This page describes design intent and values. It does not describe system behavior or provide usage instructions.
         </span>
         <span class="lang lang-no hidden">
-          Denne siden beskriver utviklerens intensjon og verdigrunnlag, og beskriver ikke systemets funksjon eller bruk.
+          Denne siden beskriver intensjon og verdier. Den beskriver ikke systematferd eller bruksinstruksjoner.
         </span>
         <span class="lang lang-lt hidden">
-          Šiame puslapyje aprašoma kūrėjo intencija ir vertybinis pagrindas; jis neaprašo sistemos veikimo ar naudojimo.
+          Šiame puslapyje aprašoma intencija ir vertybės. Jis neaprašo sistemos veikimo ar naudojimo instrukcijų.
         </span>
       </p>
 
-      <header class="hero">
-        <h1>
-          <span class="lang lang-en">Why this exists</span>
-          <span class="lang lang-no hidden">Hvorfor dette finnes</span>
-          <span class="lang lang-lt hidden">Kodėl tai egzistuoja</span>
-        </h1>
+      <!-- EN -->
+      <div class="lang lang-en">
+        <header class="hero">
+          <h1>Why this exists</h1>
+          <p class="lead">
+            I did not build FCE to monitor people. I built it to help people notice themselves clearly, voluntarily, and without judgment.
+          </p>
+          <blockquote class="quote">
+            “A measurement is only ethical when the person being measured remains the primary decision-maker.”
+          </blockquote>
+        </header>
 
-        <p class="lead">
-          <span class="lang lang-en">
-            I didn't build FCE to monitor people. I built it to help people notice themselves —
-            clearly, voluntarily, and without judgment.
-          </span>
-          <span class="lang lang-no hidden">
-            Jeg bygde ikke FCE for å overvåke mennesker. Jeg bygde det for å hjelpe mennesker å legge merke til seg selv —
-            klart, frivillig og uten dømming.
-          </span>
-          <span class="lang lang-lt hidden">
-            Aš nesukūriau FCE tam, kad stebėčiau žmones. Aš jį sukūriau tam, kad žmonės galėtų pastebėti save —
-            aiškiai, savanoriškai ir be vertinimo.
-          </span>
-        </p>
+        <section class="card">
+          <h3>What problem this responds to</h3>
+          <p>
+            Many systems that measure human performance are designed for institutions: to classify, to decide, to reduce liability, or to enforce compliance.
+            Even when the intention is good, that structure can shift power away from the person whose body and mind are being measured.
+          </p>
+          <p>
+            At the same time, there are ordinary moments where a person genuinely needs to know:
+            <em>“Am I functioning like myself today?”</em>
+            Not as a diagnosis. Not as a legal status. As a practical self-check before something demanding.
+          </p>
+          <p class="muted">
+            FCE exists for that moment: to support awareness and responsibility without turning the person into a case.
+          </p>
+        </section>
 
-        <blockquote class="quote">
-          <span class="lang lang-en">
-            "A measurement is only ethical when the person being measured remains the primary decision-maker."
-          </span>
-          <span class="lang lang-no hidden">
-            «En måling er bare etisk når personen som måles forblir den som tar beslutningen.»
-          </span>
-          <span class="lang lang-lt hidden">
-            „Matavimas yra etiškas tik tada, kai matuojamas žmogus pats lieka sprendimų priėmėju.“
-          </span>
-        </blockquote>
-      </header>
+        <section class="card">
+          <h3>Why baseline-relative measurement matters</h3>
+          <p>
+            People differ widely in reaction speed, attention style, and motor precision. Fixed thresholds flatten that diversity.
+            They also create false confidence and false alarm.
+          </p>
+          <p>
+            Baseline-relative measurement asks a narrower and more honest question:
+          </p>
+          <blockquote class="quote">
+            “How are you functioning today compared to your own normal range?”
+          </blockquote>
+          <p class="muted">
+            FCE is not built to prove that a person is “good” or “bad.” It is built to reveal drift and support better judgment.
+          </p>
+        </section>
 
-      <section class="card">
-        <h3>
-          <span class="lang lang-en">What problem I'm responding to</span>
-          <span class="lang lang-no hidden">Hvilket problem dette svarer på</span>
-          <span class="lang lang-lt hidden">Į kokią problemą tai atsako</span>
-        </h3>
-
-        <p>
-          <span class="lang lang-en">
-            Many systems that measure human performance are designed for institutions: to decide, to classify,
-            to protect liability, or to enforce compliance. Even when well-intended, that structure can pull
-            power away from the person whose body and mind are being measured.
-          </span>
-          <span class="lang lang-no hidden">
-            Mange systemer som måler menneskelig ytelse er laget for institusjoner:
-            for å avgjøre, klassifisere, redusere ansvar eller håndheve regler.
-            Selv når intensjonen er god, kan denne strukturen flytte makt bort fra personen
-            hvis kropp og sinn faktisk blir målt.
-          </span>
-          <span class="lang lang-lt hidden">
-            Daugelis sistemų, kurios matuoja žmogaus veiklą, yra sukurtos institucijoms:
-            spręsti, klasifikuoti, apsidrausti ar kontroliuoti.
-            Net ir turint gerų ketinimų, tokios sistemos dažnai atima galią
-            iš paties žmogaus, kurio kūnas ir protas yra matuojami.
-          </span>
-        </p>
-
-        <p>
-          <span class="lang lang-en">
-            At the same time, everyday life contains moments where a person genuinely needs to know:
-            <em>"Am I functioning like myself today?"</em> Not as a legal status, not as a diagnosis —
-            as a practical check-in before a demanding task.
-          </span>
-          <span class="lang lang-no hidden">
-            Samtidig finnes det øyeblikk i hverdagen hvor en person oppriktig trenger å vite:
-            <em>«Fungerer jeg som meg selv i dag?»</em> Ikke som juridisk status, ikke som diagnose —
-            men som en praktisk vurdering før en krevende oppgave.
-          </span>
-          <span class="lang lang-lt hidden">
-            Tačiau kasdienybėje būna momentų, kai žmogui nuoširdžiai reikia žinoti:
-            <em>„Ar šiandien aš veikiu kaip įprastai?“</em> Ne kaip teisinė išvada, ne kaip diagnozė —
-            o kaip paprastas, praktiškas savęs patikrinimas prieš sunkesnę užduotį.
-          </span>
-        </p>
-
-        <p class="muted">
-          <span class="lang lang-en">
-            FCE exists for that moment: to support awareness and responsibility without turning the person into a case file.
-          </span>
-          <span class="lang lang-no hidden">
-            FCE finnes for nettopp dette øyeblikket: å støtte bevissthet og ansvar uten å gjøre personen til en sak.
-          </span>
-          <span class="lang lang-lt hidden">
-            FCE egzistuoja būtent tam momentui: padėti pastebėti save ir veikti atsakingai, nepaverčiant žmogaus „byla".
-          </span>
-        </p>
-      </section>
-
-      <section class="card">
-        <h3>
-          <span class="lang lang-en">Awareness before judgment</span>
-          <span class="lang lang-no hidden">Bevissthet før vurdering</span>
-          <span class="lang lang-lt hidden">Sąmoningumas prieš vertinimą</span>
-        </h3>
-
-        <p>
-          <span class="lang lang-en">
-            There's a common experience most people recognize:
-          </span>
-          <span class="lang lang-no hidden">
-            Mange kjenner igjen denne indre dialogen:
-          </span>
-          <span class="lang lang-lt hidden">
-            Daugeliui pažįstami šie vidiniai klausimai:
-          </span>
-        </p>
-
-        <ul>
-          <li>
-            <span class="lang lang-en">"I'm probably fine… but something feels off."</span>
-            <span class="lang lang-no hidden">«Jeg er sikkert ok … men noe føles litt annerledes.»</span>
-            <span class="lang lang-lt hidden">„Lyg ir viskas gerai… bet kažkas ne taip."</span>
-          </li>
-          <li>
-            <span class="lang lang-en">"I can push through, or I can pause."</span>
-            <span class="lang lang-no hidden">«Jeg kan presse videre — eller jeg kan stoppe opp.»</span>
-            <span class="lang lang-lt hidden">„Galiu spausti toliau — arba galiu sustoti."</span>
-          </li>
-          <li>
-            <span class="lang lang-en">"I don't want to guess. I want a clean signal."</span>
-            <span class="lang lang-no hidden">«Jeg vil ikke gjette. Jeg vil ha et tydelig signal.»</span>
-            <span class="lang lang-lt hidden">„Nenoriu spėlioti. Noriu aiškaus signalo."</span>
-          </li>
-        </ul>
-
-        <p>
-          <span class="lang lang-en">
-            FCE doesn't tell you what you are. It doesn't tell you why you feel the way you do.
-            It offers a mirror: <strong>how you function today compared to your own baseline.</strong>
-          </span>
-          <span class="lang lang-no hidden">
-            FCE forteller deg ikke hva du er. Det forteller deg ikke hvorfor du føler som du gjør.
-            Det gir deg et speil: <strong>hvordan du fungerer i dag sammenlignet med din egen normaltilstand.</strong>
-          </span>
-          <span class="lang lang-lt hidden">
-            FCE nesako, kas tu esi. Jis nesako, kodėl tu taip jautiesi.
-            Jis parodo veidrodį: <strong>kaip tu veiki šiandien, palyginti su savo įprasta būsena.</strong>
-          </span>
-        </p>
-
-        <p>
-          <span class="lang lang-en">
-            That's the difference between a tool that supports self-regulation and a tool that tries to control outcomes.
-          </span>
-          <span class="lang lang-no hidden">
-            Det er forskjellen mellom et verktøy som støtter selvregulering og et system som forsøker å styre utfallet.
-          </span>
-          <span class="lang lang-lt hidden">
-            Tai skirtumas tarp įrankio, kuris padeda savireguliacijai, ir sistemos, kuri bando kontroliuoti rezultatą.
-          </span>
-        </p>
-      </section>
-
-      <section class="card">
-        <h3>
-          <span class="lang lang-en">Why baseline-relative matters</span>
-          <span class="lang lang-no hidden">Hvorfor baseline-relativ måling betyr noe</span>
-          <span class="lang lang-lt hidden">Kodėl svarbus palyginimas su savimi</span>
-        </h3>
-
-        <p>
-          <span class="lang lang-en">
-            People differ widely in reaction time, attention style, and motor precision. Absolute thresholds flatten that
-            diversity. They also create false confidence ("I'm above the cutoff, therefore I'm safe") and false alarm
-            ("I'm below the cutoff, therefore I'm unfit"), even when the person is simply different.
-          </span>
-          <span class="lang lang-no hidden">
-            Mennesker varierer kraftig i reaksjonstid, oppmerksomhetsstil og motorisk presisjon.
-            Absolutte grenser flater ut denne variasjonen. De kan også skape falsk trygghet
-            («jeg er over grensen, altså er jeg trygg») og falsk alarm
-            («jeg er under grensen, altså er jeg uegnet»), selv når personen bare er annerledes.
-          </span>
-          <span class="lang lang-lt hidden">
-            Žmonės labai skiriasi reakcijos greičiu, dėmesio tipu ir judesių tikslumu.
-            Bendros normos šiuos skirtumus ištrina. Jos gali sukurti klaidingą saugumo jausmą
-            („esu virš ribos, vadinasi saugu") arba klaidingą pavojų
-            („esu žemiau ribos, vadinasi netinku"), net kai žmogus tiesiog kitoks.
-          </span>
-        </p>
-
-        <p>
-          <span class="lang lang-en">
-            Baseline-relative measurement respects individuality by asking a simpler and more honest question:
-          </span>
-          <span class="lang lang-no hidden">
-            Baseline-relativ måling stiller et enklere og mer ærlig spørsmål:
-          </span>
-          <span class="lang lang-lt hidden">
-            FCE užduoda paprastesnį ir sąžiningesnį klausimą:
-          </span>
-        </p>
-
-        <blockquote class="quote">
-          <span class="lang lang-en">
-            "How are you performing today compared to your normal range?"
-          </span>
-          <span class="lang lang-no hidden">
-            «Hvordan fungerer du i dag sammenlignet med ditt normale spenn?»
-          </span>
-          <span class="lang lang-lt hidden">
-            „Kaip aš veikiu šiandien, palyginti su tuo, kaip veikiu įprastai?"
-          </span>
-        </blockquote>
-
-        <p class="muted">
-          <span class="lang lang-en">
-            FCE is not built to prove you are "good" or "bad." It is built to reveal drift — and to invite better decisions.
-          </span>
-          <span class="lang lang-no hidden">
-            FCE er ikke bygget for å bevise at du er «god» eller «dårlig». Det er bygget for å synliggjøre endring —
-            og invitere til bedre valg.
-          </span>
-          <span class="lang lang-lt hidden">
-            FCE nėra skirtas nuspręsti, ar tu „geras" ar „blogas". Jis skirtas pastebėti pokytį —
-            ir paskatinti priimti geresnius sprendimus.
-          </span>
-        </p>
-      </section>
-
-      <section class="card">
-        <h3>
-          <span class="lang lang-en">Why I refuse surveillance</span>
-          <span class="lang lang-no hidden">Hvorfor jeg avviser overvåking</span>
-          <span class="lang lang-lt hidden">Kodėl aš atsisakau stebėjimo</span>
-        </h3>
-
-        <p>
-          <span class="lang lang-en">
+        <section class="card">
+          <h3>Why surveillance is refused</h3>
+          <p>
             I deliberately chose not to build features that turn a self-check into a monitoring system.
-            This is a design boundary — not a technical limitation.
-          </span>
-          <span class="lang lang-no hidden">
-            Jeg har bevisst valgt å ikke bygge funksjoner som gjør en egenkontroll til et overvåkingssystem.
-            Dette er en designgrense — ikke en teknisk begrensning.
-          </span>
-          <span class="lang lang-lt hidden">
-            Aš sąmoningai neįtraukiau funkcijų, kurios paverstų savęs patikrinimą kontrolės sistema.
-            Tai yra dizaino riba, o ne techninis trūkumas.
-          </span>
-        </p>
-
-        <p><strong>
-          <span class="lang lang-en">I refuse:</span>
-          <span class="lang lang-no hidden">Jeg avviser:</span>
-          <span class="lang lang-lt hidden">Aš atsisakau:</span>
-        </strong></p>
-
-        <ul>
-          <li>
-            <span class="lang lang-en">Background tracking that runs without deliberate user action</span>
-            <span class="lang lang-no hidden">Bakgrunnssporing uten aktiv brukerhandling</span>
-            <span class="lang lang-lt hidden">Slapto ar nuolatinio sekimo be aiškaus žmogaus veiksmo</span>
-          </li>
-          <li>
-            <span class="lang lang-en">Default cloud accounts, automatic uploads, or hidden telemetry</span>
-            <span class="lang lang-no hidden">Standard skylagring, automatisk opplasting eller skjult datainnsamling</span>
-            <span class="lang lang-lt hidden">Automatinio siuntimo į debesį ar paslėpto duomenų rinkimo</span>
-          </li>
-          <li>
-            <span class="lang lang-en">Third-party reporting as a built-in outcome</span>
-            <span class="lang lang-no hidden">Tredjepartsrapportering som standardutfall</span>
-            <span class="lang lang-lt hidden">Ataskaitų trečiosioms šalims kaip „numatyto rezultato"</span>
-          </li>
-          <li>
-            <span class="lang lang-en">"Safe/unsafe" or "fit/unfit" verdicts generated by the system</span>
-            <span class="lang lang-no hidden">«Trygg/utrygg» eller «skikket/uskikket»-dommer fra systemet</span>
-            <span class="lang lang-lt hidden">„Saugus/nesaugus" ar „tinkamas/netinkamas" verdiktų</span>
-          </li>
-          <li>
-            <span class="lang lang-en">Anything that is easily repurposed for enforcement</span>
-            <span class="lang lang-no hidden">Alt som lett kan gjenbrukes til håndheving</span>
-            <span class="lang lang-lt hidden">Visko, kas lengvai gali būti panaudota kontrolei ar baudimui</span>
-          </li>
-        </ul>
-
-        <p>
-          <span class="lang lang-en">
+            This is a design boundary, not a technical limitation.
+          </p>
+          <p><strong>I refuse:</strong></p>
+          <ul>
+            <li>background tracking without deliberate user action</li>
+            <li>default cloud accounts, automatic uploads, or hidden telemetry</li>
+            <li>third-party reporting as a built-in outcome</li>
+            <li>safe/unsafe or fit/unfit verdicts generated by the system</li>
+            <li>features that are easily repurposed for enforcement</li>
+          </ul>
+          <p>
             Measurement without participation becomes surveillance. Surveillance shifts power away from the person being measured.
-            And once that power shifts, it tends to stay shifted — even if the original intent was wellbeing.
-          </span>
-          <span class="lang lang-no hidden">
-            Måling uten deltakelse blir overvåking. Overvåking flytter makt bort fra personen som måles.
-            Og når makt først er flyttet, forblir den ofte flyttet — selv om intensjonen opprinnelig var omsorg.
-          </span>
-          <span class="lang lang-lt hidden">
-            Matavimas be dalyvavimo tampa stebėjimu. Stebėjimas atima galią iš žmogaus, kurį matuoja.
-            Ir kai ta galia kartą atimta, ji dažniausiai nebegrįžta — net jei pradinis tikslas buvo „gerovė".
-          </span>
-        </p>
-
-        <p class="muted">
-          <span class="lang lang-en">
+          </p>
+          <p class="muted">
             Refusal is protection. If FCE ever becomes a leash, it has failed its purpose.
-          </span>
-          <span class="lang lang-no hidden">
-            Avvisning er beskyttelse. Hvis FCE noen gang blir en lenke, har det feilet.
-          </span>
-          <span class="lang lang-lt hidden">
-            Atsisakymas čia yra apsauga. Jei FCE kada nors taps „pavadėliu", jis bus praradęs prasmę.
-          </span>
-        </p>
-      </section>
+          </p>
+        </section>
 
-      <section class="card">
-        <h3>
-          <span class="lang lang-en">What FCE is (and is not)</span>
-          <span class="lang lang-no hidden">Hva FCE er (og ikke er)</span>
-          <span class="lang lang-lt hidden">Kas yra FCE (ir kas jis nėra)</span>
-        </h3>
+        <section class="card">
+          <h3>What FCE is and is not</h3>
 
-        <p><strong>
-          <span class="lang lang-en">FCE is:</span>
-          <span class="lang lang-no hidden">FCE er:</span>
-          <span class="lang lang-lt hidden">FCE yra:</span>
-        </strong></p>
+          <p><strong>FCE is:</strong></p>
+          <ul>
+            <li>a voluntary functional self-check</li>
+            <li>baseline-relative measurement</li>
+            <li>privacy-first and local by default</li>
+            <li>designed to support human interpretation</li>
+          </ul>
 
-        <ul>
-          <li>
-            <span class="lang lang-en">A voluntary functional self-check</span>
-            <span class="lang lang-no hidden">En frivillig funksjonell egenkontroll</span>
-            <span class="lang lang-lt hidden">Savanoriškas savęs patikrinimas</span>
-          </li>
-          <li>
-            <span class="lang lang-en">Baseline-relative (you vs you)</span>
-            <span class="lang lang-no hidden">Baseline-relativ (deg mot deg selv)</span>
-            <span class="lang lang-lt hidden">Palyginimas su savimi</span>
-          </li>
-          <li>
-            <span class="lang lang-en">Privacy-first and local by default</span>
-            <span class="lang lang-no hidden">Personvern-først og lokal som standard</span>
-            <span class="lang lang-lt hidden">Privatumas pagal nutylėjimą (lokaliai)</span>
-          </li>
-          <li>
-            <span class="lang lang-en">Designed to support human interpretation</span>
-            <span class="lang lang-no hidden">Designet for menneskelig tolkning</span>
-            <span class="lang lang-lt hidden">Skirta padėti žmogui interpretuoti rezultatą</span>
-          </li>
-        </ul>
+          <p style="margin-top: 18px;"><strong>FCE is not:</strong></p>
+          <ul>
+            <li>a medical diagnosis</li>
+            <li>a substance detection system</li>
+            <li>a legal fitness verdict</li>
+            <li>an enforcement mechanism</li>
+            <li>a replacement for professional care</li>
+          </ul>
 
-        <p style="margin-top: 18px;"><strong>
-          <span class="lang lang-en">FCE is not:</span>
-          <span class="lang lang-no hidden">FCE er ikke:</span>
-          <span class="lang lang-lt hidden">FCE nėra:</span>
-        </strong></p>
-
-        <ul>
-          <li>
-            <span class="lang lang-en">A medical diagnosis</span>
-            <span class="lang lang-no hidden">En medisinsk diagnose</span>
-            <span class="lang lang-lt hidden">Medicininė diagnozė</span>
-          </li>
-          <li>
-            <span class="lang lang-en">A substance detection system</span>
-            <span class="lang lang-no hidden">Et rusdeteksjonssystem</span>
-            <span class="lang lang-lt hidden">Narkotikų ar alkoholio testas</span>
-          </li>
-          <li>
-            <span class="lang lang-en">A legal fitness verdict</span>
-            <span class="lang lang-no hidden">En juridisk vurdering av skikkethet</span>
-            <span class="lang lang-lt hidden">Teisinis sprendimas</span>
-          </li>
-          <li>
-            <span class="lang lang-en">An enforcement mechanism</span>
-            <span class="lang lang-no hidden">Et håndhevingsverktøy</span>
-            <span class="lang lang-lt hidden">Kontrolės priemonė</span>
-          </li>
-          <li>
-            <span class="lang lang-en">A replacement for professional care</span>
-            <span class="lang lang-no hidden">En erstatning for profesjonell hjelp</span>
-            <span class="lang lang-lt hidden">Profesionalios pagalbos pakaitalas</span>
-          </li>
-        </ul>
-
-        <p class="muted">
-          <span class="lang lang-en">
+          <p class="muted">
             FCE measures function. It does not claim to identify causes.
-          </span>
-          <span class="lang lang-no hidden">
-            FCE måler funksjon. Det påstår ikke å identifisere årsak.
-          </span>
-          <span class="lang lang-lt hidden">
-            FCE matuoja funkciją. Jis nepretenduoja nustatyti priežasties.
-          </span>
-        </p>
-      </section>
+          </p>
+        </section>
 
-      <section class="card">
-        <h3>
-          <span class="lang lang-en">The awareness loop</span>
-          <span class="lang lang-no hidden">Bevissthetsløkken</span>
-          <span class="lang lang-lt hidden">Sąmoningumo ciklas</span>
-        </h3>
+        <section class="card">
+          <h3>The awareness loop</h3>
+          <ol>
+            <li><strong>Baseline:</strong> build your normal range under typical conditions</li>
+            <li><strong>Check:</strong> compare today to your baseline</li>
+            <li><strong>Interpret:</strong> combine the result with context</li>
+            <li><strong>Act:</strong> rest, reduce load, postpone, or retest if needed</li>
+          </ol>
+          <p>
+            The system does not decide for you. It gives a cleaner mirror than guesswork alone while keeping judgment in human hands.
+          </p>
+        </section>
 
-        <p>
-          <span class="lang lang-en">
-            FCE supports a simple loop that stays human-led:
-          </span>
-          <span class="lang lang-no hidden">
-            FCE støtter en enkel sirkel som styres av mennesket:
-          </span>
-          <span class="lang lang-lt hidden">
-            FCE palaiko paprastą ciklą, kuriame sprendžia žmogus:
-          </span>
-        </p>
-
-        <ol>
-          <li>
-            <strong><span class="lang lang-en">Baseline:</span><span class="lang lang-no hidden">Baseline:</span><span class="lang lang-lt hidden">Įprasta būsena:</span></strong>
-            <span class="lang lang-en"> Build your normal range under typical conditions</span>
-            <span class="lang lang-no hidden"> Bygg din normaltilstand under typiske forhold</span>
-            <span class="lang lang-lt hidden"> Susikurk savo įprastą lygį įprastomis sąlygomis</span>
-          </li>
-          <li>
-            <strong><span class="lang lang-en">Check:</span><span class="lang lang-no hidden">Sjekk:</span><span class="lang lang-lt hidden">Patikrinimas:</span></strong>
-            <span class="lang lang-en"> Compare today to your baseline</span>
-            <span class="lang lang-no hidden"> Sammenlign i dag med baseline</span>
-            <span class="lang lang-lt hidden"> Palygink šiandien su savo įprasta būsena</span>
-          </li>
-          <li>
-            <strong><span class="lang lang-en">Interpret:</span><span class="lang lang-no hidden">Tolk:</span><span class="lang lang-lt hidden">Interpretacija:</span></strong>
-            <span class="lang lang-en"> Combine the result with context (sleep, stress, illness, training load)</span>
-            <span class="lang lang-no hidden"> Legg til kontekst (søvn, stress, sykdom, belastning)</span>
-            <span class="lang lang-lt hidden"> Pridėk kontekstą (miegas, stresas, liga, krūvis)</span>
-          </li>
-          <li>
-            <strong><span class="lang lang-en">Act:</span><span class="lang lang-no hidden">Handle:</span><span class="lang lang-lt hidden">Veiksmas:</span></strong>
-            <span class="lang lang-en"> Adjust — rest, reduce load, postpone, or retest later</span>
-            <span class="lang lang-no hidden"> Juster — hvil, reduser, utsett eller test senere</span>
-            <span class="lang lang-lt hidden"> Prisitaikyk — pailsėk, sumažink krūvį, atidėk arba patikrink vėliau</span>
-          </li>
-        </ol>
-
-        <p>
-          <span class="lang lang-en">
-            The system doesn't decide for you. It gives you a cleaner mirror than "gut feeling" alone —
-            while still treating your judgment as primary.
-          </span>
-          <span class="lang lang-no hidden">
-            Systemet tar ikke avgjørelsen for deg. Det gir deg et klarere speil enn magefølelse alene —
-            og lar likevel din vurdering være den viktigste.
-          </span>
-          <span class="lang lang-lt hidden">
-            Sistema nenusprendžia už tave. Ji duoda aiškesnį „veidrodį" nei vien tik nuojauta —
-            bet sprendimas vis tiek lieka tavo.
-          </span>
-        </p>
-      </section>
-
-      <section class="card">
-        <h3>
-          <span class="lang lang-en">Where this fits: rehab, burnout prevention, athlete recovery</span>
-          <span class="lang lang-no hidden">Hvor dette passer: rehab, utbrenthetsforebygging, idrett og restitusjon</span>
-          <span class="lang lang-lt hidden">Kur tai tinka: reabilitacija, perdegimo prevencija, sporto atsistatymas</span>
-        </h3>
-
-        <h4 style="margin: 0 0 8px 0;">
-          <span class="lang lang-en">Rehab &amp; return-to-function</span>
-          <span class="lang lang-no hidden">Rehab &amp; tilbake til funksjon</span>
-          <span class="lang lang-lt hidden">Reabilitacija ir grįžimas į įprastą veikimą</span>
-        </h4>
-
-        <p>
-          <span class="lang lang-en">
-            Recovery is often uneven. Motivation can be high while function is still unstable.
-            FCE can help detect "today is not a stable day" without moralizing it.
-          </span>
-          <span class="lang lang-no hidden">
-            Bedring er ofte ujevn. Motivasjon kan være høy, mens funksjon fortsatt svinger.
-            FCE kan hjelpe med å fange opp «i dag er ikke en stabil dag» uten å moralisere.
-          </span>
-          <span class="lang lang-lt hidden">
-            Atsistatymas dažnai būna nelygus. Noras gali būti didelis, bet funkcija dar nestabili.
-            FCE gali padėti pastebėti „šiandien nėra stabili diena" be kaltinimų ar gėdinimo.
-          </span>
-        </p>
-
-        <p class="muted">
-          <span class="lang lang-en">
-            Use: short checks before demanding tasks; repeatability matters more than one-off scores.
-          </span>
-          <span class="lang lang-no hidden">
-            Bruk: korte sjekker før krevende oppgaver; repeterbarhet betyr mer enn enkeltresultater.
-          </span>
-          <span class="lang lang-lt hidden">
-            Naudojimas: trumpi patikrinimai prieš sunkesnes užduotis; pastovumas svarbiau nei vienas rezultatas.
-          </span>
-        </p>
-
-        <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 18px 0;">
-
-        <h4 style="margin: 0 0 8px 0;">
-          <span class="lang lang-en">Burnout prevention &amp; load management</span>
-          <span class="lang lang-no hidden">Utbrenthetsforebygging &amp; belastningsstyring</span>
-          <span class="lang lang-lt hidden">Perdegimo prevencija ir krūvio valdymas</span>
-        </h4>
-
-        <p>
-          <span class="lang lang-en">
-            Burnout rarely arrives suddenly — it accumulates. When execution begins to drift (slower response, noisier precision,
-            reduced stability under split attention), FCE can surface that drift earlier, when small adjustments still work.
-          </span>
-          <span class="lang lang-no hidden">
-            Utbrenthet kommer sjelden brått — den bygger seg opp. Når utførelse begynner å skli
-            (langsommere respons, mer «støy» i presisjon, lavere stabilitet under delt oppmerksomhet),
-            kan FCE synliggjøre dette tidligere, mens små justeringer fortsatt hjelper.
-          </span>
-          <span class="lang lang-lt hidden">
-            Perdegimas retai ateina staiga — jis kaupiasi. Kai veikimas ima „slįsti"
-            (lėtesnė reakcija, mažesnis tikslumas, prastesnis stabilumas dalinant dėmesį),
-            FCE gali padėti tai pamatyti anksčiau, kai dar užtenka mažų korekcijų.
-          </span>
-        </p>
-
-        <p class="muted">
-          <span class="lang lang-en">
-            Use: periodic checks during demanding periods; treat results as prompts for pacing, not proof of failure.
-          </span>
-          <span class="lang lang-no hidden">
-            Bruk: periodiske sjekker i krevende perioder; se resultatene som signaler for tempo, ikke bevis på nederlag.
-          </span>
-          <span class="lang lang-lt hidden">
-            Naudojimas: periodiški patikrinimai intensyviu metu; laikyk rezultatus ženklu apie tempą, o ne „nesėkmės įrodymu".
-          </span>
-        </p>
-
-        <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 18px 0;">
-
-        <h4 style="margin: 0 0 8px 0;">
-          <span class="lang lang-en">Athlete readiness &amp; recovery</span>
-          <span class="lang lang-no hidden">Idrett: form og restitusjon</span>
-          <span class="lang lang-lt hidden">Sportas: pasirengimas ir atsistatymas</span>
-        </h4>
-
-        <p>
-          <span class="lang lang-en">
-            Athletes already track readiness through sleep, HRV, and subjective fatigue. FCE complements those with something direct:
-            functional execution signals. It can help decide whether today should be high-intensity, technical, or recovery-focused.
-          </span>
-          <span class="lang lang-no hidden">
-            Idrettsutøvere følger ofte med på form via søvn, HRV og subjektiv fatigue. FCE kan supplere dette med noe direkte:
-            funksjonelle utførelsessignaler. Det kan hjelpe med å velge om dagen bør være hard, teknisk eller restitusjonsfokusert.
-          </span>
-          <span class="lang lang-lt hidden">
-            Sportininkai jau seka pasirengimą per miegą, HRV ir subjektyvų nuovargį. FCE tai papildo tiesiogiai:
-            funkcijos/atlikimo signalais. Tai gali padėti nuspręsti, ar šiandien daryti intensyviau, techniškiau, ar rinktis atsistatymą.
-          </span>
-        </p>
-
-        <p class="muted">
-          <span class="lang lang-en">
-            Use: quick checks pre-session; make your own action rules (reduce intensity, shift focus, or rest).
-          </span>
-          <span class="lang lang-no hidden">
-            Bruk: raske sjekker før økt; lag dine egne handlingsregler (reduser intensitet, skift fokus eller hvil).
-          </span>
-          <span class="lang lang-lt hidden">
-            Naudojimas: trumpas patikrinimas prieš treniruotę; susikurk savo veiksmų taisykles (mažinti intensyvumą, keisti fokusą arba pailsėti).
-          </span>
-        </p>
-      </section>
-
-      <section class="card">
-        <h3>
-          <span class="lang lang-en">A note on future sensing</span>
-          <span class="lang lang-no hidden">En note om fremtidig «sensing»</span>
-          <span class="lang lang-lt hidden">Pastaba apie ateities „jutiklius"</span>
-        </h3>
-
-        <p>
-          <span class="lang lang-en">
-            In the future, passive sensing (sleep signals, HRV, movement patterns) could offer early hints that "something is off."
-            But passive sensing alone should never become a decision engine. It can only be an invitation.
-          </span>
-          <span class="lang lang-no hidden">
-            I fremtiden kan passiv sensing (søvnsignaler, HRV, bevegelsesmønstre) gi tidlige hint om at «noe er off».
-            Men passiv sensing alene bør aldri bli en beslutningsmotor. Det kan bare være en invitasjon.
-          </span>
-          <span class="lang lang-lt hidden">
-            Ateityje pasyvūs signalai (miegas, HRV, judėjimo įpročiai) gali duoti ankstyvą užuominą, kad „kažkas ne taip".
-            Bet vien pasyvūs signalai neturi tapti sprendimų varikliu. Tai gali būti tik kvietimas pasitikrinti.
-          </span>
-        </p>
-
-        <p>
-          <span class="lang lang-en">
-            If anything like that ever exists in the FCE ecosystem, it should remain:
-            <strong>opt-in</strong>, <strong>local-first</strong>, and <strong>non-enforcing</strong> —
-            and it should point back to a voluntary functional check, not replace it.
-          </span>
-          <span class="lang lang-no hidden">
-            Hvis noe slikt noen gang blir en del av FCE-økosystemet, bør det forbli:
-            <strong>valgfritt</strong>, <strong>lokalt først</strong> og <strong>uten håndheving</strong> —
-            og peke tilbake til en frivillig funksjonell sjekk, ikke erstatte den.
-          </span>
-          <span class="lang lang-lt hidden">
-            Jei tokie dalykai kada nors atsirastų FCE aplinkoje, tai turi būti:
-            <strong>pasirenkama</strong>, <strong>lokaliai</strong> ir <strong>be prievartos</strong> —
-            ir visada vesti į savanorišką funkcijos patikrinimą, o ne jį pakeisti.
-          </span>
-        </p>
-
-        <p class="muted">
-          <span class="lang lang-en">
-            Awareness is the goal. Not classification.
-          </span>
-          <span class="lang lang-no hidden">
-            Målet er bevissthet. Ikke klassifisering.
-          </span>
-          <span class="lang lang-lt hidden">
-            Tikslas — sąmoningumas. Ne klasifikavimas.
-          </span>
-        </p>
-      </section>
-
-      <section class="card">
-        <h3>
-          <span class="lang lang-en">Final principle</span>
-          <span class="lang lang-no hidden">Avsluttende prinsipp</span>
-          <span class="lang lang-lt hidden">Pabaigos principas</span>
-        </h3>
-
-        <p>
-          <span class="lang lang-en">
-            Technology shapes behavior. Every product quietly teaches people what matters.
-            FCE is built to teach one thing:
-          </span>
-          <span class="lang lang-no hidden">
-            Teknologi former adferd. Hvert produkt lærer oss stille hva som betyr noe.
-            FCE er bygget for å lære én ting:
-          </span>
-          <span class="lang lang-lt hidden">
-            Technologijos tyliai formuoja elgesį. Kiekvienas produktas „moko", kas svarbu.
-            FCE sukurtas mokyti vieno dalyko:
-          </span>
-        </p>
-
-        <blockquote class="quote">
-          <span class="lang lang-en">
-            "Notice yourself clearly — then decide with care."
-          </span>
-          <span class="lang lang-no hidden">
-            «Legg merke til deg selv — og ta valg med omtanke.»
-          </span>
-          <span class="lang lang-lt hidden">
-            „Pastebėk save aiškiai — ir rinkis atsakingai."
-          </span>
-        </blockquote>
-
-        <p>
-          <span class="lang lang-en">
+        <section class="card">
+          <h3>Final principle</h3>
+          <p>
+            Technology quietly teaches people what matters. FCE is built to teach one thing:
+          </p>
+          <blockquote class="quote">
+            “Notice yourself clearly — then decide with care.”
+          </blockquote>
+          <p>
             If FCE ever stops supporting dignity, consent, and human judgment, it should not exist.
-          </span>
-          <span class="lang lang-no hidden">
+          </p>
+        </section>
+      </div>
+
+      <!-- NO -->
+      <div class="lang lang-no hidden">
+        <header class="hero">
+          <h1>Hvorfor dette finnes</h1>
+          <p class="lead">
+            Jeg bygde ikke FCE for å overvåke mennesker. Jeg bygde det for å hjelpe mennesker å legge merke til seg selv klart, frivillig og uten dømming.
+          </p>
+          <blockquote class="quote">
+            «En måling er bare etisk når personen som måles forblir den som tar beslutningen.»
+          </blockquote>
+        </header>
+
+        <section class="card">
+          <h3>Hvilket problem dette svarer på</h3>
+          <p>
+            Mange systemer som måler menneskelig prestasjon er laget for institusjoner: for å klassifisere, avgjøre, redusere ansvar eller håndheve regler.
+            Selv når intensjonen er god, kan denne strukturen flytte makt bort fra personen som faktisk blir målt.
+          </p>
+          <p>
+            Samtidig finnes det vanlige øyeblikk hvor en person oppriktig trenger å vite:
+            <em>«Fungerer jeg som meg selv i dag?»</em>
+            Ikke som diagnose. Ikke som juridisk status. Som en praktisk egenkontroll før noe krevende.
+          </p>
+          <p class="muted">
+            FCE finnes for dette øyeblikket: å støtte bevissthet og ansvar uten å gjøre personen til en sak.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Hvorfor baseline-relativ måling betyr noe</h3>
+          <p>
+            Mennesker varierer kraftig i responshastighet, oppmerksomhetsstil og motorisk presisjon. Faste terskler flater ut denne variasjonen.
+            De kan også skape falsk trygghet og falsk alarm.
+          </p>
+          <p>
+            Baseline-relativ måling stiller et smalere og mer ærlig spørsmål:
+          </p>
+          <blockquote class="quote">
+            «Hvordan fungerer du i dag sammenlignet med ditt eget normalområde?»
+          </blockquote>
+          <p class="muted">
+            FCE er ikke bygget for å bevise at en person er «god» eller «dårlig». Det er bygget for å synliggjøre endring og støtte bedre vurdering.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Hvorfor overvåking avvises</h3>
+          <p>
+            Jeg har bevisst valgt å ikke bygge funksjoner som gjør en egenkontroll til et overvåkingssystem.
+            Dette er en designgrense, ikke en teknisk begrensning.
+          </p>
+          <p><strong>Jeg avviser:</strong></p>
+          <ul>
+            <li>bakgrunnssporing uten bevisst brukerhandling</li>
+            <li>standard skykontoer, automatisk opplasting eller skjult telemetri</li>
+            <li>tredjepartsrapportering som innebygd utfall</li>
+            <li>trygg/utrygg eller skikket/uskikket-dommer generert av systemet</li>
+            <li>funksjoner som lett kan gjenbrukes til håndheving</li>
+          </ul>
+          <p>
+            Måling uten deltakelse blir overvåking. Overvåking flytter makt bort fra personen som måles.
+          </p>
+          <p class="muted">
+            Avvisning er beskyttelse. Hvis FCE noen gang blir en lenke, har det feilet sitt formål.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Hva FCE er og ikke er</h3>
+
+          <p><strong>FCE er:</strong></p>
+          <ul>
+            <li>en frivillig funksjonell egenkontroll</li>
+            <li>baseline-relativ måling</li>
+            <li>personvern-først og lokal som standard</li>
+            <li>laget for å støtte menneskelig tolkning</li>
+          </ul>
+
+          <p style="margin-top: 18px;"><strong>FCE er ikke:</strong></p>
+          <ul>
+            <li>en medisinsk diagnose</li>
+            <li>et stoff- eller rusdeteksjonssystem</li>
+            <li>en juridisk skikkethetsdom</li>
+            <li>et håndhevingsverktøy</li>
+            <li>en erstatning for profesjonell hjelp</li>
+          </ul>
+
+          <p class="muted">
+            FCE måler funksjon. Det påstår ikke å identifisere årsak.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Bevissthetsløkken</h3>
+          <ol>
+            <li><strong>Baseline:</strong> bygg ditt normalområde under typiske forhold</li>
+            <li><strong>Sjekk:</strong> sammenlign i dag med baseline</li>
+            <li><strong>Tolk:</strong> legg til kontekst</li>
+            <li><strong>Handle:</strong> hvil, reduser belastning, utsett eller test på nytt ved behov</li>
+          </ol>
+          <p>
+            Systemet bestemmer ikke for deg. Det gir et klarere speil enn gjetting alene, samtidig som vurderingen forblir menneskelig.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Avsluttende prinsipp</h3>
+          <p>
+            Teknologi lærer oss stille hva som betyr noe. FCE er bygget for å lære én ting:
+          </p>
+          <blockquote class="quote">
+            «Legg merke til deg selv klart — og ta valg med omtanke.»
+          </blockquote>
+          <p>
             Hvis FCE slutter å støtte verdighet, samtykke og menneskelig vurdering, bør det ikke eksistere.
-          </span>
-          <span class="lang lang-lt hidden">
-            Jei FCE kada nors nustos gerbti žmogaus orumą, pasirinkimą ir žmogaus sprendimą, jis neturėtų egzistuoti.
-          </span>
-        </p>
-      </section>
+          </p>
+        </section>
+      </div>
+
+      <!-- LT -->
+      <div class="lang lang-lt hidden">
+        <header class="hero">
+          <h1>Kodėl tai egzistuoja</h1>
+          <p class="lead">
+            Aš nesukūriau FCE tam, kad stebėčiau žmones. Aš jį sukūriau tam, kad žmonės galėtų aiškiai, savanoriškai ir be vertinimo pastebėti save.
+          </p>
+          <blockquote class="quote">
+            „Matavimas yra etiškas tik tada, kai matuojamas žmogus pats lieka sprendimų priėmėju.“
+          </blockquote>
+        </header>
+
+        <section class="card">
+          <h3>Į kokią problemą tai atsako</h3>
+          <p>
+            Daugelis sistemų, kurios matuoja žmogaus veiklą, yra sukurtos institucijoms: klasifikuoti, spręsti, mažinti atsakomybę ar kontroliuoti.
+            Net ir turint gerų ketinimų, tokia struktūra gali atimti galią iš žmogaus, kuris iš tikrųjų yra matuojamas.
+          </p>
+          <p>
+            Tačiau yra paprastų momentų, kai žmogui nuoširdžiai reikia žinoti:
+            <em>„Ar šiandien aš veikiu kaip įprastai?“</em>
+            Ne kaip diagnozė. Ne kaip teisinė išvada. O kaip praktiškas savęs patikrinimas prieš sunkesnę užduotį.
+          </p>
+          <p class="muted">
+            FCE egzistuoja būtent tam momentui: padėti pastebėti save ir veikti atsakingai, nepaverčiant žmogaus byla.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Kodėl svarbus palyginimas su savo baze</h3>
+          <p>
+            Žmonės labai skiriasi reakcijos greičiu, dėmesio tipu ir motoriniu tikslumu. Fiksuotos ribos šiuos skirtumus ištrina.
+            Jos taip pat gali sukurti klaidingą saugumo jausmą ir klaidingą pavojų.
+          </p>
+          <p>
+            Lyginimas su asmenine baze užduoda siauresnį ir sąžiningesnį klausimą:
+          </p>
+          <blockquote class="quote">
+            „Kaip tu veiki šiandien, palyginti su savo įprastu diapazonu?“
+          </blockquote>
+          <p class="muted">
+            FCE nėra skirtas įrodyti, kad žmogus yra „geras“ ar „blogas“. Jis skirtas pastebėti pokytį ir padėti priimti geresnius sprendimus.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Kodėl stebėjimas atmetamas</h3>
+          <p>
+            Aš sąmoningai neįtraukiau funkcijų, kurios paverstų savęs patikrinimą kontrolės sistema.
+            Tai dizaino riba, o ne techninis trūkumas.
+          </p>
+          <p><strong>Aš atsisakau:</strong></p>
+          <ul>
+            <li>fono sekimo be sąmoningo vartotojo veiksmo</li>
+            <li>numatytų debesijos paskyrų, automatinio siuntimo ar paslėptos telemetrijos</li>
+            <li>trečiųjų šalių ataskaitų kaip numatyto rezultato</li>
+            <li>saugus/nesaugus ar tinkamas/netinkamas verdiktų, kuriuos pateikia pati sistema</li>
+            <li>funkcijų, kurias lengva panaudoti kontrolei</li>
+          </ul>
+          <p>
+            Matavimas be dalyvavimo tampa stebėjimu. Stebėjimas atima galią iš žmogaus, kuris yra matuojamas.
+          </p>
+          <p class="muted">
+            Atsisakymas čia yra apsauga. Jei FCE kada nors taps pavadėliu, jis bus praradęs savo paskirtį.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Kas yra FCE ir kas jis nėra</h3>
+
+          <p><strong>FCE yra:</strong></p>
+          <ul>
+            <li>savanoriškas funkcinis savęs patikrinimas</li>
+            <li>lygintas su asmenine baze</li>
+            <li>privatumas pirmiausia ir lokaliai pagal nutylėjimą</li>
+            <li>sukurtas padėti žmogaus interpretacijai</li>
+          </ul>
+
+          <p style="margin-top: 18px;"><strong>FCE nėra:</strong></p>
+          <ul>
+            <li>medicininė diagnozė</li>
+            <li>medžiagų aptikimo sistema</li>
+            <li>teisinis tinkamumo verdiktas</li>
+            <li>kontrolės mechanizmas</li>
+            <li>profesionalios pagalbos pakaitalas</li>
+          </ul>
+
+          <p class="muted">
+            FCE matuoja funkciją. Jis nepretenduoja nustatyti priežasties.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Sąmoningumo ciklas</h3>
+          <ol>
+            <li><strong>Bazė:</strong> susikurkite savo įprastą diapazoną įprastomis sąlygomis</li>
+            <li><strong>Patikra:</strong> palyginkite šiandieną su baze</li>
+            <li><strong>Interpretacija:</strong> pridėkite kontekstą</li>
+            <li><strong>Veiksmas:</strong> pailsėkite, sumažinkite krūvį, atidėkite arba pakartokite vėliau</li>
+          </ol>
+          <p>
+            Sistema nenusprendžia už jus. Ji duoda aiškesnį veidrodį nei vien spėlionė, bet sprendimas vis tiek lieka žmogaus rankose.
+          </p>
+        </section>
+
+        <section class="card">
+          <h3>Pabaigos principas</h3>
+          <p>
+            Technologijos tyliai moko, kas svarbu. FCE sukurtas mokyti vieno dalyko:
+          </p>
+          <blockquote class="quote">
+            „Pastebėk save aiškiai — ir rinkis atsakingai.“
+          </blockquote>
+          <p>
+            Jei FCE kada nors nustos gerbti žmogaus orumą, sutikimą ir žmogaus sprendimą, jis neturėtų egzistuoti.
+          </p>
+        </section>
+      </div>
 
       <nav class="docs-nav">
         <div class="docs-nav-left">
@@ -812,25 +530,17 @@
         </div>
 
         <div class="docs-nav-right">
-          <a href="about.html" class="docs-nav-btn">
-            <span class="lang lang-en">About →</span>
-            <span class="lang lang-no hidden">Om →</span>
-            <span class="lang lang-lt hidden">Apie →</span>
+          <a href="applications.html" class="docs-nav-btn">
+            <span class="lang lang-en">Applications / Use Contexts →</span>
+            <span class="lang lang-no hidden">Bruksområder / kontekster →</span>
+            <span class="lang lang-lt hidden">Taikymo sritys / naudojimo kontekstai →</span>
           </a>
         </div>
       </nav>
 
       <footer class="footer muted">
-        <p>
-          <span class="lang lang-en">FCE — Functional Cognition &amp; Execution · </span>
-          <span class="lang lang-no hidden">FCE — Funksjonell kognisjon &amp; utførelse · </span>
-          <span class="lang lang-lt hidden">FCE — Funkcinė kognicija ir vykdymas · </span>
-          <a href="why.html">
-            <span class="lang lang-en">Why this exists</span>
-            <span class="lang lang-no hidden">Hvorfor dette finnes</span>
-            <span class="lang lang-lt hidden">Kodėl tai egzistuoja</span>
-          </a>
-        </p>
+        <p>FCE — Functional Cognition &amp; Execution</p>
+        <p class="footer-builtby">Designed and built by Zwoomer</p>
       </footer>
     </section>
   </main>
@@ -895,6 +605,17 @@
       }
 
       const langSelect = document.getElementById("langSelect");
+
+      if (langSelect) {
+        const hasLtOption = Array.from(langSelect.options).some(opt => opt.value === "lt");
+        if (!hasLtOption) {
+          const ltOption = document.createElement("option");
+          ltOption.value = "lt";
+          ltOption.textContent = "LT";
+          langSelect.appendChild(ltOption);
+        }
+      }
+
       if (langSelect) langSelect.value = currentLang;
 
       function applyLangUI() {
@@ -908,12 +629,9 @@
         currentLang = langSelect.value;
         try { localStorage.setItem(LANG_KEY, currentLang); } catch {}
         applyLangUI();
-        
-        // Update brand link hint
         updateBrandLinkHint();
       });
 
-      // Brand link hint text handler
       function updateBrandLinkHint() {
         const brandLink = document.getElementById("brandLink");
         if (!brandLink) return;
@@ -929,9 +647,9 @@
         brandLink.setAttribute("aria-label", hint);
       }
 
-      // Initial update
       updateBrandLinkHint();
     })();
   </script>
+  <script src="menu-sections.js" defer></script>
 </body>
 </html>

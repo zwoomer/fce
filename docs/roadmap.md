@@ -189,6 +189,7 @@ Focus: clearer interpretation copy in the instrument, grouped docs navigation, n
 - Onboarding copy and scroll targets (`#instruction` / `#instrument` alignment)
 - Grouped hamburger menu (Core vs Context), `menu-sections.js`, `applications.html`, `validation-research.html` (validation / research page), **What FCE Measures** in IA
 - Docs-nav flow and responsive long-label layout; footer attribution
+- **`docs/summary.md`** shareable concise overview; README intro cross-link
 - Release notes archived under `docs/releases/` for older versions; root SVG marks removed (follow-up: preview/favicon paths)
 
 **Still local-only, baseline-relative, human-interpreted.**

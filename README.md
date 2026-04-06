@@ -1,14 +1,23 @@
 # FCE — Functional Cognition & Execution
 
+FCE measures how your performance changes — not how you compare to others.
+
+It compares your current performance to your own baseline, under consistent conditions.
+
+It produces structured signals of change, not conclusions about capability.
+It does not diagnose, detect, or decide.
+
+Interpretation remains human.
+
+---
+
 FCE is a **baseline-relative measurement instrument** for observing changes in cognitive and execution performance over time.
-
-FCE produces structured signals of performance change — not conclusions about capability.
-It measures change relative to self — not comparison to others.
-
 
 Rather than comparing users to population averages, FCE compares performance **against the individual’s own baseline**, under consistent conditions, on the same device.
 
 FCE is designed to support **human interpretation**, not automated judgment.
+
+For a shorter standalone overview (shareable copy), see [`docs/summary.md`](docs/summary.md).
 
 ---
 

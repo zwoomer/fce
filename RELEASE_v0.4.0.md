@@ -63,7 +63,7 @@ v0.4.0 maintains full backward compatibility for stored sessions and baselines. 
 
 ### Readme alignment
 
-- **`README.md`:** Sharper opening (baseline-relative **measurement** instrument; anchor on signals vs capability); dedicated **Interpretation & validation limits** section (heuristic thresholds, no real-world validation yet); optional **Position** summary aligned with `validation-research.html`.
+- **`README.md`:** Opening lines on change vs others, signals vs capability, and human interpretation; baseline-relative **measurement** instrument; dedicated **Interpretation & validation limits**; **Position** summary; link to `docs/summary.md`.
 
 ### Docs bottom navigation (`docs-nav`)
 
@@ -111,12 +111,13 @@ v0.4.0 maintains full backward compatibility for stored sessions and baselines. 
 - `applications.html`
 - `validation-research.html`
 - `RELEASE_v0.4.0.md` (this note)
+- `docs/summary.md` — concise project overview (aligned with README positioning)
 
 ### Planning & readme
 
 - `README.md` — latest release, v0.4.0 changelog section, History & trends note, planned development
-- `docs/next-steps.md` — v0.3.x closure, v0.4.0 shipped, v0.4.x next
-- `docs/roadmap.md` — v0.3.x complete, v0.4.0 shipped, v0.4.x planned
+- `docs/next-steps.md` — v0.3.x closure, v0.4.0 shipped, v0.4.x next; `docs/summary.md` noted
+- `docs/roadmap.md` — v0.3.x complete, v0.4.0 shipped, v0.4.x planned; `docs/summary.md` noted
 
 ---
 

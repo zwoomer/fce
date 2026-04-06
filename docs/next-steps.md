@@ -385,6 +385,7 @@ Shipped improvements:
 - Docs-nav sequence: FAQ → Why → Applications → Validation; responsive `.docs-nav` for long translations
 - Footers: **Designed and built by Zwoomer**; simplified FCE tagline (Why link via menu)
 - `index.html` canonical doc list updated for Learn-more / last-page continuity
+- **`docs/summary.md`** — short standalone overview (positioning, limits, responsible use); README links to it for sharing
 
 **Repository**
 - Older release notes moved to `docs/releases/` (v0.2.9–v0.3.1); root `RELEASE_v0.3.3.md` maintained

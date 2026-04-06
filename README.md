@@ -1,6 +1,10 @@
 # FCE — Functional Cognition & Execution
 
-FCE is a **baseline-relative functional assessment instrument** for measuring cognitive and execution performance over time.
+FCE is a **baseline-relative measurement instrument** for observing changes in cognitive and execution performance over time.
+
+FCE produces structured signals of performance change — not conclusions about capability.
+It measures change relative to self — not comparison to others.
+
 
 Rather than comparing users to population averages, FCE compares performance **against the individual’s own baseline**, under consistent conditions, on the same device.
 
@@ -47,7 +51,7 @@ Primary task:
 Secondary task:
 - Visual count (brief blue flashes during trials)
 
-Evaluation combines:
+Evaluation integrates:
 - Reaction speed
 - Inhibitory control
 - Attention accuracy
@@ -65,10 +69,12 @@ Measures fine motor control and spatial accuracy.
 - Hit/miss/timeout rates
 - Baseline-relative evaluation
 
-### Deviation signals and validation
+---
 
-- Deviation thresholds (e.g. 1SD / 2SD) are practical signals of change, not calibrated indicators of real-world capability.
-- FCE has not yet been validated against real-world performance outcomes.
+## Interpretation & validation limits
+
+- **Deviation thresholds** (e.g. 1SD / 2SD) are **heuristic** signals of change — practical design choices, not calibrated indicators of real-world capability.
+- **FCE has not yet been validated** against real-world performance outcomes.
 
 ---
 
@@ -380,3 +386,15 @@ No future version will introduce:
 - Accounts or cloud storage
 - Medical or legal claims
 - Automated judgments or decisions
+
+---
+
+## Position
+
+FCE is best understood as:
+
+- a structured self-monitoring instrument  
+- a source of functional signals  
+- a support for human judgment  
+
+It is not a validated decision system.

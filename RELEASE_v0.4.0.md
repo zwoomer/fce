@@ -63,7 +63,7 @@ v0.4.0 maintains full backward compatibility for stored sessions and baselines. 
 
 ### Readme alignment
 
-- **`README.md`:** Under **What FCE measures**, adds **Deviation signals and validation** — deviation thresholds (e.g. 1SD / 2SD) as practical change signals, not calibrated real-world capability indicators; FCE not yet validated against real-world performance outcomes.
+- **`README.md`:** Sharper opening (baseline-relative **measurement** instrument; anchor on signals vs capability); dedicated **Interpretation & validation limits** section (heuristic thresholds, no real-world validation yet); optional **Position** summary aligned with `validation-research.html`.
 
 ### Docs bottom navigation (`docs-nav`)
 

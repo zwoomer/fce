@@ -369,7 +369,3 @@ v0.3.x refinements continue with focus on:
 - Minor HUD clarity improvements for Precision
 - Additional UX consistency improvements
 - Performance optimizations
-
----
-
-**Full changelog:** See commit history from v0.3.2 to v0.3.3

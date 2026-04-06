@@ -117,19 +117,17 @@
         <div id="instruction">
           <div class="lang lang-en">
             <p>
-              Build a personal baseline (typically 3–5 sessions). Then run a Functional Check to compare today's performance to your baseline. Training runs the same tasks without comparison. Early inputs count as false starts.
+              New here? Start with Training to learn the task. Then build a personal baseline with 3–5 sessions on the same device. After that, use Check to compare today’s performance to your usual range. Do not interpret one session in isolation. Early inputs count as false starts.
             </p>
           </div>
           <div class="lang lang-no hidden">
             <p>
-              Bygg en personlig baseline (typisk 3–5 økter). Deretter kjører du en Funksjonssjekk for å sammenligne dagens ytelse med din baseline. Trening kjører samme oppgaver uten sammenligning. Tidlige inndata teller som feilstart.
+              Ny her? Start med Trening for å lære oppgaven. Bygg deretter en personlig baseline med 3–5 økter på samme enhet. Bruk deretter Funksjonssjekk for å sammenligne dagens ytelse med det vanlige omfanget ditt. Ikke tolke én enkelt økt isolert. Tidlige inndata teller som feilstart.
             </p>
           </div>
           <div class="lang lang-lt hidden">
             <p>
-              Sukurkite asmeninį bazinį lygį (dažniausiai 3–5 sesijos). Tada atlikite funkcinę patikrą,
-              kad palygintumėte šiandienos vykdymą su savo baze. Treniruotė vykdo tas pačias užduotis
-              be palyginimo. Per ankstyvi paspaudimai laikomi klaidingu startu.
+              Naujas čia? Pradėkite nuo treniruotės, kad susipažintumėte su užduotimi. Tada sukurkite asmeninį bazinį lygį atlikdami 3–5 sesijas tame pačiame įrenginyje. Po to naudokite patikrą, kad palygintumėte šiandienos rezultatus su įprastu diapazonu. Neinterpretuokite vienos sesijos izoliuotai. Per ankstyvi paspaudimai laikomi klaidingu startu.
             </p>
           </div>
         </div>
@@ -138,15 +136,15 @@
         <div id="onboardingOverlay" class="onboarding-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="onboardingTitle">
           <div class="onboarding-card">
             <h2 id="onboardingTitle">
-              <span class="lang lang-en">First time here?</span>
-              <span class="lang lang-no hidden">Første gang her?</span>
-              <span class="lang lang-lt hidden">Pirmas kartas čia?</span>
+              <span class="lang lang-en">Start here</span>
+              <span class="lang lang-no hidden">Start her</span>
+              <span class="lang lang-lt hidden">Pradėkite čia</span>
             </h2>
 
             <p class="muted" style="margin-top: 8px;">
-              <span class="lang lang-en">Have you used FCE before?</span>
-              <span class="lang lang-no hidden">Har du brukt FCE før?</span>
-              <span class="lang lang-lt hidden">Ar anksčiau naudojote FCE?</span>
+              <span class="lang lang-en">Choose the path that fits you.</span>
+              <span class="lang lang-no hidden">Velg veien som passer deg.</span>
+              <span class="lang lang-lt hidden">Pasirinkite jums tinkamą kelią.</span>
             </p>
 
             <div style="margin-top: 16px; margin-bottom: 4px; display: flex; justify-content: center;">
@@ -161,14 +159,14 @@
 
             <div class="action-row" style="margin-top: 14px;">
               <button id="onboardingNoBtn" type="button">
-                <span class="lang lang-en">No — show me how the tests work</span>
-                <span class="lang lang-no hidden">Nei — vis meg hvordan testene fungerer</span>
-                <span class="lang lang-lt hidden">Ne — parodykite, kaip veikia testai</span>
+                <span class="lang lang-en">I’m new — show me how the tests work</span>
+                <span class="lang lang-no hidden">Jeg er ny — vis meg hvordan testene fungerer</span>
+                <span class="lang lang-lt hidden">Esu naujas — parodykite, kaip veikia testai</span>
               </button>
               <button id="onboardingYesBtn" type="button" class="secondary">
-                <span class="lang lang-en">Yes — take me to the instrument</span>
-                <span class="lang lang-no hidden">Ja — ta meg til instrumentet</span>
-                <span class="lang lang-lt hidden">Taip — nukreipkite į instrumentą</span>
+                <span class="lang lang-en">I know the workflow — take me to the instrument</span>
+                <span class="lang lang-no hidden">Jeg kjenner arbeidsflyten — ta meg til instrumentet</span>
+                <span class="lang lang-lt hidden">Žinau eigą — nukreipkite į instrumentą</span>
               </button>
             </div>
 
@@ -589,42 +587,31 @@
   <script>
     (function () {
       function scrollToInstrument() {
-        // Try to update task hint if function is available (from app.js)
         if (typeof window.updateTaskHint === 'function') {
           window.updateTaskHint();
         }
-        
-        // Ensure task hint panel is visible
-        const taskHintPanel = document.getElementById("taskHintPanel");
-        if (taskHintPanel && taskHintPanel.offsetParent !== null) {
-          // Scroll to "What to do" panel, positioned right below topbar
-          const topbar = document.querySelector('.topbar');
-          const topbarHeight = topbar ? topbar.offsetHeight : 64;
-          const targetY = taskHintPanel.getBoundingClientRect().top + window.pageYOffset - topbarHeight - 20;
+        const topbar = document.querySelector('.topbar');
+        const topbarHeight = topbar ? topbar.offsetHeight : 64;
+        function scrollToEl(el) {
+          if (!el) return false;
+          var targetY = el.getBoundingClientRect().top + window.pageYOffset - topbarHeight - 20;
           window.scrollTo({ top: targetY, behavior: 'smooth' });
-          // Focus first action button after scroll
-          setTimeout(function() {
-            const firstActionBtn = document.querySelector(".action-row button");
-            if (firstActionBtn) {
-              firstActionBtn.focus();
-            }
-          }, 300);
-        } else {
-          // Fallback to action-row if panel not found or not visible
-          const actionRow = document.querySelector(".action-row");
-          if (actionRow) {
-            const topbar = document.querySelector('.topbar');
-            const topbarHeight = topbar ? topbar.offsetHeight : 64;
-            const targetY = actionRow.getBoundingClientRect().top + window.pageYOffset - topbarHeight - 20;
-            window.scrollTo({ top: targetY, behavior: 'smooth' });
-            setTimeout(function() {
-              const firstActionBtn = document.querySelector(".action-row button");
-              if (firstActionBtn) {
-                firstActionBtn.focus();
-              }
-            }, 300);
-          }
+          return true;
         }
+        var instructionEl = document.getElementById("instruction");
+        var taskHintPanel = document.getElementById("taskHintPanel");
+        var scrolled = scrollToEl(instructionEl);
+        if (!scrolled && taskHintPanel && taskHintPanel.offsetParent !== null) {
+          scrolled = scrollToEl(taskHintPanel);
+        }
+        if (!scrolled) {
+          var actionRow = document.querySelector("#instrument .action-row") || document.querySelector(".action-row");
+          scrollToEl(actionRow);
+        }
+        setTimeout(function() {
+          var firstActionBtn = document.querySelector("#instrument .action-row button");
+          if (firstActionBtn) firstActionBtn.focus();
+        }, 300);
       }
 
       // Handle #instrument hash when arriving from external links (e.g., docs pages)

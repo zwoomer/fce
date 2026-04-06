@@ -2013,34 +2013,30 @@ function initOnboardingGate() {
     hide();
     // Small delay to ensure overlay is hidden before scrolling
     setTimeout(() => {
-      // Ensure task hint panel is visible
       updateTaskHint();
-      // Scroll to "What to do" panel, positioned right below topbar (same as docs pages)
-      const taskHintPanel = document.getElementById("taskHintPanel");
-      if (taskHintPanel) {
-        // Get actual topbar height (use CSS variable or fallback to 64)
-        const topbar = document.querySelector('.topbar');
-        const topbarHeight = topbar ? topbar.offsetHeight : 64;
-        const targetY = taskHintPanel.getBoundingClientRect().top + window.pageYOffset - topbarHeight - 20;
+      const topbar = document.querySelector(".topbar");
+      const topbarHeight = topbar ? topbar.offsetHeight : 64;
+      const scrollToEl = (el) => {
+        if (!el) return false;
+        const targetY = el.getBoundingClientRect().top + window.pageYOffset - topbarHeight - 20;
         window.scrollTo({ top: targetY, behavior: "smooth" });
-        setTimeout(() => {
-          const firstActionBtn = document.querySelector(".action-row button");
-          if (firstActionBtn) firstActionBtn.focus();
-        }, 300);
-        } else {
-        // Fallback to action-row if panel not found
-        const actionRow = document.querySelector(".action-row");
-        if (actionRow) {
-          const topbar = document.querySelector('.topbar');
-          const topbarHeight = topbar ? topbar.offsetHeight : 64;
-          const targetY = actionRow.getBoundingClientRect().top + window.pageYOffset - topbarHeight - 20;
-          window.scrollTo({ top: targetY, behavior: "smooth" });
-          setTimeout(() => {
-            const firstActionBtn = document.querySelector(".action-row button");
-            if (firstActionBtn) firstActionBtn.focus();
-          }, 300);
-        }
+        return true;
+      };
+      // Prefer the top instruction block (first-use workflow text); task hint is often hidden until a test is active
+      const instructionEl = document.getElementById("instruction");
+      const taskHintPanel = document.getElementById("taskHintPanel");
+      let scrolled = scrollToEl(instructionEl);
+      if (!scrolled && taskHintPanel && taskHintPanel.offsetParent !== null) {
+        scrolled = scrollToEl(taskHintPanel);
       }
+      if (!scrolled) {
+        const actionRow = document.querySelector("#instrument .action-row") || document.querySelector(".action-row");
+        scrollToEl(actionRow);
+      }
+      setTimeout(() => {
+        const firstActionBtn = document.querySelector("#instrument .action-row button");
+        if (firstActionBtn) firstActionBtn.focus();
+      }, 300);
     }, 100);
   });
 

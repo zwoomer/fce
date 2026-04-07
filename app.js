@@ -88,6 +88,10 @@ const I18N = {
     baseline: {
       noSessions: "No baseline sessions recorded.",
       sessions: "sessions",
+      statusLabel: "Baseline status",
+      statusBuilding: "building",
+      statusReady: "ready",
+      lastSessionLabel: "Last session",
     },
     export: {
       btn: "Export (Copy JSON)",
@@ -415,6 +419,10 @@ const I18N = {
       noSessions: "Ingen baseline-økter er registrert.",
       sessions: "økter",
       økter: "økter",
+      statusLabel: "Baseline-status",
+      statusBuilding: "under oppbygging",
+      statusReady: "klar",
+      lastSessionLabel: "Siste økt",
     },
     export: {
       btn: "Eksporter (kopier JSON)",
@@ -741,6 +749,10 @@ const I18N = {
     baseline: {
       noSessions: "Nėra užregistruotų bazinio lygio sesijų.",
       sessions: "sesijos",
+      statusLabel: "Bazinio lygio būsena",
+      statusBuilding: "kuriama",
+      statusReady: "paruošta",
+      lastSessionLabel: "Paskutinė sesija",
     },
     export: {
       btn: "Eksportuoti (kopijuoti JSON)",
@@ -1097,23 +1109,62 @@ function getPrecisionFallback(path) {
 
 // Helper functions for bilingual trial and session strings
 function getTrialProgress(current, total, completed) {
-  if (currentLang === "no") {
-    return `Forsøk ${current}/${total} (fullført: ${completed})`;
-  }
-  if (currentLang === "lt") {
-    return `Bandymas ${current}/${total} (baigta: ${completed})`;
-  }
-  return `Trial ${current}/${total} (completed: ${completed})`;
+  if (currentLang === "no") return `Forsøk ${current} / ${total}`;
+  if (currentLang === "lt") return `Bandymas ${current} / ${total}`;
+  return `Trial ${current} / ${total}`;
 }
 
 function getSessionComplete(done, total) {
-  if (currentLang === "no") {
-    return `Økt fullført (${done}/${total} forsøk).`;
-  }
-  if (currentLang === "lt") {
-    return `Sesija baigta (${done}/${total} bandymų).`;
-  }
-  return `Session complete (${done}/${total} trials).`;
+  if (currentLang === "no") return "Økt fullført";
+  if (currentLang === "lt") return "Sesija baigta";
+  return "Session complete";
+}
+
+function getCompletedSessionLabel() {
+  if (currentLang === "no") return "Økt fullført";
+  if (currentLang === "lt") return "Sesija baigta";
+  return "Session complete";
+}
+
+function getBaselineSavedLabel() {
+  if (currentLang === "no") return "Baseline-økt lagret";
+  if (currentLang === "lt") return "Bazinio lygio sesija išsaugota";
+  return "Baseline session saved";
+}
+
+function getTrainingCompleteLabel() {
+  if (currentLang === "no") return "Treningsøkt fullført";
+  if (currentLang === "lt") return "Treniruotės sesija baigta";
+  return "Training session complete";
+}
+
+function getCheckCompleteLabel() {
+  if (currentLang === "no") return "Funksjonssjekk fullført";
+  if (currentLang === "lt") return "Funkcinė patikra baigta";
+  return "Functional check complete";
+}
+
+function getStatusLabel() {
+  if (currentLang === "no") return "Status";
+  if (currentLang === "lt") return "Būsena";
+  return "Status";
+}
+
+/** Structured summary rendering for system-generated strings only (no user-provided HTML). */
+function renderStructuredSummary({ metricsLine = "", statusLine = "", systemLine = "" }) {
+  if (!summary) return;
+  summary.innerHTML = "";
+  const addLine = (cls, text) => {
+    if (!text) return;
+    const el = document.createElement("div");
+    el.className = cls;
+    el.textContent = text;
+    summary.appendChild(el);
+  };
+  addLine("summary-metrics", metricsLine);
+  addLine("summary-status", statusLine);
+  addLine("summary-system", systemLine);
+  summary.style.display = "";
 }
 
 function getTrialText(n, entry, testType) {
@@ -1634,35 +1685,79 @@ function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
       break;
       
     case "baseline_saved_reaction":
-      summary.textContent = getBaselineSavedReaction(dataObj.mean, dataObj.sd, dataObj.falseStarts, dataObj.qualityNote || "", dataObj.quality, dataObj.deviceWarning || "");
+      renderStructuredSummary({
+        metricsLine: `${currentLang === "no" ? "Gjennomsnitt" : currentLang === "lt" ? "Vidurkis" : "Mean"}: ${dataObj.mean.toFixed(0)} ms | ${t("history.sd")}: ${dataObj.sd.toFixed(0)} ms`,
+        statusLine: dataObj.quality ? `${t("quality.label")}: ${t(`quality.${dataObj.quality}`)}` : "",
+        systemLine: getBaselineSavedLabel(),
+      });
       break;
       
     case "baseline_saved_gonogo":
-      summary.textContent = getBaselineSavedGoNoGo(dataObj.mean, dataObj.sd, dataObj.misses, dataObj.falseAlarms, dataObj.falseStarts, dataObj.qualityNote || "", dataObj.quality, dataObj.deviceWarning || "");
+      renderStructuredSummary({
+        metricsLine: `${currentLang === "no" ? "Gjennomsnitt" : currentLang === "lt" ? "Vidurkis" : "Mean"}: ${dataObj.mean.toFixed(0)} ms | ${t("history.sd")}: ${dataObj.sd.toFixed(0)} ms`,
+        statusLine: dataObj.quality ? `${t("quality.label")}: ${t(`quality.${dataObj.quality}`)}` : "",
+        systemLine: getBaselineSavedLabel(),
+      });
       break;
       
     case "baseline_saved_divided":
-      summary.textContent = getBaselineSavedDivided(dataObj.mean, dataObj.sd, dataObj.misses, dataObj.falseAlarms, dataObj.falseStarts, dataObj.flashTargetCount || 0, dataObj.flashAbsError || 0, dataObj.qualityNote || "", dataObj.quality, dataObj.deviceWarning || "");
+      renderStructuredSummary({
+        metricsLine: `${currentLang === "no" ? "Gjennomsnitt" : currentLang === "lt" ? "Vidurkis" : "Mean"}: ${dataObj.mean.toFixed(0)} ms | ${t("history.sd")}: ${dataObj.sd.toFixed(0)} ms`,
+        statusLine: dataObj.quality ? `${t("quality.label")}: ${t(`quality.${dataObj.quality}`)}` : "",
+        systemLine: getBaselineSavedLabel(),
+      });
       break;
       
     case "baseline_saved_precision":
-      summary.textContent = getBaselineSavedPrecision(dataObj.meanErrN, dataObj.sdErrN, dataObj.meanRtMs, dataObj.qualityNote || "", dataObj.quality, dataObj.deviceWarning || "", dataObj.fullscreenNote || "");
+      renderStructuredSummary({
+        metricsLine: `${currentLang === "no" ? "Gjennomsnitt" : currentLang === "lt" ? "Vidurkis" : "Mean"}: ${dataObj.meanErrN.toFixed(2)} | ${t("history.sd")}: ${dataObj.sdErrN.toFixed(2)}`,
+        statusLine: dataObj.quality ? `${t("quality.label")}: ${t(`quality.${dataObj.quality}`)}` : "",
+        systemLine: getBaselineSavedLabel(),
+      });
       break;
       
     case "check_reaction":
-      summary.textContent = getCheckReaction(dataObj.mean, dataObj.baselineMean, dataObj.baselineSD, dataObj.status, dataObj.falseStarts, dataObj.qualityNote || "", dataObj.quality, dataObj.deviceWarning || "");
+      renderStructuredSummary({
+        metricsLine:
+          `${currentLang === "no" ? "Gjennomsnitt" : currentLang === "lt" ? "Vidurkis" : "Mean"}: ${dataObj.mean.toFixed(0)} ms | ` +
+          `${currentLang === "no" ? "Baseline-gjennomsnitt" : currentLang === "lt" ? "Bazinio lygio vidurkis" : "Baseline mean"}: ${dataObj.baselineMean.toFixed(0)} ms | ` +
+          `${currentLang === "no" ? "Baseline SD" : currentLang === "lt" ? "Bazinio lygio SD" : "Baseline SD"}: ${dataObj.baselineSD.toFixed(0)} ms`,
+        statusLine: `${getStatusLabel()}: ${dataObj.status || "—"}`,
+        systemLine: getCheckCompleteLabel(),
+      });
       break;
       
     case "check_gonogo":
-      summary.textContent = getCheckGoNoGo(dataObj.mean, dataObj.baselineMean, dataObj.baselineSD, dataObj.status, dataObj.misses, dataObj.baselineMissAvg, dataObj.falseAlarms, dataObj.baselineFAAvg, dataObj.falseStarts, dataObj.qualityNote || "", dataObj.quality, dataObj.deviceWarning || "");
+      renderStructuredSummary({
+        metricsLine:
+          `${currentLang === "no" ? "GO " : ""}${currentLang === "no" ? "Gjennomsnitt" : currentLang === "lt" ? "Vidurkis" : "Mean"}: ${dataObj.mean.toFixed(0)} ms | ` +
+          `${currentLang === "no" ? "Baseline-gjennomsnitt" : currentLang === "lt" ? "Bazinio lygio vidurkis" : "Baseline mean"}: ${dataObj.baselineMean.toFixed(0)} ms | ` +
+          `${currentLang === "no" ? "Baseline SD" : currentLang === "lt" ? "Bazinio lygio SD" : "Baseline SD"}: ${dataObj.baselineSD.toFixed(0)} ms`,
+        statusLine: `${getStatusLabel()}: ${dataObj.status || "—"}`,
+        systemLine: getCheckCompleteLabel(),
+      });
       break;
       
     case "check_divided":
-      summary.textContent = getCheckDividedAttention(dataObj.mean, dataObj.baselineMean, dataObj.baselineSD, dataObj.status, dataObj.falseAlarmsRate, dataObj.baselineFARate, dataObj.flashAbsError, dataObj.baselineFlashError, dataObj.falseStarts, dataObj.qualityNote || "", dataObj.quality, dataObj.deviceWarning || "");
+      renderStructuredSummary({
+        metricsLine:
+          `${currentLang === "no" ? "GO " : ""}${currentLang === "no" ? "Gjennomsnitt" : currentLang === "lt" ? "Vidurkis" : "Mean"}: ${dataObj.mean.toFixed(0)} ms | ` +
+          `${currentLang === "no" ? "Baseline-gjennomsnitt" : currentLang === "lt" ? "Bazinio lygio vidurkis" : "Baseline mean"}: ${dataObj.baselineMean.toFixed(0)} ms | ` +
+          `${currentLang === "no" ? "Baseline SD" : currentLang === "lt" ? "Bazinio lygio SD" : "Baseline SD"}: ${dataObj.baselineSD.toFixed(0)} ms`,
+        statusLine: `${getStatusLabel()}: ${dataObj.status || "—"}`,
+        systemLine: getCheckCompleteLabel(),
+      });
       break;
       
     case "check_precision":
-      summary.textContent = getCheckPrecision(dataObj.meanErrN, dataObj.baselineMeanErrN, dataObj.baselineSDErrN, dataObj.status, dataObj.meanRtMs || 0, dataObj.quality, dataObj.deviceWarning || "", dataObj.fullscreenNote || "");
+      renderStructuredSummary({
+        metricsLine:
+          `${currentLang === "no" ? "Feil" : currentLang === "lt" ? "Klaida" : "Error"}: ${dataObj.meanErrN.toFixed(2)} | ` +
+          `${currentLang === "no" ? "Baseline-feil" : currentLang === "lt" ? "Bazinio lygio klaida" : "Baseline error"}: ${dataObj.baselineMeanErrN.toFixed(2)} | ` +
+          `${currentLang === "no" ? "Baseline SD" : currentLang === "lt" ? "Bazinio lygio SD" : "Baseline SD"}: ${dataObj.baselineSDErrN.toFixed(2)}`,
+        statusLine: `${getStatusLabel()}: ${dataObj.status || "—"}`,
+        systemLine: getCheckCompleteLabel(),
+      });
       break;
       
     case "invalid_no_reaction":
@@ -1970,6 +2065,7 @@ function applyLangUI() {
   if (historyListEl) {
     renderHistory();
   }
+  updateBaselineInfo();
   renderLastFullBackupLine();
 
   // 9) Update select options for modes and test types
@@ -2172,8 +2268,9 @@ const startTrainingBtn = document.getElementById("startTrainingBtn");
 const baselineInfo = document.getElementById("baselineInfo");
 const clearBaselineBtn = document.getElementById("clearBaselineBtn");
 const baselineList = document.getElementById("baselineList");
-const baselineProgress = document.getElementById("baselineProgress");
 const baselineGuidance = document.getElementById("baselineGuidance");
+const baselineStatusInfo = document.getElementById("baselineStatusInfo");
+const baselineLastUpdateInfo = document.getElementById("baselineLastUpdateInfo");
 const testType = document.getElementById("testType");
 
 // Context (optional) - sleep, stress, note only (mode is determined by action button clicked)
@@ -5919,6 +6016,8 @@ function pushHistoryRecord(record) {
 function updateProgress(isDone = false) {
   if (!inSession && !isDone) {
     progress.textContent = "";
+    if (progress) progress.classList.remove("is-complete");
+    if (sessionPanel) sessionPanel.classList.remove("session-result-ready");
     return;
   }
 
@@ -5927,8 +6026,12 @@ function updateProgress(isDone = false) {
 
   if (isDone) {
     progress.textContent = getSessionComplete(done, total);
+    if (progress) progress.classList.add("is-complete");
+    if (sessionPanel) sessionPanel.classList.add("session-result-ready");
   } else {
     progress.textContent = getTrialProgress(Math.min(trialIndex, total), total, done);
+    if (progress) progress.classList.remove("is-complete");
+    if (sessionPanel) sessionPanel.classList.remove("session-result-ready");
   }
 }
 
@@ -5944,6 +6047,8 @@ function hardReset() {
   if (trialList) {
     trialList.classList.remove("session-ended");
   }
+  if (progress) progress.classList.remove("is-complete");
+  if (sessionPanel) sessionPanel.classList.remove("session-result-ready");
   // Clear divided attention state on reset
   dividedPlan = null;
   dividedFlashAnswer = null;
@@ -6108,16 +6213,12 @@ function loadBaseline() {
       }
     }
 
-    // Progress + button gating - update both language spans
-    const progressEn = baselineProgress.querySelector(".lang-en");
-    const progressNo = baselineProgress.querySelector(".lang-no");
-    if (progressEn) {
-      progressEn.textContent = `Baseline progress: ${sessions.length}/${minSessions} sessions (minimum).`;
-    }
-    if (progressNo) {
-      progressNo.textContent = `Baseline-fremgang: ${sessions.length}/${minSessions} økter (minimum).`;
-    }
+    // Button gating based on minimum baseline sessions
     startCheckBtn.disabled = sessions.length < minSessions;
+
+    // Small metadata lines: shown only when a baseline exists
+    if (baselineStatusInfo) baselineStatusInfo.textContent = "";
+    if (baselineLastUpdateInfo) baselineLastUpdateInfo.textContent = "";
 
     if (sessions.length === 0) {
       // Update both language spans in baselineInfo
@@ -6127,10 +6228,14 @@ function loadBaseline() {
       if (infoEn) infoEn.textContent = "No baseline sessions recorded.";
       if (infoNo) infoNo.textContent = "Ingen baseline-økter er registrert.";
       if (infoLt) infoLt.textContent = "Nėra užregistruotų bazinio lygio sesijų.";
+      if (baselineStatusInfo) baselineStatusInfo.style.display = "none";
+      if (baselineLastUpdateInfo) baselineLastUpdateInfo.style.display = "none";
       clearBaselineBtn.style.display = "none";
       return;
     }
 
+    if (baselineStatusInfo) baselineStatusInfo.style.display = "";
+    if (baselineLastUpdateInfo) baselineLastUpdateInfo.style.display = "";
     clearBaselineBtn.style.display = "";
 
     // For precision, use meanErrN/sdErrN; for others, use mean/sd
@@ -6154,16 +6259,17 @@ function loadBaseline() {
     const infoLt = baselineInfo.querySelector(".lang-lt");
     const prefix = (isGoNoGo || isDivided) ? "GO " : "";
     if (infoEn) {
+      const enSessionWord = sessions.length === 1 ? "session" : "sessions";
       if (isPrecisionType) {
         infoEn.textContent =
-          `${sessions.length} sessions | ` +
-          `Baseline error: ${meanAvg.toFixed(2)} | ` +
-          `Baseline SD: ${sdAvg.toFixed(2)}`;
+          `${sessions.length} ${enSessionWord} | ` +
+          `Mean error: ${meanAvg.toFixed(2)} | ` +
+          `SD: ${sdAvg.toFixed(2)}`;
       } else {
         infoEn.textContent =
-          `${sessions.length} sessions | ` +
-          `${prefix}Baseline mean: ${meanAvg.toFixed(0)} ms | ` +
-          `${prefix}Baseline SD: ${sdAvg.toFixed(0)} ms`;
+          `${sessions.length} ${enSessionWord} | ` +
+          `${prefix}Mean: ${meanAvg.toFixed(0)} ms | ` +
+          `${prefix}SD: ${sdAvg.toFixed(0)} ms`;
       }
     }
     if (infoNo) {
@@ -6191,6 +6297,29 @@ function loadBaseline() {
           `${prefix}Bazinio lygio vidurkis: ${meanAvg.toFixed(0)} ms | ` +
           `${prefix}Bazinio lygio SD: ${sdAvg.toFixed(0)} ms`;
       }
+    }
+
+    if (baselineStatusInfo) {
+      if (sessions.length >= 3) {
+        baselineStatusInfo.textContent = `${t("baseline.statusLabel")}: ${t("baseline.statusReady")}`;
+      } else {
+        baselineStatusInfo.textContent = `${t("baseline.statusLabel")}: ${t("baseline.statusBuilding")} (${sessions.length}/3)`;
+      }
+    }
+    if (baselineLastUpdateInfo) {
+      const latestSession = sessions.reduce((latest, s) => {
+        const ts = Date.parse(s && s.timestamp ? s.timestamp : "");
+        if (!Number.isFinite(ts)) return latest;
+        if (!latest) return s;
+        const prevTs = Date.parse(latest.timestamp || "");
+        if (!Number.isFinite(prevTs) || ts > prevTs) return s;
+        return latest;
+      }, null);
+      let timeText = "-";
+      if (latestSession && latestSession.timestamp) {
+        timeText = formatTs(latestSession.timestamp);
+      }
+      baselineLastUpdateInfo.textContent = `${t("baseline.lastSessionLabel")}: ${timeText}`;
     }
   
     // Render newest first

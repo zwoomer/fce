@@ -305,7 +305,7 @@
     backdrop-filter: blur(6px);
     border-bottom: 1px solid rgba(255,255,255,0.08);
     padding: 10px 12px;
-    margin: -10px -12px 10px;
+    margin: -10px -12px 14px;
     border-radius: 12px 12px 0 0;
     flex-shrink: 0;
   }
@@ -347,8 +347,8 @@
     scroll-behavior: smooth;
     overflow-x: hidden;
     
-    font-size: 14px;
-    color: #ddd;
+    font-size: 12.5px;
+    color: #c8c8c8;
     /* Ensure scrolling is always enabled */
     -webkit-overflow-scrolling: touch;
     position: relative;
@@ -383,7 +383,7 @@
   /* Trial emphasis: opacity-based, never hide (no display:none) */
   .session-trials li.is-latest {
     opacity: 1;
-    font-weight: 650;
+    font-weight: 600;
   }
 
   .session-trials li.is-2nd {
@@ -498,20 +498,23 @@
   .panel.session-panel #summary {
     flex-shrink: 0;
     margin-top: 12px;
+    margin-bottom: 10px;
     overflow: visible;
   }
 
   .op-advice {
     margin-top: 12px;
-    padding: 16px 16px;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.06);
+    padding: 13px 13px;
+    background: rgba(255,255,255,0.015);
+    border: 1px solid rgba(255,255,255,0.035);
     border-radius: 14px;
+    opacity: 0.86;
   }
   .op-advice h3 {
     margin: 0;
-    font-size: 16px;
-    font-weight: 650;
+    font-size: 15px;
+    font-weight: 600;
+    opacity: 0.9;
   }
   .op-advice-body {
     margin-top: 10px;
@@ -875,16 +878,60 @@
   
   /* Typography improvements for summary and content */
   #summary {
-    margin-top: 14px;
-    font-weight: 600;
-    font-size: 15px;
-    line-height: 1.6;
-    color: #eee;
-    opacity: 0.95;
-    padding: 12px;
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 8px;
-    border-left: 3px solid rgba(255, 255, 255, 0.1);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.45;
+    color: #f0f0f0;
+    opacity: 1;
+    padding: 8px 0 10px;
+    background: transparent;
+    border-radius: 0;
+    border: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    letter-spacing: 0.1px;
+    text-align: left;
+    max-width: 420px;
+  }
+
+  .summary-metrics {
+    font-size: 16px;
+    font-weight: 660;
+    color: #f2f2f2;
+  }
+
+  .summary-status {
+    margin-top: 4px;
+    font-size: 14px;
+    font-weight: 560;
+    color: rgba(255, 255, 255, 0.88);
+  }
+
+  .summary-system {
+    margin-top: 4px;
+    font-size: 12.5px;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .session-panel.session-result-ready #summary {
+    animation: summaryResultIn 180ms ease-out;
+  }
+
+  @keyframes summaryResultIn {
+    from {
+      opacity: 0;
+      transform: translateY(2px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  #progress.is-complete {
+    opacity: 0.6;
+    font-size: 14px;
   }
  
   /* Improved baseline actions spacing */
@@ -923,18 +970,35 @@
   }
 
 
-  /* Enhanced baseline progress and guidance */
-  #baselineProgress, #baselineGuidance {
+  /* Enhanced baseline guidance */
+  #baselineGuidance {
     margin: 8px 0;
     opacity: 0.9;
     font-size: 14px;
     line-height: 1.5;
     color: #ccc;
   }
+
+  .baseline-meta-line {
+    margin: 4px 0;
+    text-align: left;
+  }
   
   #baselineInfo {
     line-height: 1.6;
     color: #ddd;
+    text-align: left;
+    margin-bottom: 4px;
+  }
+
+  #baselineStatusInfo {
+    font-weight: 600;
+    opacity: 0.92;
+  }
+
+  #baselineLastUpdateInfo {
+    opacity: 0.76;
+    font-size: 13px;
   }
 
   /* Improved note/helper text styling */

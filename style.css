@@ -2539,3 +2539,117 @@ html.precision-prep-open {
   background: rgba(255, 255, 255, 0.15);
   border-color: rgba(255, 255, 255, 0.3);
 }
+
+/* Import preview (dry-run backup validator) */
+.import-preview-panel {
+  margin-top: 16px;
+  padding: 16px 18px;
+}
+
+.import-preview-panel.hidden {
+  display: none;
+}
+
+.import-preview-title {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+}
+
+.import-preview-validity {
+  margin: 0 0 12px;
+  font-weight: 600;
+}
+
+.import-preview-validity.import-preview-ok {
+  color: var(--ok, #6bc96b);
+}
+
+.import-preview-validity.import-preview-bad {
+  color: var(--danger, #e07070);
+}
+
+.import-preview-meta {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 14px;
+  margin: 0 0 12px;
+  font-size: 14px;
+}
+
+.import-preview-meta dt {
+  margin: 0;
+  color: var(--muted, #aaa);
+}
+
+.import-preview-meta dd {
+  margin: 0;
+}
+
+.import-preview-subhead {
+  margin: 12px 0 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted, #aaa);
+}
+
+.import-preview-meta-list {
+  margin: 0 0 8px;
+  padding-left: 1.25rem;
+  font-size: 14px;
+}
+
+.import-preview-list {
+  margin: 0 0 8px;
+  padding-left: 1.25rem;
+  font-size: 14px;
+}
+
+.import-preview-warnings li {
+  list-style-type: disc;
+}
+
+.import-preview-errors li {
+  list-style-type: disc;
+  color: var(--danger, #e07070);
+}
+
+.import-preview-keys,
+.import-preview-summary-json {
+  margin: 0 0 8px;
+  padding: 10px 12px;
+  font-size: 12px;
+  line-height: 1.45;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  overflow: auto;
+  max-height: 180px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.import-preview-summary-json {
+  max-height: 220px;
+}
+
+.import-preview-note {
+  margin-top: 12px;
+  margin-bottom: 0;
+}
+
+.import-data-actions {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.import-data-actions.hidden {
+  display: none;
+}
+
+.import-overwrite-warning {
+  margin: 0;
+  color: var(--warning, #e6c46c);
+}

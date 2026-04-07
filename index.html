@@ -538,8 +538,38 @@
           <div class="history-actions">
             <button id="exportHistoryBtn" class="secondary" type="button" data-i18n="export.btn">Export (Copy JSON)</button>
             <button id="exportCsvBtn" class="secondary" type="button" data-i18n="export.btnCsv">Export CSV</button>
+            <button id="exportFullBackupBtn" class="secondary" type="button" data-i18n="export.backupBtn">Export full backup (.json)</button>
+            <input id="importPreviewFileInput" type="file" accept="application/json,.json" hidden aria-hidden="true" />
+            <button id="importPreviewBtn" class="secondary" type="button" data-i18n="importPreview.btn">Preview import (.json)</button>
             <span id="exportStatus" class="muted" aria-live="polite"></span>
           </div>
+          <p class="note muted" data-i18n="export.backupReminder">
+            Your data is stored only in this browser. Export regularly to keep a backup.
+          </p>
+          <p id="lastFullBackupLine" class="note muted">
+            Last full backup: never
+          </p>
+
+          <section id="importPreviewPanel" class="card import-preview-panel hidden" aria-live="polite">
+            <h3 class="import-preview-title" data-i18n="importPreview.title">Import preview (dry run)</h3>
+            <p id="importPreviewValidity" class="import-preview-validity"></p>
+            <dl id="importPreviewMeta" class="import-preview-meta"></dl>
+            <p class="import-preview-subhead" data-i18n="importPreview.groupsHeader">Keys per group</p>
+            <ul id="importPreviewGroupCounts" class="import-preview-meta-list"></ul>
+            <p class="import-preview-subhead" data-i18n="importPreview.warnings">Warnings</p>
+            <ul id="importPreviewWarnings" class="import-preview-list import-preview-warnings"></ul>
+            <p class="import-preview-subhead" data-i18n="importPreview.errors">Errors</p>
+            <ul id="importPreviewErrors" class="import-preview-list import-preview-errors"></ul>
+            <p class="import-preview-subhead" data-i18n="importPreview.wouldRestore">Would restore (localStorage keys)</p>
+            <pre id="importPreviewKeys" class="import-preview-keys"></pre>
+            <p class="import-preview-subhead" data-i18n="importPreview.summaryJson">Summary (for tooling)</p>
+            <pre id="importPreviewSummaryJson" class="import-preview-summary-json"></pre>
+            <div id="importDataActions" class="import-data-actions hidden">
+              <p id="importOverwriteWarning" class="note import-overwrite-warning hidden" role="status"></p>
+              <button type="button" id="importDataBtn" class="secondary" data-i18n="importPreview.importBtn">Import data</button>
+            </div>
+            <p class="note muted import-preview-note" data-i18n="importPreview.dryRunNote">Nothing was written to storage. This is a read-only check.</p>
+          </section>
 
           <div class="config-row">
             <button id="clearHistoryBtn" class="danger" type="button">

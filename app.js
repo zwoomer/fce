@@ -92,10 +92,49 @@ const I18N = {
     export: {
       btn: "Export (Copy JSON)",
       btnCsv: "Export CSV",
+      backupBtn: "Export full backup (.json)",
+      backupReminder:
+        "Your data is stored only in this browser. Export regularly to keep a backup.",
+      lastBackupLabel: "Last full backup",
+      lastBackupNever: "never",
       copied: "Copied to clipboard.",
       csvExported: "CSV exported.",
+      backupOk: "Backup exported successfully.",
+      backupEmpty: "No FCE data found in local storage to export.",
       empty: "No history to export.",
       failed: "Copy failed — showing text below.",
+    },
+    importPreview: {
+      btn: "Preview import (.json)",
+      title: "Import preview (dry run)",
+      valid: "Valid — file matches FCE backup rules.",
+      invalid: "Invalid — see errors below.",
+      schemaVersion: "Schema version",
+      keyCount: "Keys in localStorageSnapshot",
+      groupsHeader: "Keys per group (from groups, if present)",
+      warnings: "Warnings",
+      errors: "Errors",
+      wouldRestore: "Would restore (localStorage keys)",
+      summaryJson: "Summary (for tooling)",
+      dryRunNote:
+        "Preview does not change storage. Import runs only after you confirm, using the button below.",
+      noWarnings: "None",
+      noErrors: "None",
+      readError: "Could not read the file.",
+      parseError: "File is not valid JSON.",
+      importBtn: "Import data",
+      overwriteWarning:
+        "Warning: {overwrite} of {total} key(s) already exist in local storage and will be replaced. {fresh} key(s) are new.",
+      confirmImport:
+        "Import this backup into local storage on this device?\n\nTotal keys: {total}\nWill overwrite existing: {overwrite}\nNew keys: {fresh}\n\nYou cannot undo this. Continue?",
+      importSuccessNoSkip:
+        "Imported {written} key(s): {replaced} replaced, {fresh} new.",
+      importSuccessWithSkip:
+        "Imported {written} key(s): {replaced} replaced, {fresh} new, {skipped} skipped.",
+      importUpdatedMeaning:
+        "Local FCE data on this browser was updated from the imported backup.",
+      importAborted: "Import cancelled.",
+      importNothing: "No keys could be written. Check the backup file.",
     },
     trend: {
       title: "Change over time (relative to your baseline)",
@@ -380,10 +419,49 @@ const I18N = {
     export: {
       btn: "Eksporter (kopier JSON)",
       btnCsv: "Eksporter CSV",
+      backupBtn: "Eksporter full sikkerhetskopi (.json)",
+      backupReminder:
+        "Dataene dine lagres kun i denne nettleseren. Eksporter jevnlig for å ha en sikkerhetskopi.",
+      lastBackupLabel: "Siste fullstendige sikkerhetskopi",
+      lastBackupNever: "aldri",
       copied: "Kopiert til utklippstavlen.",
       csvExported: "CSV eksportert.",
+      backupOk: "Sikkerhetskopien ble eksportert.",
+      backupEmpty: "Fant ingen FCE-data i lokal lagring å eksportere.",
       empty: "Ingen historikk å eksportere.",
       failed: "Kopiering feilet — viser tekst under.",
+    },
+    importPreview: {
+      btn: "Forhåndsvis import (.json)",
+      title: "Importforhåndsvisning (kun lesing)",
+      valid: "Gyldig — filen følger FCE-sikkerhetskopireglene.",
+      invalid: "Ugyldig — se feil under.",
+      schemaVersion: "Skjemaversjon",
+      keyCount: "Nøkler i localStorageSnapshot",
+      groupsHeader: "Nøkler per gruppe (fra groups, hvis til stede)",
+      warnings: "Advarsler",
+      errors: "Feil",
+      wouldRestore: "Ville gjenopprettet (localStorage-nøkler)",
+      summaryJson: "Sammendrag (for verktøy)",
+      dryRunNote:
+        "Forhåndsvisning endrer ikke lagring. Import skjer først etter at du bekrefter, med knappen under.",
+      noWarnings: "Ingen",
+      noErrors: "Ingen",
+      readError: "Kunne ikke lese filen.",
+      parseError: "Filen er ikke gyldig JSON.",
+      importBtn: "Importer data",
+      overwriteWarning:
+        "Advarsel: {overwrite} av {total} nøkler finnes allerede lokalt og blir erstattet. {fresh} nøkler er nye.",
+      confirmImport:
+        "Importere denne sikkerhetskopien til lokal lagring på denne enheten?\n\nTotalt antall nøkler: {total}\nVil overskrive eksisterende: {overwrite}\nNye nøkler: {fresh}\n\nDette kan ikke angres. Fortsette?",
+      importSuccessNoSkip:
+        "Importerte {written} nøkler: {replaced} erstattet, {fresh} nye.",
+      importSuccessWithSkip:
+        "Importerte {written} nøkler: {replaced} erstattet, {fresh} nye, {skipped} hoppet over.",
+      importUpdatedMeaning:
+        "Lokale FCE-data i denne nettleseren ble oppdatert fra den importerte sikkerhetskopien.",
+      importAborted: "Import avbrutt.",
+      importNothing: "Ingen nøkler kunne skrives. Sjekk sikkerhetskopifilen.",
     },
     trend: {
       title: "Endring over tid (i forhold til din baseline)",
@@ -667,10 +745,49 @@ const I18N = {
     export: {
       btn: "Eksportuoti (kopijuoti JSON)",
       btnCsv: "Eksportuoti CSV",
+      backupBtn: "Eksportuoti pilną atsarginę kopiją (.json)",
+      backupReminder:
+        "Jūsų duomenys saugomi tik šioje naršyklėje. Reguliariai eksportuokite, kad turėtumėte atsarginę kopiją.",
+      lastBackupLabel: "Paskutinė pilna atsarginė kopija",
+      lastBackupNever: "niekada",
       copied: "Kopijuota į iškarpinę.",
       csvExported: "CSV eksportuotas.",
+      backupOk: "Atsarginė kopija sėkmingai eksportuota.",
+      backupEmpty: "Vietinėje saugykloje nerasta FCE duomenų eksportavimui.",
       empty: "Nėra istorijos eksportavimui.",
       failed: "Kopijavimas nepavyko — rodomas tekstas žemiau.",
+    },
+    importPreview: {
+      btn: "Peržiūrėti importą (.json)",
+      title: "Importo peržiūra (tik skaitymas)",
+      valid: "Galioja — failas atitinka FCE atsarginės kopijos taisykles.",
+      invalid: "Negalioja — žr. klaidas žemiau.",
+      schemaVersion: "Schemos versija",
+      keyCount: "Raktai localStorageSnapshot",
+      groupsHeader: "Raktai pagal grupę (iš groups, jei yra)",
+      warnings: "Įspėjimai",
+      errors: "Klaidos",
+      wouldRestore: "Būtų atkurti (localStorage raktai)",
+      summaryJson: "Santrauka (įrankiams)",
+      dryRunNote:
+        "Peržiūra nekeičia saugyklos. Importas vyksta tik po patvirtinimo mygtuku žemiau.",
+      noWarnings: "Nėra",
+      noErrors: "Nėra",
+      readError: "Nepavyko perskaityti failo.",
+      parseError: "Failas nėra tinkamas JSON.",
+      importBtn: "Importuoti duomenis",
+      overwriteWarning:
+        "Įspėjimas: {overwrite} iš {total} raktų jau yra vietinėje saugykloje ir bus pakeisti. {fresh} raktai yra nauji.",
+      confirmImport:
+        "Importuoti šią atsarginę kopiją į šio įrenginio vietinę saugyklą?\n\nIš viso raktų: {total}\nPerrašys esamus: {overwrite}\nNauji raktai: {fresh}\n\nAtšaukti negalėsite. Tęsti?",
+      importSuccessNoSkip:
+        "Importuota {written} raktų: {replaced} pakeisti, {fresh} nauji.",
+      importSuccessWithSkip:
+        "Importuota {written} raktų: {replaced} pakeisti, {fresh} nauji, {skipped} praleista.",
+      importUpdatedMeaning:
+        "Vietiniai FCE duomenys šioje naršyklėje buvo atnaujinti iš importuotos atsarginės kopijos.",
+      importAborted: "Importas atšauktas.",
+      importNothing: "Nepavyko įrašyti raktų. Patikrinkite atsarginės kopijos failą.",
     },
     trend: {
       title: "Pokytis laikui bėgant (palyginti su jūsų baziniu lygiu)",
@@ -1853,6 +1970,7 @@ function applyLangUI() {
   if (historyListEl) {
     renderHistory();
   }
+  renderLastFullBackupLine();
 
   // 9) Update select options for modes and test types
   updateSelectOptions();
@@ -2174,11 +2292,13 @@ function updateHistoryMenuState() {
 }
 
 // Reusable function to switch views (used by menu buttons and URL params)
-function switchView(target) {
+function switchView(target, options) {
   if (!target) return;
-  
-  // Prevent switching to history if no data exists
-  if (target === "history" && !hasHistory()) {
+  const forceHistory =
+    options && typeof options === "object" && options.forceHistory === true;
+
+  // Prevent switching to history if no data exists (post-import restore may force)
+  if (target === "history" && !hasHistory() && !forceHistory) {
     return;
   }
 
@@ -3422,11 +3542,44 @@ if (clearHistoryBtn) {
 // Export history functionality
 const exportHistoryBtn = document.getElementById("exportHistoryBtn");
 const exportStatus = document.getElementById("exportStatus");
+const FCE_IMPORT_RESULT_MESSAGE_KEY = "fce_import_result_message";
+const FCE_LAST_FULL_BACKUP_AT_KEY = "fce_last_full_backup_at";
 
 function setExportStatus(msg) {
   if (!exportStatus) return;
   exportStatus.textContent = msg;
   if (msg) setTimeout(() => (exportStatus.textContent = ""), 2500);
+}
+
+function renderLastFullBackupLine() {
+  const lineEl = document.getElementById("lastFullBackupLine");
+  if (!lineEl) return;
+
+  const label = t("export.lastBackupLabel");
+  const neverText = t("export.lastBackupNever");
+  let lastRaw = null;
+  try {
+    lastRaw = localStorage.getItem(FCE_LAST_FULL_BACKUP_AT_KEY);
+  } catch {}
+
+  let valueText = neverText;
+  if (lastRaw) {
+    const d = new Date(lastRaw);
+    if (!Number.isNaN(d.getTime())) {
+      try {
+        valueText = d.toLocaleString();
+      } catch {
+        const Y = d.getFullYear();
+        const M = String(d.getMonth() + 1).padStart(2, "0");
+        const D = String(d.getDate()).padStart(2, "0");
+        const h = String(d.getHours()).padStart(2, "0");
+        const m = String(d.getMinutes()).padStart(2, "0");
+        valueText = `${Y}-${M}-${D} ${h}:${m}`;
+      }
+    }
+  }
+
+  lineEl.textContent = `${label}: ${valueText}`;
 }
 
 async function copyTextToClipboard(text) {
@@ -3716,6 +3869,454 @@ function downloadCsv(content, filename) {
   URL.revokeObjectURL(url);
 }
 
+/** All FCE app keys on this origin use the `fce_` prefix (instrument, baselines, history, UI prefs). */
+function collectFceLocalStorageKeys() {
+  const keys = [];
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith("fce_")) keys.push(k);
+    }
+  } catch {
+    return keys;
+  }
+  keys.sort();
+  return keys;
+}
+
+function fceBackupFilename() {
+  const d = new Date();
+  const pad = (n) => String(n).padStart(2, "0");
+  const YYYY = d.getFullYear();
+  const MM = pad(d.getMonth() + 1);
+  const DD = pad(d.getDate());
+  const HH = pad(d.getHours());
+  const mm = pad(d.getMinutes());
+  const ss = pad(d.getSeconds());
+  return `fce-backup-${YYYY}-${MM}-${DD}T${HH}-${mm}-${ss}.json`;
+}
+
+/** Preference-like keys (language, onboarding, instrument nav); order checked after history/baseline/docsState. */
+const FCE_BACKUP_PREFERENCE_KEYS = new Set([
+  "fce_lang",
+  "fce_lang_v1",
+  "fce_onboarding_done",
+  "fce_test_type_v1",
+  "fce_last_page",
+  "fce_learn_more_clicked",
+  "fce_resume_last",
+]);
+
+function fceBackupGroupForKey(key) {
+  if (key.startsWith("fce_history_")) return "history";
+  if (key.startsWith("fce_baseline_")) return "baselines";
+  if (key === "fce_last_docs_page" || key.startsWith("fce_doc_scroll_")) return "docsState";
+  if (FCE_BACKUP_PREFERENCE_KEYS.has(key)) return "preferences";
+  return "otherFceKeys";
+}
+
+function buildFullBackupJsonString() {
+  const keys = collectFceLocalStorageKeys();
+  if (!keys.length) return { ok: false, reason: "empty" };
+
+  const localStorageSnapshot = {};
+  const includedKeys = [];
+  for (const key of keys) {
+    let raw;
+    try {
+      raw = localStorage.getItem(key);
+    } catch {
+      continue;
+    }
+    if (raw === null) continue;
+    includedKeys.push(key);
+    try {
+      localStorageSnapshot[key] = { type: "json", value: JSON.parse(raw) };
+    } catch {
+      localStorageSnapshot[key] = { type: "raw", value: raw };
+    }
+  }
+
+  if (!includedKeys.length) return { ok: false, reason: "empty" };
+
+  const groups = {
+    history: {},
+    baselines: {},
+    preferences: {},
+    docsState: {},
+    otherFceKeys: {},
+  };
+  for (const key of includedKeys) {
+    const bucket = fceBackupGroupForKey(key);
+    groups[bucket][key] = localStorageSnapshot[key];
+  }
+
+  const backup = {
+    format: "fce-export",
+    schemaVersion: 2,
+    exportedAt: new Date().toISOString(),
+    appVersion: "unknown",
+    summary: {
+      includedKeys,
+      keyCount: includedKeys.length,
+      approxBytes: 0,
+    },
+    groups,
+    localStorageSnapshot,
+  };
+
+  for (let i = 0; i < 4; i++) {
+    const json = JSON.stringify(backup);
+    backup.summary.approxBytes = new TextEncoder().encode(json).length;
+  }
+  return { ok: true, json: JSON.stringify(backup) };
+}
+
+function downloadJsonFile(content, filename) {
+  const blob = new Blob([content], { type: "application/json;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+const KNOWN_FCE_BACKUP_SCHEMA_VERSIONS = [1, 2];
+const FCE_IMPORT_PREVIEW_GROUP_NAMES = ["history", "baselines", "preferences", "docsState", "otherFceKeys"];
+
+/** Last successfully validated backup object (same reference as preview); cleared after import or invalid preview. */
+let importPreviewStagedParsed = null;
+
+function fceI18nReplace(template, vars) {
+  if (template == null || typeof template !== "string") return "";
+  let out = template;
+  for (const [k, v] of Object.entries(vars)) {
+    out = out.split(`{${k}}`).join(String(v));
+  }
+  return out;
+}
+
+function computeImportOverwriteStats(snap) {
+  const keys = Object.keys(snap && typeof snap === "object" && !Array.isArray(snap) ? snap : {});
+  let overwrite = 0;
+  let fresh = 0;
+  for (const k of keys) {
+    try {
+      if (localStorage.getItem(k) !== null) overwrite++;
+      else fresh++;
+    } catch {
+      fresh++;
+    }
+  }
+  return { total: keys.length, overwrite, fresh };
+}
+
+function serializeFceSnapshotEntry(entry) {
+  if (!entry || typeof entry !== "object" || Array.isArray(entry)) return null;
+  if (entry.type === "json") {
+    try {
+      return JSON.stringify(entry.value);
+    } catch {
+      return null;
+    }
+  }
+  if (entry.type === "raw") {
+    if (entry.value === undefined || entry.value === null) return "";
+    return String(entry.value);
+  }
+  return null;
+}
+
+/** Writes only localStorageSnapshot entries; does not use groups. Returns counts for UI. */
+function applyFceBackupLocalStorageSnapshot(snap) {
+  if (!snap || typeof snap !== "object" || Array.isArray(snap)) {
+    return { written: 0, skipped: 0, replaced: 0, fresh: 0 };
+  }
+  let written = 0;
+  let skipped = 0;
+  let replaced = 0;
+  let fresh = 0;
+  for (const [key, entry] of Object.entries(snap)) {
+    let existed = false;
+    try {
+      existed = localStorage.getItem(key) !== null;
+    } catch {
+      existed = false;
+    }
+    const serialized = serializeFceSnapshotEntry(entry);
+    if (serialized === null) {
+      skipped++;
+      continue;
+    }
+    try {
+      localStorage.setItem(key, serialized);
+      written++;
+      if (existed) replaced++;
+      else fresh++;
+    } catch {
+      skipped++;
+    }
+  }
+  return { written, skipped, replaced, fresh };
+}
+
+function emptyImportPreviewGroupCounts() {
+  return {
+    history: 0,
+    baselines: 0,
+    preferences: 0,
+    docsState: 0,
+    otherFceKeys: 0,
+  };
+}
+
+/** Dry-run validation only — does not read or write localStorage. */
+function validateFceBackupImportPreview(parsed) {
+  const errors = [];
+  const warnings = [];
+  const groupCounts = emptyImportPreviewGroupCounts();
+  let schemaVersion = null;
+  let keyCount = 0;
+
+  if (parsed === null || typeof parsed !== "object" || Array.isArray(parsed)) {
+    errors.push("Root must be a JSON object.");
+    return { valid: false, schemaVersion, keyCount, groups: groupCounts, warnings, errors };
+  }
+
+  if (parsed.format !== "fce-export") {
+    errors.push('format must be exactly "fce-export".');
+  }
+
+  if (typeof parsed.schemaVersion !== "number" || !Number.isFinite(parsed.schemaVersion)) {
+    errors.push("schemaVersion must be a finite number.");
+  } else {
+    schemaVersion = parsed.schemaVersion;
+    if (!KNOWN_FCE_BACKUP_SCHEMA_VERSIONS.includes(schemaVersion)) {
+      warnings.push(
+        `schemaVersion ${schemaVersion} is not in the known set (${KNOWN_FCE_BACKUP_SCHEMA_VERSIONS.join(", ")}); import may require migration later.`
+      );
+    }
+  }
+
+  const snap = parsed.localStorageSnapshot;
+  if (snap === null || typeof snap !== "object" || Array.isArray(snap)) {
+    errors.push("localStorageSnapshot must be a non-null object.");
+  } else {
+    keyCount = Object.keys(snap).length;
+    for (const [k, v] of Object.entries(snap)) {
+      if (v === null || typeof v !== "object" || Array.isArray(v)) {
+        warnings.push(`Snapshot key "${k}": expected an object with { type, value }.`);
+      } else if (v.type !== "json" && v.type !== "raw") {
+        warnings.push(`Snapshot key "${k}": type should be "json" or "raw".`);
+      }
+    }
+  }
+
+  const groups = parsed.groups;
+  if (typeof parsed.schemaVersion === "number" && parsed.schemaVersion >= 2) {
+    if (!groups || typeof groups !== "object" || Array.isArray(groups)) {
+      warnings.push("schemaVersion ≥ 2 backups usually include a structured groups object.");
+    }
+  }
+
+  if (groups && typeof groups === "object" && !Array.isArray(groups)) {
+    for (const name of FCE_IMPORT_PREVIEW_GROUP_NAMES) {
+      if (!(name in groups)) {
+        warnings.push(`Missing expected group bucket: groups.${name}`);
+      } else if (groups[name] !== null && typeof groups[name] === "object" && !Array.isArray(groups[name])) {
+        groupCounts[name] = Object.keys(groups[name]).length;
+      } else {
+        warnings.push(`groups.${name} should be an object.`);
+      }
+    }
+
+    if (snap && typeof snap === "object" && !Array.isArray(snap)) {
+      const snapKeys = new Set(Object.keys(snap));
+      const groupedKeys = new Set();
+      let anyGrouped = false;
+      for (const name of FCE_IMPORT_PREVIEW_GROUP_NAMES) {
+        const b = groups[name];
+        if (b && typeof b === "object" && !Array.isArray(b)) {
+          if (Object.keys(b).length) anyGrouped = true;
+          for (const k of Object.keys(b)) groupedKeys.add(k);
+        }
+      }
+      if (anyGrouped) {
+        if (groupedKeys.size !== snapKeys.size) {
+          warnings.push(
+            `Group key count (${groupedKeys.size}) does not match localStorageSnapshot key count (${snapKeys.size}).`
+          );
+        }
+        for (const k of groupedKeys) {
+          if (!snapKeys.has(k)) {
+            warnings.push(`Key "${k}" appears in groups but not in localStorageSnapshot.`);
+          }
+        }
+        for (const k of snapKeys) {
+          if (!groupedKeys.has(k)) {
+            warnings.push(`Key "${k}" is in localStorageSnapshot but not found in any group bucket.`);
+          }
+        }
+      }
+    }
+  }
+
+  const structurallyOk =
+    parsed.format === "fce-export" &&
+    typeof parsed.schemaVersion === "number" &&
+    Number.isFinite(parsed.schemaVersion) &&
+    snap !== null &&
+    typeof snap === "object" &&
+    !Array.isArray(snap);
+
+  const valid = structurallyOk && errors.length === 0;
+
+  return { valid, schemaVersion, keyCount, groups: groupCounts, warnings, errors };
+}
+
+function renderImportPreviewFromParsed(parsed, parseStageError) {
+  const panel = document.getElementById("importPreviewPanel");
+  if (!panel) return;
+
+  const groupCountsEmpty = emptyImportPreviewGroupCounts();
+  let validation;
+  if (parseStageError) {
+    validation = {
+      valid: false,
+      schemaVersion: null,
+      keyCount: 0,
+      groups: groupCountsEmpty,
+      warnings: [],
+      errors: [parseStageError],
+    };
+  } else {
+    validation = validateFceBackupImportPreview(parsed);
+  }
+
+  const snap =
+    parsed &&
+    parsed.localStorageSnapshot &&
+    typeof parsed.localStorageSnapshot === "object" &&
+    !Array.isArray(parsed.localStorageSnapshot)
+      ? parsed.localStorageSnapshot
+      : null;
+  const restoreKeys = snap ? Object.keys(snap).sort() : [];
+
+  panel.classList.remove("hidden");
+
+  const validityEl = document.getElementById("importPreviewValidity");
+  if (validityEl) {
+    validityEl.textContent = validation.valid ? t("importPreview.valid") : t("importPreview.invalid");
+    validityEl.className =
+      "import-preview-validity " + (validation.valid ? "import-preview-ok" : "import-preview-bad");
+  }
+
+  const meta = document.getElementById("importPreviewMeta");
+  if (meta) {
+    meta.innerHTML = "";
+    const dt1 = document.createElement("dt");
+    dt1.textContent = t("importPreview.schemaVersion");
+    meta.appendChild(dt1);
+    const dd1 = document.createElement("dd");
+    dd1.textContent =
+      validation.schemaVersion !== null && validation.schemaVersion !== undefined
+        ? String(validation.schemaVersion)
+        : "—";
+    meta.appendChild(dd1);
+    const dt2 = document.createElement("dt");
+    dt2.textContent = t("importPreview.keyCount");
+    meta.appendChild(dt2);
+    const dd2 = document.createElement("dd");
+    dd2.textContent = String(validation.keyCount);
+    meta.appendChild(dd2);
+  }
+
+  const gcUl = document.getElementById("importPreviewGroupCounts");
+  if (gcUl) {
+    gcUl.innerHTML = "";
+    for (const name of FCE_IMPORT_PREVIEW_GROUP_NAMES) {
+      const li = document.createElement("li");
+      li.textContent = `${name}: ${validation.groups[name]}`;
+      gcUl.appendChild(li);
+    }
+  }
+
+  function fillList(ul, items, emptyKey) {
+    if (!ul) return;
+    ul.innerHTML = "";
+    if (!items.length) {
+      const li = document.createElement("li");
+      li.className = "muted";
+      li.textContent = t(emptyKey);
+      ul.appendChild(li);
+      return;
+    }
+    for (const line of items) {
+      const li = document.createElement("li");
+      li.textContent = line;
+      ul.appendChild(li);
+    }
+  }
+
+  fillList(document.getElementById("importPreviewWarnings"), validation.warnings, "importPreview.noWarnings");
+  fillList(document.getElementById("importPreviewErrors"), validation.errors, "importPreview.noErrors");
+
+  const keysEl = document.getElementById("importPreviewKeys");
+  if (keysEl) {
+    keysEl.textContent = restoreKeys.length ? restoreKeys.join("\n") : "—";
+  }
+
+  const summaryForJson = {
+    valid: validation.valid,
+    schemaVersion: validation.schemaVersion,
+    keyCount: validation.keyCount,
+    groups: {
+      history: validation.groups.history,
+      baselines: validation.groups.baselines,
+      preferences: validation.groups.preferences,
+      docsState: validation.groups.docsState,
+      otherFceKeys: validation.groups.otherFceKeys,
+    },
+    warnings: validation.warnings,
+    errors: validation.errors,
+  };
+  const jsonEl = document.getElementById("importPreviewSummaryJson");
+  if (jsonEl) {
+    jsonEl.textContent = JSON.stringify(summaryForJson, null, 2);
+  }
+
+  if (validation.valid && snap && parsed && !parseStageError) {
+    importPreviewStagedParsed = parsed;
+  } else {
+    importPreviewStagedParsed = null;
+  }
+
+  const actions = document.getElementById("importDataActions");
+  const warnEl = document.getElementById("importOverwriteWarning");
+  const importBtn = document.getElementById("importDataBtn");
+  if (actions && warnEl && importBtn) {
+    if (validation.valid && snap) {
+      actions.classList.remove("hidden");
+      importBtn.disabled = false;
+      const stats = computeImportOverwriteStats(snap);
+      if (stats.overwrite > 0) {
+        warnEl.classList.remove("hidden");
+        warnEl.textContent = fceI18nReplace(t("importPreview.overwriteWarning"), stats);
+      } else {
+        warnEl.classList.add("hidden");
+        warnEl.textContent = "";
+      }
+    } else {
+      actions.classList.add("hidden");
+      warnEl.classList.add("hidden");
+      warnEl.textContent = "";
+    }
+  }
+}
+
 if (exportHistoryBtn) {
   exportHistoryBtn.addEventListener("click", async () => {
     // Use your existing UI selector for current test type:
@@ -3765,6 +4366,107 @@ if (exportCsvBtn) {
 
     downloadCsv(res.text, filename);
     setExportStatus(t("export.csvExported"));
+  });
+}
+
+const exportFullBackupBtn = document.getElementById("exportFullBackupBtn");
+if (exportFullBackupBtn) {
+  exportFullBackupBtn.addEventListener("click", () => {
+    const res = buildFullBackupJsonString();
+    if (!res.ok) {
+      setExportStatus(t("export.backupEmpty"));
+      return;
+    }
+    downloadJsonFile(res.json, fceBackupFilename());
+    try {
+      localStorage.setItem(FCE_LAST_FULL_BACKUP_AT_KEY, new Date().toISOString());
+    } catch {}
+    renderLastFullBackupLine();
+    setExportStatus(t("export.backupOk"));
+  });
+}
+
+const importPreviewBtn = document.getElementById("importPreviewBtn");
+const importPreviewFileInput = document.getElementById("importPreviewFileInput");
+if (importPreviewBtn && importPreviewFileInput) {
+  importPreviewBtn.addEventListener("click", () => {
+    importPreviewFileInput.value = "";
+    importPreviewFileInput.click();
+  });
+  importPreviewFileInput.addEventListener("change", () => {
+    const file = importPreviewFileInput.files && importPreviewFileInput.files[0];
+    if (!file) return;
+    setExportStatus("");
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const text = String(reader.result || "");
+        const parsed = JSON.parse(text);
+        renderImportPreviewFromParsed(parsed, null);
+      } catch {
+        renderImportPreviewFromParsed(null, t("importPreview.parseError"));
+      }
+    };
+    reader.onerror = () => {
+      renderImportPreviewFromParsed(null, t("importPreview.readError"));
+    };
+    reader.readAsText(file, "utf-8");
+  });
+}
+
+const importDataBtn = document.getElementById("importDataBtn");
+if (importDataBtn) {
+  importDataBtn.addEventListener("click", () => {
+    const staged = importPreviewStagedParsed;
+    if (!staged) return;
+    const v = validateFceBackupImportPreview(staged);
+    if (!v.valid || v.errors.length > 0) {
+      setExportStatus(t("importPreview.invalid"));
+      return;
+    }
+    const snap = staged.localStorageSnapshot;
+    if (!snap || typeof snap !== "object" || Array.isArray(snap)) return;
+
+    const stats = computeImportOverwriteStats(snap);
+    const msg = fceI18nReplace(t("importPreview.confirmImport"), stats);
+    const ok = confirm(msg);
+    if (!ok) {
+      setExportStatus(t("importPreview.importAborted"));
+      return;
+    }
+
+    importDataBtn.disabled = true;
+    const { written, skipped, replaced, fresh } = applyFceBackupLocalStorageSnapshot(snap);
+
+    if (written === 0) {
+      setExportStatus(t("importPreview.importNothing"));
+      importDataBtn.disabled = false;
+      return;
+    }
+
+    importPreviewStagedParsed = null;
+
+    const statusMsgCore =
+      skipped > 0
+        ? fceI18nReplace(t("importPreview.importSuccessWithSkip"), {
+            written,
+            replaced,
+            fresh,
+            skipped,
+          })
+        : fceI18nReplace(t("importPreview.importSuccessNoSkip"), {
+            written,
+            replaced,
+            fresh,
+          });
+    const statusMsg = `${statusMsgCore} ${t("importPreview.importUpdatedMeaning")}`;
+    try {
+      sessionStorage.setItem(FCE_IMPORT_RESULT_MESSAGE_KEY, statusMsg);
+    } catch {}
+    setExportStatus(statusMsg);
+    setTimeout(() => {
+      location.reload();
+    }, 1200);
   });
 }
 
@@ -7101,6 +7803,28 @@ if (params.get("home") === "1") {
     topbarPage.textContent = t("ui.home");
   }
 }
+
+const FCE_IMPORT_RESULT_RESTORE_MS = 7000;
+try {
+  const pendingImportStatus = sessionStorage.getItem(FCE_IMPORT_RESULT_MESSAGE_KEY);
+  if (pendingImportStatus != null && pendingImportStatus !== "") {
+    sessionStorage.removeItem(FCE_IMPORT_RESULT_MESSAGE_KEY);
+    switchView("history", { forceHistory: true });
+    if (exportStatus) {
+      exportStatus.textContent = pendingImportStatus;
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          exportStatus.scrollIntoView({ behavior: "smooth", block: "center" });
+        });
+      });
+      setTimeout(() => {
+        if (exportStatus && exportStatus.textContent === pendingImportStatus) {
+          exportStatus.textContent = "";
+        }
+      }, FCE_IMPORT_RESULT_RESTORE_MS);
+    }
+  }
+} catch {}
 
 // Initialize History menu state
 updateHistoryMenuState();

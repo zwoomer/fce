@@ -423,18 +423,18 @@
             <span class="lang lang-no hidden">Baseline</span>
             <span class="lang lang-lt hidden">Bazinis lygis</span>
           </h2>
-          <p id="baselineInfo">
-            <span class="lang lang-en">No baseline sessions recorded.</span>
-            <span class="lang lang-no hidden">Ingen baseline-økter er registrert.</span>
-            <span class="lang lang-lt hidden">Nėra užregistruotų bazinio lygio sesijų.</span>
-          </p>
-          <p id="baselineStatusInfo" class="muted baseline-meta-line"></p>
-          <p id="baselineLastUpdateInfo" class="muted baseline-meta-line"></p>
-          <p id="baselineGuidance">
-            <span class="lang lang-en"></span>
-            <span class="lang lang-no hidden"></span>
-            <span class="lang lang-lt hidden"></span>
-          </p>
+          <div class="baseline-core">
+            <p id="baselineStatusInfo" class="baseline-state-line"></p>
+            <p id="baselineSessionsLine" class="baseline-meta-line muted" hidden></p>
+            <p id="baselineLastUpdateInfo" class="muted baseline-meta-line" hidden></p>
+          </div>
+          <div id="baselineIntegrityWrap" class="baseline-integrity-wrap" hidden>
+            <p id="baselineIntegrityStrength" class="baseline-integrity-line muted"></p>
+            <p id="baselineIntegrityConsistency" class="baseline-integrity-line muted"></p>
+          </div>
+          <p id="baselineStatsLine" class="baseline-stats-line" hidden></p>
+          <p id="baselineIntegrityOutlier" class="baseline-integrity-note muted" hidden></p>
+          <p id="baselineGuidance" class="baseline-guidance-line muted"></p>
           <p class="note">
             <span class="lang lang-en">
               Baseline applies to the current device and input method.

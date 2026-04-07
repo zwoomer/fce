@@ -80,18 +80,50 @@ const I18N = {
       noteLabel: "Note",
     },
     status: {
-      within: "Within your usual range",
-      slightly: "Slightly below your usual range",
-      significantly: "Significantly below your usual range",
+      within: "Within range",
+      slightly: "Slight deviation",
+      significantly: "Clear deviation",
       noBaseline: "No baseline yet — add baseline sessions first.",
+    },
+    check: {
+      withinRange: "Within range",
+      slightDeviation: "Slight deviation",
+      clearDeviation: "Clear deviation",
+      slower: "slower than baseline",
+      faster: "faster than baseline",
+      moreError: "more error than baseline",
+      lessError: "less error than baseline",
+      comparisonUnavailable: "Comparison unavailable",
+      deltaFromBaseline: "{delta} from baseline",
+      notComparable: "Not comparable",
     },
     baseline: {
       noSessions: "No baseline sessions recorded.",
       sessions: "sessions",
-      statusLabel: "Baseline status",
-      statusBuilding: "building",
-      statusReady: "ready",
+      statusLabel: "Status",
+      statusNone: "No baseline yet",
+      statusBuildingWithProgress: "Building ({n}/{min})",
+      statusReady: "Ready",
+      sessionsLabel: "Sessions",
+      sessionLineOne: "1 baseline session",
+      sessionLineMany: "{n} baseline sessions",
       lastSessionLabel: "Last session",
+      guidanceNone:
+        "Add baseline sessions to create your personal reference for this test.",
+      guidanceBuilding:
+        "Still building. Add more sessions for a stronger reference.",
+      guidanceReady: "Checks for this test compare your current result against this baseline.",
+      statsPrecision: "Mean error: {mean} | SD: {sd}",
+      integrityStrengthLabel: "Baseline strength",
+      integrityConsistencyLabel: "Consistency",
+      integrityStrengthThin: "Thin",
+      integrityStrengthDeveloping: "Developing",
+      integrityStrengthStrong: "Strong",
+      integrityConsistencyConsistent: "Consistent",
+      integrityConsistencyModerate: "Moderate variation",
+      integrityConsistencyHigh: "High variation",
+      integrityConsistencyUnavailable: "Not enough data",
+      integrityOutlierNote: "One session differs noticeably from the others.",
     },
     export: {
       btn: "Export (Copy JSON)",
@@ -167,7 +199,7 @@ const I18N = {
       noBaseline: "No baseline yet — trend uses baseline sessions.",
       noChecks: "No check sessions yet.",
       checkLabel: "Check",
-      delta: "Difference from baseline: {delta}",
+      delta: "{delta} from baseline",
       result: "Result:",
       footerNote: "This view visualizes change. It does not decide readiness, fitness, or permission.",
       ok: "OK",
@@ -179,6 +211,9 @@ const I18N = {
         consistency: "Consistency (this session)",
         trials: "Trials",
       },
+      display: {
+        valueUnavailable: "—",
+      },
       detail: {
         avg: "Average",
         consistency: "Consistency",
@@ -187,7 +222,7 @@ const I18N = {
           line1: "This result differs by {delta} from your baseline.",
           line2: {
             within: "Given how much you usually vary, this difference is still typical for you.",
-            slightly: "Given how much you usually vary, this difference is less typical, but still within a reasonable range.",
+            slightly: "Given how much you usually vary, this difference is less typical for you.",
             significantly: "Given how much you usually vary, this difference is not typical for you.",
           },
         },
@@ -230,9 +265,9 @@ const I18N = {
           sd: "SD",
         },
         comparison: {
-          within: "Accuracy within normal range",
-          slightly: "Accuracy slightly worse than baseline",
-          significantly: "Accuracy significantly worse than baseline",
+          within: "Within range",
+          slightly: "Slight deviation",
+          significantly: "Clear deviation",
         },
       },
       gonogo: {
@@ -284,10 +319,10 @@ const I18N = {
       unknown: "Unknown",
     },
     quality: {
-      good: "Good",
+      good: "Stable",
       mixed: "Mixed",
       not_usable: "Not usable",
-      label: "Quality",
+      label: "Signal quality",
       warning: {
         manyFalseStarts: "many false starts",
         fewValidHits: "few valid hits",
@@ -350,12 +385,14 @@ const I18N = {
       title: "What happens after a test?",
       note: "Advisory only. This does not diagnose or decide readiness.",
       tiers: {
-        baseline_needed_title: "Baseline needed",
-        proceed_title: "Proceed",
-        proceed_caution_title: "Proceed with caution",
-        pause_retest_title: "Pause and retest",
-        rest_retest_later_title: "Rest and retest later",
-        not_usable_title: "Not usable session",
+        baseline_needed_title: "No baseline reference",
+        proceed_title: "Context",
+        proceed_caution_title: "Less typical pattern",
+        pause_retest_title: "Unusual deviation",
+        rest_retest_later_title: "Sustained deviation",
+        not_usable_title: "Not comparable",
+        not_usable_context:
+          "This session is not usable for comparison.",
       },
       common: {
         retest_now: "Retest now in a calm, consistent setup.",
@@ -363,7 +400,7 @@ const I18N = {
         take_break: "Take a short break, then re-run a check in a consistent setup.",
         reduce_load: "Consider lowering intensity and rechecking if needed.",
         check_conditions: "Check your setup and conditions before retesting.",
-        consider_context: "If this matches your baseline, it's reasonable to continue as planned.",
+        consider_context: "This aligns with your usual pattern.",
         if_symptoms: "If you feel symptoms or fatigue, prioritize rest.",
       },
       byTest: {
@@ -421,19 +458,52 @@ const I18N = {
       noteLabel: "Merk",
     },
     status: {
-      within: "Innenfor normalområdet",
-      slightly: "Litt under normalområdet",
-      significantly: "Betydelig under normalområdet",
+      within: "Innenfor område",
+      slightly: "Litt avvik",
+      significantly: "Tydelig avvik",
       noBaseline: "Ingen baseline ennå — legg til baseline-økter først.",
+    },
+    check: {
+      withinRange: "Innenfor område",
+      slightDeviation: "Litt avvik",
+      clearDeviation: "Tydelig avvik",
+      slower: "tregere enn baseline",
+      faster: "raskere enn baseline",
+      moreError: "mer feil enn baseline",
+      lessError: "mindre feil enn baseline",
+      comparisonUnavailable: "Sammenligning ikke tilgjengelig",
+      deltaFromBaseline: "{delta} fra baseline",
+      notComparable: "Ikke sammenlignbar",
     },
     baseline: {
       noSessions: "Ingen baseline-økter er registrert.",
       sessions: "økter",
       økter: "økter",
-      statusLabel: "Baseline-status",
-      statusBuilding: "under oppbygging",
-      statusReady: "klar",
+      statusLabel: "Status",
+      statusNone: "Ingen baseline ennå",
+      statusBuildingWithProgress: "Under oppbygging ({n}/{min})",
+      statusReady: "Klar",
+      sessionsLabel: "Økter",
+      sessionLineOne: "1 baseline-økt",
+      sessionLineMany: "{n} baseline-økter",
       lastSessionLabel: "Siste økt",
+      guidanceNone:
+        "Legg til baseline-økter for å lage din personlige referanse for denne testen.",
+      guidanceBuilding:
+        "Bygges fortsatt. Legg til flere økter for en sterkere referanse.",
+      guidanceReady:
+        "Funksjonssjekker for denne testen sammenligner dagens resultat med denne baselineen.",
+      statsPrecision: "Baseline-feil: {mean} | SD: {sd}",
+      integrityStrengthLabel: "Baseline-styrke",
+      integrityConsistencyLabel: "Konsistens",
+      integrityStrengthThin: "Tynn",
+      integrityStrengthDeveloping: "Under utvikling",
+      integrityStrengthStrong: "Sterk",
+      integrityConsistencyConsistent: "Konsistent",
+      integrityConsistencyModerate: "Moderat variasjon",
+      integrityConsistencyHigh: "Høy variasjon",
+      integrityConsistencyUnavailable: "Ikke nok data",
+      integrityOutlierNote: "Én baseline-økt skiller seg tydelig fra de andre.",
     },
     export: {
       btn: "Eksporter (kopier JSON)",
@@ -509,7 +579,7 @@ const I18N = {
       noBaseline: "Ingen baseline ennå — trend bruker baseline-økter.",
       noChecks: "Ingen sjekk-økter ennå.",
       checkLabel: "Sjekk",
-      delta: "Forskjell fra baseline: {delta}",
+      delta: "{delta} fra baseline",
       result: "Resultat:",
       footerNote: "Denne visningen visualiserer endring. Den avgjør ikke klarhet, form eller tillatelse.",
       ok: "OK",
@@ -521,6 +591,9 @@ const I18N = {
         consistency: "Konsistens (denne økten)",
         trials: "Forsøk",
       },
+      display: {
+        valueUnavailable: "—",
+      },
       detail: {
         avg: "Gjennomsnitt",
         consistency: "Konsistens",
@@ -529,7 +602,7 @@ const I18N = {
           line1: "Dette resultatet avviker med {delta} fra din baseline.",
           line2: {
             within: "Gitt hvor mye du vanligvis varierer, er denne forskjellen fortsatt typisk for deg.",
-            slightly: "Gitt hvor mye du vanligvis varierer, er denne forskjellen mindre typisk, men fortsatt innenfor et rimelig område.",
+            slightly: "Gitt hvor mye du vanligvis varierer, er denne forskjellen mindre typisk for deg.",
             significantly: "Gitt hvor mye du vanligvis varierer, er denne forskjellen ikke typisk for deg.",
           },
         },
@@ -572,9 +645,9 @@ const I18N = {
           sd: "SD",
         },
         comparison: {
-          within: "Nøyaktighet innenfor normalområdet",
-          slightly: "Nøyaktighet noe dårligere enn baseline",
-          significantly: "Nøyaktighet betydelig dårligere enn baseline",
+          within: "Innenfor område",
+          slightly: "Litt avvik",
+          significantly: "Tydelig avvik",
         },
       },
       gonogo: {
@@ -626,10 +699,10 @@ const I18N = {
       unknown: "Ukjent",
     },
     quality: {
-      good: "God",
+      good: "Stabil",
       mixed: "Blandet",
       not_usable: "Ikke brukbar",
-      label: "Kvalitet",
+      label: "Signalkvalitet",
       warning: {
         manyFalseStarts: "mange feilstarter",
         fewValidHits: "få gyldige treff",
@@ -692,12 +765,14 @@ const I18N = {
       title: "Hva skjer etter en test?",
       note: "Kun rådgivende. Dette diagnostiserer ikke eller avgjør ikke klarhet.",
       tiers: {
-        baseline_needed_title: "Baseline nødvendig",
-        proceed_title: "Fortsett",
-        proceed_caution_title: "Fortsett med forsiktighet",
-        pause_retest_title: "Pause og test på nytt",
-        rest_retest_later_title: "Hvil og test senere",
-        not_usable_title: "Ikke brukbar økt",
+        baseline_needed_title: "Ingen baseline-referanse",
+        proceed_title: "Kontekst",
+        proceed_caution_title: "Mindre typisk mønster",
+        pause_retest_title: "Uvanlig avvik",
+        rest_retest_later_title: "Vedvarende avvik",
+        not_usable_title: "Ikke sammenlignbar",
+        not_usable_context:
+          "Denne økten kan ikke brukes til sammenligning.",
       },
       common: {
         retest_now: "Test på nytt nå i en rolig, konsistent oppsett.",
@@ -705,7 +780,7 @@ const I18N = {
         take_break: "Ta en kort pause, deretter kjør en sjekk på nytt i et konsistent oppsett.",
         reduce_load: "Vurder å redusere intensitet og sjekke på nytt hvis nødvendig.",
         check_conditions: "Sjekk oppsettet og forholdene før du tester på nytt.",
-        consider_context: "Hvis dette matcher din baseline, er det rimelig å fortsette som planlagt.",
+        consider_context: "Dette samsvarer med ditt vanlige mønster.",
         if_symptoms: "Hvis du føler symptomer eller tretthet, prioriter hvile.",
       },
       byTest: {
@@ -763,18 +838,51 @@ const I18N = {
       noteLabel: "Pastaba",
     },
     status: {
-      within: "Jūsų įprastame diapazone",
-      slightly: "Šiek tiek žemiau jūsų įprasto diapazono",
-      significantly: "Reikšmingai žemiau jūsų įprasto diapazono",
+      within: "Įprastame diapazone",
+      slightly: "Nedidelis nuokrypis",
+      significantly: "Aiškus nuokrypis",
       noBaseline: "Dar nėra bazinio lygio — pirmiausia pridėkite bazinio lygio sesijas.",
+    },
+    check: {
+      withinRange: "Įprastame diapazone",
+      slightDeviation: "Nedidelis nuokrypis",
+      clearDeviation: "Aiškus nuokrypis",
+      slower: "lėčiau nei bazinis lygis",
+      faster: "greičiau nei bazinis lygis",
+      moreError: "daugiau klaidų nei bazinis lygis",
+      lessError: "mažiau klaidų nei bazinis lygis",
+      comparisonUnavailable: "Palyginimas neprieinamas",
+      deltaFromBaseline: "{delta} nuo bazinio lygio",
+      notComparable: "Nepalyginama",
     },
     baseline: {
       noSessions: "Nėra užregistruotų bazinio lygio sesijų.",
       sessions: "sesijos",
-      statusLabel: "Bazinio lygio būsena",
-      statusBuilding: "kuriama",
-      statusReady: "paruošta",
+      statusLabel: "Būsena",
+      statusNone: "Dar nėra bazinio lygio",
+      statusBuildingWithProgress: "Kuriama ({n}/{min})",
+      statusReady: "Paruošta",
+      sessionsLabel: "Sesijos",
+      sessionLineOne: "1 bazinio lygio sesija",
+      sessionLineMany: "{n} bazinio lygio sesijos",
       lastSessionLabel: "Paskutinė sesija",
+      guidanceNone:
+        "Pridėkite bazinio lygio sesijas, kad sukurtumėte asmeninę šio testo atskaitą.",
+      guidanceBuilding:
+        "Vis dar kuriama. Pridėkite daugiau sesijų stipresnei atskaitai.",
+      guidanceReady:
+        "Šio testo patikros lygina dabartinį rezultatą su šiuo baziniu lygiu.",
+      statsPrecision: "Vid. klaida: {mean} | SD: {sd}",
+      integrityStrengthLabel: "Bazinio lygio stiprumas",
+      integrityConsistencyLabel: "Nuoseklumas",
+      integrityStrengthThin: "Silpnas",
+      integrityStrengthDeveloping: "Vystomas",
+      integrityStrengthStrong: "Stiprus",
+      integrityConsistencyConsistent: "Nuoseklus",
+      integrityConsistencyModerate: "Vidutinis kintamumas",
+      integrityConsistencyHigh: "Didelis kintamumas",
+      integrityConsistencyUnavailable: "Per mažai duomenų",
+      integrityOutlierNote: "Viena bazinio lygio sesija aiškiai skiriasi nuo kitų.",
     },
     export: {
       btn: "Eksportuoti (kopijuoti JSON)",
@@ -850,7 +958,7 @@ const I18N = {
       noBaseline: "Dar nėra bazinio lygio — tendencija naudoja bazinio lygio sesijas.",
       noChecks: "Dar nėra patikros sesijų.",
       checkLabel: "Patikra",
-      delta: "Skirtumas nuo bazinio lygio: {delta}",
+      delta: "{delta} nuo bazinio lygio",
       result: "Rezultatas:",
       footerNote: "Ši peržiūra vizualizuoja pokytį. Ji nesprendžia pasirengimo, tinkamumo ar leidimo.",
       ok: "Gerai",
@@ -862,6 +970,9 @@ const I18N = {
         consistency: "Nuoseklumas (ši sesija)",
         trials: "Bandymai",
       },
+      display: {
+        valueUnavailable: "—",
+      },
       detail: {
         avg: "Vidurkis",
         consistency: "Nuoseklumas",
@@ -870,7 +981,7 @@ const I18N = {
           line1: "Šis rezultatas skiriasi {delta} nuo jūsų bazinio lygio.",
           line2: {
             within: "Atsižvelgiant į tai, kiek jūs paprastai kintate, šis skirtumas vis tiek yra tipiškas jums.",
-            slightly: "Atsižvelgiant į tai, kiek jūs paprastai kintate, šis skirtumas yra mažiau tipiškas, bet vis tiek yra pagrįstame diapazone.",
+            slightly: "Atsižvelgiant į tai, kiek jūs paprastai kintate, šis skirtumas jums mažiau tipiškas.",
             significantly: "Atsižvelgiant į tai, kiek jūs paprastai kintate, šis skirtumas nėra tipiškas jums.",
           },
         },
@@ -913,9 +1024,9 @@ const I18N = {
           sd: "SD",
         },
         comparison: {
-          within: "Tikslumas normos ribose",
-          slightly: "Tikslumas šiek tiek prastesnis nei bazė",
-          significantly: "Tikslumas ženkliai prastesnis nei bazė",
+          within: "Įprastame diapazone",
+          slightly: "Nedidelis nuokrypis",
+          significantly: "Aiškus nuokrypis",
         },
       },
       gonogo: {
@@ -967,10 +1078,10 @@ const I18N = {
       unknown: "Nežinoma",
     },
     quality: {
-      good: "Gera",
+      good: "Stabili",
       mixed: "Mišri",
       not_usable: "Netinkama",
-      label: "Kokybė",
+      label: "Signalo kokybė",
       warning: {
         manyFalseStarts: "daug klaidingų startų",
         fewValidHits: "mažai galiojančių atsakų",
@@ -1033,12 +1144,14 @@ const I18N = {
       title: "Kas atsitinka po testo?",
       note: "Tik patariamasis. Tai nediagnozuoja ir nesprendžia pasirengimo.",
       tiers: {
-        baseline_needed_title: "Reikalingas bazinis lygis",
-        proceed_title: "Tęsti",
-        proceed_caution_title: "Tęsti atsargiai",
-        pause_retest_title: "Pristabdyti ir pakartoti testą",
-        rest_retest_later_title: "Pailsėti ir pakartoti vėliau",
-        not_usable_title: "Netinkama sesija",
+        baseline_needed_title: "Nėra bazinės nuorodos",
+        proceed_title: "Kontekstas",
+        proceed_caution_title: "Mažiau tipiškas modelis",
+        pause_retest_title: "Neįprastas nuokrypis",
+        rest_retest_later_title: "Išliekantis nuokrypis",
+        not_usable_title: "Nepalyginama",
+        not_usable_context:
+          "Šios sesijos negalima naudoti palyginimui.",
       },
       common: {
         retest_now: "Pakartokite testą dabar ramioje, nuoseklioje aplinkoje.",
@@ -1046,7 +1159,7 @@ const I18N = {
         take_break: "Trumpai pailsėkite, tada pakartokite patikrą nuoseklioje aplinkoje.",
         reduce_load: "Apsvarstykite sumažinti intensyvumą ir pakartoti patikrą, jei reikia.",
         check_conditions: "Patikrinkite savo aplinką ir sąlygas prieš pakartojant testą.",
-        consider_context: "Jei tai atitinka jūsų bazinį lygį, pagrįsta tęsti kaip planuota.",
+        consider_context: "Tai atitinka jūsų įprastą modelį.",
         if_symptoms: "Jei jaučiate simptomus ar nuovargį, pirmiausia pailsėkite.",
       },
       byTest: {
@@ -1172,9 +1285,9 @@ function getTrainingCompleteLabel() {
 }
 
 function getCheckCompleteLabel() {
-  if (currentLang === "no") return "Funksjonssjekk fullført";
-  if (currentLang === "lt") return "Funkcinė patikra baigta";
-  return "Functional check complete";
+  if (currentLang === "no") return "Sjekk fullført";
+  if (currentLang === "lt") return "Patikra baigta";
+  return "Check complete";
 }
 
 function getStatusLabel() {
@@ -1184,7 +1297,14 @@ function getStatusLabel() {
 }
 
 /** Structured summary rendering for system-generated strings only (no user-provided HTML). */
-function renderStructuredSummary({ metricsLine = "", statusLine = "", systemLine = "" }) {
+function renderStructuredSummary({
+  interpretationLine = "",
+  metricsLine = "",
+  detailLine = "",
+  statusLine = "",
+  systemLine = "",
+  completionLine = "",
+} = {}) {
   if (!summary) return;
   summary.innerHTML = "";
   const addLine = (cls, text) => {
@@ -1194,10 +1314,151 @@ function renderStructuredSummary({ metricsLine = "", statusLine = "", systemLine
     el.textContent = text;
     summary.appendChild(el);
   };
+  addLine("summary-interpretation", interpretationLine);
   addLine("summary-metrics", metricsLine);
+  addLine("summary-detail", detailLine);
   addLine("summary-status", statusLine);
   addLine("summary-system", systemLine);
+  addLine("summary-completion", completionLine);
   summary.style.display = "";
+}
+
+/**
+ * Check-session baseline comparison copy (signals only). Uses |session − baselineMean| vs 1×SD / 2×SD.
+ * RT tasks: sessionValue = mean RT; precision: meanErrN. Returns empty string if inputs unusable (caller may skip).
+ */
+function buildCheckInterpretationLine(testType, sessionValue, baselineMean, baselineSD) {
+  if (
+    !Number.isFinite(sessionValue) ||
+    !Number.isFinite(baselineMean) ||
+    !Number.isFinite(baselineSD) ||
+    baselineSD <= 0
+  ) {
+    return t("check.comparisonUnavailable");
+  }
+  const delta = sessionValue - baselineMean;
+  const absDelta = Math.abs(delta);
+  const isPrecision = testType === "precision";
+  const negligible = isPrecision ? 1e-6 : 0.5;
+  let tier;
+  if (absDelta <= baselineSD) tier = "within";
+  else if (absDelta <= 2 * baselineSD) tier = "slight";
+  else tier = "clear";
+
+  const classLabel =
+    tier === "within"
+      ? t("check.withinRange")
+      : tier === "slight"
+        ? t("check.slightDeviation")
+        : t("check.clearDeviation");
+
+  if (absDelta < negligible) return classLabel;
+
+  const dir =
+    testType === "precision"
+      ? delta > 0
+        ? t("check.moreError")
+        : delta < 0
+          ? t("check.lessError")
+          : null
+      : delta > 0
+        ? t("check.slower")
+        : delta < 0
+          ? t("check.faster")
+          : null;
+
+  if (!dir) return classLabel;
+  return `${classLabel} — ${dir}`;
+}
+
+/** Compact signed delta vs baseline for summary/history/trend (no z-scores). */
+function formatCheckDeltaFromBaseline(testType, sessionValue, baselineMean) {
+  if (!Number.isFinite(sessionValue) || !Number.isFinite(baselineMean)) return "";
+  const delta = sessionValue - baselineMean;
+  const isPrecision = testType === "precision";
+  const negligible = isPrecision ? 1e-6 : 0.5;
+  if (Math.abs(delta) < negligible) return "";
+  const deltaSigned =
+    (delta >= 0 ? "+" : "") + (isPrecision ? delta.toFixed(2) : delta.toFixed(0));
+  const unit = getUnitForTest(testType);
+  const deltaWithUnit = unit ? `${deltaSigned} ${unit}` : deltaSigned;
+  return fceI18nReplace(t("check.deltaFromBaseline"), { delta: deltaWithUnit });
+}
+
+/** Check summary payload: invalid / not_usable must not foreground baseline comparison copy. */
+function isCheckSessionUnusableForComparison(dataObj) {
+  if (!dataObj || typeof dataObj !== "object") return false;
+  if (dataObj.flags && dataObj.flags.invalid === true) return true;
+  if (dataObj.quality === "not_usable") return true;
+  return false;
+}
+
+/** Invalid + no aggregate RT/error (e.g. zero trials): avoid implying 0 ms is a real measurement. */
+function invalidSessionNoAggregate(testType, metrics, flags) {
+  if (!flags || flags.invalid !== true) return false;
+  if (testType === "precision") {
+    const responded = Number(metrics?.respondedTrials ?? 0);
+    const avgN = Number(metrics?.avgErrN);
+    return responded === 0 && (!Number.isFinite(avgN) || avgN === 0);
+  }
+  const trials = Number(metrics?.trials ?? 0);
+  const avgMs = Number(metrics?.avgMs);
+  return trials === 0 && (!Number.isFinite(avgMs) || avgMs === 0);
+}
+
+function invalidSummarySystemQualityLine(quality) {
+  if (!quality || quality === "good") return "";
+  return `${t("quality.label")}: ${t(`quality.${quality}`)}`;
+}
+
+function renderNotComparableStructuredSummary(refusalText, remedyKey, quality, flashPipeSuffix) {
+  let refusalBlock = refusalText || "";
+  if (flashPipeSuffix) {
+    const flashClean = String(flashPipeSuffix).replace(/^\s*\|\s*/, "").trim();
+    if (flashClean) refusalBlock = refusalBlock ? `${refusalBlock} ${flashClean}` : flashClean;
+  }
+  renderStructuredSummary({
+    interpretationLine: t("check.notComparable"),
+    metricsLine: refusalBlock,
+    statusLine: remedyKey ? t(remedyKey) : "",
+    systemLine: invalidSummarySystemQualityLine(quality),
+  });
+}
+
+/** Next-step remedy i18n key from refusal code (display only; same strings as existing invalid flows). */
+/** Map check summary payload to metrics shape used by invalidSessionNoAggregate (display only). */
+function checkSummaryDataToMetricsSnapshot(testType, dataObj) {
+  const tt = String(testType || "reaction").toLowerCase();
+  if (tt === "precision") {
+    return {
+      avgErrN: dataObj.meanErrN,
+      respondedTrials: Number(dataObj.respondedTrials ?? 0),
+      trials: Number(dataObj.trials ?? 0),
+    };
+  }
+  return {
+    avgMs: dataObj.mean,
+    trials: Number(dataObj.trials ?? 0),
+  };
+}
+
+function getRemedyKeyForRefusal(refusalCode, testType) {
+  if (!refusalCode) return null;
+  const tt = String(testType || "reaction").toLowerCase();
+  if (refusalCode === "R1_INVALID_EXECUTION") {
+    if (tt === "precision") return "remedy.invalid_precision_no_responses";
+    if (tt === "gonogo") return "remedy.invalid_no_go";
+    if (tt === "divided") return "remedy.invalid_no_go_responses_divided";
+    return "remedy.invalid_no_reaction";
+  }
+  if (refusalCode === "R2_INSUFFICIENT_DATA") {
+    if (tt === "precision") return "remedy.invalid_precision_insufficient";
+    if (tt === "gonogo") return "remedy.invalid_no_go";
+    if (tt === "divided") return "remedy.invalid_no_go_responses_divided";
+    return "remedy.invalid_no_reaction";
+  }
+  if (refusalCode === "R3_EXCESS_NOISE") return "remedy.invalid_precision_excess_noise";
+  return null;
 }
 
 function getTrialText(n, entry, testType) {
@@ -1720,7 +1981,10 @@ function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
     case "baseline_saved_reaction":
       renderStructuredSummary({
         metricsLine: `${currentLang === "no" ? "Gjennomsnitt" : currentLang === "lt" ? "Vidurkis" : "Mean"}: ${dataObj.mean.toFixed(0)} ms | ${t("history.sd")}: ${dataObj.sd.toFixed(0)} ms`,
-        statusLine: dataObj.quality ? `${t("quality.label")}: ${t(`quality.${dataObj.quality}`)}` : "",
+        statusLine:
+          dataObj.quality && dataObj.quality !== "good"
+            ? `${t("quality.label")}: ${t(`quality.${dataObj.quality}`)}`
+            : "",
         systemLine: getBaselineSavedLabel(),
       });
       break;
@@ -1728,7 +1992,10 @@ function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
     case "baseline_saved_gonogo":
       renderStructuredSummary({
         metricsLine: `${currentLang === "no" ? "Gjennomsnitt" : currentLang === "lt" ? "Vidurkis" : "Mean"}: ${dataObj.mean.toFixed(0)} ms | ${t("history.sd")}: ${dataObj.sd.toFixed(0)} ms`,
-        statusLine: dataObj.quality ? `${t("quality.label")}: ${t(`quality.${dataObj.quality}`)}` : "",
+        statusLine:
+          dataObj.quality && dataObj.quality !== "good"
+            ? `${t("quality.label")}: ${t(`quality.${dataObj.quality}`)}`
+            : "",
         systemLine: getBaselineSavedLabel(),
       });
       break;
@@ -1736,7 +2003,10 @@ function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
     case "baseline_saved_divided":
       renderStructuredSummary({
         metricsLine: `${currentLang === "no" ? "Gjennomsnitt" : currentLang === "lt" ? "Vidurkis" : "Mean"}: ${dataObj.mean.toFixed(0)} ms | ${t("history.sd")}: ${dataObj.sd.toFixed(0)} ms`,
-        statusLine: dataObj.quality ? `${t("quality.label")}: ${t(`quality.${dataObj.quality}`)}` : "",
+        statusLine:
+          dataObj.quality && dataObj.quality !== "good"
+            ? `${t("quality.label")}: ${t(`quality.${dataObj.quality}`)}`
+            : "",
         systemLine: getBaselineSavedLabel(),
       });
       break;
@@ -1744,107 +2014,200 @@ function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
     case "baseline_saved_precision":
       renderStructuredSummary({
         metricsLine: `${currentLang === "no" ? "Gjennomsnitt" : currentLang === "lt" ? "Vidurkis" : "Mean"}: ${dataObj.meanErrN.toFixed(2)} | ${t("history.sd")}: ${dataObj.sdErrN.toFixed(2)}`,
-        statusLine: dataObj.quality ? `${t("quality.label")}: ${t(`quality.${dataObj.quality}`)}` : "",
+        statusLine:
+          dataObj.quality && dataObj.quality !== "good"
+            ? `${t("quality.label")}: ${t(`quality.${dataObj.quality}`)}`
+            : "",
         systemLine: getBaselineSavedLabel(),
       });
       break;
       
-    case "check_reaction":
+    case "check_reaction": {
+      const stt = testTypeParam || (testType && testType.value) || "reaction";
+      const unusable = isCheckSessionUnusableForComparison(dataObj);
+      const metricsSnap = checkSummaryDataToMetricsSnapshot(stt, dataObj);
+      const noAgg =
+        unusable && dataObj.flags && invalidSessionNoAggregate(stt, metricsSnap, dataObj.flags);
+      const showUnusableStats = unusable && !noAgg;
+      const statsLine =
+        `${currentLang === "no" ? "Gjennomsnitt" : currentLang === "lt" ? "Vidurkis" : "Mean"}: ${dataObj.mean.toFixed(0)} ms | ` +
+        `${currentLang === "no" ? "Baseline-gjennomsnitt" : currentLang === "lt" ? "Bazinio lygio vidurkis" : "Baseline mean"}: ${dataObj.baselineMean.toFixed(0)} ms | ` +
+        `${currentLang === "no" ? "Baseline SD" : currentLang === "lt" ? "Bazinio lygio SD" : "Baseline SD"}: ${dataObj.baselineSD.toFixed(0)} ms`;
+      const refusalLine =
+        unusable && dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : "";
+      const remedyKeyU = unusable ? getRemedyKeyForRefusal(dataObj.refusalCode, stt) : null;
       renderStructuredSummary({
-        metricsLine:
-          `${currentLang === "no" ? "Gjennomsnitt" : currentLang === "lt" ? "Vidurkis" : "Mean"}: ${dataObj.mean.toFixed(0)} ms | ` +
-          `${currentLang === "no" ? "Baseline-gjennomsnitt" : currentLang === "lt" ? "Bazinio lygio vidurkis" : "Baseline mean"}: ${dataObj.baselineMean.toFixed(0)} ms | ` +
-          `${currentLang === "no" ? "Baseline SD" : currentLang === "lt" ? "Bazinio lygio SD" : "Baseline SD"}: ${dataObj.baselineSD.toFixed(0)} ms`,
-        statusLine: `${getStatusLabel()}: ${dataObj.status || "—"}`,
-        systemLine: getCheckCompleteLabel(),
+        interpretationLine: unusable
+          ? t("check.notComparable")
+          : buildCheckInterpretationLine(
+              "reaction",
+              dataObj.mean,
+              dataObj.baselineMean,
+              dataObj.baselineSD
+            ),
+        metricsLine: unusable ? refusalLine : statsLine,
+        detailLine: showUnusableStats ? statsLine : "",
+        statusLine: unusable
+          ? remedyKeyU
+            ? t(remedyKeyU)
+            : ""
+          : formatCheckDeltaFromBaseline("reaction", dataObj.mean, dataObj.baselineMean),
+        systemLine: unusable ? invalidSummarySystemQualityLine(dataObj.quality) : getCheckCompleteLabel(),
+        completionLine: unusable ? getCheckCompleteLabel() : "",
       });
       break;
+    }
       
-    case "check_gonogo":
+    case "check_gonogo": {
+      const stt = testTypeParam || (testType && testType.value) || "gonogo";
+      const unusable = isCheckSessionUnusableForComparison(dataObj);
+      const metricsSnap = checkSummaryDataToMetricsSnapshot(stt, dataObj);
+      const noAgg =
+        unusable && dataObj.flags && invalidSessionNoAggregate(stt, metricsSnap, dataObj.flags);
+      const showUnusableStats = unusable && !noAgg;
+      const statsLine =
+        `${currentLang === "no" ? "GO " : ""}${currentLang === "no" ? "Gjennomsnitt" : currentLang === "lt" ? "Vidurkis" : "Mean"}: ${dataObj.mean.toFixed(0)} ms | ` +
+        `${currentLang === "no" ? "Baseline-gjennomsnitt" : currentLang === "lt" ? "Bazinio lygio vidurkis" : "Baseline mean"}: ${dataObj.baselineMean.toFixed(0)} ms | ` +
+        `${currentLang === "no" ? "Baseline SD" : currentLang === "lt" ? "Bazinio lygio SD" : "Baseline SD"}: ${dataObj.baselineSD.toFixed(0)} ms`;
+      const refusalLine =
+        unusable && dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : "";
+      const remedyKeyU = unusable ? getRemedyKeyForRefusal(dataObj.refusalCode, stt) : null;
       renderStructuredSummary({
-        metricsLine:
-          `${currentLang === "no" ? "GO " : ""}${currentLang === "no" ? "Gjennomsnitt" : currentLang === "lt" ? "Vidurkis" : "Mean"}: ${dataObj.mean.toFixed(0)} ms | ` +
-          `${currentLang === "no" ? "Baseline-gjennomsnitt" : currentLang === "lt" ? "Bazinio lygio vidurkis" : "Baseline mean"}: ${dataObj.baselineMean.toFixed(0)} ms | ` +
-          `${currentLang === "no" ? "Baseline SD" : currentLang === "lt" ? "Bazinio lygio SD" : "Baseline SD"}: ${dataObj.baselineSD.toFixed(0)} ms`,
-        statusLine: `${getStatusLabel()}: ${dataObj.status || "—"}`,
-        systemLine: getCheckCompleteLabel(),
+        interpretationLine: unusable
+          ? t("check.notComparable")
+          : buildCheckInterpretationLine(
+              "gonogo",
+              dataObj.mean,
+              dataObj.baselineMean,
+              dataObj.baselineSD
+            ),
+        metricsLine: unusable ? refusalLine : statsLine,
+        detailLine: showUnusableStats ? statsLine : "",
+        statusLine: unusable
+          ? remedyKeyU
+            ? t(remedyKeyU)
+            : ""
+          : formatCheckDeltaFromBaseline("gonogo", dataObj.mean, dataObj.baselineMean),
+        systemLine: unusable ? invalidSummarySystemQualityLine(dataObj.quality) : getCheckCompleteLabel(),
+        completionLine: unusable ? getCheckCompleteLabel() : "",
       });
       break;
+    }
       
-    case "check_divided":
+    case "check_divided": {
+      const stt = testTypeParam || (testType && testType.value) || "divided";
+      const unusable = isCheckSessionUnusableForComparison(dataObj);
+      const metricsSnap = checkSummaryDataToMetricsSnapshot(stt, dataObj);
+      const noAgg =
+        unusable && dataObj.flags && invalidSessionNoAggregate(stt, metricsSnap, dataObj.flags);
+      const showUnusableStats = unusable && !noAgg;
+      const statsLine =
+        `${currentLang === "no" ? "GO " : ""}${currentLang === "no" ? "Gjennomsnitt" : currentLang === "lt" ? "Vidurkis" : "Mean"}: ${dataObj.mean.toFixed(0)} ms | ` +
+        `${currentLang === "no" ? "Baseline-gjennomsnitt" : currentLang === "lt" ? "Bazinio lygio vidurkis" : "Baseline mean"}: ${dataObj.baselineMean.toFixed(0)} ms | ` +
+        `${currentLang === "no" ? "Baseline SD" : currentLang === "lt" ? "Bazinio lygio SD" : "Baseline SD"}: ${dataObj.baselineSD.toFixed(0)} ms`;
+      const refusalLine =
+        unusable && dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : "";
+      const remedyKeyU = unusable ? getRemedyKeyForRefusal(dataObj.refusalCode, stt) : null;
       renderStructuredSummary({
-        metricsLine:
-          `${currentLang === "no" ? "GO " : ""}${currentLang === "no" ? "Gjennomsnitt" : currentLang === "lt" ? "Vidurkis" : "Mean"}: ${dataObj.mean.toFixed(0)} ms | ` +
-          `${currentLang === "no" ? "Baseline-gjennomsnitt" : currentLang === "lt" ? "Bazinio lygio vidurkis" : "Baseline mean"}: ${dataObj.baselineMean.toFixed(0)} ms | ` +
-          `${currentLang === "no" ? "Baseline SD" : currentLang === "lt" ? "Bazinio lygio SD" : "Baseline SD"}: ${dataObj.baselineSD.toFixed(0)} ms`,
-        statusLine: `${getStatusLabel()}: ${dataObj.status || "—"}`,
-        systemLine: getCheckCompleteLabel(),
+        interpretationLine: unusable
+          ? t("check.notComparable")
+          : buildCheckInterpretationLine(
+              "divided",
+              dataObj.mean,
+              dataObj.baselineMean,
+              dataObj.baselineSD
+            ),
+        metricsLine: unusable ? refusalLine : statsLine,
+        detailLine: showUnusableStats ? statsLine : "",
+        statusLine: unusable
+          ? remedyKeyU
+            ? t(remedyKeyU)
+            : ""
+          : formatCheckDeltaFromBaseline("divided", dataObj.mean, dataObj.baselineMean),
+        systemLine: unusable ? invalidSummarySystemQualityLine(dataObj.quality) : getCheckCompleteLabel(),
+        completionLine: unusable ? getCheckCompleteLabel() : "",
       });
       break;
+    }
       
-    case "check_precision":
+    case "check_precision": {
+      const stt = testTypeParam || (testType && testType.value) || "precision";
+      const unusable = isCheckSessionUnusableForComparison(dataObj);
+      const metricsSnap = checkSummaryDataToMetricsSnapshot(stt, dataObj);
+      const noAgg =
+        unusable && dataObj.flags && invalidSessionNoAggregate(stt, metricsSnap, dataObj.flags);
+      const showUnusableStats = unusable && !noAgg;
+      const statsLine =
+        `${currentLang === "no" ? "Feil" : currentLang === "lt" ? "Klaida" : "Error"}: ${dataObj.meanErrN.toFixed(2)} | ` +
+        `${currentLang === "no" ? "Baseline-feil" : currentLang === "lt" ? "Bazinio lygio klaida" : "Baseline error"}: ${dataObj.baselineMeanErrN.toFixed(2)} | ` +
+        `${currentLang === "no" ? "Baseline SD" : currentLang === "lt" ? "Bazinio lygio SD" : "Baseline SD"}: ${dataObj.baselineSDErrN.toFixed(2)}`;
+      const refusalLine =
+        unusable && dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : "";
+      const remedyKeyU = unusable ? getRemedyKeyForRefusal(dataObj.refusalCode, stt) : null;
       renderStructuredSummary({
-        metricsLine:
-          `${currentLang === "no" ? "Feil" : currentLang === "lt" ? "Klaida" : "Error"}: ${dataObj.meanErrN.toFixed(2)} | ` +
-          `${currentLang === "no" ? "Baseline-feil" : currentLang === "lt" ? "Bazinio lygio klaida" : "Baseline error"}: ${dataObj.baselineMeanErrN.toFixed(2)} | ` +
-          `${currentLang === "no" ? "Baseline SD" : currentLang === "lt" ? "Bazinio lygio SD" : "Baseline SD"}: ${dataObj.baselineSDErrN.toFixed(2)}`,
-        statusLine: `${getStatusLabel()}: ${dataObj.status || "—"}`,
-        systemLine: getCheckCompleteLabel(),
+        interpretationLine: unusable
+          ? t("check.notComparable")
+          : buildCheckInterpretationLine(
+              "precision",
+              dataObj.meanErrN,
+              dataObj.baselineMeanErrN,
+              dataObj.baselineSDErrN
+            ),
+        metricsLine: unusable ? refusalLine : statsLine,
+        detailLine: showUnusableStats ? statsLine : "",
+        statusLine: unusable
+          ? remedyKeyU
+            ? t(remedyKeyU)
+            : ""
+          : formatCheckDeltaFromBaseline("precision", dataObj.meanErrN, dataObj.baselineMeanErrN),
+        systemLine: unusable ? invalidSummarySystemQualityLine(dataObj.quality) : getCheckCompleteLabel(),
+        completionLine: unusable ? getCheckCompleteLabel() : "",
       });
       break;
+    }
       
-    case "invalid_no_reaction":
+    case "invalid_no_reaction": {
       const refusalMsg1 = dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : getSessionInvalidNoReaction();
-      const remedyText1 = ` | ${t("remedy.invalid_no_reaction")}`;
-      const qualityLabel1 = dataObj.quality ? t(`quality.${dataObj.quality}`) : "";
-      const qualityBlock1 = formatQualityWithOptionalNote(qualityLabel1, "");
-      const qualityText1 = qualityBlock1 ? ` | ${qualityBlock1}` : "";
-      const summaryText1 = refusalMsg1 + remedyText1 + qualityText1;
-      summary.textContent = summaryText1;
-      // Ensure summary is visible (CSS :empty rule might hide it if text is empty)
-      if (summaryText1) {
-        summary.style.display = "";
-      }
+      renderNotComparableStructuredSummary(
+        refusalMsg1,
+        "remedy.invalid_no_reaction",
+        dataObj.quality,
+        ""
+      );
       break;
-      
-    case "invalid_no_go":
+    }
+
+    case "invalid_no_go": {
       const refusalMsg2 = dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : getSessionInvalidNoGo();
-      const remedyText2 = ` | ${t("remedy.invalid_no_go")}`;
-      const qualityLabel2 = dataObj.quality ? t(`quality.${dataObj.quality}`) : "";
-      const qualityBlock2 = formatQualityWithOptionalNote(qualityLabel2, "");
-      const qualityText2 = qualityBlock2 ? ` | ${qualityBlock2}` : "";
-      summary.textContent = refusalMsg2 + remedyText2 + qualityText2;
+      renderNotComparableStructuredSummary(refusalMsg2, "remedy.invalid_no_go", dataObj.quality, "");
       break;
-      
-    case "not_enough_baseline":
+    }
+
+    case "not_enough_baseline": {
       const refusalMsg3 = dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : getNotEnoughBaseline();
-      const remedyText3 = ` | ${t("remedy.not_enough_baseline")}`;
-      const qualityLabel3 = dataObj.quality ? t(`quality.${dataObj.quality}`) : "";
-      const qualityBlock3 = formatQualityWithOptionalNote(qualityLabel3, "");
-      const qualityText3 = qualityBlock3 ? ` | ${qualityBlock3}` : "";
-      summary.textContent = refusalMsg3 + remedyText3 + qualityText3;
+      renderNotComparableStructuredSummary(refusalMsg3, "remedy.not_enough_baseline", dataObj.quality, "");
       break;
-      
-    case "baseline_not_saved":
+    }
+
+    case "baseline_not_saved": {
       const refusalMsg4 = dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : getBaselineNotSaved();
-      const remedyText4 = ` | ${t("remedy.baseline_not_saved")}`;
-      const qualityLabel4 = dataObj.quality ? t(`quality.${dataObj.quality}`) : "";
-      const qualityBlock4 = formatQualityWithOptionalNote(qualityLabel4, "");
-      const qualityText4 = qualityBlock4 ? ` | ${qualityBlock4}` : "";
-      summary.textContent = refusalMsg4 + remedyText4 + qualityText4;
+      renderNotComparableStructuredSummary(refusalMsg4, "remedy.baseline_not_saved", dataObj.quality, "");
       break;
-      
-    case "baseline_not_saved_divided":
+    }
+
+    case "baseline_not_saved_divided": {
       const flashInfo2 = getFlashInfoString(dataObj.flashTarget, dataObj.flashUser, dataObj.flashError);
       const refusalMsg5 = dataObj.refusalCode ? t(`refusal.${dataObj.refusalCode}`) : getBaselineNotSavedDivided();
-      const remedyText5 = ` | ${t("remedy.baseline_not_saved_divided")}`;
-      const qualityLabel5 = dataObj.quality ? t(`quality.${dataObj.quality}`) : "";
-      const qualityBlock5 = formatQualityWithOptionalNote(qualityLabel5, "");
-      const qualityText5 = qualityBlock5 ? ` | ${qualityBlock5}` : "";
-      summary.textContent = refusalMsg5 + flashInfo2 + remedyText5 + qualityText5;
+      renderNotComparableStructuredSummary(
+        refusalMsg5,
+        "remedy.baseline_not_saved_divided",
+        dataObj.quality,
+        flashInfo2
+      );
       break;
-      
-    case "invalid_missing_answer":
+    }
+
+    case "invalid_missing_answer": {
       let refusalMsg6 = "";
       if (dataObj.refusalCode) {
         refusalMsg6 = t(`refusal.${dataObj.refusalCode}`);
@@ -1855,14 +2218,16 @@ function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
       } else {
         refusalMsg6 = "Session not usable for comparison: missing answer";
       }
-      const remedyText6 = ` | ${t("remedy.invalid_missing_answer")}`;
-      const qualityLabel6 = dataObj.quality ? t(`quality.${dataObj.quality}`) : "";
-      const qualityBlock6 = formatQualityWithOptionalNote(qualityLabel6, "");
-      const qualityText6 = qualityBlock6 ? ` | ${qualityBlock6}` : "";
-      summary.textContent = refusalMsg6 + remedyText6 + qualityText6;
+      renderNotComparableStructuredSummary(
+        refusalMsg6,
+        "remedy.invalid_missing_answer",
+        dataObj.quality,
+        ""
+      );
       break;
-      
-    case "invalid_no_go_responses_divided":
+    }
+
+    case "invalid_no_go_responses_divided": {
       let refusalMsg7 = "";
       if (dataObj.refusalCode) {
         refusalMsg7 = t(`refusal.${dataObj.refusalCode}`);
@@ -1873,24 +2238,25 @@ function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
       } else {
         refusalMsg7 = "Session invalid: no GO responses.";
       }
-      const remedyText7 = ` | ${t("remedy.invalid_no_go_responses_divided")}`;
-      const qualityLabel7 = dataObj.quality ? t(`quality.${dataObj.quality}`) : "";
-      const qualityBlock7 = formatQualityWithOptionalNote(qualityLabel7, "");
-      const qualityText7 = qualityBlock7 ? ` | ${qualityBlock7}` : "";
-      summary.textContent = refusalMsg7 + remedyText7 + qualityText7;
+      renderNotComparableStructuredSummary(
+        refusalMsg7,
+        "remedy.invalid_no_go_responses_divided",
+        dataObj.quality,
+        ""
+      );
       break;
-      
+    }
+
     case "invalid_precision_no_responses":
     case "invalid_precision_insufficient":
     case "invalid_precision_excess_noise":
-    case "invalid_precision_exit":
+    case "invalid_precision_exit": {
       let refusalMsg8 = "";
       if (dataObj.refusalCode) {
         refusalMsg8 = t(`refusal.${dataObj.refusalCode}`);
       } else {
         refusalMsg8 = t("precision.invalid");
       }
-      // Determine remedy key based on case type
       let remedyKey8 = "invalid_precision_exit";
       if (type === "invalid_precision_no_responses") {
         remedyKey8 = "invalid_precision_no_responses";
@@ -1899,12 +2265,9 @@ function setSummary(type, dataObj, testTypeParam = null, modeParam = null) {
       } else if (type === "invalid_precision_excess_noise") {
         remedyKey8 = "invalid_precision_excess_noise";
       }
-      const remedyText8 = ` | ${t(`remedy.${remedyKey8}`)}`;
-      const qualityLabel8 = dataObj.quality ? t(`quality.${dataObj.quality}`) : "";
-      const qualityBlock8 = formatQualityWithOptionalNote(qualityLabel8, "");
-      const qualityText8 = qualityBlock8 ? ` | ${qualityBlock8}` : "";
-      summary.textContent = refusalMsg8 + remedyText8 + qualityText8;
+      renderNotComparableStructuredSummary(refusalMsg8, `remedy.${remedyKey8}`, dataObj.quality, "");
       break;
+    }
       
     default:
       // Unknown type, just set text directly
@@ -1975,7 +2338,8 @@ function setOperationalAdvice(adviceObj) {
   const { tier, testType, mode, quality, deviceMismatch, extra } = adviceObj;
 
   const tierTitleKey = `op.tiers.${tier}_title`;
-  const tierTitle = t(tierTitleKey);
+  const tierTitle =
+    tier === "not_usable" ? t("op.tiers.not_usable_context") : t(tierTitleKey);
 
   const oneLine = t(`op.byTest.${testType}.oneLine`);
   const b1 = t(`op.byTest.${testType}.bullet1`);
@@ -2304,7 +2668,12 @@ function initOnboardingGate() {
 const startBaselineBtn = document.getElementById("startBaselineBtn");
 const startCheckBtn = document.getElementById("startCheckBtn");
 const startTrainingBtn = document.getElementById("startTrainingBtn");
-const baselineInfo = document.getElementById("baselineInfo");
+const baselineStatsLine = document.getElementById("baselineStatsLine");
+const baselineSessionsLine = document.getElementById("baselineSessionsLine");
+const baselineIntegrityWrap = document.getElementById("baselineIntegrityWrap");
+const baselineIntegrityStrength = document.getElementById("baselineIntegrityStrength");
+const baselineIntegrityConsistency = document.getElementById("baselineIntegrityConsistency");
+const baselineIntegrityOutlier = document.getElementById("baselineIntegrityOutlier");
 const clearBaselineBtn = document.getElementById("clearBaselineBtn");
 const baselineList = document.getElementById("baselineList");
 const baselineGuidance = document.getElementById("baselineGuidance");
@@ -6635,10 +7004,32 @@ function pushHistoryRecord(record) {
           baselineSDErrN: baselineSD,
           status,
           meanRtMs: sessionPayload.meanRtMs,
+          trials: sessionPayload.trials,
+          respondedTrials: sessionPayload.respondedTrials,
           quality: sessionRecord.quality || "good",
           deviceWarning: deviceWarning || "",
-          fullscreenNote
+          fullscreenNote,
+          flags: sessionRecord.flags,
+          refusalCode: sessionRecord.flags?.refusalCode || null,
         }, tt, mode);
+        {
+          const checkInv = !!(sessionRecord.flags && sessionRecord.flags.invalid);
+          const checkRc = checkInv ? sessionRecord.flags.refusalCode : null;
+          const tierPrec = computeAdviceTier({
+            mode,
+            refusalCode: checkRc,
+            statusText: checkInv ? null : status,
+            summaryType: "check_precision",
+          });
+          setOperationalAdvice({
+            tier: tierPrec,
+            testType: "precision",
+            mode,
+            quality: sessionRecord.quality || "good",
+            deviceMismatch: !!deviceWarning,
+            extra: {},
+          });
+        }
         mode = null;
         return;
       }
@@ -6668,20 +7059,32 @@ function pushHistoryRecord(record) {
           baselineMean,
           baselineSD,
           status,
+          trials: sessionPayload.trials,
           falseStarts: sessionPayload.falseStarts,
           qualityNote,
           quality: sessionRecord.quality || "good",
-          deviceWarning: deviceWarning || ""
+          deviceWarning: deviceWarning || "",
+          flags: sessionRecord.flags,
+          refusalCode: sessionRecord.flags?.refusalCode || null,
         }, tt, mode);
-        const tier16 = computeAdviceTier({ mode, refusalCode: null, statusText: status, summaryType: "check_reaction" });
-        setOperationalAdvice({
-          tier: tier16,
-          testType: "reaction",
-          mode,
-          quality: sessionRecord.quality || "good",
-          deviceMismatch: !!deviceWarning,
-          extra: {}
-        });
+        {
+          const checkInv = !!(sessionRecord.flags && sessionRecord.flags.invalid);
+          const checkRc = checkInv ? sessionRecord.flags.refusalCode : null;
+          const tier16 = computeAdviceTier({
+            mode,
+            refusalCode: checkRc,
+            statusText: checkInv ? null : status,
+            summaryType: "check_reaction",
+          });
+          setOperationalAdvice({
+            tier: tier16,
+            testType: "reaction",
+            mode,
+            quality: sessionRecord.quality || "good",
+            deviceMismatch: !!deviceWarning,
+            extra: {},
+          });
+        }
       } else if (isDivided) {
         // Divided Attention check summary
         // False alarm rate: use NO-GO trial count as denominator
@@ -6700,6 +7103,7 @@ function pushHistoryRecord(record) {
           baselineMean,
           baselineSD,
           status,
+          trials: sessionPayload.trials,
           falseAlarmsRate: currentFARate,
           baselineFARate,
           flashAbsError: sessionPayload.flashAbsError,
@@ -6707,17 +7111,28 @@ function pushHistoryRecord(record) {
           falseStarts: sessionPayload.falseStarts,
           qualityNote,
           quality: sessionRecord.quality || "good",
-          deviceWarning: deviceWarning || ""
+          deviceWarning: deviceWarning || "",
+          flags: sessionRecord.flags,
+          refusalCode: sessionRecord.flags?.refusalCode || null,
         }, tt, mode);
-        const tier17 = computeAdviceTier({ mode, refusalCode: null, statusText: status, summaryType: "check_divided" });
-        setOperationalAdvice({
-          tier: tier17,
-          testType: "divided",
-          mode,
-          quality: sessionRecord.quality || "good",
-          deviceMismatch: !!deviceWarning,
-          extra: {}
-        });
+        {
+          const checkInv = !!(sessionRecord.flags && sessionRecord.flags.invalid);
+          const checkRc = checkInv ? sessionRecord.flags.refusalCode : null;
+          const tier17 = computeAdviceTier({
+            mode,
+            refusalCode: checkRc,
+            statusText: checkInv ? null : status,
+            summaryType: "check_divided",
+          });
+          setOperationalAdvice({
+            tier: tier17,
+            testType: "divided",
+            mode,
+            quality: sessionRecord.quality || "good",
+            deviceMismatch: !!deviceWarning,
+            extra: {},
+          });
+        }
       } else {
         // For Go/No-Go, also show error counts clearly.
         // Optional: compare errors vs baseline averages (simple, explainable)
@@ -6729,6 +7144,7 @@ function pushHistoryRecord(record) {
           baselineMean,
           baselineSD,
           status,
+          trials: sessionPayload.trials,
           misses: sessionPayload.misses,
           baselineMissAvg,
           falseAlarms: sessionPayload.falseAlarms,
@@ -6736,8 +7152,28 @@ function pushHistoryRecord(record) {
           falseStarts: sessionPayload.falseStarts,
           qualityNote,
           quality: sessionRecord.quality || "good",
-          deviceWarning: deviceWarning || ""
+          deviceWarning: deviceWarning || "",
+          flags: sessionRecord.flags,
+          refusalCode: sessionRecord.flags?.refusalCode || null,
         }, tt, mode);
+        {
+          const checkInv = !!(sessionRecord.flags && sessionRecord.flags.invalid);
+          const checkRc = checkInv ? sessionRecord.flags.refusalCode : null;
+          const tierGonogo = computeAdviceTier({
+            mode,
+            refusalCode: checkRc,
+            statusText: checkInv ? null : status,
+            summaryType: "check_gonogo",
+          });
+          setOperationalAdvice({
+            tier: tierGonogo,
+            testType: "gonogo",
+            mode,
+            quality: sessionRecord.quality || "good",
+            deviceMismatch: !!deviceWarning,
+            extra: {},
+          });
+        }
       }
   
       mode = null;
@@ -6908,82 +7344,118 @@ function loadBaseline() {
     const sessionsRaw = loadBaseline();
     const sessions = filterValidBaselineSessions(sessionsRaw);
 
-    // Clear list UI
     baselineList.innerHTML = "";
 
     const minSessions = minBaselineSessions();
-    const recTrials = recommendedTrialsPerSession();
     const tt = testType.value;
-    const isGoNoGo = tt === "gonogo";
-    const isDivided = tt === "divided";
-    const isPrecision = tt === "precision";
+    const isPrecisionType = tt === "precision";
 
-    // Guidance text (always shown) - update all language spans
-    const guidanceEn = baselineGuidance.querySelector(".lang-en");
-    const guidanceNo = baselineGuidance.querySelector(".lang-no");
-    const guidanceLt = baselineGuidance.querySelector(".lang-lt");
-    if (guidanceEn) {
-      if (isGoNoGo) {
-        guidanceEn.textContent = `Recommended: ≥${minSessions} baseline sessions, ≥${recTrials} trials per session (Go/No-Go needs more trials for stable results).`;
-      } else if (isDivided) {
-        guidanceEn.textContent = `Recommended: ≥${minSessions} baseline sessions, ≥${recTrials} trials per session (Divided Attention needs more trials for flash counting).`;
-      } else if (isPrecision) {
-        guidanceEn.textContent = `Recommended: ≥${minSessions} baseline sessions, ≥${recTrials} trials per session (Precision needs more trials for stable accuracy measurement).`;
-      } else {
-        guidanceEn.textContent = `Recommended: ≥${minSessions} baseline sessions, ≥${recTrials} trials per session.`;
-      }
-    }
-    if (guidanceNo) {
-      if (isGoNoGo) {
-        guidanceNo.textContent = `Anbefalt: ≥${minSessions} baseline-økter, ≥${recTrials} forsøk per økt (Go/No-Go trenger flere forsøk for stabile resultater).`;
-      } else if (isDivided) {
-        guidanceNo.textContent = `Anbefalt: ≥${minSessions} baseline-økter, ≥${recTrials} forsøk per økt (Delt oppmerksomhet trenger flere forsøk for flash-telling).`;
-      } else if (isPrecision) {
-        guidanceNo.textContent = `Anbefalt: ≥${minSessions} baseline-økter, ≥${recTrials} forsøk per økt (Presisjon trenger flere forsøk for stabil nøyaktighetsmåling).`;
-      } else {
-        guidanceNo.textContent = `Anbefalt: ≥${minSessions} baseline-økter, ≥${recTrials} forsøk per økt.`;
-      }
-    }
-    if (guidanceLt) {
-      if (isGoNoGo) {
-        guidanceLt.textContent = `Rekomenduojama: ≥${minSessions} bazinio lygio sesijos, ≥${recTrials} bandymai per sesiją (Spausk/Nespausk reikalauja daugiau bandymų dėl stabilaus rezultato).`;
-      } else if (isDivided) {
-        guidanceLt.textContent = `Rekomenduojama: ≥${minSessions} bazinio lygio sesijos, ≥${recTrials} bandymai per sesiją (Padalinta dėmesys reikalauja daugiau bandymų dėl blyksnių skaičiavimo).`;
-      } else if (isPrecision) {
-        guidanceLt.textContent = `Rekomenduojama: ≥${minSessions} bazinio lygio sesijos, ≥${recTrials} bandymai per sesiją (Tikslumas reikalauja daugiau bandymų dėl stabilaus tikslumo matavimo).`;
-      } else {
-        guidanceLt.textContent = `Rekomenduojama: ≥${minSessions} bazinio lygio sesijos, ≥${recTrials} bandymai per sesiją.`;
-      }
-    }
-
-    // Button gating based on minimum baseline sessions
     startCheckBtn.disabled = sessions.length < minSessions;
 
-    // Small metadata lines: shown only when a baseline exists
-    if (baselineStatusInfo) baselineStatusInfo.textContent = "";
-    if (baselineLastUpdateInfo) baselineLastUpdateInfo.textContent = "";
+    function setBaselineStatusClasses(state) {
+      if (!baselineStatusInfo) return;
+      baselineStatusInfo.classList.remove("status-building", "status-ready");
+      if (state === "building") baselineStatusInfo.classList.add("status-building");
+      else if (state === "ready") baselineStatusInfo.classList.add("status-ready");
+    }
+
+    function setGuidanceForState() {
+      if (!baselineGuidance) return;
+      if (sessions.length === 0) {
+        baselineGuidance.textContent = t("baseline.guidanceNone");
+        return;
+      }
+      if (sessions.length >= minSessions) {
+        baselineGuidance.textContent = t("baseline.guidanceReady");
+      } else {
+        baselineGuidance.textContent = t("baseline.guidanceBuilding");
+      }
+    }
 
     if (sessions.length === 0) {
-      // Update both language spans in baselineInfo
-      const infoEn = baselineInfo.querySelector(".lang-en");
-      const infoNo = baselineInfo.querySelector(".lang-no");
-      const infoLt = baselineInfo.querySelector(".lang-lt");
-      if (infoEn) infoEn.textContent = "No baseline sessions recorded.";
-      if (infoNo) infoNo.textContent = "Ingen baseline-økter er registrert.";
-      if (infoLt) infoLt.textContent = "Nėra užregistruotų bazinio lygio sesijų.";
-      if (baselineStatusInfo) baselineStatusInfo.style.display = "none";
-      if (baselineLastUpdateInfo) baselineLastUpdateInfo.style.display = "none";
+      if (baselineStatusInfo) {
+        baselineStatusInfo.style.display = "";
+        setBaselineStatusClasses(null);
+        baselineStatusInfo.textContent = `${t("baseline.statusLabel")}: ${t("baseline.statusNone")}`;
+      }
+      if (baselineSessionsLine) {
+        baselineSessionsLine.hidden = true;
+        baselineSessionsLine.textContent = "";
+      }
+      if (baselineLastUpdateInfo) {
+        baselineLastUpdateInfo.hidden = true;
+        baselineLastUpdateInfo.textContent = "";
+      }
+      if (baselineStatsLine) {
+        baselineStatsLine.hidden = true;
+        baselineStatsLine.textContent = "";
+      }
+      if (baselineIntegrityWrap) baselineIntegrityWrap.hidden = true;
+      if (baselineIntegrityStrength) baselineIntegrityStrength.textContent = "";
+      if (baselineIntegrityConsistency) baselineIntegrityConsistency.textContent = "";
+      if (baselineIntegrityOutlier) {
+        baselineIntegrityOutlier.hidden = true;
+        baselineIntegrityOutlier.textContent = "";
+      }
+      setGuidanceForState();
       clearBaselineBtn.style.display = "none";
       return;
     }
 
-    if (baselineStatusInfo) baselineStatusInfo.style.display = "";
-    if (baselineLastUpdateInfo) baselineLastUpdateInfo.style.display = "";
-    clearBaselineBtn.style.display = "";
+    if (baselineStatusInfo) {
+      baselineStatusInfo.style.display = "";
+      if (sessions.length >= minSessions) {
+        setBaselineStatusClasses("ready");
+        baselineStatusInfo.textContent = `${t("baseline.statusLabel")}: ${t("baseline.statusReady")}`;
+      } else {
+        setBaselineStatusClasses("building");
+        baselineStatusInfo.textContent = `${t("baseline.statusLabel")}: ${fceI18nReplace(t("baseline.statusBuildingWithProgress"), { n: sessions.length, min: minSessions })}`;
+      }
+    }
+    if (baselineSessionsLine) {
+      baselineSessionsLine.hidden = false;
+      baselineSessionsLine.textContent = `${t("baseline.sessionsLabel")}: ${sessions.length}`;
+    }
+    if (baselineLastUpdateInfo) {
+      baselineLastUpdateInfo.hidden = false;
+      const latestSession = sessions.reduce((latest, s) => {
+        const ts = Date.parse(s && s.timestamp ? s.timestamp : "");
+        if (!Number.isFinite(ts)) return latest;
+        if (!latest) return s;
+        const prevTs = Date.parse(latest.timestamp || "");
+        if (!Number.isFinite(prevTs) || ts > prevTs) return s;
+        return latest;
+      }, null);
+      let timeText = "—";
+      if (latestSession && latestSession.timestamp) {
+        timeText = formatTs(latestSession.timestamp);
+      }
+      baselineLastUpdateInfo.textContent = `${t("baseline.lastSessionLabel")}: ${timeText}`;
+    }
 
-    // For precision, use meanErrN/sdErrN; for others, use mean/sd
-    const isPrecisionType = tt === "precision";
-    let meanAvg, sdAvg;
+    const strengthSig = getBaselineStrengthSignal(sessions.length);
+    const consistencySig = getBaselineConsistencySignal(sessions, tt);
+    if (baselineIntegrityWrap) baselineIntegrityWrap.hidden = false;
+    if (baselineIntegrityStrength && strengthSig) {
+      const sk = {
+        thin: "integrityStrengthThin",
+        developing: "integrityStrengthDeveloping",
+        strong: "integrityStrengthStrong",
+      }[strengthSig];
+      baselineIntegrityStrength.textContent = `${t("baseline.integrityStrengthLabel")}: ${t(`baseline.${sk}`)}`;
+    }
+    if (baselineIntegrityConsistency && consistencySig) {
+      const ck = {
+        consistent: "integrityConsistencyConsistent",
+        moderate: "integrityConsistencyModerate",
+        high: "integrityConsistencyHigh",
+        unavailable: "integrityConsistencyUnavailable",
+      }[consistencySig];
+      baselineIntegrityConsistency.textContent = `${t("baseline.integrityConsistencyLabel")}: ${t(`baseline.${ck}`)}`;
+    }
+
+    let meanAvg;
+    let sdAvg;
     if (isPrecisionType) {
       const meanErrNs = sessions.map(s => s.meanErrN || 0).filter(v => Number.isFinite(v));
       const sdErrNs = sessions.map(s => s.sdErrN || 0).filter(v => Number.isFinite(v));
@@ -6996,89 +7468,42 @@ function loadBaseline() {
       sdAvg = sds.length > 0 ? mean(sds) : 0;
     }
 
-    // Update both language spans in baselineInfo
-    const infoEn = baselineInfo.querySelector(".lang-en");
-    const infoNo = baselineInfo.querySelector(".lang-no");
-    const infoLt = baselineInfo.querySelector(".lang-lt");
-    const prefix = (isGoNoGo || isDivided) ? "GO " : "";
-    if (infoEn) {
-      const enSessionWord = sessions.length === 1 ? "session" : "sessions";
+    if (baselineStatsLine) {
+      baselineStatsLine.hidden = false;
       if (isPrecisionType) {
-        infoEn.textContent =
-          `${sessions.length} ${enSessionWord} | ` +
-          `Mean error: ${meanAvg.toFixed(2)} | ` +
-          `SD: ${sdAvg.toFixed(2)}`;
+        baselineStatsLine.textContent = fceI18nReplace(t("baseline.statsPrecision"), {
+          mean: meanAvg.toFixed(2),
+          sd: sdAvg.toFixed(2),
+        });
       } else {
-        infoEn.textContent =
-          `${sessions.length} ${enSessionWord} | ` +
-          `${prefix}Mean: ${meanAvg.toFixed(0)} ms | ` +
-          `${prefix}SD: ${sdAvg.toFixed(0)} ms`;
-      }
-    }
-    if (infoNo) {
-      if (isPrecisionType) {
-        infoNo.textContent =
-          `${sessions.length} økter | ` +
-          `Baseline-feil: ${meanAvg.toFixed(2)} | ` +
-          `Baseline SD: ${sdAvg.toFixed(2)}`;
-      } else {
-        infoNo.textContent =
-          `${sessions.length} økter | ` +
-          `${prefix}Baseline-gjennomsnitt: ${meanAvg.toFixed(0)} ms | ` +
-          `${prefix}Baseline SD: ${sdAvg.toFixed(0)} ms`;
-      }
-    }
-    if (infoLt) {
-      if (isPrecisionType) {
-        infoLt.textContent =
-          `${sessions.length} sesijos | ` +
-          `Bazinio lygio klaida: ${meanAvg.toFixed(2)} | ` +
-          `Bazinio lygio SD: ${sdAvg.toFixed(2)}`;
-      } else {
-        infoLt.textContent =
-          `${sessions.length} sesijos | ` +
-          `${prefix}Bazinio lygio vidurkis: ${meanAvg.toFixed(0)} ms | ` +
-          `${prefix}Bazinio lygio SD: ${sdAvg.toFixed(0)} ms`;
+        baselineStatsLine.textContent = `${meanAvg.toFixed(0)} ms · SD ${sdAvg.toFixed(0)} ms`;
       }
     }
 
-    if (baselineStatusInfo) {
-      if (sessions.length >= 3) {
-        baselineStatusInfo.textContent = `${t("baseline.statusLabel")}: ${t("baseline.statusReady")}`;
+    if (baselineIntegrityOutlier) {
+      if (hasBaselineOutlier(sessions, tt)) {
+        baselineIntegrityOutlier.textContent = t("baseline.integrityOutlierNote");
+        baselineIntegrityOutlier.hidden = false;
       } else {
-        baselineStatusInfo.textContent = `${t("baseline.statusLabel")}: ${t("baseline.statusBuilding")} (${sessions.length}/3)`;
+        baselineIntegrityOutlier.hidden = true;
+        baselineIntegrityOutlier.textContent = "";
       }
     }
-    if (baselineLastUpdateInfo) {
-      const latestSession = sessions.reduce((latest, s) => {
-        const ts = Date.parse(s && s.timestamp ? s.timestamp : "");
-        if (!Number.isFinite(ts)) return latest;
-        if (!latest) return s;
-        const prevTs = Date.parse(latest.timestamp || "");
-        if (!Number.isFinite(prevTs) || ts > prevTs) return s;
-        return latest;
-      }, null);
-      let timeText = "-";
-      if (latestSession && latestSession.timestamp) {
-        timeText = formatTs(latestSession.timestamp);
-      }
-      baselineLastUpdateInfo.textContent = `${t("baseline.lastSessionLabel")}: ${timeText}`;
-    }
-  
-    // Render newest first
+
+    setGuidanceForState();
+    clearBaselineBtn.style.display = "";
+
     const newestFirst = [...sessions].reverse();
-  
     for (const s of newestFirst) {
       const li = document.createElement("li");
-      const tt = testType.value;
-      if (tt === "precision" && typeof s.meanErrN === "number" && typeof s.sdErrN === "number") {
+      const ttLoop = testType.value;
+      if (ttLoop === "precision" && typeof s.meanErrN === "number" && typeof s.sdErrN === "number") {
         li.textContent =
           `${formatTime(s.timestamp)} — err ${s.meanErrN.toFixed(2)}, SD ${s.sdErrN.toFixed(2)} (${s.trials} ${t("history.trials")})`;
       } else if (typeof s.mean === "number" && typeof s.sd === "number") {
         li.textContent =
           `${formatTime(s.timestamp)} — ${t("history.mean")} ${s.mean.toFixed(0)} ms, ${t("history.sd")} ${s.sd.toFixed(0)} ms (${s.trials} ${t("history.trials")})`;
       } else {
-        // Fallback for malformed entries
         li.textContent = `${formatTime(s.timestamp)} — ${t("history.trials")} ${s.trials || 0}`;
       }
       baselineList.appendChild(li);
@@ -7290,6 +7715,55 @@ function stddev(arr) {
   return Math.sqrt(variance);
 }
 
+/** Primary metric per baseline session for integrity signals (not pooled aggregate). */
+function baselineSessionPrimaryMetric(session, testType) {
+  if (testType === "precision") {
+    const v = Number(session?.meanErrN ?? session?.avgErrN);
+    return Number.isFinite(v) ? v : NaN;
+  }
+  const v = Number(session?.mean);
+  return Number.isFinite(v) ? v : NaN;
+}
+
+/** Interpretive only; does not affect readiness. 1–2 thin, 3–4 developing, 5+ strong. */
+function getBaselineStrengthSignal(sessionCount) {
+  if (sessionCount <= 0) return null;
+  if (sessionCount <= 2) return "thin";
+  if (sessionCount <= 4) return "developing";
+  return "strong";
+}
+
+/**
+ * Variation of session-level primary metrics vs their mean (CV). Advisory only.
+ * Returns consistent | moderate | high | unavailable
+ */
+function getBaselineConsistencySignal(sessions, testType) {
+  const vals = sessions
+    .map(s => baselineSessionPrimaryMetric(s, testType))
+    .filter(v => Number.isFinite(v));
+  if (vals.length < 2) return "unavailable";
+  const m = mean(vals);
+  if (Math.abs(m) < 1e-9) return "unavailable";
+  const sd = stddev(vals);
+  const cv = sd / Math.abs(m);
+  if (!Number.isFinite(cv)) return "unavailable";
+  if (cv < 0.08) return "consistent";
+  if (cv < 0.2) return "moderate";
+  return "high";
+}
+
+/** Conservative: any session primary metric > 2 SD from the session-mean (needs ≥3 sessions). */
+function hasBaselineOutlier(sessions, testType) {
+  const vals = sessions
+    .map(s => baselineSessionPrimaryMetric(s, testType))
+    .filter(v => Number.isFinite(v));
+  if (vals.length < 3) return false;
+  const m = mean(vals);
+  const sd = stddev(vals);
+  if (sd < 1e-9 || !Number.isFinite(sd)) return false;
+  return vals.some(v => Math.abs(v - m) > 2 * sd);
+}
+
 // ----------------------------
 // History UI (Phase 1.5)
 // ----------------------------
@@ -7330,12 +7804,38 @@ function formatDateTime(iso) {
 }
 
 function clampBadgeClass(statusText) {
-  // Map your existing status strings to badges.
-  // Adjust if your exact labels differ.
+  // Map status / interpretation strings to badge classes (current i18n + legacy stored labels).
   const s = (statusText || "").toLowerCase();
-  if (s.includes("within") || s.includes("innenfor") || s.includes("įprastame")) return "ok";
-  if (s.includes("slightly") || s.includes("litt") || s.includes("šiek")) return "warn";
-  if (s.includes("significantly") || s.includes("betydelig") || s.includes("reikšmingai")) return "bad";
+  if (
+    s.includes("within range") ||
+    s.includes("within your usual") ||
+    s.includes("innenfor område") ||
+    s.includes("innenfor normalområdet") ||
+    s.includes("įprastame diapazone") ||
+    s.includes("jūsų įprastame")
+  ) {
+    return "ok";
+  }
+  if (
+    s.includes("slight deviation") ||
+    s.includes("slightly") ||
+    s.includes("litt avvik") ||
+    s.includes("litt under") ||
+    s.includes("nedidelis nuokrypis") ||
+    s.includes("šiek tiek")
+  ) {
+    return "warn";
+  }
+  if (
+    s.includes("clear deviation") ||
+    s.includes("significantly") ||
+    s.includes("tydelig avvik") ||
+    s.includes("betydelig under") ||
+    s.includes("aiškus nuokrypis") ||
+    s.includes("reikšmingai")
+  ) {
+    return "bad";
+  }
   return "na";
 }
 
@@ -7447,17 +7947,21 @@ function renderHomeHistoryPreview() {
 
   recent.forEach(s => {
     const isInvalid = !!(s?.flags?.invalid);
+    const sessionQualityHome = s?.quality || computeSessionQuality(s);
+    const unusableHome = isInvalid || sessionQualityHome === "not_usable";
     const when = formatDateTime(s?.createdAt || s?.id);
 
     // Metrics (kept calm + minimal)
     const isPrecision = tt === "precision";
-    const avg = isPrecision ? s?.metrics?.avgErrN : s?.metrics?.avgMs;
-    const trials = s?.metrics?.trials ?? s?.trials;
+    const mHome = s?.metrics || {};
+    const avg = isPrecision ? mHome.avgErrN : mHome.avgMs;
+    const trials = mHome.trials ?? s?.trials;
+    const noAggHome = invalidSessionNoAggregate(tt, mHome, s.flags);
     const mode = s?.mode || "";
 
     // Prefer stored statusText; else compute if baseline exists
     let statusText = s?.statusText || "";
-    if (!statusText && typeof avg === "number") {
+    if (!statusText && !unusableHome && typeof avg === "number") {
       // Load baseline sessions and compute mean/sd (same pattern as renderHistory)
       const baselineSessionsRaw = getBaselineSessionsForActiveProfile(ensureV2Store(), tt);
       const baselineSessions = filterValidBaselineSessions(baselineSessionsRaw);
@@ -7510,12 +8014,19 @@ function renderHomeHistoryPreview() {
     metrics.className = "home-history-metrics muted";
 
     let avgStr;
-    if (isPrecision) {
-      avgStr = (typeof avg === "number") ? `${fmt(avg, 2)}` : "—";
+    if (noAggHome) {
+      avgStr = t("session.display.valueUnavailable");
+    } else if (isPrecision) {
+      avgStr = typeof avg === "number" ? `${fmt(avg, 2)}` : "—";
     } else {
-      avgStr = (typeof avg === "number") ? `${fmt(avg, 0)} ms` : "—";
+      avgStr = typeof avg === "number" ? `${fmt(avg, 0)} ms` : "—";
     }
-    const trialsStr = (typeof trials === "number") ? `${trials}` : "—";
+    const trialsStr =
+      noAggHome && Number(trials) === 0
+        ? t("session.display.valueUnavailable")
+        : typeof trials === "number"
+          ? `${trials}`
+          : "—";
 
     metrics.innerHTML = `
       <span><strong>${avgStr}</strong></span>
@@ -7524,7 +8035,13 @@ function renderHomeHistoryPreview() {
 
     const status = document.createElement("div");
     status.className = "muted";
-    status.textContent = statusText || "";
+    status.textContent = unusableHome
+      ? isInvalid
+        ? ""
+        : s.mode === "check"
+          ? t("check.notComparable")
+          : ""
+      : statusText || "";
 
     sub.appendChild(metrics);
     sub.appendChild(status);
@@ -7630,8 +8147,12 @@ function renderTrendFor(testType) {
 
   checks.forEach(s => {
     const isPrecision = testType === "precision" || s?.testType === "precision";
-    const avg = isPrecision ? s?.metrics?.avgErrN : s?.metrics?.avgMs;
+    const mTrend = s?.metrics || {};
+    const avg = isPrecision ? mTrend.avgErrN : mTrend.avgMs;
     const isInvalid = !!(s?.flags?.invalid);
+    const sessionQualityTrend = s?.quality || computeSessionQuality(s);
+    const unusableForTrend = isInvalid || sessionQualityTrend === "not_usable";
+    const noAggTrend = invalidSessionNoAggregate(isPrecision ? "precision" : testType, mTrend, s.flags);
     const when = formatDateTime(s?.createdAt || s?.id);
     // Use compareBaseline.mean for delta calculation (same as used for status)
     const delta = (compareBaseline && typeof avg === "number" && Number.isFinite(compareBaseline.mean)) 
@@ -7640,7 +8161,7 @@ function renderTrendFor(testType) {
 
     // Compute status using same logic as renderHistory (single source of truth)
     let statusText = s?.statusText || "";
-    if (!statusText && !isInvalid && Number.isFinite(avg)) {
+    if (!statusText && !unusableForTrend && Number.isFinite(avg)) {
       // Load baseline sessions the same way as renderHistory
       const baselineSessionsRaw = getBaselineSessionsForActiveProfile(ensureV2Store(), testType);
       const baselineSessions = filterValidBaselineSessions(baselineSessionsRaw);
@@ -7679,21 +8200,32 @@ function renderTrendFor(testType) {
     const left = document.createElement("div");
     left.className = "trend-left";
 
-    const badgeText = isInvalid ? t("trend.invalid") : t("trend.ok");
     const title = document.createElement("div");
-    title.innerHTML = `<span class="badge ${badgeClass}">${badgeText}</span> <strong>${t("trend.checkLabel")}</strong> — ${when}`;
+    title.innerHTML = isInvalid
+      ? `<span class="badge ${badgeClass}">${t("trend.invalid")}</span> <strong>${t("trend.checkLabel")}</strong> — ${when}`
+      : `<span class="badge ${badgeClass}" aria-hidden="true"></span> <strong>${t("trend.checkLabel")}</strong> — ${when}`;
     left.appendChild(title);
 
     const sub = document.createElement("div");
     sub.className = "muted";
-    sub.textContent = statusText ? `${t("trend.result")} ${statusText}` : "";
+    if (unusableForTrend) {
+      sub.textContent = isInvalid ? "" : t("check.notComparable");
+    } else if (delta !== null && Number.isFinite(delta)) {
+      sub.textContent = "";
+    } else if (statusText) {
+      sub.textContent = statusText;
+    } else {
+      sub.textContent = "";
+    }
     left.appendChild(sub);
 
     const right = document.createElement("div");
     right.className = "trend-right";
 
     const avgLine = document.createElement("div");
-    if (isPrecision) {
+    if (noAggTrend) {
+      avgLine.innerHTML = `<strong>${t("session.display.valueUnavailable")}</strong>`;
+    } else if (isPrecision) {
       avgLine.innerHTML = `<strong>${fmt(avg, 2)}</strong>`;
     } else {
       avgLine.innerHTML = `<strong>${fmt(avg, 0)}</strong> ms`;
@@ -7702,11 +8234,11 @@ function renderTrendFor(testType) {
 
     const deltaLine = document.createElement("div");
     deltaLine.className = "muted";
-    if (delta !== null && Number.isFinite(delta)) {
+    if (!unusableForTrend && delta !== null && Number.isFinite(delta)) {
       const deltaSigned = delta >= 0 ? `+${fmt(delta, isPrecision ? 2 : 0)}` : fmt(delta, isPrecision ? 2 : 0);
       const unit = getUnitForTest(testType);
       const deltaWithUnit = unit ? `${deltaSigned} ${unit}` : deltaSigned;
-      deltaLine.textContent = t("trend.delta").replace("{delta}", deltaWithUnit);
+      deltaLine.textContent = fceI18nReplace(t("check.deltaFromBaseline"), { delta: deltaWithUnit });
     } else {
       deltaLine.textContent = "";
     }
@@ -7832,9 +8364,20 @@ function renderHistory() {
     const worst = tt === "precision" ? Number(m.worstErrN) : Number(m.worstMs);
     const trials = Number(m.trials);
 
+    const isInvalid = !!(s.flags && s.flags.invalid);
+    const sessionQuality = s.quality || computeSessionQuality(s);
+    const unusableForCompare = isInvalid || sessionQuality === "not_usable";
+    const noAgg = invalidSessionNoAggregate(tt, m, s.flags);
+
     // Compute status text for badge color (for check sessions with baseline)
     let statusText = s?.statusText || "";
-    if (!statusText && s.mode === "check" && baselineSessions.length && Number.isFinite(avg)) {
+    if (
+      !statusText &&
+      s.mode === "check" &&
+      baselineSessions.length &&
+      Number.isFinite(avg) &&
+      !unusableForCompare
+    ) {
       // For divided attention, use multi-metric comparison if available; otherwise use avgMs only
       if (tt === "divided" && m.nogoCount !== undefined && m.flashAbsError !== undefined) {
         const sessionPayloadMock = {
@@ -7858,7 +8401,6 @@ function renderHistory() {
 
     // Mode-aware badge logic
     const badge = document.createElement("span");
-    const isInvalid = !!(s.flags && s.flags.invalid);
     let badgeClass;
     let badgeText;
 
@@ -7866,6 +8408,9 @@ function renderHistory() {
       // Invalid sessions: always bad class
       badgeClass = "bad";
       badgeText = t("trend.invalid");
+    } else if (s.mode === "check" && unusableForCompare) {
+      badgeClass = "bad";
+      badgeText = t("check.notComparable");
     } else if (s.mode === "check") {
       // Check sessions: use status-based coloring
       if (statusText) {
@@ -7924,15 +8469,19 @@ function renderHistory() {
     chips.className = "chips";
     
     // Determine chip classes semantically
-    const avgClass = isInvalid ? "bad" : (s.mode === "check" && baselineSessions.length && statusText ? clampBadgeClass(statusText) : "na");
+    const avgClass = unusableForCompare
+      ? "bad"
+      : s.mode === "check" && baselineSessions.length && statusText
+        ? clampBadgeClass(statusText)
+        : "na";
     const sdClass = s.mode === "check" && baselineSessions.length && Number.isFinite(sd) ? sdChipClass(sd, baselineSD) : "na";
     const expectedTrials = expectedTrialsFor(tt);
     const trialsClass = Number.isFinite(trials) ? (trials < expectedTrials ? "warn" : "ok") : "na";
 
     // Precision: chips depend on validity
     if (tt === "precision") {
-      if (isInvalid) {
-        // Invalid sessions: show "Not usable" chip only
+      if (unusableForCompare) {
+        // Invalid / not_usable: no baseline-comparison framing on chips
         const chip = document.createElement("span");
         chip.className = "chip bad";
         chip.textContent = t("history.precision.notUsable");
@@ -7966,22 +8515,25 @@ function renderHistory() {
       }
     } else {
       // Other tests: Always show: Avg, SD, Trials
-      if (Number.isFinite(avg)) {
+      if (noAgg || Number.isFinite(avg)) {
         const chip = document.createElement("span");
         chip.className = `chip ${avgClass}`;
-        chip.textContent = `${t("session.chip.avg")} ${avg.toFixed(0)}ms`;
+        const avgDisp = noAgg ? t("session.display.valueUnavailable") : `${avg.toFixed(0)}ms`;
+        chip.textContent = `${t("session.chip.avg")} ${avgDisp}`;
         chips.appendChild(chip);
       }
-      if (Number.isFinite(sd)) {
+      if (noAgg || Number.isFinite(sd)) {
         const chip = document.createElement("span");
         chip.className = `chip ${sdClass}`;
-        chip.textContent = `${t("session.chip.consistency")} ${sd.toFixed(0)}ms`;
+        const sdDisp = noAgg ? t("session.display.valueUnavailable") : `${sd.toFixed(0)}ms`;
+        chip.textContent = `${t("session.chip.consistency")} ${sdDisp}`;
         chips.appendChild(chip);
       }
-      if (Number.isFinite(trials)) {
+      if (Number.isFinite(trials) || (noAgg && trials === 0)) {
         const chip = document.createElement("span");
         chip.className = `chip ${trialsClass}`;
-        chip.textContent = `${t("session.chip.trials")} ${trials}`;
+        const trialsDisp = noAgg && trials === 0 ? t("session.display.valueUnavailable") : trials;
+        chip.textContent = `${t("session.chip.trials")} ${trialsDisp}`;
         chips.appendChild(chip);
       }
     }
@@ -8256,7 +8808,17 @@ function renderHistory() {
       // Other tests: original format
       const line1 = document.createElement("div");
       line1.className = "history-line";
-      line1.textContent = `${t("session.detail.avg")} ${Number.isFinite(avg) ? avg.toFixed(0) : "—"} ms · ${t("session.detail.consistency")} ${Number.isFinite(sd) ? sd.toFixed(0) : "—"} ms · ${t("session.detail.trials")} ${Number.isFinite(trials) ? trials : "—"}`;
+      {
+        const avgD = noAgg ? t("session.display.valueUnavailable") : Number.isFinite(avg) ? avg.toFixed(0) : "—";
+        const sdD = noAgg ? t("session.display.valueUnavailable") : Number.isFinite(sd) ? sd.toFixed(0) : "—";
+        const trD =
+          noAgg && trials === 0
+            ? t("session.display.valueUnavailable")
+            : Number.isFinite(trials)
+              ? String(trials)
+              : "—";
+        line1.textContent = `${t("session.detail.avg")} ${avgD} ms · ${t("session.detail.consistency")} ${sdD} ms · ${t("session.detail.trials")} ${trD}`;
+      }
       details.appendChild(line1);
 
       const line2 = document.createElement("div");
@@ -8281,8 +8843,8 @@ function renderHistory() {
       details.appendChild(fs);
     }
 
-    // Compare-to-baseline hint for check sessions
-    if (s.mode === "check" && baselineSessions.length) {
+    // Compare-to-baseline hint for check sessions (skip when not usable for comparison)
+    if (s.mode === "check" && baselineSessions.length && !unusableForCompare) {
       // Reuse statusText computed earlier for badge (or compute if not already computed)
       const status = statusText || (() => {
         if (tt === "divided" && m.nogoCount !== undefined && m.flashAbsError !== undefined) {
@@ -8343,21 +8905,19 @@ function renderHistory() {
       line1.style.borderTop = "none";
       line1.style.paddingTop = "0";
       line1.style.marginTop = "0";
-      line1.textContent = t("session.detail.compare.line1").replace("{delta}", deltaWithUnit);
+      line1.textContent = fceI18nReplace(t("check.deltaFromBaseline"), { delta: deltaWithUnit });
       cmp.appendChild(line1);
-      // Always show line2 with status-specific explanation
-      const line2 = document.createElement("div");
-      line2.className = "history-compare muted";
-      line2.style.marginTop = "4px";
-      // Determine which line2 variant to use based on status
-      let line2Key = "session.detail.compare.line2.within"; // default
-      if (status === t("status.slightly")) {
-        line2Key = "session.detail.compare.line2.slightly";
-      } else if (status === t("status.significantly")) {
-        line2Key = "session.detail.compare.line2.significantly";
+      if (status === t("status.slightly") || status === t("status.significantly")) {
+        const line2 = document.createElement("div");
+        line2.className = "history-compare muted";
+        line2.style.marginTop = "4px";
+        const line2Key =
+          status === t("status.significantly")
+            ? "session.detail.compare.line2.significantly"
+            : "session.detail.compare.line2.slightly";
+        line2.textContent = t(line2Key);
+        cmp.appendChild(line2);
       }
-      line2.textContent = t(line2Key);
-      cmp.appendChild(line2);
       details.appendChild(cmp);
     } else if (s.mode === "check" && !baselineSessions.length) {
       const cmp = document.createElement("div");
@@ -8386,9 +8946,8 @@ function renderHistory() {
       details.appendChild(tagLine);
     }
 
-    // Quality label (always show) - display as colored badge
-    const sessionQuality = s.quality || computeSessionQuality(s);
-    if (sessionQuality) {
+    // Quality (only when not default-stable) — avoids repeating “good/stable” next to a healthy session
+    if (sessionQuality && sessionQuality !== "good") {
       const qualityLine = document.createElement("div");
       qualityLine.className = "history-line muted";
       const qc = qualityToBadgeClass(sessionQuality);

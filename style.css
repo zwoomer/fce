@@ -895,10 +895,26 @@
     max-width: 420px;
   }
 
+  .summary-interpretation {
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.78);
+  }
+
   .summary-metrics {
     font-size: 16px;
     font-weight: 660;
     color: #f2f2f2;
+  }
+
+  .summary-detail {
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.45;
+    color: rgba(255, 255, 255, 0.72);
   }
 
   .summary-status {
@@ -909,6 +925,12 @@
   }
 
   .summary-system {
+    margin-top: 4px;
+    font-size: 12.5px;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .summary-completion {
     margin-top: 4px;
     font-size: 12.5px;
     color: rgba(255, 255, 255, 0.55);
@@ -936,7 +958,8 @@
  
   /* Improved baseline actions spacing */
   .baseline-actions {
-    margin: 12px 0 8px;
+    margin: 14px 0 8px;
+    opacity: 0.9;
   }
   
   button.danger {
@@ -970,34 +993,84 @@
   }
 
 
+  .baseline-core {
+    margin: 4px 0 8px;
+  }
+
   /* Enhanced baseline guidance */
   #baselineGuidance {
-    margin: 8px 0;
-    opacity: 0.9;
+    margin-top: 10px;
+    margin-bottom: 6px;
+    opacity: 0.88;
     font-size: 14px;
-    line-height: 1.5;
-    color: #ccc;
+    line-height: 1.45;
+    color: #c9c9c9;
   }
 
   .baseline-meta-line {
     margin: 4px 0;
     text-align: left;
   }
-  
-  #baselineInfo {
-    line-height: 1.6;
-    color: #ddd;
+
+  .baseline-state-line {
+    margin: 0 0 6px;
+    line-height: 1.45;
+    color: #e8e8e8;
     text-align: left;
-    margin-bottom: 4px;
+  }
+
+  .baseline-integrity-wrap {
+    margin: 6px 0 2px;
+    text-align: left;
+  }
+
+  .baseline-integrity-line {
+    margin: 3px 0;
+    font-size: 13px;
+    line-height: 1.45;
+    opacity: 0.82;
+    color: #b8b8b8;
+  }
+
+  .baseline-integrity-note {
+    margin: 6px 0 0;
+    font-size: 13px;
+    line-height: 1.45;
+    opacity: 0.78;
+    color: #a8a8a8;
+    font-style: normal;
+  }
+
+  #baselineStatsLine {
+    line-height: 1.5;
+    color: #d5d5d5;
+    text-align: left;
+    margin-top: 6px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    opacity: 0.9;
   }
 
   #baselineStatusInfo {
     font-weight: 600;
-    opacity: 0.92;
+    opacity: 0.98;
+    font-size: 15px;
+  }
+
+  #baselineStatusInfo.status-building {
+    color: #e6c36a;
+  }
+
+  #baselineStatusInfo.status-ready {
+    color: #9fe3a3;
+  }
+
+  #baselineSessionsLine {
+    font-size: 14px;
   }
 
   #baselineLastUpdateInfo {
-    opacity: 0.76;
+    opacity: 0.78;
     font-size: 13px;
   }
 

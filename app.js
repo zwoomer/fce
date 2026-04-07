@@ -96,14 +96,14 @@ const I18N = {
     export: {
       btn: "Export (Copy JSON)",
       btnCsv: "Export CSV",
-      backupBtn: "Export full backup (.json)",
+      backupBtn: "Export full FCE store backup (.json)",
       backupReminder:
-        "Your data is stored only in this browser. Export regularly to keep a backup.",
+        "Your local FCE store is saved only in this browser. Export regularly to keep a full backup.",
       lastBackupLabel: "Last full backup",
       lastBackupNever: "never",
       copied: "Copied to clipboard.",
       csvExported: "CSV exported.",
-      backupOk: "Backup exported successfully.",
+      backupOk: "Full FCE store backup exported successfully.",
       backupEmpty: "No FCE data found in local storage to export.",
       empty: "No history to export.",
       failed: "Copy failed — showing text below.",
@@ -115,13 +115,22 @@ const I18N = {
       invalid: "Invalid — see errors below.",
       schemaVersion: "Schema version",
       keyCount: "Keys in localStorageSnapshot",
+      storeFormat: "Store format",
+      storeFormatCanonicalV2: "Canonical v2",
+      containedSessions: "Contained sessions",
+      containedBaselineProfiles: "Contained baseline profiles",
+      browserKeysToWrite: "Browser storage keys to write",
       groupsHeader: "Keys per group (from groups, if present)",
+      groupsHeaderCanonical: "Grouped keys (legacy envelope only)",
+      groupsCanonicalNote:
+        "Not used — this file is a canonical v2 store, not a grouped legacy envelope.",
       warnings: "Warnings",
       errors: "Errors",
       wouldRestore: "Would restore (localStorage keys)",
+      wouldRestoreBrowser: "Would write (browser localStorage keys)",
       summaryJson: "Summary (for tooling)",
       dryRunNote:
-        "Preview does not change storage. Import runs only after you confirm, using the button below.",
+        "Preview does not change data. Import starts only after you press ‘Import data’ and confirm.",
       noWarnings: "None",
       noErrors: "None",
       readError: "Could not read the file.",
@@ -129,6 +138,8 @@ const I18N = {
       importBtn: "Import data",
       overwriteWarning:
         "Warning: {overwrite} of {total} key(s) already exist in local storage and will be replaced. {fresh} key(s) are new.",
+      overwriteWarningCanonical:
+        "Warning: 1 browser storage key (`{storeKey}`) already exists and will be replaced. This key contains the full local FCE store.",
       confirmImport:
         "Import this backup into local storage on this device?\n\nTotal keys: {total}\nWill overwrite existing: {overwrite}\nNew keys: {fresh}\n\nYou cannot undo this. Continue?",
       importSuccessNoSkip:
@@ -427,14 +438,14 @@ const I18N = {
     export: {
       btn: "Eksporter (kopier JSON)",
       btnCsv: "Eksporter CSV",
-      backupBtn: "Eksporter full sikkerhetskopi (.json)",
+      backupBtn: "Eksporter full sikkerhetskopi av FCE-lageret (.json)",
       backupReminder:
-        "Dataene dine lagres kun i denne nettleseren. Eksporter jevnlig for å ha en sikkerhetskopi.",
+        "Det lokale FCE-lageret ditt er kun lagret i denne nettleseren. Eksporter jevnlig for å ha en full sikkerhetskopi.",
       lastBackupLabel: "Siste fullstendige sikkerhetskopi",
       lastBackupNever: "aldri",
       copied: "Kopiert til utklippstavlen.",
       csvExported: "CSV eksportert.",
-      backupOk: "Sikkerhetskopien ble eksportert.",
+      backupOk: "Full sikkerhetskopi av FCE-lageret ble eksportert.",
       backupEmpty: "Fant ingen FCE-data i lokal lagring å eksportere.",
       empty: "Ingen historikk å eksportere.",
       failed: "Kopiering feilet — viser tekst under.",
@@ -446,13 +457,22 @@ const I18N = {
       invalid: "Ugyldig — se feil under.",
       schemaVersion: "Skjemaversjon",
       keyCount: "Nøkler i localStorageSnapshot",
+      storeFormat: "Lagringsformat",
+      storeFormatCanonicalV2: "Canonical v2",
+      containedSessions: "Økter i filen",
+      containedBaselineProfiles: "Baseline-profiler i filen",
+      browserKeysToWrite: "Nettleserlagringsnøkler som skrives",
       groupsHeader: "Nøkler per gruppe (fra groups, hvis til stede)",
+      groupsHeaderCanonical: "Grupperte nøkler (kun eldre envelope)",
+      groupsCanonicalNote:
+        "Ikke i bruk — denne filen er et canonical v2-lager, ikke en gruppert eldre envelope.",
       warnings: "Advarsler",
       errors: "Feil",
       wouldRestore: "Ville gjenopprettet (localStorage-nøkler)",
+      wouldRestoreBrowser: "Vil skrive (nettleserens localStorage-nøkler)",
       summaryJson: "Sammendrag (for verktøy)",
       dryRunNote:
-        "Forhåndsvisning endrer ikke lagring. Import skjer først etter at du bekrefter, med knappen under.",
+        "Forhåndsvisning endrer ikke data. Import starter først etter at du trykker «Importer data» og bekrefter.",
       noWarnings: "Ingen",
       noErrors: "Ingen",
       readError: "Kunne ikke lese filen.",
@@ -460,6 +480,8 @@ const I18N = {
       importBtn: "Importer data",
       overwriteWarning:
         "Advarsel: {overwrite} av {total} nøkler finnes allerede lokalt og blir erstattet. {fresh} nøkler er nye.",
+      overwriteWarningCanonical:
+        "Advarsel: 1 nettleserlagringsnøkkel (`{storeKey}`) finnes allerede og blir erstattet. Denne nøkkelen inneholder hele det lokale FCE-lageret.",
       confirmImport:
         "Importere denne sikkerhetskopien til lokal lagring på denne enheten?\n\nTotalt antall nøkler: {total}\nVil overskrive eksisterende: {overwrite}\nNye nøkler: {fresh}\n\nDette kan ikke angres. Fortsette?",
       importSuccessNoSkip:
@@ -757,14 +779,14 @@ const I18N = {
     export: {
       btn: "Eksportuoti (kopijuoti JSON)",
       btnCsv: "Eksportuoti CSV",
-      backupBtn: "Eksportuoti pilną atsarginę kopiją (.json)",
+      backupBtn: "Eksportuoti pilną FCE saugyklos atsarginę kopiją (.json)",
       backupReminder:
-        "Jūsų duomenys saugomi tik šioje naršyklėje. Reguliariai eksportuokite, kad turėtumėte atsarginę kopiją.",
+        "Jūsų vietinė FCE saugykla laikoma tik šioje naršyklėje. Reguliariai eksportuokite, kad turėtumėte pilną atsarginę kopiją.",
       lastBackupLabel: "Paskutinė pilna atsarginė kopija",
       lastBackupNever: "niekada",
       copied: "Kopijuota į iškarpinę.",
       csvExported: "CSV eksportuotas.",
-      backupOk: "Atsarginė kopija sėkmingai eksportuota.",
+      backupOk: "Pilna FCE saugyklos atsarginė kopija sėkmingai eksportuota.",
       backupEmpty: "Vietinėje saugykloje nerasta FCE duomenų eksportavimui.",
       empty: "Nėra istorijos eksportavimui.",
       failed: "Kopijavimas nepavyko — rodomas tekstas žemiau.",
@@ -776,13 +798,22 @@ const I18N = {
       invalid: "Negalioja — žr. klaidas žemiau.",
       schemaVersion: "Schemos versija",
       keyCount: "Raktai localStorageSnapshot",
+      storeFormat: "Saugyklos formatas",
+      storeFormatCanonicalV2: "Canonical v2",
+      containedSessions: "Sesijos faile",
+      containedBaselineProfiles: "Bazinio lygio profiliai faile",
+      browserKeysToWrite: "Naršyklės saugyklos raktai, kurie bus įrašyti",
       groupsHeader: "Raktai pagal grupę (iš groups, jei yra)",
+      groupsHeaderCanonical: "Sugrupuoti raktai (tik senasis apvalkalas)",
+      groupsCanonicalNote:
+        "Nenaudojama — šis failas yra canonical v2 saugykla, ne sugrupuotas senasis apvalkalas.",
       warnings: "Įspėjimai",
       errors: "Klaidos",
       wouldRestore: "Būtų atkurti (localStorage raktai)",
+      wouldRestoreBrowser: "Bus įrašyta (naršyklės localStorage raktai)",
       summaryJson: "Santrauka (įrankiams)",
       dryRunNote:
-        "Peržiūra nekeičia saugyklos. Importas vyksta tik po patvirtinimo mygtuku žemiau.",
+        "Peržiūra nekeičia duomenų. Importas prasideda tik po to, kai paspausite „Importuoti duomenis“ ir patvirtinsite.",
       noWarnings: "Nėra",
       noErrors: "Nėra",
       readError: "Nepavyko perskaityti failo.",
@@ -790,6 +821,8 @@ const I18N = {
       importBtn: "Importuoti duomenis",
       overwriteWarning:
         "Įspėjimas: {overwrite} iš {total} raktų jau yra vietinėje saugykloje ir bus pakeisti. {fresh} raktai yra nauji.",
+      overwriteWarningCanonical:
+        "Įspėjimas: 1 naršyklės saugyklos raktas (`{storeKey}`) jau yra ir bus pakeistas. Šis raktas saugo visą vietinę FCE saugyklą.",
       confirmImport:
         "Importuoti šią atsarginę kopiją į šio įrenginio vietinę saugyklą?\n\nIš viso raktų: {total}\nPerrašys esamus: {overwrite}\nNauji raktai: {fresh}\n\nAtšaukti negalėsite. Tęsti?",
       importSuccessNoSkip:
@@ -2067,6 +2100,12 @@ function applyLangUI() {
   }
   updateBaselineInfo();
   renderLastFullBackupLine();
+
+  // 8b) Re-run import preview when open so dynamic labels match the language
+  const importPreviewPanel = document.getElementById("importPreviewPanel");
+  if (importPreviewPanel && !importPreviewPanel.classList.contains("hidden") && importPreviewLastRender) {
+    renderImportPreviewFromParsed(importPreviewLastRender.parsed, importPreviewLastRender.parseStageError);
+  }
 
   // 9) Update select options for modes and test types
   updateSelectOptions();
@@ -4013,60 +4052,10 @@ function fceBackupGroupForKey(key) {
 }
 
 function buildFullBackupJsonString() {
-  const keys = collectFceLocalStorageKeys();
-  if (!keys.length) return { ok: false, reason: "empty" };
-
-  const localStorageSnapshot = {};
-  const includedKeys = [];
-  for (const key of keys) {
-    let raw;
-    try {
-      raw = localStorage.getItem(key);
-    } catch {
-      continue;
-    }
-    if (raw === null) continue;
-    includedKeys.push(key);
-    try {
-      localStorageSnapshot[key] = { type: "json", value: JSON.parse(raw) };
-    } catch {
-      localStorageSnapshot[key] = { type: "raw", value: raw };
-    }
-  }
-
-  if (!includedKeys.length) return { ok: false, reason: "empty" };
-
-  const groups = {
-    history: {},
-    baselines: {},
-    preferences: {},
-    docsState: {},
-    otherFceKeys: {},
-  };
-  for (const key of includedKeys) {
-    const bucket = fceBackupGroupForKey(key);
-    groups[bucket][key] = localStorageSnapshot[key];
-  }
-
-  const backup = {
-    format: "fce-export",
-    schemaVersion: 2,
-    exportedAt: new Date().toISOString(),
-    appVersion: "unknown",
-    summary: {
-      includedKeys,
-      keyCount: includedKeys.length,
-      approxBytes: 0,
-    },
-    groups,
-    localStorageSnapshot,
-  };
-
-  for (let i = 0; i < 4; i++) {
-    const json = JSON.stringify(backup);
-    backup.summary.approxBytes = new TextEncoder().encode(json).length;
-  }
-  return { ok: true, json: JSON.stringify(backup) };
+  const store = ensureV2Store();
+  if (!store || !isCanonicalV2Store(store)) return { ok: false, reason: "empty" };
+  const cloned = JSON.parse(JSON.stringify(store));
+  return { ok: true, json: JSON.stringify(cloned, null, 2) };
 }
 
 function downloadJsonFile(content, filename) {
@@ -4086,6 +4075,8 @@ const FCE_IMPORT_PREVIEW_GROUP_NAMES = ["history", "baselines", "preferences", "
 
 /** Last successfully validated backup object (same reference as preview); cleared after import or invalid preview. */
 let importPreviewStagedParsed = null;
+/** When set, `applyLangUI` re-runs import preview so labels match the current language. */
+let importPreviewLastRender = null;
 
 function fceI18nReplace(template, vars) {
   if (template == null || typeof template !== "string") return "";
@@ -4183,37 +4174,47 @@ function validateFceBackupImportPreview(parsed) {
     return { valid: false, schemaVersion, keyCount, groups: groupCounts, warnings, errors };
   }
 
-  if (parsed.format !== "fce-export") {
-    errors.push('format must be exactly "fce-export".');
+  const canonical = validateCanonicalV2StoreShape(parsed);
+  const isCanonicalV2 = canonical.ok;
+  const isLegacyEnvelope = parsed.format === "fce-export";
+
+  if (!isCanonicalV2 && !isLegacyEnvelope) {
+    errors.push('Expected canonical v2 store object or legacy envelope format "fce-export".');
   }
 
-  if (typeof parsed.schemaVersion !== "number" || !Number.isFinite(parsed.schemaVersion)) {
-    errors.push("schemaVersion must be a finite number.");
+  if (isCanonicalV2) {
+    schemaVersion = canonical.schemaVersion;
+    keyCount = Object.keys(parsed.sessions || {}).length;
+    warnings.push(...canonical.warnings);
   } else {
-    schemaVersion = parsed.schemaVersion;
-    if (!KNOWN_FCE_BACKUP_SCHEMA_VERSIONS.includes(schemaVersion)) {
-      warnings.push(
-        `schemaVersion ${schemaVersion} is not in the known set (${KNOWN_FCE_BACKUP_SCHEMA_VERSIONS.join(", ")}); import may require migration later.`
-      );
+    if (typeof parsed.schemaVersion !== "number" || !Number.isFinite(parsed.schemaVersion)) {
+      errors.push("schemaVersion must be a finite number.");
+    } else {
+      schemaVersion = parsed.schemaVersion;
+      if (!KNOWN_FCE_BACKUP_SCHEMA_VERSIONS.includes(schemaVersion)) {
+        warnings.push(
+          `schemaVersion ${schemaVersion} is not in the known set (${KNOWN_FCE_BACKUP_SCHEMA_VERSIONS.join(", ")}); import may require migration later.`
+        );
+      }
     }
-  }
 
-  const snap = parsed.localStorageSnapshot;
-  if (snap === null || typeof snap !== "object" || Array.isArray(snap)) {
-    errors.push("localStorageSnapshot must be a non-null object.");
-  } else {
-    keyCount = Object.keys(snap).length;
-    for (const [k, v] of Object.entries(snap)) {
-      if (v === null || typeof v !== "object" || Array.isArray(v)) {
-        warnings.push(`Snapshot key "${k}": expected an object with { type, value }.`);
-      } else if (v.type !== "json" && v.type !== "raw") {
-        warnings.push(`Snapshot key "${k}": type should be "json" or "raw".`);
+    const snap = parsed.localStorageSnapshot;
+    if (snap === null || typeof snap !== "object" || Array.isArray(snap)) {
+      errors.push("localStorageSnapshot must be a non-null object.");
+    } else {
+      keyCount = Object.keys(snap).length;
+      for (const [k, v] of Object.entries(snap)) {
+        if (v === null || typeof v !== "object" || Array.isArray(v)) {
+          warnings.push(`Snapshot key "${k}": expected an object with { type, value }.`);
+        } else if (v.type !== "json" && v.type !== "raw") {
+          warnings.push(`Snapshot key "${k}": type should be "json" or "raw".`);
+        }
       }
     }
   }
 
   const groups = parsed.groups;
-  if (typeof parsed.schemaVersion === "number" && parsed.schemaVersion >= 2) {
+  if (!isCanonicalV2 && typeof parsed.schemaVersion === "number" && parsed.schemaVersion >= 2) {
     if (!groups || typeof groups !== "object" || Array.isArray(groups)) {
       warnings.push("schemaVersion ≥ 2 backups usually include a structured groups object.");
     }
@@ -4230,8 +4231,9 @@ function validateFceBackupImportPreview(parsed) {
       }
     }
 
-    if (snap && typeof snap === "object" && !Array.isArray(snap)) {
-      const snapKeys = new Set(Object.keys(snap));
+    const snapForGroups = parsed.localStorageSnapshot;
+    if (snapForGroups && typeof snapForGroups === "object" && !Array.isArray(snapForGroups)) {
+      const snapKeys = new Set(Object.keys(snapForGroups));
       const groupedKeys = new Set();
       let anyGrouped = false;
       for (const name of FCE_IMPORT_PREVIEW_GROUP_NAMES) {
@@ -4261,13 +4263,15 @@ function validateFceBackupImportPreview(parsed) {
     }
   }
 
-  const structurallyOk =
+  const snap = parsed.localStorageSnapshot;
+  const structurallyOk = isCanonicalV2 || (
     parsed.format === "fce-export" &&
     typeof parsed.schemaVersion === "number" &&
     Number.isFinite(parsed.schemaVersion) &&
     snap !== null &&
     typeof snap === "object" &&
-    !Array.isArray(snap);
+    !Array.isArray(snap)
+  );
 
   const valid = structurallyOk && errors.length === 0;
 
@@ -4275,6 +4279,8 @@ function validateFceBackupImportPreview(parsed) {
 }
 
 function renderImportPreviewFromParsed(parsed, parseStageError) {
+  importPreviewLastRender = { parsed, parseStageError };
+
   const panel = document.getElementById("importPreviewPanel");
   if (!panel) return;
 
@@ -4293,14 +4299,20 @@ function renderImportPreviewFromParsed(parsed, parseStageError) {
     validation = validateFceBackupImportPreview(parsed);
   }
 
-  const snap =
+  const legacySnap =
     parsed &&
     parsed.localStorageSnapshot &&
     typeof parsed.localStorageSnapshot === "object" &&
     !Array.isArray(parsed.localStorageSnapshot)
       ? parsed.localStorageSnapshot
       : null;
-  const restoreKeys = snap ? Object.keys(snap).sort() : [];
+  const isCanonicalV2 = !!parsed && isCanonicalV2Store(parsed);
+  /** Same shape the import handler passes to apply — used for preview keys + overwrite stats only. */
+  const previewImportSnap =
+    isCanonicalV2 && parsed
+      ? { [FCE_V2_STORE_KEY]: { type: "json", value: parsed } }
+      : legacySnap;
+  const restoreKeys = previewImportSnap ? Object.keys(previewImportSnap).sort() : [];
 
   panel.classList.remove("hidden");
 
@@ -4314,30 +4326,60 @@ function renderImportPreviewFromParsed(parsed, parseStageError) {
   const meta = document.getElementById("importPreviewMeta");
   if (meta) {
     meta.innerHTML = "";
-    const dt1 = document.createElement("dt");
-    dt1.textContent = t("importPreview.schemaVersion");
-    meta.appendChild(dt1);
-    const dd1 = document.createElement("dd");
-    dd1.textContent =
-      validation.schemaVersion !== null && validation.schemaVersion !== undefined
-        ? String(validation.schemaVersion)
-        : "—";
-    meta.appendChild(dd1);
-    const dt2 = document.createElement("dt");
-    dt2.textContent = t("importPreview.keyCount");
-    meta.appendChild(dt2);
-    const dd2 = document.createElement("dd");
-    dd2.textContent = String(validation.keyCount);
-    meta.appendChild(dd2);
+    function appendMetaRow(label, value) {
+      const dt = document.createElement("dt");
+      dt.textContent = label;
+      meta.appendChild(dt);
+      const dd = document.createElement("dd");
+      dd.textContent = value;
+      meta.appendChild(dd);
+    }
+    if (isCanonicalV2 && parsed) {
+      appendMetaRow(t("importPreview.storeFormat"), t("importPreview.storeFormatCanonicalV2"));
+      appendMetaRow(
+        t("importPreview.schemaVersion"),
+        validation.schemaVersion !== null && validation.schemaVersion !== undefined
+          ? String(validation.schemaVersion)
+          : "—"
+      );
+      const nSess = Object.keys(parsed.sessions || {}).length;
+      const nBase = Object.keys(parsed.baselines || {}).length;
+      const nBrowser = previewImportSnap ? Object.keys(previewImportSnap).length : 0;
+      appendMetaRow(t("importPreview.containedSessions"), String(nSess));
+      appendMetaRow(t("importPreview.containedBaselineProfiles"), String(nBase));
+      appendMetaRow(t("importPreview.browserKeysToWrite"), String(nBrowser));
+    } else {
+      appendMetaRow(
+        t("importPreview.schemaVersion"),
+        validation.schemaVersion !== null && validation.schemaVersion !== undefined
+          ? String(validation.schemaVersion)
+          : "—"
+      );
+      appendMetaRow(t("importPreview.keyCount"), String(validation.keyCount));
+    }
   }
 
+  const groupsSubhead = document.getElementById("importPreviewGroupsSubhead");
   const gcUl = document.getElementById("importPreviewGroupCounts");
   if (gcUl) {
     gcUl.innerHTML = "";
-    for (const name of FCE_IMPORT_PREVIEW_GROUP_NAMES) {
+    if (isCanonicalV2) {
+      if (groupsSubhead) {
+        groupsSubhead.textContent = t("importPreview.groupsHeaderCanonical");
+      }
       const li = document.createElement("li");
-      li.textContent = `${name}: ${validation.groups[name]}`;
+      li.className = "muted";
+      li.textContent = t("importPreview.groupsCanonicalNote");
       gcUl.appendChild(li);
+    } else {
+      if (groupsSubhead) {
+        groupsSubhead.textContent = t("importPreview.groupsHeader");
+      }
+      for (const name of FCE_IMPORT_PREVIEW_GROUP_NAMES) {
+        const li = document.createElement("li");
+        li.textContent = `${name}: ${validation.groups[name]}`;
+        gcUl.appendChild(li);
+      }
     }
   }
 
@@ -4366,26 +4408,35 @@ function renderImportPreviewFromParsed(parsed, parseStageError) {
     keysEl.textContent = restoreKeys.length ? restoreKeys.join("\n") : "—";
   }
 
-  const summaryForJson = {
-    valid: validation.valid,
-    schemaVersion: validation.schemaVersion,
-    keyCount: validation.keyCount,
-    groups: {
-      history: validation.groups.history,
-      baselines: validation.groups.baselines,
-      preferences: validation.groups.preferences,
-      docsState: validation.groups.docsState,
-      otherFceKeys: validation.groups.otherFceKeys,
-    },
-    warnings: validation.warnings,
-    errors: validation.errors,
-  };
+  const summaryForJson = isCanonicalV2
+    ? {
+        valid: validation.valid,
+        schemaVersion: validation.schemaVersion,
+        sessions: Object.keys(parsed.sessions || {}).length,
+        baselines: Object.keys(parsed.baselines || {}).length,
+        warnings: validation.warnings,
+        errors: validation.errors,
+      }
+    : {
+        valid: validation.valid,
+        schemaVersion: validation.schemaVersion,
+        keyCount: validation.keyCount,
+        groups: {
+          history: validation.groups.history,
+          baselines: validation.groups.baselines,
+          preferences: validation.groups.preferences,
+          docsState: validation.groups.docsState,
+          otherFceKeys: validation.groups.otherFceKeys,
+        },
+        warnings: validation.warnings,
+        errors: validation.errors,
+      };
   const jsonEl = document.getElementById("importPreviewSummaryJson");
   if (jsonEl) {
     jsonEl.textContent = JSON.stringify(summaryForJson, null, 2);
   }
 
-  if (validation.valid && snap && parsed && !parseStageError) {
+  if (validation.valid && previewImportSnap && parsed && !parseStageError) {
     importPreviewStagedParsed = parsed;
   } else {
     importPreviewStagedParsed = null;
@@ -4395,13 +4446,19 @@ function renderImportPreviewFromParsed(parsed, parseStageError) {
   const warnEl = document.getElementById("importOverwriteWarning");
   const importBtn = document.getElementById("importDataBtn");
   if (actions && warnEl && importBtn) {
-    if (validation.valid && snap) {
+    if (validation.valid && previewImportSnap) {
       actions.classList.remove("hidden");
       importBtn.disabled = false;
-      const stats = computeImportOverwriteStats(snap);
+      const stats = computeImportOverwriteStats(previewImportSnap);
       if (stats.overwrite > 0) {
         warnEl.classList.remove("hidden");
-        warnEl.textContent = fceI18nReplace(t("importPreview.overwriteWarning"), stats);
+        if (isCanonicalV2) {
+          warnEl.textContent = fceI18nReplace(t("importPreview.overwriteWarningCanonical"), {
+            storeKey: FCE_V2_STORE_KEY,
+          });
+        } else {
+          warnEl.textContent = fceI18nReplace(t("importPreview.overwriteWarning"), stats);
+        }
       } else {
         warnEl.classList.add("hidden");
         warnEl.textContent = "";
@@ -4478,6 +4535,13 @@ if (exportFullBackupBtn) {
     try {
       localStorage.setItem(FCE_LAST_FULL_BACKUP_AT_KEY, new Date().toISOString());
     } catch {}
+    try {
+      const s = ensureV2Store();
+      s.meta = s.meta || {};
+      s.meta.lastBackupAt = new Date().toISOString();
+      s.meta.schemaVersion = FCE_V2_SCHEMA_VERSION;
+      saveStore(s);
+    } catch {}
     renderLastFullBackupLine();
     setExportStatus(t("export.backupOk"));
   });
@@ -4521,7 +4585,10 @@ if (importDataBtn) {
       setExportStatus(t("importPreview.invalid"));
       return;
     }
-    const snap = staged.localStorageSnapshot;
+    const isCanonicalV2 = isCanonicalV2Store(staged);
+    const snap = isCanonicalV2
+      ? { [FCE_V2_STORE_KEY]: { type: "json", value: staged } }
+      : staged.localStorageSnapshot;
     if (!snap || typeof snap !== "object" || Array.isArray(snap)) return;
 
     const stats = computeImportOverwriteStats(snap);
@@ -4534,6 +4601,10 @@ if (importDataBtn) {
 
     importDataBtn.disabled = true;
     const { written, skipped, replaced, fresh } = applyFceBackupLocalStorageSnapshot(snap);
+    if (isCanonicalV2) {
+      // Refresh in-memory migration result and derived meta after direct store import.
+      ensureV2Store();
+    }
 
     if (written === 0) {
       setExportStatus(t("importPreview.importNothing"));
@@ -4979,46 +5050,696 @@ clearBaselineBtn.addEventListener("click", () => {
 // ----------------------------
 // History model (local-first)
 // ----------------------------
+const FCE_V2_STORE_KEY = "fce_store_v2";
+const FCE_V2_SCHEMA_VERSION = 2;
+const FCE_TEST_TYPES = ["reaction", "gonogo", "divided", "precision"];
+
+function generateId(prefix = "id") {
+  try {
+    if (crypto && typeof crypto.randomUUID === "function") {
+      return `${prefix}_${crypto.randomUUID()}`;
+    }
+  } catch {}
+  return `${prefix}_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
+}
+
+function createEmptyV2Store() {
+  const now = new Date().toISOString();
+  return {
+    version: 2,
+    sessions: {},
+    baselines: {},
+    activeBaseline: {
+      reaction: null,
+      gonogo: null,
+      divided: null,
+      precision: null
+    },
+    meta: {
+      createdAt: now,
+      lastBackupAt: null,
+      schemaVersion: FCE_V2_SCHEMA_VERSION
+    }
+  };
+}
+
+function validateCanonicalV2StoreShape(store) {
+  const warnings = [];
+  if (!store || typeof store !== "object" || Array.isArray(store)) {
+    return { ok: false, warnings, schemaVersion: null };
+  }
+  if (store.version !== 2) {
+    return { ok: false, warnings, schemaVersion: null };
+  }
+  if (!store.sessions || typeof store.sessions !== "object" || Array.isArray(store.sessions)) {
+    return { ok: false, warnings, schemaVersion: null };
+  }
+  if (!store.baselines || typeof store.baselines !== "object" || Array.isArray(store.baselines)) {
+    return { ok: false, warnings, schemaVersion: null };
+  }
+  if (!store.activeBaseline || typeof store.activeBaseline !== "object" || Array.isArray(store.activeBaseline)) {
+    return { ok: false, warnings, schemaVersion: null };
+  }
+  if (!store.meta || typeof store.meta !== "object" || Array.isArray(store.meta)) {
+    return { ok: false, warnings, schemaVersion: null };
+  }
+  const schemaVersion = Number(store?.meta?.schemaVersion || store?.version || 2);
+  if (!Number.isFinite(schemaVersion) || schemaVersion < 2) {
+    warnings.push("Canonical v2 store meta.schemaVersion is missing or not >= 2.");
+  }
+  for (const tt of FCE_TEST_TYPES) {
+    const ref = store.activeBaseline[tt];
+    if (ref !== null && ref !== undefined && !store.baselines[ref]) {
+      warnings.push(`activeBaseline.${tt} references missing profile "${ref}".`);
+    }
+  }
+  for (const [sid, sess] of Object.entries(store.sessions || {})) {
+    if (sess && sess.baselineRef && sess.baselineRef.profileId) {
+      const pid = sess.baselineRef.profileId;
+      if (!store.baselines[pid]) {
+        warnings.push(`Session "${sid}" baselineRef.profileId "${pid}" not found in baselines.`);
+      }
+    }
+  }
+  return { ok: true, warnings, schemaVersion };
+}
+
+function isCanonicalV2Store(store) {
+  return validateCanonicalV2StoreShape(store).ok;
+}
+
+function loadStore() {
+  try {
+    const raw = localStorage.getItem(FCE_V2_STORE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    return isCanonicalV2Store(parsed) ? parsed : null;
+  } catch {
+    return null;
+  }
+}
+
+function saveStore(store) {
+  if (!isCanonicalV2Store(store)) return false;
+  try {
+    localStorage.setItem(FCE_V2_STORE_KEY, JSON.stringify(store));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function getLegacyData() {
+  const legacy = { history: {}, baseline: {} };
+  for (const tt of FCE_TEST_TYPES) {
+    try {
+      const hr = localStorage.getItem(historyKeyFor(tt));
+      legacy.history[tt] = hr ? JSON.parse(hr) : [];
+    } catch {
+      legacy.history[tt] = [];
+    }
+    try {
+      const br = localStorage.getItem(baselineKeyFor(tt));
+      legacy.baseline[tt] = br ? JSON.parse(br) : [];
+    } catch {
+      legacy.baseline[tt] = [];
+    }
+  }
+  return legacy;
+}
+
+function inferContextFromLegacy(legacyRecord) {
+  const device = legacyRecord?.device || {};
+  const viewportW = (typeof window !== "undefined" && Number.isFinite(window.innerWidth)) ? window.innerWidth : 0;
+  const viewportH = (typeof window !== "undefined" && Number.isFinite(window.innerHeight)) ? window.innerHeight : 0;
+  let deviceClass = "unknown";
+  if (device.userAgentHint === "mobile") deviceClass = "mobile";
+  else if (device.userAgentHint === "desktop") deviceClass = "desktop";
+  if (deviceClass === "unknown") {
+    if (viewportW > 0 && viewportW < 768) deviceClass = "mobile";
+    else if (viewportW >= 768 && viewportW <= 1024) deviceClass = "tablet";
+    else if (viewportW > 1024) deviceClass = "desktop";
+  }
+  const inputMode = device.isTouch ? "touch" : "mouse";
+  return {
+    deviceClass,
+    inputMode: inputMode || "unknown",
+    viewport: { w: viewportW || 0, h: viewportH || 0 },
+    fullscreen: !!device.precisionFullscreenAchieved
+  };
+}
+
+function normalizeQuality(legacyRecord) {
+  const valid = !(legacyRecord?.flags && legacyRecord.flags.invalid === true);
+  const flags = [];
+  if (!valid) {
+    if (legacyRecord?.flags?.refusalCode) flags.push(String(legacyRecord.flags.refusalCode));
+    else if (legacyRecord?.flags?.reason) flags.push(String(legacyRecord.flags.reason));
+    else flags.push("invalid");
+  }
+  return { valid, flags };
+}
+
+function normalizeSessionRecordForStore(legacyRecord, forcedTestType = null, forcedMode = null) {
+  const id = String(legacyRecord?.id || legacyRecord?.createdAt || generateId("session"));
+  const createdAt = String(legacyRecord?.createdAt || legacyRecord?.timestamp || new Date().toISOString());
+  const testType = forcedTestType || legacyRecord?.testType || "reaction";
+  const mode = forcedMode || legacyRecord?.mode || "baseline";
+  const metrics = legacyRecord?.metrics || {};
+  const statusText = legacyRecord?.statusText || legacyRecord?.status || "";
+  return {
+    id,
+    createdAt,
+    testType,
+    mode,
+    metrics: { ...metrics },
+    quality: normalizeQuality(legacyRecord),
+    context: inferContextFromLegacy(legacyRecord),
+    baselineRef: null,
+    // Keep a compatibility payload so existing UI rendering paths can stay stable.
+    legacy: {
+      flags: legacyRecord?.flags || { invalid: false, reason: "" },
+      tags: legacyRecord?.tags || {},
+      device: legacyRecord?.device || {},
+      trialLog: Array.isArray(legacyRecord?.trialLog) ? legacyRecord.trialLog : [],
+      quality: legacyRecord?.quality || (normalizeQuality(legacyRecord).valid ? "good" : "not_usable"),
+      qualityNote: legacyRecord?.qualityNote || "",
+      statusText,
+      version: legacyRecord?.version || ""
+    }
+  };
+}
+
+function baselinePayloadToLegacyRecord(payload, testType) {
+  const createdAt = String(payload?.timestamp || new Date().toISOString());
+  const isPrecision = testType === "precision";
+  const metrics = isPrecision
+    ? {
+        avgErrN: Number(payload?.meanErrN || 0),
+        sdErrN: Number(payload?.sdErrN || 0),
+        meanRtMs: Number(payload?.meanRtMs || 0),
+        sdRtMs: Number(payload?.sdRtMs || 0),
+        trials: Number(payload?.trials || 0)
+      }
+    : {
+        avgMs: Number(payload?.mean || 0),
+        sdMs: Number(payload?.sd || 0),
+        bestMs: Number(payload?.best || 0),
+        worstMs: Number(payload?.worst || 0),
+        trials: Number(payload?.trials || 0),
+        hits: Number(payload?.hits || payload?.trials || 0),
+        misses: Number(payload?.misses || 0),
+        falseAlarms: Number(payload?.falseAlarms || 0),
+        correctRejects: Number(payload?.correctRejects || 0),
+        falseStarts: Number(payload?.falseStarts || 0),
+        nogoCount: Number(payload?.nogoCount || 0),
+        flashTargetCount: Number(payload?.flashTargetCount || 0),
+        flashUserCount: Number(payload?.flashUserCount || 0),
+        flashAbsError: Number(payload?.flashAbsError || 0)
+      };
+  return {
+    id: String(payload?.sourceSessionId || payload?.id || generateId("baseline_session")),
+    createdAt,
+    testType,
+    mode: "baseline",
+    metrics,
+    flags: { invalid: false, reason: "" },
+    tags: {},
+    device: payload?.device || {},
+    trialLog: []
+  };
+}
+
+function almostEqualNumber(a, b, eps = 1e-9) {
+  if (!Number.isFinite(a) || !Number.isFinite(b)) return false;
+  return Math.abs(a - b) <= eps;
+}
+
+function matchesBaselinePayloadForTestType(session, testType, payload) {
+  if (!session || session.testType !== testType || session.mode !== "baseline") return false;
+  const sMetrics = session.metrics || {};
+  const pCreated = String(payload?.timestamp || "");
+  if (pCreated) {
+    const sCreated = String(session.createdAt || "");
+    if (sCreated !== pCreated) {
+      const sMs = Date.parse(sCreated);
+      const pMs = Date.parse(pCreated);
+      const sameMinute = Number.isFinite(sMs) && Number.isFinite(pMs)
+        ? Math.floor(sMs / 60000) === Math.floor(pMs / 60000)
+        : false;
+      const within60s = Number.isFinite(sMs) && Number.isFinite(pMs)
+        ? Math.abs(sMs - pMs) <= 60000
+        : false;
+      if (!sameMinute && !within60s) return false;
+    }
+  }
+  if (testType === "precision") {
+    const pMean = Number(payload?.meanErrN || 0);
+    const pTrials = Number(payload?.trials || 0);
+    const sMean = Number(sMetrics.avgErrN ?? sMetrics.meanErrN ?? NaN);
+    const sTrials = Number(sMetrics.trials ?? NaN);
+    if (!almostEqualNumber(sMean, pMean)) return false;
+    if (!almostEqualNumber(sTrials, pTrials)) return false;
+    const pSd = Number(payload?.sdErrN || 0);
+    const sSd = Number(sMetrics.sdErrN ?? NaN);
+    if (Number.isFinite(sSd) && !almostEqualNumber(sSd, pSd)) return false;
+    return true;
+  }
+  const pMean = Number(payload?.mean || 0);
+  const pTrials = Number(payload?.trials || 0);
+  const sMean = Number(sMetrics.avgMs ?? sMetrics.mean ?? NaN);
+  const sTrials = Number(sMetrics.trials ?? NaN);
+  if (!almostEqualNumber(sMean, pMean)) return false;
+  if (!almostEqualNumber(sTrials, pTrials)) return false;
+  const pSd = Number(payload?.sd || 0);
+  const sSd = Number(sMetrics.sdMs ?? sMetrics.sd ?? NaN);
+  if (Number.isFinite(sSd) && !almostEqualNumber(sSd, pSd)) return false;
+  return true;
+}
+
+function findMatchingBaselineSessionId(store, testType, payload) {
+  const sessions = getAllSessions(store);
+  for (const [sid, sess] of Object.entries(sessions)) {
+    if (matchesBaselinePayloadForTestType(sess, testType, payload)) return sid;
+  }
+  return null;
+}
+
+function scoreBaselineSessionRichness(session) {
+  const l = session?.legacy || {};
+  let score = 0;
+  if (Array.isArray(l.trialLog) && l.trialLog.length > 0) score += 5;
+  if (l.tags && typeof l.tags === "object" && Object.keys(l.tags).length > 0) score += 3;
+  if (l.device && typeof l.device === "object" && Object.keys(l.device).length > 0) score += 2;
+  if (session?.baselineRef) score += 1;
+  return score;
+}
+
+function dedupeMigratedBaselineDuplicates(store) {
+  if (!store || !store.sessions || !store.baselines) return false;
+  const groups = {};
+  for (const [sid, s] of Object.entries(store.sessions)) {
+    if (!s || s.mode !== "baseline") continue;
+    const tt = s.testType || "reaction";
+    const createdAt = String(s.createdAt || "");
+    if (!createdAt) continue;
+    const m = s.metrics || {};
+    const sig = tt === "precision"
+      ? `${tt}|${createdAt}|${Number(m.avgErrN ?? m.meanErrN ?? NaN)}|${Number(m.trials ?? NaN)}|${Number(m.sdErrN ?? NaN)}`
+      : `${tt}|${createdAt}|${Number(m.avgMs ?? m.mean ?? NaN)}|${Number(m.trials ?? NaN)}|${Number(m.sdMs ?? m.sd ?? NaN)}`;
+    if (!groups[sig]) groups[sig] = [];
+    groups[sig].push(sid);
+  }
+  const remap = {};
+  let changed = false;
+  for (const ids of Object.values(groups)) {
+    if (ids.length < 2) continue;
+    ids.sort((a, b) => scoreBaselineSessionRichness(store.sessions[b]) - scoreBaselineSessionRichness(store.sessions[a]));
+    const keep = ids[0];
+    for (const dup of ids.slice(1)) {
+      remap[dup] = keep;
+      delete store.sessions[dup];
+      changed = true;
+    }
+  }
+  if (!changed) return false;
+  for (const p of Object.values(store.baselines)) {
+    if (!p || !Array.isArray(p.sessionIds)) continue;
+    const mapped = p.sessionIds.map(id => remap[id] || id).filter(id => !!store.sessions[id]);
+    p.sessionIds = Array.from(new Set(mapped));
+    p.meta = p.meta || {};
+    p.meta.baselineSessionCount = p.sessionIds.length;
+  }
+  return true;
+}
+
+function getBaselineCoreMetrics(session) {
+  const tt = session?.testType || "reaction";
+  const m = session?.metrics || {};
+  if (tt === "precision") {
+    return {
+      mean: Number(m.avgErrN ?? m.meanErrN ?? NaN),
+      sd: Number(m.sdErrN ?? NaN),
+      trials: Number(m.trials ?? NaN)
+    };
+  }
+  return {
+    mean: Number(m.avgMs ?? m.mean ?? NaN),
+    sd: Number(m.sdMs ?? m.sd ?? NaN),
+    trials: Number(m.trials ?? NaN)
+  };
+}
+
+function baselineSessionsLikelySameRealSession(a, b) {
+  if (!a || !b) return false;
+  if (a.mode !== "baseline" || b.mode !== "baseline") return false;
+  if (a.testType !== b.testType) return false;
+  const ma = getBaselineCoreMetrics(a);
+  const mb = getBaselineCoreMetrics(b);
+  if (!almostEqualNumber(ma.trials, mb.trials)) return false;
+  // Core mean metric must match; keep tolerance conservative for float serialization drift.
+  if (!almostEqualNumber(ma.mean, mb.mean, 1e-6)) return false;
+  const aMs = Date.parse(String(a.createdAt || ""));
+  const bMs = Date.parse(String(b.createdAt || ""));
+  if (Number.isFinite(aMs) && Number.isFinite(bMs)) {
+    const sameMinute = Math.floor(aMs / 60000) === Math.floor(bMs / 60000);
+    const within60s = Math.abs(aMs - bMs) <= 60000;
+    if (!sameMinute && !within60s) return false;
+  } else if (String(a.createdAt || "") !== String(b.createdAt || "")) {
+    return false;
+  }
+  // SD can vary slightly between reconstructed records; only block if both are finite and clearly different.
+  if (Number.isFinite(ma.sd) && Number.isFinite(mb.sd) && !almostEqualNumber(ma.sd, mb.sd, 1e-6)) {
+    // keep permissive: SD mismatch alone does not disqualify likely duplicates
+  }
+  return true;
+}
+
+function getBaselineDuplicateCandidates(store, testType = null) {
+  const out = [];
+  if (!store || !store.sessions) return out;
+  const baselineSessions = Object.entries(store.sessions)
+    .filter(([, s]) => s && s.mode === "baseline" && (!testType || s.testType === testType))
+    .map(([id, s]) => ({ id, ...s }));
+
+  const seen = new Set();
+  for (let i = 0; i < baselineSessions.length; i++) {
+    const a = baselineSessions[i];
+    if (seen.has(a.id)) continue;
+    const group = [a];
+    for (let j = i + 1; j < baselineSessions.length; j++) {
+      const b = baselineSessions[j];
+      if (baselineSessionsLikelySameRealSession(a, b)) group.push(b);
+    }
+    if (group.length > 1) {
+      for (const g of group) seen.add(g.id);
+      out.push({
+        testType: a.testType,
+        mode: "baseline",
+        ids: group.map(g => g.id),
+        entries: group.map(g => ({
+          id: g.id,
+          createdAt: g.createdAt,
+          mode: g.mode,
+          metrics: getBaselineCoreMetrics(g),
+          richness: scoreBaselineSessionRichness(g)
+        }))
+      });
+    }
+  }
+  return out;
+}
+
+function repairNearDuplicateBaselineSessions(store) {
+  if (!store || !store.sessions || !store.baselines) return 0;
+  const candidates = getBaselineDuplicateCandidates(store);
+  if (!candidates.length) return 0;
+  let removed = 0;
+  const remap = {};
+  for (const group of candidates) {
+    const ids = group.ids.slice().sort((a, b) =>
+      scoreBaselineSessionRichness(store.sessions[b]) - scoreBaselineSessionRichness(store.sessions[a])
+    );
+    const keep = ids[0];
+    for (const dup of ids.slice(1)) {
+      if (dup === keep || !store.sessions[dup]) continue;
+      remap[dup] = keep;
+      delete store.sessions[dup];
+      removed++;
+    }
+  }
+  if (removed === 0) return 0;
+  for (const p of Object.values(store.baselines)) {
+    if (!p || !Array.isArray(p.sessionIds)) continue;
+    const mapped = p.sessionIds.map(id => remap[id] || id).filter(id => !!store.sessions[id]);
+    p.sessionIds = Array.from(new Set(mapped));
+    p.meta = p.meta || {};
+    p.meta.baselineSessionCount = p.sessionIds.length;
+  }
+  return removed;
+}
+
+function sessionToBaselinePayload(session, testType) {
+  const metrics = session?.metrics || {};
+  const timestamp = session?.createdAt || new Date().toISOString();
+  const legacyDevice = session?.legacy?.device || {};
+  if (testType === "precision") {
+    return {
+      meanErrN: Number(metrics.avgErrN ?? metrics.meanErrN ?? 0),
+      sdErrN: Number(metrics.sdErrN ?? 0),
+      meanRtMs: Number(metrics.meanRtMs ?? 0),
+      sdRtMs: Number(metrics.sdRtMs ?? 0),
+      trials: Number(metrics.trials ?? 0),
+      timestamp,
+      device: legacyDevice
+    };
+  }
+  return {
+    mean: Number(metrics.avgMs ?? metrics.mean ?? 0),
+    sd: Number(metrics.sdMs ?? metrics.sd ?? 0),
+    trials: Number(metrics.trials ?? 0),
+    hits: Number(metrics.hits ?? metrics.trials ?? 0),
+    misses: Number(metrics.misses ?? 0),
+    falseAlarms: Number(metrics.falseAlarms ?? 0),
+    correctRejects: Number(metrics.correctRejects ?? 0),
+    falseStarts: Number(metrics.falseStarts ?? 0),
+    nogoCount: Number(metrics.nogoCount ?? 0),
+    flashTargetCount: Number(metrics.flashTargetCount ?? 0),
+    flashUserCount: Number(metrics.flashUserCount ?? 0),
+    flashAbsError: Number(metrics.flashAbsError ?? 0),
+    best: Number(metrics.bestMs ?? metrics.best ?? 0),
+    worst: Number(metrics.worstMs ?? metrics.worst ?? 0),
+    timestamp,
+    device: legacyDevice
+  };
+}
+
+function computeBaselineStatsFromPayloads(payloads, testType) {
+  const valid = filterValidBaselineSessions(payloads);
+  if (!valid.length) return {};
+  if (testType === "precision") {
+    return {
+      meanErrN: mean(valid.map(s => s.meanErrN || 0)),
+      sdErrN: mean(valid.map(s => s.sdErrN || 0)),
+      meanRtMs: mean(valid.map(s => s.meanRtMs || 0)),
+      sdRtMs: mean(valid.map(s => s.sdRtMs || 0))
+    };
+  }
+  return {
+    mean: mean(valid.map(s => s.mean || 0)),
+    sd: mean(valid.map(s => s.sd || 0)),
+    missesAvg: mean(valid.map(s => s.misses || 0)),
+    falseAlarmsAvg: mean(valid.map(s => s.falseAlarms || 0)),
+    flashAbsErrorAvg: mean(valid.map(s => s.flashAbsError || 0))
+  };
+}
+
+function buildOrUpdateBaselineProfileFromPayloads(store, testType, payloads, profileId = null) {
+  const valid = filterValidBaselineSessions(payloads);
+  if (!valid.length) return null;
+  const now = new Date().toISOString();
+  const id = profileId || generateId(`baseline_${testType}`);
+  const sessionIds = [];
+  const ctxClasses = [];
+  const ctxInputs = [];
+  for (const p of valid) {
+    const existingId = findMatchingBaselineSessionId(store, testType, p);
+    if (existingId && store.sessions[existingId]) {
+      const existing = store.sessions[existingId];
+      sessionIds.push(existingId);
+      ctxClasses.push(existing?.context?.deviceClass || "unknown");
+      ctxInputs.push(existing?.context?.inputMode || "unknown");
+      continue;
+    }
+    const legacyRecord = baselinePayloadToLegacyRecord(p, testType);
+    const normalized = normalizeSessionRecordForStore(legacyRecord, testType, "baseline");
+    store.sessions[normalized.id] = normalized;
+    sessionIds.push(normalized.id);
+    ctxClasses.push(normalized?.context?.deviceClass || "unknown");
+    ctxInputs.push(normalized?.context?.inputMode || "unknown");
+  }
+  const modeOf = (arr) => {
+    const counts = {};
+    for (const v of arr) counts[v] = (counts[v] || 0) + 1;
+    let best = "unknown";
+    let max = -1;
+    for (const [k, c] of Object.entries(counts)) {
+      if (c > max) { max = c; best = k; }
+    }
+    return best;
+  };
+  const status = valid.length >= minBaselineSessions() ? "ready" : "building";
+  store.baselines[id] = {
+    id,
+    testType,
+    label: null,
+    status,
+    createdAt: store.baselines[id]?.createdAt || now,
+    updatedAt: now,
+    archivedAt: null,
+    sessionIds,
+    stats: computeBaselineStatsFromPayloads(valid, testType),
+    contextSummary: {
+      deviceClass: modeOf(ctxClasses),
+      inputMode: modeOf(ctxInputs)
+    },
+    meta: {
+      baselineSessionCount: valid.length,
+      lastSessionAt: valid.length ? String(valid[valid.length - 1].timestamp || null) : null,
+      staleFlags: []
+    }
+  };
+  store.activeBaseline[testType] = id;
+  return id;
+}
+
+function migrateLegacyToV2(legacy) {
+  const store = createEmptyV2Store();
+  // 1) History records
+  for (const tt of FCE_TEST_TYPES) {
+    const historyArr = Array.isArray(legacy?.history?.[tt]) ? legacy.history[tt] : [];
+    for (const r of historyArr) {
+      const normalized = normalizeSessionRecordForStore(r, tt, r?.mode || null);
+      if (!store.sessions[normalized.id]) store.sessions[normalized.id] = normalized;
+    }
+  }
+  // 2) One baseline profile per test type from legacy baseline arrays
+  for (const tt of FCE_TEST_TYPES) {
+    const baselineArr = Array.isArray(legacy?.baseline?.[tt]) ? legacy.baseline[tt] : [];
+    buildOrUpdateBaselineProfileFromPayloads(store, tt, baselineArr);
+  }
+  return store;
+}
+
+function ensureV2Store() {
+  const existing = loadStore();
+  if (existing) {
+    const mutated = dedupeMigratedBaselineDuplicates(existing);
+    const pre = getBaselineDuplicateCandidates(existing).length;
+    if (pre > 0) console.debug("[FCE] baseline duplicate candidates (existing store):", pre);
+    const repaired = repairNearDuplicateBaselineSessions(existing);
+    if (repaired > 0) console.debug("[FCE] baseline near-duplicates removed (existing store):", repaired);
+    if (mutated) saveStore(existing);
+    if (repaired > 0) saveStore(existing);
+    try {
+      window.debugFceBaselineDupes = () => getBaselineDuplicateCandidates(ensureV2Store());
+    } catch {}
+    return existing;
+  }
+  const migrated = migrateLegacyToV2(getLegacyData());
+  dedupeMigratedBaselineDuplicates(migrated);
+  const pre = getBaselineDuplicateCandidates(migrated).length;
+  if (pre > 0) console.debug("[FCE] baseline duplicate candidates (migrated store):", pre);
+  const repaired = repairNearDuplicateBaselineSessions(migrated);
+  if (repaired > 0) console.debug("[FCE] baseline near-duplicates removed (migrated store):", repaired);
+  saveStore(migrated);
+  try {
+    window.debugFceBaselineDupes = () => getBaselineDuplicateCandidates(ensureV2Store());
+  } catch {}
+  return migrated;
+}
+
+function getAllSessions(store) {
+  const s = store || ensureV2Store();
+  return s && s.sessions && typeof s.sessions === "object" ? s.sessions : {};
+}
+
+function getSessionsArray(store) {
+  return Object.values(getAllSessions(store));
+}
+
+function getSessionsByTestType(store, testType) {
+  return getSessionsArray(store).filter(s => s && s.testType === testType);
+}
+
+function getActiveBaselineProfile(store, testType) {
+  const s = store || ensureV2Store();
+  const profileId = s?.activeBaseline?.[testType] || null;
+  if (!profileId) return null;
+  return s.baselines?.[profileId] || null;
+}
+
+function getBaselineSessionsForActiveProfile(store, testType) {
+  const s = store || ensureV2Store();
+  const profile = getActiveBaselineProfile(s, testType);
+  if (!profile || !Array.isArray(profile.sessionIds)) return [];
+  return profile.sessionIds
+    .map(id => s.sessions?.[id])
+    .filter(Boolean)
+    .map(sess => sessionToBaselinePayload(sess, testType));
+}
+
+function getBaselineStatsForTest(store, testType) {
+  const profile = getActiveBaselineProfile(store || ensureV2Store(), testType);
+  return profile?.stats || null;
+}
+
+function maybeBuildBaselineRefForCheck(store, session) {
+  if (!session || session.mode !== "check") return null;
+  const profile = getActiveBaselineProfile(store, session.testType);
+  if (!profile || !profile.stats) return null;
+  if (profile.status !== "ready") return null;
+  const metrics = session.metrics || {};
+  const isPrecision = session.testType === "precision";
+  const currentVal = isPrecision ? Number(metrics.avgErrN ?? NaN) : Number(metrics.avgMs ?? NaN);
+  const baselineMean = isPrecision ? Number(profile.stats.meanErrN ?? NaN) : Number(profile.stats.mean ?? NaN);
+  const baselineSD = isPrecision ? Number(profile.stats.sdErrN ?? NaN) : Number(profile.stats.sd ?? NaN);
+  let level = "unknown";
+  if (Number.isFinite(currentVal) && Number.isFinite(baselineMean) && Number.isFinite(baselineSD)) {
+    if (currentVal <= baselineMean + baselineSD) level = "within";
+    else if (currentVal <= baselineMean + 2 * baselineSD) level = "slightly";
+    else level = "significantly";
+  }
+  return {
+    profileId: profile.id,
+    summarySnapshot: {
+      mean: baselineMean,
+      sd: baselineSD,
+      n: profile?.meta?.baselineSessionCount || profile?.sessionIds?.length || 0,
+      status: profile.status
+    },
+    comparison: {
+      current: currentVal,
+      delta: Number.isFinite(currentVal) && Number.isFinite(baselineMean) ? currentVal - baselineMean : null,
+      level
+    }
+  };
+}
+
 function historyKeyFor(testType) {
   return `fce_history_v1_${testType}`;
 }
 
 function loadHistory(tt = testType.value) {
-  try {
-    const raw = localStorage.getItem(historyKeyFor(tt));
-    return raw ? JSON.parse(raw) : [];
-  } catch (_) {
-    return [];
-  }
+  const store = ensureV2Store();
+  return getSessionsByTestType(store, tt)
+    .filter(s => !!s)
+    .map(s => ({
+      id: s.id,
+      createdAt: s.createdAt,
+      testType: s.testType,
+      mode: s.mode,
+      metrics: { ...(s.metrics || {}) },
+      flags: s.legacy?.flags || { invalid: !(s.quality?.valid), reason: (s.quality?.flags || [])[0] || "" },
+      tags: s.legacy?.tags || {},
+      device: s.legacy?.device || {},
+      trialLog: Array.isArray(s.legacy?.trialLog) ? s.legacy.trialLog : [],
+      quality: s.legacy?.quality || (s.quality?.valid ? "good" : "not_usable"),
+      qualityNote: s.legacy?.qualityNote || "",
+      statusText: s.legacy?.statusText || "",
+      version: s.legacy?.version || "",
+      baselineRef: s.baselineRef || null
+    }))
+    .sort((a, b) => String(a.createdAt || "").localeCompare(String(b.createdAt || "")));
 }
 
 // Check if stored records exist for a specific test type (history or baseline)
 function hasHistoryForTestType(testTypeValue) {
   const tt = testTypeValue || "reaction";
-  
-  // Check history
-  try {
-    const historyRaw = localStorage.getItem(historyKeyFor(tt));
-    if (historyRaw) {
-      const history = JSON.parse(historyRaw);
-      if (Array.isArray(history) && history.length > 0) {
-        return true;
-      }
-    }
-  } catch (_) {}
-  
-  // Check baseline
-  try {
-    const baselineRaw = localStorage.getItem(baselineKeyFor(tt));
-    if (baselineRaw) {
-      const baseline = JSON.parse(baselineRaw);
-      if (Array.isArray(baseline) && baseline.length > 0) {
-        return true;
-      }
-    }
-  } catch (_) {}
-  
-  return false;
+  const store = ensureV2Store();
+  const hasSessions = getSessionsByTestType(store, tt).length > 0;
+  const hasBaseline = getBaselineSessionsForActiveProfile(store, tt).length > 0;
+  return hasSessions || hasBaseline;
 }
 
 // Check if stored records exist for the current test type (history or baseline)
@@ -5028,7 +5749,21 @@ function hasHistory() {
 }
 
 function saveHistory(tt, sessions) {
-  localStorage.setItem(historyKeyFor(tt), JSON.stringify(sessions));
+  const store = ensureV2Store();
+  const sessionArr = Array.isArray(sessions) ? sessions : [];
+  // Replace only this testType's sessions with provided array, preserving other types.
+  const existing = getSessionsByTestType(store, tt).map(s => s.id);
+  for (const id of existing) {
+    delete store.sessions[id];
+  }
+  for (const legacyRecord of sessionArr) {
+    const normalized = normalizeSessionRecordForStore(legacyRecord, tt, legacyRecord?.mode || null);
+    if (normalized.mode === "check") {
+      normalized.baselineRef = maybeBuildBaselineRefForCheck(store, normalized);
+    }
+    store.sessions[normalized.id] = normalized;
+  }
+  saveStore(store);
 }
 
 // Get context tags (metadata only - sleep, stress, note)
@@ -5068,9 +5803,13 @@ function getDeviceHints() {
 
 function pushHistoryRecord(record) {
   const tt = record.testType;
-  const sessions = loadHistory(tt);
-  sessions.push(record);
-  saveHistory(tt, sessions);
+  const store = ensureV2Store();
+  const normalized = normalizeSessionRecordForStore(record, tt, record?.mode || null);
+  if (normalized.mode === "check") {
+    normalized.baselineRef = maybeBuildBaselineRefForCheck(store, normalized);
+  }
+  store.sessions[normalized.id] = normalized;
+  saveStore(store);
   renderHomeHistoryPreview();
   updateHistoryMenuState();
 }
@@ -5711,12 +6450,12 @@ function pushHistoryRecord(record) {
             meanRtMs: sessionPayload.meanRtMs,
             sdRtMs: sessionPayload.sdRtMs,
             trials: sessionPayload.trials,
-            timestamp: new Date().toISOString(),
+            timestamp: createdAt,
             device: device
           }
         : {
             ...sessionPayload,
-            timestamp: new Date().toISOString(),
+            timestamp: createdAt,
             device: device
           };
       sessions.push(baselinePayload);
@@ -6153,12 +6892,16 @@ function hardReset() {
 }
 
 function loadBaseline() {
-    const raw = localStorage.getItem(baselineKey());
-    return raw ? JSON.parse(raw) : [];
+    return getBaselineSessionsForActiveProfile(ensureV2Store(), testType.value);
   }
   
   function saveBaseline(sessions) {
-    localStorage.setItem(baselineKey(), JSON.stringify(sessions));
+    const store = ensureV2Store();
+    const tt = testType.value;
+    const active = getActiveBaselineProfile(store, tt);
+    const profileId = active?.id || null;
+    buildOrUpdateBaselineProfileFromPayloads(store, tt, Array.isArray(sessions) ? sessions : [], profileId);
+    saveStore(store);
   }
   
   function updateBaselineInfo() {
@@ -6366,40 +7109,25 @@ function baselineKeyFor(tt) {
 // For precision: uses meanErrN/sdErrN; for others: uses mean/sd
 // This is the mean of per-session SDs (not stddev of session means)
 function getBaselineForCompare(testType) {
-  try {
-    const key = baselineKeyFor(testType);
-    const raw = localStorage.getItem(key);
-    if (!raw) return null;
-    
-    const baselineSessionsRaw = JSON.parse(raw);
-    const baselineSessions = filterValidBaselineSessions(baselineSessionsRaw);
-    
-    if (baselineSessions.length === 0) return null;
-    
-    const isPrecision = testType === "precision";
-    
-    if (isPrecision) {
-      const baselineMean = mean(baselineSessions.map(s => s.meanErrN || 0));
-      const baselineSD = mean(baselineSessions.map(s => s.sdErrN || 0));
-      return {
-        mean: baselineMean,
-        sd: baselineSD,
-        n: baselineSessions.length,
-        isPrecision: true
-      };
-    } else {
-      const baselineMean = mean(baselineSessions.map(s => s.mean || 0));
-      const baselineSD = mean(baselineSessions.map(s => s.sd || 0));
-      return {
-        mean: baselineMean,
-        sd: baselineSD,
-        n: baselineSessions.length,
-        isPrecision: false
-      };
-    }
-  } catch {
-    return null;
+  const baselineSessions = filterValidBaselineSessions(
+    getBaselineSessionsForActiveProfile(ensureV2Store(), testType)
+  );
+  if (baselineSessions.length === 0) return null;
+  const isPrecision = testType === "precision";
+  if (isPrecision) {
+    return {
+      mean: mean(baselineSessions.map(s => s.meanErrN || 0)),
+      sd: mean(baselineSessions.map(s => s.sdErrN || 0)),
+      n: baselineSessions.length,
+      isPrecision: true
+    };
   }
+  return {
+    mean: mean(baselineSessions.map(s => s.mean || 0)),
+    sd: mean(baselineSessions.map(s => s.sd || 0)),
+    n: baselineSessions.length,
+    isPrecision: false
+  };
 }
 
 function minBaselineSessions() {
@@ -6731,15 +7459,7 @@ function renderHomeHistoryPreview() {
     let statusText = s?.statusText || "";
     if (!statusText && typeof avg === "number") {
       // Load baseline sessions and compute mean/sd (same pattern as renderHistory)
-      const baselineSessionsRaw = (() => {
-        try {
-          const key = baselineKeyFor(tt);
-          const raw = localStorage.getItem(key);
-          return raw ? JSON.parse(raw) : [];
-        } catch {
-          return [];
-        }
-      })();
+      const baselineSessionsRaw = getBaselineSessionsForActiveProfile(ensureV2Store(), tt);
       const baselineSessions = filterValidBaselineSessions(baselineSessionsRaw);
       if (baselineSessions.length > 0) {
         let baselineMean, baselineSD;
@@ -6922,15 +7642,7 @@ function renderTrendFor(testType) {
     let statusText = s?.statusText || "";
     if (!statusText && !isInvalid && Number.isFinite(avg)) {
       // Load baseline sessions the same way as renderHistory
-      const baselineSessionsRaw = (() => {
-        try {
-          const key = baselineKeyFor(testType);
-          const raw = localStorage.getItem(key);
-          return raw ? JSON.parse(raw) : [];
-        } catch {
-          return [];
-        }
-      })();
+      const baselineSessionsRaw = getBaselineSessionsForActiveProfile(ensureV2Store(), testType);
       const baselineSessions = filterValidBaselineSessions(baselineSessionsRaw);
       
       if (baselineSessions.length > 0) {
@@ -7066,16 +7778,7 @@ function renderHistory() {
   historyEmpty.textContent = "";
 
   // Baseline reference for compare cards (if available)
-  const baselineSessionsRaw = (() => {
-    try {
-      // Use baselineKeyFor() to get correct key for test type
-      const key = baselineKeyFor(tt);
-      const raw = localStorage.getItem(key);
-      return raw ? JSON.parse(raw) : [];
-    } catch {
-      return [];
-    }
-  })();
+  const baselineSessionsRaw = getBaselineSessionsForActiveProfile(ensureV2Store(), tt);
 
   // Filter out invalid baseline sessions before using them
   const baselineSessions = filterValidBaselineSessions(baselineSessionsRaw);
@@ -7910,6 +8613,7 @@ if (testType) {
 }
 
 // Handle URL parameters for initial view selection (after all initialization)
+ensureV2Store();
 const params = new URLSearchParams(location.search);
 if (params.get("home") === "1") {
   // Force Home view (existing behavior)

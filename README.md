@@ -23,8 +23,8 @@ For a shorter standalone overview (shareable copy), see [`docs/summary.md`](docs
 
 ## Current status
 
-**Latest release:** v0.4.0  
-**Status:** Stable (interpretation layer pass + documentation IA)
+**Latest release:** v0.4.1  
+**Status:** Stable (instrument UX hardening + canonical v2 backup/import)
 
 ---
 
@@ -303,6 +303,17 @@ No test logic changes.
 
 ---
 
+## Instrument UX, backup/import, and summary hardening (v0.4.1)
+
+- **Backup / import:** Full FCE store export, last-backup timestamp, import preview (dry run), confirm-and-apply flow (EN/NO/LT)
+- **Canonical v2 store:** Validated backup/import contract; preview shows sessions, baselines, and store format (not legacy key noise)
+- **Structured summaries:** Hierarchy for baseline saved, check complete, and deviation interpretation; completion line for unusable checks
+- **Invalid / not-usable guards:** No baseline comparison leak in summary, History compare, or Trend delta for failed checks; no misleading `0 ms` aggregates
+- **Baseline panel:** Status, guidance, and integrity lines (strength, consistency)
+- **i18n:** Merged duplicate `history.precision` keys (EN/NO/LT); LT precision invalid label fixed (`Netinkama`)
+
+---
+
 ## Interpretation layer, docs IA, and navigation (v0.4.0)
 
 - **History & Trend clarity:** Shared compare logic across home preview, History, and Trend; human-readable baseline header and recent checks (EN/NO/LT)
@@ -319,6 +330,7 @@ No test logic changes.
 - Per-test session history
 - Mode-aware filtering (Baseline / Check / Training)
 - Clear handling of invalid or low-quality sessions
+- **v0.4.1:** Structured check/baseline summaries; backup/import UX; canonical v2 store; invalid-session comparison guards; precision History i18n fix
 - **v0.4.0:** Home History preview and Trend panel share aligned baseline comparison logic; readable baseline header (typical value, variation, guidance) and recent-check list with EN/NO/LT copy
 - Minimal trend view showing:
   - Baseline summary (mean / variation as applicable)
@@ -376,6 +388,7 @@ FCE is suitable for:
 - v0.3.2 — Unified navigation and Precision history polish
 - v0.3.3 — Precision stability, export, and formatting improvements
 - v0.4.0 — Interpretation layer, documentation IA, grouped nav, applications page
+- v0.4.1 — Backup/import UX, canonical v2 store, structured summaries, i18n hardening
 
 ---
 
@@ -389,7 +402,8 @@ and further trend visualization — still local-only, baseline-relative, and hum
 
 ### Completed lines
 - **v0.3.x** closed at v0.3.3 (Precision stability, export, docs boundaries).
-- **v0.4.0** delivers the first interpretation-layer pass and documentation architecture update (see `RELEASE_v0.4.0.md`).
+- **v0.4.0** — interpretation-layer pass and documentation architecture (see `RELEASE_v0.4.0.md`).
+- **v0.4.1** — instrument UX hardening, backup/import, canonical v2, structured summaries (see `RELEASE_v0.4.1.md`).
 
 No future version will introduce:
 - Accounts or cloud storage

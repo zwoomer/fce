@@ -395,6 +395,30 @@ Tagged as **v0.4.0** (see `RELEASE_v0.4.0.md`).
 
 ---
 
+## v0.4.1 — Instrument UX hardening, backup/import, i18n (completed)
+
+Shipped improvements:
+
+**Backup / import & canonical v2**
+- Full FCE store backup export, local-data reminder, last-backup timestamp (EN/NO/LT)
+- Import preview (dry run), confirm-and-apply, post-reload result messaging
+- Canonical v2 store validation in load/save, export, and import preview/apply
+- Import preview tooling summary: schema version, session/baseline counts, store format (legacy envelope still supported)
+
+**Session output & invalid-session guards**
+- Structured summary hierarchy (interpretation, metrics, detail, status, system, completion)
+- Baseline panel status, guidance, integrity (strength, consistency)
+- Unusable/invalid checks: **Not comparable** headline; no baseline comparison leak in summary, History compare, or Trend delta
+- `invalidSessionNoAggregate` avoids misleading zero-ms presentation
+
+**Internationalization**
+- Merged duplicate `history.precision` i18n objects (EN/NO/LT)
+- LT `history.precision.notUsable` corrected to **Netinkama**
+
+Tagged as **v0.4.1** (see `RELEASE_v0.4.1.md`).
+
+---
+
 ## v0.4.x — Synthesis & reporting (next)
 
 Purpose: extend readability and longitudinal insight **without** changing measurement philosophy or adding automated judgment.

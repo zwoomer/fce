@@ -198,6 +198,22 @@ Status: ✅ Shipped (see `RELEASE_v0.4.0.md`)
 
 ---
 
+## v0.4.1 — Instrument UX hardening & backup/import (completed)
+
+Focus: structured session output, local backup/import UX, canonical v2 store contract, invalid-session summary guards, precision History i18n.
+
+**Shipped:**
+- Full FCE store backup + import preview/apply; last-backup line; canonical v2 validation and preview summary
+- Structured check/baseline summaries; baseline integrity panel copy
+- Invalid/not-usable checks do not foreground baseline comparison; trend/history guards aligned
+- Merged `history.precision` translations (EN/NO/LT); LT not-usable label fix
+
+**Still local-only, baseline-relative, human-interpreted.**
+
+Status: ✅ Shipped (see `RELEASE_v0.4.1.md`)
+
+---
+
 ## v0.4.x — Synthesis & trends (planned)
 
 Focus: deeper longitudinal insight and reporting, without automated judgment.

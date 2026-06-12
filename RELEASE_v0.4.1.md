@@ -92,6 +92,16 @@ No change to core measurement philosophy or comparison math. **Human interpretat
 
 ---
 
+## Release focus
+
+v0.4.1 does not introduce new measurement capabilities.
+
+Its purpose is to make existing measurements easier to interpret, safer to store and restore, and more consistent across valid and unusable session states.
+
+This release focuses on **clarity, integrity, and trustworthiness** rather than expanding scope.
+
+---
+
 ## 🚀 Next steps (v0.4.x)
 
 Still open (non-binding):
